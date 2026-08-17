@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.3.0",
+	"schemaVersion":"1.4.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.15.0"
+		"version":"0.16.0"
 	},
 	"catalogue":{
 		"id":"dnplus1-2--n4",
@@ -54567,6 +54567,134 @@
 			}
 		}
 	},
+	"families":[
+		{
+			"familyId":"C*.1",
+			"title":"C*.1",
+			"affineTypes":[
+				"Dn+1(2)"
+			],
+			"description":"Twisted affine D plain family.",
+			"contentStatus":"computational",
+			"regimes":[],
+			"parameterOrder":[
+				"l",
+				"r"
+			],
+			"parameterDomain":{
+				"parameters":[
+					{
+						"name":"l",
+						"label":"\\ell",
+						"type":"integer"
+					},
+					{
+						"name":"r",
+						"label":"r",
+						"type":"integer"
+					}
+				],
+				"constraints":[],
+				"branches":[]
+			},
+			"generalFormula":null,
+			"properties":[],
+			"sourceAnchors":[],
+			"instanceIds":[
+				"dnplus1-2--n4--xnone--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0--tau0-1-2-3-4",
+				"dnplus1-2--n4--x4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-1--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x3-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-1-2--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-1-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-3-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x2-3-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-1-2-3--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-1-2-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-1-3-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-2-3-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x1-2-3-4--tau0-1-2-3-4"
+			]
+		},
+		{
+			"familyId":"C*.2",
+			"title":"C*.2",
+			"affineTypes":[
+				"Dn+1(2)"
+			],
+			"description":"Twisted affine D alternating family.",
+			"contentStatus":"computational",
+			"regimes":[],
+			"parameterOrder":[
+				"l",
+				"r"
+			],
+			"parameterDomain":{
+				"parameters":[
+					{
+						"name":"l",
+						"label":"\\ell",
+						"type":"integer"
+					},
+					{
+						"name":"r",
+						"label":"r",
+						"type":"integer"
+					}
+				],
+				"constraints":[],
+				"branches":[]
+			},
+			"generalFormula":null,
+			"properties":[],
+			"sourceAnchors":[],
+			"instanceIds":[
+				"dnplus1-2--n4--x1-3--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-1-3--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-2-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x1-3-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-1-2-3--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-1-2-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-1-3-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x0-2-3-4--tau0-1-2-3-4",
+				"dnplus1-2--n4--x1-2-3-4--tau0-1-2-3-4"
+			]
+		},
+		{
+			"familyId":"C*.4",
+			"title":"C*.4",
+			"affineTypes":[
+				"Dn+1(2)"
+			],
+			"description":"Twisted affine D involutive family.",
+			"contentStatus":"computational",
+			"regimes":[],
+			"parameterOrder":[
+				"l"
+			],
+			"parameterDomain":{
+				"parameters":[
+					{
+						"name":"l",
+						"label":"\\ell",
+						"type":"integer"
+					}
+				],
+				"constraints":[],
+				"branches":[]
+			},
+			"generalFormula":null,
+			"properties":[],
+			"sourceAnchors":[],
+			"instanceIds":[
+				"dnplus1-2--n4--xnone--tau4-3-2-1-0",
+				"dnplus1-2--n4--x2--tau4-3-2-1-0",
+				"dnplus1-2--n4--x1-2-3--tau4-3-2-1-0"
+			]
+		}
+	],
 	"summary":{
 		"diagramCount":22,
 		"statuses":{
@@ -54686,6 +54814,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--xnone--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -57938,6 +58091,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x0--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -60885,6 +61063,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"3"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -63445,6 +63648,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"classified",
+					"regime":"NonQuasistandard",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x0-1--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -69861,6 +70089,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"classified",
+					"regime":"NonQuasistandard",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"3"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x0-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -75765,6 +76018,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.2",
+					"membershipStatus":"classified",
+					"regime":"WeakAlternating",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x1-3--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -79112,6 +79390,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"classified",
+					"regime":"NonQuasistandard",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -85033,6 +85336,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"3"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x0-1-2--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -87012,6 +87340,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.2",
+					"membershipStatus":"classified",
+					"regime":"WeakAlternating",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x0-1-3--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -89520,6 +89873,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"3"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x0-1-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -91247,6 +91625,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.2",
+					"membershipStatus":"classified",
+					"regime":"WeakAlternating",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"3"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x0-2-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -93371,6 +93774,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x0-3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -94760,6 +95188,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.2",
+					"membershipStatus":"classified",
+					"regime":"WeakAlternating",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x1-3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -96772,6 +97225,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"1"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x2-3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -98009,6 +98487,54 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"4"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"familyId":"C*.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"4"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x0-1-2-3--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -100764,6 +101290,54 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"3"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"3"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"familyId":"C*.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"3"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"3"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x0-1-2-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -103017,6 +103591,54 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"familyId":"C*.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x0-1-3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -104596,6 +105218,54 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"1"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"familyId":"C*.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"1"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x0-2-3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -105857,6 +106527,54 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"0"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"familyId":"C*.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"0"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x1-2-3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -106618,6 +107336,27 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.4",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--xnone--tau4-3-2-1-0--qsp",
 				"status":"instantiatedPresentation",
@@ -110933,6 +111672,27 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.4",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x2--tau4-3-2-1-0--qsp",
 				"status":"instantiatedPresentation",
@@ -114469,6 +115229,27 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C*.4",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"dnplus1-2--n4--x1-2-3--tau4-3-2-1-0--qsp",
 				"status":"instantiatedPresentation",

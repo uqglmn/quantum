@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.3.0",
+	"schemaVersion":"1.4.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.15.0"
+		"version":"0.16.0"
 	},
 	"files":[
 		{
@@ -10,161 +10,263 @@
 			"affineType":"A(1)",
 			"rank":2,
 			"path":"a-1--n2.json",
-			"diagramCount":10
+			"diagramCount":10,
+			"families":[
+				"A.1",
+				"A.3"
+			]
 		},
 		{
 			"id":"a-1--n3",
 			"affineType":"A(1)",
 			"rank":3,
 			"path":"a-1--n3.json",
-			"diagramCount":22
+			"diagramCount":22,
+			"families":[
+				"A.1",
+				"A.2",
+				"A.4",
+				"A.3"
+			]
 		},
 		{
 			"id":"a-1--n4",
 			"affineType":"A(1)",
 			"rank":4,
 			"path":"a-1--n4.json",
-			"diagramCount":31
+			"diagramCount":31,
+			"families":[
+				"A.1",
+				"A.3"
+			]
 		},
 		{
 			"id":"b-1--n2",
 			"affineType":"B(1)",
 			"rank":2,
 			"path":"b-1--n2.json",
-			"diagramCount":9
+			"diagramCount":9,
+			"families":[
+				"B.1",
+				"B.2"
+			]
 		},
 		{
 			"id":"b-1--n3",
 			"affineType":"B(1)",
 			"rank":3,
 			"path":"b-1--n3.json",
-			"diagramCount":14
+			"diagramCount":14,
+			"families":[
+				"B.1",
+				"B.2"
+			]
 		},
 		{
 			"id":"b-1--n4",
 			"affineType":"B(1)",
 			"rank":4,
 			"path":"b-1--n4.json",
-			"diagramCount":22
+			"diagramCount":22,
+			"families":[
+				"B.1",
+				"B.2"
+			]
 		},
 		{
 			"id":"c-1--n2",
 			"affineType":"C(1)",
 			"rank":2,
 			"path":"c-1--n2.json",
-			"diagramCount":9
+			"diagramCount":9,
+			"families":[
+				"C.1",
+				"C.2",
+				"C.4"
+			]
 		},
 		{
 			"id":"c-1--n3",
 			"affineType":"C(1)",
 			"rank":3,
 			"path":"c-1--n3.json",
-			"diagramCount":14
+			"diagramCount":14,
+			"families":[
+				"C.1",
+				"C.2",
+				"C.4"
+			]
 		},
 		{
 			"id":"c-1--n4",
 			"affineType":"C(1)",
 			"rank":4,
 			"path":"c-1--n4.json",
-			"diagramCount":22
+			"diagramCount":22,
+			"families":[
+				"C.1",
+				"C.2",
+				"C.4"
+			]
 		},
 		{
 			"id":"d-1--n4",
 			"affineType":"D(1)",
 			"rank":4,
 			"path":"d-1--n4.json",
-			"diagramCount":46
+			"diagramCount":46,
+			"families":[
+				"D.1",
+				"D.2",
+				"D.3",
+				"D.4"
+			]
 		},
 		{
 			"id":"a2n-1-2--n3",
 			"affineType":"A2n-1(2)",
 			"rank":3,
 			"path":"a2n-1-2--n3.json",
-			"diagramCount":14
+			"diagramCount":14,
+			"families":[
+				"B*.1",
+				"B*.2"
+			]
 		},
 		{
 			"id":"a2n-1-2--n4",
 			"affineType":"A2n-1(2)",
 			"rank":4,
 			"path":"a2n-1-2--n4.json",
-			"diagramCount":22
+			"diagramCount":22,
+			"families":[
+				"B*.1",
+				"B*.2"
+			]
 		},
 		{
 			"id":"a2n-1-2t--n3",
 			"affineType":"A2n-1(2)T",
 			"rank":3,
 			"path":"a2n-1-2t--n3.json",
-			"diagramCount":14
+			"diagramCount":14,
+			"families":[
+				"tB*.1",
+				"tB*.2"
+			]
 		},
 		{
 			"id":"a2n-1-2t--n4",
 			"affineType":"A2n-1(2)T",
 			"rank":4,
 			"path":"a2n-1-2t--n4.json",
-			"diagramCount":22
+			"diagramCount":22,
+			"families":[
+				"tB*.1",
+				"tB*.2"
+			]
 		},
 		{
 			"id":"a2n-2--n2",
 			"affineType":"A2n(2)",
 			"rank":2,
 			"path":"a2n-2--n2.json",
-			"diagramCount":7
+			"diagramCount":7,
+			"families":[
+				"C**.1",
+				"C**.2"
+			]
 		},
 		{
 			"id":"a2n-2--n3",
 			"affineType":"A2n(2)",
 			"rank":3,
 			"path":"a2n-2--n3.json",
-			"diagramCount":12
+			"diagramCount":12,
+			"families":[
+				"C**.1",
+				"C**.2"
+			]
 		},
 		{
 			"id":"a2n-2--n4",
 			"affineType":"A2n(2)",
 			"rank":4,
 			"path":"a2n-2--n4.json",
-			"diagramCount":19
+			"diagramCount":19,
+			"families":[
+				"C**.1",
+				"C**.2"
+			]
 		},
 		{
 			"id":"a2n-2t--n2",
 			"affineType":"A2n(2)T",
 			"rank":2,
 			"path":"a2n-2t--n2.json",
-			"diagramCount":7
+			"diagramCount":7,
+			"families":[
+				"tC**.1",
+				"tC**.2"
+			]
 		},
 		{
 			"id":"a2n-2t--n3",
 			"affineType":"A2n(2)T",
 			"rank":3,
 			"path":"a2n-2t--n3.json",
-			"diagramCount":12
+			"diagramCount":12,
+			"families":[
+				"tC**.1",
+				"tC**.2"
+			]
 		},
 		{
 			"id":"a2n-2t--n4",
 			"affineType":"A2n(2)T",
 			"rank":4,
 			"path":"a2n-2t--n4.json",
-			"diagramCount":19
+			"diagramCount":19,
+			"families":[
+				"tC**.1",
+				"tC**.2"
+			]
 		},
 		{
 			"id":"dnplus1-2--n2",
 			"affineType":"Dn+1(2)",
 			"rank":2,
 			"path":"dnplus1-2--n2.json",
-			"diagramCount":9
+			"diagramCount":9,
+			"families":[
+				"C*.1",
+				"C*.2",
+				"C*.4"
+			]
 		},
 		{
 			"id":"dnplus1-2--n3",
 			"affineType":"Dn+1(2)",
 			"rank":3,
 			"path":"dnplus1-2--n3.json",
-			"diagramCount":14
+			"diagramCount":14,
+			"families":[
+				"C*.1",
+				"C*.2",
+				"C*.4"
+			]
 		},
 		{
 			"id":"dnplus1-2--n4",
 			"affineType":"Dn+1(2)",
 			"rank":4,
 			"path":"dnplus1-2--n4.json",
-			"diagramCount":22
+			"diagramCount":22,
+			"families":[
+				"C*.1",
+				"C*.2",
+				"C*.4"
+			]
 		}
 	]
 }
