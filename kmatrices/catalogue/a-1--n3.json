@@ -2,7 +2,7 @@
 	"schemaVersion":"1.0.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.11.0"
+		"version":"0.11.1"
 	},
 	"catalogue":{
 		"id":"a-1--n3",
@@ -393,7 +393,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n 0 & \\sqrt{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$q}} & 0 & 0 \\\\\n -\\frac{1}{\\sqrt{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$q}}} & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & \\sqrt{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$q}} \\\\\n 0 & 0 & -\\frac{1}{\\sqrt{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$q}}} & 0 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n 0 & \\sqrt{q} & 0 & 0 \\\\\n -\\frac{1}{\\sqrt{q}} & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & \\sqrt{q} \\\\\n 0 & 0 & -\\frac{1}{\\sqrt{q}} & 0 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA124.tex",
 						"Formula":"A.2",
@@ -620,7 +620,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n 0 & \\sqrt{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$q}} & 0 & 0 \\\\\n -\\frac{1}{\\sqrt{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$q}}} & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & \\sqrt{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$q}} \\\\\n 0 & 0 & -\\frac{1}{\\sqrt{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$q}}} & 0 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n 0 & \\sqrt{q} & 0 & 0 \\\\\n -\\frac{1}{\\sqrt{q}} & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & \\sqrt{q} \\\\\n 0 & 0 & -\\frac{1}{\\sqrt{q}} & 0 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA124.tex",
 						"Formula":"A.2",
@@ -780,7 +780,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n 0 & 0 & 1 & 0 \\\\\n 0 & 0 & 0 & 1 \\\\\n \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u} & 0 & 0 & 0 \\\\\n 0 & \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u} & 0 & 0 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n 0 & 0 & 1 & 0 \\\\\n 0 & 0 & 0 & 1 \\\\\n u & 0 & 0 & 0 \\\\\n 0 & u & 0 & 0 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA124.tex",
 						"Formula":"A.4",
@@ -2234,7 +2234,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} \\\\\n 0 & \\frac{\\lambda  \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} & 0 \\\\\n 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 & 0 \\\\\n \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\left(u-\\frac{1}{u}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} \\\\\n 0 & \\frac{\\lambda  \\left(u-\\frac{1}{u}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 & \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} & 0 \\\\\n 0 & \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} & \\frac{u-\\frac{1}{u}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 & 0 \\\\\n \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -3248,7 +3248,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u} \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 & 0 & 0 \\\\\n 0 & \\frac{\\lambda  \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} & 0 \\\\\n 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\mu  u \\left(u-\\frac{1}{u}\\right)}{\\lambda  \\mu -u}+1 & 0 & 0 & 0 \\\\\n 0 & \\frac{\\lambda  \\left(u-\\frac{1}{u}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 & \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} & 0 \\\\\n 0 & \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} & \\frac{u-\\frac{1}{u}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -4070,7 +4070,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} \\\\\n 0 & 1 & 0 & 0 \\\\\n 0 & 0 & 1 & 0 \\\\\n \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\left(u-\\frac{1}{u}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} \\\\\n 0 & 1 & 0 & 0 \\\\\n 0 & 0 & 1 & 0 \\\\\n \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -4451,7 +4451,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u} \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 & 0 & 0 \\\\\n 0 & 1 & 0 & 0 \\\\\n 0 & 0 & 1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\mu  u \\left(u-\\frac{1}{u}\\right)}{\\lambda  \\mu -u}+1 & 0 & 0 & 0 \\\\\n 0 & 1 & 0 & 0 \\\\\n 0 & 0 & 1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -5025,7 +5025,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u} \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 & 0 & 0 \\\\\n 0 & \\frac{\\lambda  \\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u} \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 & 0 \\\\\n 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\mu  u \\left(u-\\frac{1}{u}\\right)}{\\lambda  \\mu -u}+1 & 0 & 0 & 0 \\\\\n 0 & \\frac{\\lambda  \\mu  u \\left(u-\\frac{1}{u}\\right)}{\\lambda  \\mu -u}+1 & 0 & 0 \\\\\n 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -5671,7 +5671,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n 1 & 0 & 0 & 0 \\\\\n 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 & 0 \\\\\n 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n 1 & 0 & 0 & 0 \\\\\n 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 & 0 & 0 \\\\\n 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -6223,7 +6223,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n 1 & 0 & 0 & 0 \\\\\n 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 & 0 \\\\\n 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n 1 & 0 & 0 & 0 \\\\\n 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 & 0 & 0 \\\\\n 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -7223,7 +7223,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} & 0 & 0 \\\\\n \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 & 0 & 0 \\\\\n 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\left(u-\\frac{1}{u}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 & \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} & 0 & 0 \\\\\n \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} & \\frac{u-\\frac{1}{u}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 & 0 & 0 \\\\\n 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -7591,7 +7591,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n 1 & 0 & 0 & 0 \\\\\n 0 & 1 & 0 & 0 \\\\\n 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n 1 & 0 & 0 & 0 \\\\\n 0 & 1 & 0 & 0 \\\\\n 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -8593,7 +8593,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} & 0 & 0 \\\\\n \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 & 0 & 0 \\\\\n 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\left(u-\\frac{1}{u}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 & \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} & 0 & 0 \\\\\n \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} & \\frac{u-\\frac{1}{u}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 & 0 & 0 \\\\\n 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -8962,7 +8962,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n 1 & 0 & 0 & 0 \\\\\n 0 & 1 & 0 & 0 \\\\\n 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n 1 & 0 & 0 & 0 \\\\\n 0 & 1 & 0 & 0 \\\\\n 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -9618,7 +9618,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u} \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 & 0 & 0 \\\\\n 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 & 0 \\\\\n 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\mu  u \\left(u-\\frac{1}{u}\\right)}{\\lambda  \\mu -u}+1 & 0 & 0 & 0 \\\\\n 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 & 0 & 0 \\\\\n 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -10528,7 +10528,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} & 0 \\\\\n 0 & 1 & 0 & 0 \\\\\n \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})} & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right) (\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u})}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\left(u-\\frac{1}{u}\\right)}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 & 0 & \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} & 0 \\\\\n 0 & 1 & 0 & 0 \\\\\n \\frac{u-\\frac{1}{u}}{\\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)} & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\left(\\frac{1}{\\lambda }+\\frac{1}{\\mu  u}\\right) (\\lambda  \\mu -u)}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -10999,7 +10999,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\mu  \\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u} \\left(\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}\\right)}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 & 0 & 0 \\\\\n 0 & 1 & 0 & 0 \\\\\n 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n \\frac{\\lambda  \\mu  u \\left(u-\\frac{1}{u}\\right)}{\\lambda  \\mu -u}+1 & 0 & 0 & 0 \\\\\n 0 & 1 & 0 & 0 \\\\\n 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
@@ -11278,7 +11278,7 @@
 							}
 						]
 					},
-					"latex":"\\left(\n\\begin{array}{cccc}\n 1 & 0 & 0 & 0 \\\\\n 0 & 1 & 0 & 0 \\\\\n 0 & 0 & 1 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}-\\frac{1}{\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}}{\\lambda  \\mu -\\text{QREKMatrices$\\grave{ }$Private$\\grave{ }$u}}+1 \\\\\n\\end{array}\n\\right)",
+					"latex":"\\left(\n\\begin{array}{cccc}\n 1 & 0 & 0 & 0 \\\\\n 0 & 1 & 0 & 0 \\\\\n 0 & 0 & 1 & 0 \\\\\n 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\lambda  \\mu -u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE\/files\/resultsA3.tex",
 						"Formula":"A.3",
