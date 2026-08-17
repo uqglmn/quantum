@@ -1,8 +1,10 @@
-import type { DiagramRecord } from "../domain";
+import type { DiagramRecord, DiagramSummary } from "../domain";
 
 type Point = { x: number; y: number };
 
-function nodePositions(record: DiagramRecord): Point[] {
+type DrawableDiagram = DiagramRecord | DiagramSummary;
+
+function nodePositions(record: DrawableDiagram): Point[] {
   const { affineType, nodes } = record.spec;
   const n = nodes.length - 1;
   const width = 440;
@@ -39,7 +41,7 @@ function parallelOffset(a: Point, b: Point, amount: number): [number, number] {
   return [(-(b.y - a.y) / length) * amount, ((b.x - a.x) / length) * amount];
 }
 
-export function SatakeDiagram({ record, compact = false }: { record: DiagramRecord; compact?: boolean }) {
+export function SatakeDiagram({ record, compact = false }: { record: DrawableDiagram; compact?: boolean }) {
   const positions = nodePositions(record);
   const markerKey = record.id.replace(/[^a-zA-Z0-9_-]/g, "-");
   const edges: Array<{ i: number; j: number; multiplicity: number; short: number | null }> = [];

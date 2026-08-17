@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.5.0",
+	"schemaVersion":"1.6.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.17.0"
+		"version":"0.19.0"
 	},
 	"files":[
 		{
@@ -11,6 +11,9 @@
 			"rank":2,
 			"path":"a-1--n2.json",
 			"diagramCount":10,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a-1--n2",
+			"detailCount":10,
 			"families":[
 				"A.1",
 				"A.3"
@@ -22,6 +25,9 @@
 			"rank":3,
 			"path":"a-1--n3.json",
 			"diagramCount":22,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a-1--n3",
+			"detailCount":22,
 			"families":[
 				"A.1",
 				"A.2",
@@ -35,6 +41,39 @@
 			"rank":4,
 			"path":"a-1--n4.json",
 			"diagramCount":31,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a-1--n4",
+			"detailCount":31,
+			"families":[
+				"A.1",
+				"A.3"
+			]
+		},
+		{
+			"id":"a-1--n5",
+			"affineType":"A(1)",
+			"rank":5,
+			"path":"a-1--n5.json",
+			"diagramCount":52,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a-1--n5",
+			"detailCount":52,
+			"families":[
+				"A.1",
+				"A.2",
+				"A.4",
+				"A.3"
+			]
+		},
+		{
+			"id":"a-1--n6",
+			"affineType":"A(1)",
+			"rank":6,
+			"path":"a-1--n6.json",
+			"diagramCount":71,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a-1--n6",
+			"detailCount":71,
 			"families":[
 				"A.1",
 				"A.3"
@@ -46,6 +85,9 @@
 			"rank":2,
 			"path":"b-1--n2.json",
 			"diagramCount":9,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/b-1--n2",
+			"detailCount":9,
 			"families":[
 				"B.1",
 				"B.2"
@@ -57,6 +99,9 @@
 			"rank":3,
 			"path":"b-1--n3.json",
 			"diagramCount":14,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/b-1--n3",
+			"detailCount":14,
 			"families":[
 				"B.1",
 				"B.2"
@@ -68,6 +113,37 @@
 			"rank":4,
 			"path":"b-1--n4.json",
 			"diagramCount":22,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/b-1--n4",
+			"detailCount":22,
+			"families":[
+				"B.1",
+				"B.2"
+			]
+		},
+		{
+			"id":"b-1--n5",
+			"affineType":"B(1)",
+			"rank":5,
+			"path":"b-1--n5.json",
+			"diagramCount":30,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/b-1--n5",
+			"detailCount":30,
+			"families":[
+				"B.1",
+				"B.2"
+			]
+		},
+		{
+			"id":"b-1--n6",
+			"affineType":"B(1)",
+			"rank":6,
+			"path":"b-1--n6.json",
+			"diagramCount":41,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/b-1--n6",
+			"detailCount":41,
 			"families":[
 				"B.1",
 				"B.2"
@@ -79,6 +155,9 @@
 			"rank":2,
 			"path":"c-1--n2.json",
 			"diagramCount":9,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/c-1--n2",
+			"detailCount":9,
 			"families":[
 				"C.1",
 				"C.2",
@@ -91,6 +170,9 @@
 			"rank":3,
 			"path":"c-1--n3.json",
 			"diagramCount":14,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/c-1--n3",
+			"detailCount":14,
 			"families":[
 				"C.1",
 				"C.2",
@@ -103,6 +185,39 @@
 			"rank":4,
 			"path":"c-1--n4.json",
 			"diagramCount":22,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/c-1--n4",
+			"detailCount":22,
+			"families":[
+				"C.1",
+				"C.2",
+				"C.4"
+			]
+		},
+		{
+			"id":"c-1--n5",
+			"affineType":"C(1)",
+			"rank":5,
+			"path":"c-1--n5.json",
+			"diagramCount":30,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/c-1--n5",
+			"detailCount":30,
+			"families":[
+				"C.1",
+				"C.2",
+				"C.4"
+			]
+		},
+		{
+			"id":"c-1--n6",
+			"affineType":"C(1)",
+			"rank":6,
+			"path":"c-1--n6.json",
+			"diagramCount":41,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/c-1--n6",
+			"detailCount":41,
 			"families":[
 				"C.1",
 				"C.2",
@@ -115,10 +230,43 @@
 			"rank":4,
 			"path":"d-1--n4.json",
 			"diagramCount":46,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/d-1--n4",
+			"detailCount":46,
 			"families":[
 				"D.1",
 				"D.2",
 				"D.3",
+				"D.4"
+			]
+		},
+		{
+			"id":"d-1--n5",
+			"affineType":"D(1)",
+			"rank":5,
+			"path":"d-1--n5.json",
+			"diagramCount":41,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/d-1--n5",
+			"detailCount":41,
+			"families":[
+				"D.1",
+				"D.4",
+				"D.2"
+			]
+		},
+		{
+			"id":"d-1--n6",
+			"affineType":"D(1)",
+			"rank":6,
+			"path":"d-1--n6.json",
+			"diagramCount":56,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/d-1--n6",
+			"detailCount":56,
+			"families":[
+				"D.1",
+				"D.2",
 				"D.4"
 			]
 		},
@@ -128,6 +276,9 @@
 			"rank":3,
 			"path":"a2n-1-2--n3.json",
 			"diagramCount":14,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-1-2--n3",
+			"detailCount":14,
 			"families":[
 				"B*.1",
 				"B*.2"
@@ -139,6 +290,37 @@
 			"rank":4,
 			"path":"a2n-1-2--n4.json",
 			"diagramCount":22,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-1-2--n4",
+			"detailCount":22,
+			"families":[
+				"B*.1",
+				"B*.2"
+			]
+		},
+		{
+			"id":"a2n-1-2--n5",
+			"affineType":"A2n-1(2)",
+			"rank":5,
+			"path":"a2n-1-2--n5.json",
+			"diagramCount":30,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-1-2--n5",
+			"detailCount":30,
+			"families":[
+				"B*.1",
+				"B*.2"
+			]
+		},
+		{
+			"id":"a2n-1-2--n6",
+			"affineType":"A2n-1(2)",
+			"rank":6,
+			"path":"a2n-1-2--n6.json",
+			"diagramCount":41,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-1-2--n6",
+			"detailCount":41,
 			"families":[
 				"B*.1",
 				"B*.2"
@@ -150,6 +332,9 @@
 			"rank":3,
 			"path":"a2n-1-2t--n3.json",
 			"diagramCount":14,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-1-2t--n3",
+			"detailCount":14,
 			"families":[
 				"tB*.1",
 				"tB*.2"
@@ -161,6 +346,37 @@
 			"rank":4,
 			"path":"a2n-1-2t--n4.json",
 			"diagramCount":22,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-1-2t--n4",
+			"detailCount":22,
+			"families":[
+				"tB*.1",
+				"tB*.2"
+			]
+		},
+		{
+			"id":"a2n-1-2t--n5",
+			"affineType":"A2n-1(2)T",
+			"rank":5,
+			"path":"a2n-1-2t--n5.json",
+			"diagramCount":30,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-1-2t--n5",
+			"detailCount":30,
+			"families":[
+				"tB*.1",
+				"tB*.2"
+			]
+		},
+		{
+			"id":"a2n-1-2t--n6",
+			"affineType":"A2n-1(2)T",
+			"rank":6,
+			"path":"a2n-1-2t--n6.json",
+			"diagramCount":41,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-1-2t--n6",
+			"detailCount":41,
 			"families":[
 				"tB*.1",
 				"tB*.2"
@@ -172,6 +388,9 @@
 			"rank":2,
 			"path":"a2n-2--n2.json",
 			"diagramCount":7,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-2--n2",
+			"detailCount":7,
 			"families":[
 				"C**.1",
 				"C**.2"
@@ -183,6 +402,9 @@
 			"rank":3,
 			"path":"a2n-2--n3.json",
 			"diagramCount":12,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-2--n3",
+			"detailCount":12,
 			"families":[
 				"C**.1",
 				"C**.2"
@@ -194,6 +416,37 @@
 			"rank":4,
 			"path":"a2n-2--n4.json",
 			"diagramCount":19,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-2--n4",
+			"detailCount":19,
+			"families":[
+				"C**.1",
+				"C**.2"
+			]
+		},
+		{
+			"id":"a2n-2--n5",
+			"affineType":"A2n(2)",
+			"rank":5,
+			"path":"a2n-2--n5.json",
+			"diagramCount":27,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-2--n5",
+			"detailCount":27,
+			"families":[
+				"C**.1",
+				"C**.2"
+			]
+		},
+		{
+			"id":"a2n-2--n6",
+			"affineType":"A2n(2)",
+			"rank":6,
+			"path":"a2n-2--n6.json",
+			"diagramCount":37,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-2--n6",
+			"detailCount":37,
 			"families":[
 				"C**.1",
 				"C**.2"
@@ -205,6 +458,9 @@
 			"rank":2,
 			"path":"a2n-2t--n2.json",
 			"diagramCount":7,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-2t--n2",
+			"detailCount":7,
 			"families":[
 				"tC**.1",
 				"tC**.2"
@@ -216,6 +472,9 @@
 			"rank":3,
 			"path":"a2n-2t--n3.json",
 			"diagramCount":12,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-2t--n3",
+			"detailCount":12,
 			"families":[
 				"tC**.1",
 				"tC**.2"
@@ -227,6 +486,37 @@
 			"rank":4,
 			"path":"a2n-2t--n4.json",
 			"diagramCount":19,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-2t--n4",
+			"detailCount":19,
+			"families":[
+				"tC**.1",
+				"tC**.2"
+			]
+		},
+		{
+			"id":"a2n-2t--n5",
+			"affineType":"A2n(2)T",
+			"rank":5,
+			"path":"a2n-2t--n5.json",
+			"diagramCount":27,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-2t--n5",
+			"detailCount":27,
+			"families":[
+				"tC**.1",
+				"tC**.2"
+			]
+		},
+		{
+			"id":"a2n-2t--n6",
+			"affineType":"A2n(2)T",
+			"rank":6,
+			"path":"a2n-2t--n6.json",
+			"diagramCount":37,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/a2n-2t--n6",
+			"detailCount":37,
 			"families":[
 				"tC**.1",
 				"tC**.2"
@@ -238,6 +528,9 @@
 			"rank":2,
 			"path":"dnplus1-2--n2.json",
 			"diagramCount":9,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/dnplus1-2--n2",
+			"detailCount":9,
 			"families":[
 				"C*.1",
 				"C*.2",
@@ -250,6 +543,9 @@
 			"rank":3,
 			"path":"dnplus1-2--n3.json",
 			"diagramCount":14,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/dnplus1-2--n3",
+			"detailCount":14,
 			"families":[
 				"C*.1",
 				"C*.2",
@@ -262,6 +558,39 @@
 			"rank":4,
 			"path":"dnplus1-2--n4.json",
 			"diagramCount":22,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/dnplus1-2--n4",
+			"detailCount":22,
+			"families":[
+				"C*.1",
+				"C*.2",
+				"C*.4"
+			]
+		},
+		{
+			"id":"dnplus1-2--n5",
+			"affineType":"Dn+1(2)",
+			"rank":5,
+			"path":"dnplus1-2--n5.json",
+			"diagramCount":30,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/dnplus1-2--n5",
+			"detailCount":30,
+			"families":[
+				"C*.1",
+				"C*.2",
+				"C*.4"
+			]
+		},
+		{
+			"id":"dnplus1-2--n6",
+			"affineType":"Dn+1(2)",
+			"rank":6,
+			"path":"dnplus1-2--n6.json",
+			"diagramCount":41,
+			"layout":"lazy-v1",
+			"detailBasePath":"details\/dnplus1-2--n6",
+			"detailCount":41,
 			"families":[
 				"C*.1",
 				"C*.2",

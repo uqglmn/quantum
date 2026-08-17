@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import type { Catalogue, CatalogueManifest, DiagramRecord, Realization, Solution } from "./domain";
+import type { Catalogue, CatalogueManifest, DiagramRecord, DiagramSummary, Realization, Solution } from "./domain";
 import { MathFormula } from "./components/MathFormula";
 import { FamilyConfigurator } from "./components/FamilyConfigurator";
 import { FamilyFormula } from "./components/FamilyFormula";
@@ -222,11 +222,11 @@ function FormulaPanel({ record, realization, engine, ambient, solutions, selecte
   const active = realizedSolution(selected, realization);
   if (realization === "dressed" && !active) return <div className="empty-state">
     <strong>No materialized dressing for this family yet.</strong>
-    <p>C.1 exports its canonical symplectic diagonal dressing. Other families remain visible while their admissible dressing groups are transcribed.</p>
+    <p>Canonical diagonal dressings are exported family by family when their admissible gauge action has been encoded.</p>
   </div>;
   if (realization === "transported" && !active) return <div className="empty-state">
     <strong>No transported matrix artifact in this static record.</strong>
-    <p>The representative permutation is retained with the diagram. Its transported matrix will be materialized by the transformation provider rather than treated as a separate coideal regime.</p>
+    <p>The representative permutation is retained with the diagram; this record does not require a matrix-level diagram-automorphism transport.</p>
   </div>;
   if (!active) return <div className="empty-state">
     <strong>No matrix artifact in this static record.</strong>
@@ -259,8 +259,9 @@ function FormulaPanel({ record, realization, engine, ambient, solutions, selecte
   </>;
 }
 
-function Inspector({ record, engine, ambient, family, manifest, catalogue, onFileChange, onDiagramChange }: {
+function Inspector({ record, summary, engine, ambient, family, manifest, catalogue, onFileChange, onDiagramChange }: {
   record: DiagramRecord;
+  summary: DiagramSummary;
   engine: Catalogue["engine"];
   ambient: Catalogue["ambient"];
   family: FamilyDefinition;
@@ -290,7 +291,7 @@ function Inspector({ record, engine, ambient, family, manifest, catalogue, onFil
   }, [tab]);
 
   return <main className="inspector">
-    <FamilyConfigurator family={family} manifest={manifest} catalogue={catalogue} selected={record}
+    <FamilyConfigurator family={family} manifest={manifest} catalogue={catalogue} selected={summary}
       onFileChange={onFileChange} onDiagramChange={onDiagramChange} />
 
     <section className="instance-heading">
@@ -398,6 +399,7 @@ export function App() {
   const [manifest, setManifest] = useState<CatalogueManifest | null>(null);
   const [fileId, setFileId] = useState("");
   const [catalogue, setCatalogue] = useState<Catalogue | null>(null);
+  const [diagram, setDiagram] = useState<DiagramRecord | null>(null);
   const [diagramId, setDiagramId] = useState("");
   const [familyId, setFamilyId] = useState("");
   const [error, setError] = useState("");
@@ -431,7 +433,7 @@ export function App() {
       const familyRecords = value.diagrams.filter((record) => recordBelongsToFamily(record, nextFamily));
       const requestedDiagram = search.get("diagram");
       const nextDiagram = familyRecords.find((record) => record.id === requestedDiagram) ?? familyRecords[0] ?? value.diagrams[0];
-      setCatalogue(value); setFamilyId(nextFamily); setDiagramId(nextDiagram?.id ?? ""); setError("");
+      setCatalogue(value); setDiagram(null); setFamilyId(nextFamily); setDiagramId(nextDiagram?.id ?? ""); setError("");
     }).catch((reason: Error) => setError(reason.message));
     return () => controller.abort();
   }, [manifest, fileId]);
@@ -439,6 +441,21 @@ export function App() {
   const records = useMemo(() => catalogue?.diagrams.filter((record) => recordBelongsToFamily(record, familyId)) ?? [], [catalogue, familyId]);
   const selected = catalogue?.diagrams.find((record) => record.id === diagramId && recordBelongsToFamily(record, familyId)) ?? records[0];
   const family = familyDefinition(familyId, catalogue?.families);
+
+  useEffect(() => {
+    if (!selected) { setDiagram(null); return; }
+    const controller = new AbortController();
+    setDiagram((current) => current?.id === selected.id ? current : null);
+    staticCatalogueProvider.diagram(selected.detailPath, controller.signal).then((detail) => {
+      if (detail.catalogue.id !== catalogue?.catalogue.id || detail.diagram.id !== selected.id) {
+        throw new Error(`Diagram detail identity mismatch for ${selected.id}`);
+      }
+      setDiagram(detail.diagram); setError("");
+    }).catch((reason: Error) => {
+      if (reason.name !== "AbortError") setError(reason.message);
+    });
+    return () => controller.abort();
+  }, [catalogue?.catalogue.id, selected?.id, selected?.detailPath]);
 
   useEffect(() => {
     if (!catalogue || !familyId || selected) return;
@@ -474,7 +491,7 @@ export function App() {
     <div className="workspace">
       <FamilyLibrary manifest={manifest} selectedFileId={fileId} selectedFamilyId={familyId} onSelect={selectFamily} />
       {error ? <main className="load-error"><h2>Catalogue unavailable</h2><p>{error}</p><p>Run the catalogue export script before starting the app.</p></main>
-        : selected && catalogue && manifest && family ? <Inspector record={selected} engine={catalogue.engine} ambient={catalogue.ambient}
+        : selected && diagram?.id === selected.id && catalogue && manifest && family ? <Inspector record={diagram} summary={selected} engine={catalogue.engine} ambient={catalogue.ambient}
           family={family} manifest={manifest} catalogue={catalogue} onFileChange={setFileId} onDiagramChange={setDiagramId} />
           : <main className="loading">Loading mathematical catalogue…</main>}
     </div>

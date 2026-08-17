@@ -37,7 +37,7 @@ control, but storage and computation must not conflate them.
 ### 1. Catalogue explorer — implemented foundation
 
 - all nine classical affine presentations, twisted and untwisted;
-- ranks 2–4 where supported, 392 diagram records;
+- ranks through six where supported, 1,095 diagram records in 41 catalogues;
 - custom SVG diagrams with black nodes, multiple bonds, arrows, and tau arcs;
 - classification, equation, regime, parameter, sparse K, LaTeX, and provenance
   views;
@@ -71,17 +71,19 @@ control, but storage and computation must not conflate them.
 
 ### 3. Transformations and properties
 
-- implemented pilot: C.1 bare and canonical symplectic diagonal dressing with
-  materialized matrices and inspectable transformation records;
+- implemented: bare and canonical diagonal dressings for all computable
+  classical families, with materialized matrices and inspectable transformation
+  records;
 - implemented pilot: the generic C.1 non-quasistandard formula with parameter
   `nu`, its separate regime formula, and its exact `nu^2=-1` specialization;
-- implemented pilot: C.1 spectra and multiplicities, characteristic and
-  generic minimal identities, determinant and rank loci, factorization,
-  regularity, boundary unitarity, assumptions, provenance, and verification
-  badges;
+- implemented: spectra and multiplicities, characteristic and generic minimal
+  identities, determinant and rank loci, factorization, regularity, boundary
+  unitarity, assumptions, provenance, and verification badges for all main
+  untwisted and twisted families; C*.4 exposes its unfinished source spectrum
+  without guessing the missing coefficients;
 - parameter editor with symbolic presets and assumptions;
-- extend the bare/dressed/transported pipeline and property providers from the
-  C.1 pilot to the remaining families;
+- implemented: matrix-level dihedral transport for type A, exported as an
+  explicit transformation chain and composed with subsequent dressing;
 - non-quasistandard endpoint selection where formulas are complete;
 - family-specific reduction and singular loci beyond the generic C.1 record;
 - sampled verification badges for formulas too expensive for exact export.

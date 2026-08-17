@@ -1,5 +1,5 @@
 import { readFile, readdir } from "node:fs/promises";
-import { resolve } from "node:path";
+import { relative, resolve } from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 
 const appRoot = resolve(import.meta.dirname, "..");
@@ -9,17 +9,45 @@ const catalogueDirectory = process.argv[2]
   : resolve(appRoot, "public/catalogue");
 const readJson = async (path) => JSON.parse(await readFile(path, "utf8"));
 
-const [expressionSchema, catalogueSchema, manifestSchema] = await Promise.all([
+const [expressionSchema, catalogueSchema, diagramSchema, manifestSchema] = await Promise.all([
   readJson(resolve(projectRoot, "Schemas/expression.schema.json")),
   readJson(resolve(projectRoot, "Schemas/catalogue.schema.json")),
+  readJson(resolve(projectRoot, "Schemas/diagram.schema.json")),
   readJson(resolve(projectRoot, "Schemas/manifest.schema.json")),
 ]);
 
 const ajv = new Ajv2020({ allErrors: true, strict: true });
 ajv.addSchema(expressionSchema);
-const validateCatalogue = ajv.compile(catalogueSchema);
+ajv.addSchema(catalogueSchema);
+const validateCatalogue = ajv.getSchema(catalogueSchema.$id);
+const validateDiagram = ajv.compile(diagramSchema);
 const validateManifest = ajv.compile(manifestSchema);
 const manifest = await readJson(resolve(catalogueDirectory, "manifest.json"));
+const expectedDetailPaths = new Set();
+const statusCounts = new Map();
+const certificateCounts = new Map();
+const requiredPropertyKinds = [
+  "eigenvalues",
+  "characteristicIdentity",
+  "minimalIdentity",
+  "determinant",
+  "factorization",
+  "rankLoci",
+  "regularity",
+  "unitarity",
+];
+let solutionCount = 0;
+
+const increment = (counts, key) => counts.set(key, (counts.get(key) ?? 0) + 1);
+const walkJson = async (directory) => {
+  const paths = [];
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const path = resolve(directory, entry.name);
+    if (entry.isDirectory()) paths.push(...await walkJson(path));
+    else if (entry.name.endsWith(".json")) paths.push(path);
+  }
+  return paths;
+};
 
 if (!validateManifest(manifest)) {
   console.error(validateManifest.errors);
@@ -40,6 +68,51 @@ for (const entry of manifest.files) {
   if (new Set(data.diagrams.map(({ id }) => id)).size !== data.diagrams.length) {
     throw new Error(`Duplicate diagram IDs in ${entry.path}`);
   }
+  if (data.summary.detailCount !== data.diagrams.length || entry.detailCount !== data.diagrams.length) {
+    throw new Error(`Diagram detail count mismatch in ${entry.path}`);
+  }
+  for (const summary of data.diagrams) {
+    expectedDetailPaths.add(summary.detailPath);
+    const detail = await readJson(resolve(catalogueDirectory, summary.detailPath));
+    if (!validateDiagram(detail)) {
+      console.error(`${summary.detailPath} failed schema validation`, validateDiagram.errors);
+      process.exitCode = 1;
+    }
+    if (detail.catalogue.id !== data.catalogue.id || detail.diagram.id !== summary.id) {
+      throw new Error(`Diagram detail identity mismatch in ${summary.detailPath}`);
+    }
+
+    const computation = detail.diagram.computation;
+    increment(statusCounts, computation.status);
+    if (computation.status === "ParameterExtractionFailed") {
+      throw new Error(`Unresolved family parameters in ${summary.detailPath}`);
+    }
+
+    const solutions = [computation.solution, ...(computation.candidates ?? [])]
+      .filter((solution) => solution?.properties?.length > 0);
+    for (const solution of solutions) {
+      solutionCount += 1;
+      const kinds = solution.properties.map(({ kind }) => kind);
+      if (kinds.length !== requiredPropertyKinds.length ||
+          requiredPropertyKinds.some((kind) => !kinds.includes(kind))) {
+        throw new Error(`Incomplete property dossier for ${solution.solutionId} in ${summary.detailPath}`);
+      }
+      const certificateStatus = solution.reflectionEquationCertificate?.status ?? "sourceIdentity";
+      increment(certificateCounts, certificateStatus);
+    }
+  }
 }
 
-if (!process.exitCode) console.log(`Validated ${manifest.files.length} catalogues against schema ${manifest.schemaVersion}.`);
+const actualDetailPaths = (await walkJson(resolve(catalogueDirectory, "details")))
+  .map((path) => relative(catalogueDirectory, path));
+const orphanDetails = actualDetailPaths.filter((path) => !expectedDetailPaths.has(path));
+if (orphanDetails.length > 0) {
+  throw new Error(`${orphanDetails.length} unreferenced diagram details found; first: ${orphanDetails[0]}`);
+}
+
+if (!process.exitCode) {
+  const details = manifest.files.reduce((sum, entry) => sum + entry.detailCount, 0);
+  console.log(`Validated ${manifest.files.length} catalogue indexes and ${details} diagram details against schema ${manifest.schemaVersion}.`);
+  console.log(`Computation statuses: ${JSON.stringify(Object.fromEntries([...statusCounts].sort()))}`);
+  console.log(`Complete solution dossiers: ${solutionCount}; reflection evidence: ${JSON.stringify(Object.fromEntries([...certificateCounts].sort()))}.`);
+}

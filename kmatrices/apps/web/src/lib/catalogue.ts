@@ -1,4 +1,4 @@
-import type { Catalogue, CatalogueManifest } from "../domain";
+import type { Catalogue, CatalogueManifest, DiagramDetail } from "../domain";
 
 const catalogueRoot = `${import.meta.env.BASE_URL}catalogue/`;
 
@@ -13,9 +13,11 @@ async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
 export interface CatalogueProvider {
   manifest(signal?: AbortSignal): Promise<CatalogueManifest>;
   catalogue(path: string, signal?: AbortSignal): Promise<Catalogue>;
+  diagram(path: string, signal?: AbortSignal): Promise<DiagramDetail>;
 }
 
 export const staticCatalogueProvider: CatalogueProvider = {
   manifest: (signal) => getJson<CatalogueManifest>(`${catalogueRoot}manifest.json`, signal),
   catalogue: (path, signal) => getJson<Catalogue>(`${catalogueRoot}${path}`, signal),
+  diagram: (path, signal) => getJson<DiagramDetail>(`${catalogueRoot}${path}`, signal),
 };

@@ -94,8 +94,8 @@ $twistedTypes = {
   "A2n-1(2)", "A2n-1(2)T", "A2n(2)", "A2n(2)T", "Dn+1(2)"
 };
 $canonicalTypes = Join[$untwistedTypes, $twistedTypes];
-$qreKMatricesVersion = "0.17.0";
-$webCatalogueSchemaVersion = "1.5.0";
+$qreKMatricesVersion = "0.19.0";
+$webCatalogueSchemaVersion = "1.6.0";
 
 QREKMatricesVersion[] := $qreKMatricesVersion;
 
@@ -229,6 +229,52 @@ $a4Formula = familyFormula["halfPeriodExchange",
   {familySource["qRE/files/results.tex", "T:all-K"],
    familySource["qRE/files/resultsA124.tex", "sec:K:tw", "derivation"]}];
 
+$b1Formula = familyFormula["masterFormula",
+  "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
+  $familyMasterFormulaAST,
+  {familyDefinition["b1-denominators", "Denominators",
+     "k_1(u)=\\lambda\\mu-u,\\qquad k_2(u)=\\lambda^{-1}+(\\mu u)^{-1}",
+     familyASTFunction["Definitions", familyASTSymbol["k1"],
+       familyASTSymbol["k2"]]],
+   familyDefinition["b1-m1", "Diagonal term",
+     "M_1(u)=\\sum_{\\bar\\ell\\leq i\\leq n}(\\lambda\\mu uE_{-i,-i}+E_{ii})",
+     familyASTFunction["IndexedMatrixSum", familyASTSymbol["M1"],
+       familyASTSymbol["bar(l)<=i<=n"]]],
+   familyDefinition["b1-m2", "Exchange term",
+     "M_2(u)=\\sum_{\\bar r\\leq i<\\bar\\ell}(\\lambda E_{-i,-i}+\\lambda^{-1}E_{ii}+E_{-i,i}+E_{i,-i})",
+     familyASTFunction["IndexedMatrixSum", familyASTSymbol["M2"],
+       familyASTSymbol["bar(r)<=i<bar(l)"]]],
+   familyDefinition["b1-parameters", "Parameters",
+     "N=2n+1,\\qquad\\lambda=q^{N/2-r},\\qquad\\mu=q^{-\\ell}",
+     familyASTFunction["ParameterSpecialization", familyASTSymbol["lambda"],
+       familyASTSymbol["mu"]]]},
+  "0\\leq\\ell\\leq r\\leq n",
+  {familySource["qRE/files/results.tex", "T:all-K"],
+   familySource["qRE/files/resultsBD1C2.tex", "res:BD1", "specialization"]}];
+
+$b2Formula = familyFormula["masterFormula",
+  "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
+  $familyMasterFormulaAST,
+  {familyDefinition["b2-denominators", "Denominators",
+     "k_1(u)=\\lambda\\mu-u,\\qquad k_2(u)=\\lambda^{-1}-(\\mu u)^{-1}",
+     familyASTFunction["Definitions", familyASTSymbol["k1"],
+       familyASTSymbol["k2"]]],
+   familyDefinition["b2-m1", "Diagonal term",
+     "M_1(u)=\\sum_{\\bar\\ell\\leq i\\leq n}(\\lambda\\mu uE_{-i,-i}+E_{ii})",
+     familyASTFunction["IndexedMatrixSum", familyASTSymbol["M1"],
+       familyASTSymbol["bar(l)<=i<=n"]]],
+   familyDefinition["b2-m2", "Alternating term",
+     "M_2(u)=-\\delta_{\\ell,1}u^{-1}(\\mu-\\mu^{-1})E_{nn}+\\sum_{\\bar r\\leq i<\\bar\\ell}(-\\lambda E_{-i,-i}+\\lambda^{-1}E_{ii}+\\varepsilon_i(E_{-i-\\varepsilon_i,i}-E_{i,-i-\\varepsilon_i}))",
+     familyASTFunction["IndexedMatrixSum", familyASTSymbol["M2"],
+       familyASTSymbol["bar(r)<=i<bar(l)"]]],
+   familyDefinition["b2-parameters", "Parameters",
+     "N=2n+1,\\quad\\lambda=q^{N/2-r-1},\\quad\\mu=q^{-\\ell+1};\\qquad\\mu\\in\\mathbb K^\\times\\ (\\ell\\in\\{0,1\\})",
+     familyASTFunction["ParameterSpecialization", familyASTSymbol["lambda"],
+       familyASTSymbol["mu"], familyASTSymbol["epsilon_i"]]]},
+  "0\\leq\\ell\\leq r\\leq n",
+  {familySource["qRE/files/results.tex", "T:all-K"],
+   familySource["qRE/files/resultsC1BD2.tex", "D2:K", "specialization"]}];
+
 $c1Formula = familyFormula["masterFormula",
   "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
   $familyMasterFormulaAST,
@@ -252,6 +298,169 @@ $c1Formula = familyFormula["masterFormula",
   {familySource["qRE/files/results.tex", "T:all-K"],
    familySource["qRE/files/resultsC1BD2.tex", "Res:C1", "specialization"]}];
 
+$c2Formula = familyFormula["masterFormula",
+  "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
+  $familyMasterFormulaAST,
+  {familyDefinition["c2-denominators", "Denominators",
+     "k_1(u)=\\lambda\\mu-u,\\qquad k_2(u)=\\lambda^{-1}+(\\mu u)^{-1}",
+     familyASTFunction["Definitions", familyASTSymbol["k1"],
+       familyASTSymbol["k2"]]],
+   familyDefinition["c2-m1", "Diagonal term",
+     "M_1(u)=\\sum_{\\bar\\ell\\leq i\\leq n}(\\lambda\\mu uE_{-i,-i}+E_{ii})",
+     familyASTFunction["IndexedMatrixSum", familyASTSymbol["M1"],
+       familyASTSymbol["bar(l)<=i<=n"]]],
+   familyDefinition["c2-m2", "Alternating term",
+     "M_2(u)=\\sum_{\\bar r\\leq i<\\bar\\ell}(\\lambda E_{-i,-i}+\\lambda^{-1}E_{ii}+\\varepsilon_i(E_{i,-i-\\varepsilon_i}+E_{-i-\\varepsilon_i,i}))",
+     familyASTFunction["IndexedMatrixSum", familyASTSymbol["M2"],
+       familyASTSymbol["bar(r)<=i<bar(l)"]]],
+   familyDefinition["c2-parameters", "Parameters",
+     "\\lambda=q^{n-r},\\quad\\mu=q^{-\\ell},\\quad\\varepsilon_i=(-1)^{i+n+1-\\ell}",
+     familyASTFunction["ParameterSpecialization", familyASTSymbol["lambda"],
+       familyASTSymbol["mu"], familyASTSymbol["epsilon_i"]]]},
+  "0\\leq\\ell\\leq r\\leq n,\\qquad r-\\ell\\text{ even}",
+  {familySource["qRE/files/results.tex", "T:all-K"],
+   familySource["qRE/files/resultsBD1C2.tex", "Res:C2", "specialization"]}];
+
+$c4Formula = familyFormula["masterFormula",
+  "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1+\\frac{M_2(u)}{k_2(u)}\\right)",
+  $familyMasterFormulaAST,
+  {familyDefinition["c4-denominators", "Denominators",
+     "k_1(u)=\\lambda\\mu-u,\\qquad k_2(u)=\\lambda^{-1}+(\\mu u)^{-1}",
+     familyASTFunction["Definitions", familyASTSymbol["k1"],
+       familyASTSymbol["k2"]]],
+   familyDefinition["c4-m1", "Positive diagonal term",
+     "M_1=\\sum_{1\\leq i\\leq n}E_{ii}",
+     familyASTFunction["IndexedMatrixSum", familyASTSymbol["M1"],
+       familyASTSymbol["1<=i<=n"]]],
+   familyDefinition["c4-m2", "Paired term",
+     "M_2(u)=\\sum_{\\bar\\ell\\leq i\\leq n}(\\lambda E_{-i,-i}+\\lambda^{-1}E_{-\\bar\\imath,-\\bar\\imath}+E_{-i,-\\bar\\imath}+E_{-\\bar\\imath,-i}-u^{-1}(\\mu E_{ii}+\\mu^{-1}E_{\\bar\\imath,\\bar\\imath}+E_{i,\\bar\\imath}+E_{\\bar\\imath,i}))",
+     familyASTFunction["IndexedMatrixSum", familyASTSymbol["M2"],
+       familyASTSymbol["bar(l)<=i<=n"]]],
+   familyDefinition["c4-parameters", "Parameters",
+     "\\lambda\\in\\mathbb K^\\times,\\qquad\\mu=q^{-n+2\\ell}\\lambda",
+     familyASTFunction["ParameterSpecialization", familyASTSymbol["lambda"],
+       familyASTSymbol["mu"]]]},
+  "0\\leq\\ell\\leq\\lfloor n/2\\rfloor",
+  {familySource["qRE/files/results.tex", "T:all-K"],
+   familySource["qRE/files/resultsCD4.tex", "Res:CD4", "specialization"]}];
+
+$d1Formula = familyFormula["masterFormula",
+  "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
+  $familyMasterFormulaAST,
+  {familyDefinition["d1-denominators", "Denominators",
+     "k_1(u)=\\lambda\\mu-u,\\qquad k_2(u)=\\lambda^{-1}+(\\mu u)^{-1}",
+     familyASTFunction["Definitions", familyASTSymbol["k1"],
+       familyASTSymbol["k2"]]],
+   familyDefinition["d1-terms", "Family terms",
+     "M_1(u)\\text{ is the BCD.12 diagonal term and }M_2(u)=\\sum_{\\bar r\\leq i<\\bar\\ell}(\\lambda E_{-i,-i}+\\lambda^{-1}E_{ii}+E_{-i,i}+E_{i,-i})",
+     familyASTFunction["IndexedMatrixSums", familyASTSymbol["M1"],
+       familyASTSymbol["M2"]]],
+   familyDefinition["d1-parameters", "Parameters",
+     "N=2n,\\qquad\\lambda=q^{n-r},\\qquad\\mu=q^{-\\ell}",
+     familyASTFunction["ParameterSpecialization", familyASTSymbol["lambda"],
+       familyASTSymbol["mu"]]]},
+  "0\\leq\\ell\\leq r\\leq n",
+  {familySource["qRE/files/results.tex", "T:all-K"],
+   familySource["qRE/files/resultsBD1C2.tex", "res:BD1", "specialization"]}];
+
+$d2Formula = familyFormula["masterFormula",
+  "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
+  $familyMasterFormulaAST,
+  {familyDefinition["d2-denominators", "Denominators",
+     "k_1(u)=\\lambda\\mu-u,\\qquad k_2(u)=\\lambda^{-1}-(\\mu u)^{-1}",
+     familyASTFunction["Definitions", familyASTSymbol["k1"],
+       familyASTSymbol["k2"]]],
+   familyDefinition["d2-terms", "Alternating terms",
+     "M_2(u)=-\\delta_{\\ell,1}u^{-1}(\\mu-\\mu^{-1})E_{nn}-\\delta_{r,n-1}(\\lambda-\\lambda^{-1})E_{11}+\\sum_{\\bar r\\leq i<\\bar\\ell}(-\\lambda E_{-i,-i}+\\lambda^{-1}E_{ii}+\\varepsilon_i(E_{-i-\\varepsilon_i,i}-E_{i,-i-\\varepsilon_i}))",
+     familyASTFunction["IndexedMatrixSum", familyASTSymbol["M2"],
+       familyASTSymbol["bar(r)<=i<bar(l)"]]],
+   familyDefinition["d2-parameters", "Parameters",
+     "N=2n,\\quad\\lambda=q^{n-r-1},\\quad\\mu=q^{-\\ell+1};\\quad\\lambda\\text{ is free for }r\\in\\{n-1,n\\},\\qquad\\mu\\text{ is free for }\\ell\\in\\{0,1\\}",
+     familyASTFunction["ParameterSpecialization", familyASTSymbol["lambda"],
+       familyASTSymbol["mu"], familyASTSymbol["epsilon_i"]]]},
+  "0\\leq\\ell\\leq r\\leq n",
+  {familySource["qRE/files/results.tex", "T:all-K"],
+   familySource["qRE/files/resultsC1BD2.tex", "D2:K", "specialization"]}];
+
+$d4Formula = familyFormula["masterFormula",
+  "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1+\\frac{M_2(u)}{k_2(u)}\\right)",
+  $familyMasterFormulaAST,
+  {familyDefinition["d4-terms", "Paired terms",
+     "M_1=\\sum_{1\\leq i\\leq n}E_{ii},\\qquad M_2(u)\\text{ is the paired CD.4 matrix-unit sum}",
+     familyASTFunction["IndexedMatrixSums", familyASTSymbol["M1"],
+       familyASTSymbol["M2"]]],
+   familyDefinition["d4-parameters", "Parameters",
+     "k_1(u)=\\lambda\\mu-u,\\quad k_2(u)=\\lambda^{-1}+(\\mu u)^{-1},\\quad\\mu=q^{-n+2\\ell}\\lambda",
+     familyASTFunction["ParameterSpecialization", familyASTSymbol["lambda"],
+       familyASTSymbol["mu"]]]},
+  "0\\leq\\ell\\leq\\lfloor n/2\\rfloor",
+  {familySource["qRE/files/results.tex", "T:all-K"],
+   familySource["qRE/files/resultsCD4.tex", "Res:CD4", "specialization"]}];
+
+$d4SpecialFormula = familyFormula["d4TwoExceptionalOrbits",
+  "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1-\\frac{M_2^+(u)}{k_2^+(u)}+\\frac{M_2^-}{k_2^-(u)}\\right)",
+  familyASTEqual[familyASTFunction["K", familyASTSymbol["u"]],
+    familyASTFunction["D4SpecialFormula", familyASTSymbol["u"],
+      familyASTSymbol["lambda"], familyASTSymbol["mu"],
+      familyASTSymbol["alpha"]]],
+  {familyDefinition["d4-special-parameters", "Exceptional parameter",
+     "\\ell=1,\\qquad\\mu=q^{-n+2}\\alpha\\lambda,\\qquad\\alpha,\\lambda\\in\\mathbb K^\\times",
+     familyASTFunction["ParameterDomain", familyASTSymbol["alpha"],
+       familyASTSymbol["lambda"]]],
+   familyDefinition["d4-special-terms", "Exceptional paired terms",
+     "M_2^+(u),M_2^-\\text{ and }k_2^-(u)\\text{ are the explicit terms in }(\\mathrm{D4:K:spec})",
+     familyASTFunction["IndexedMatrixSums", familyASTSymbol["M2plus"],
+       familyASTSymbol["M2minus"]]]},
+  "n\\text{ odd},\\qquad\\ell=1",
+  {familySource["qRE/files/resultsCD4.tex", "D4:K:spec", "specialization"]}];
+
+$d3NonexistenceFormula = familyFormula["noVectorKMatrix",
+  "K(u)=0\\quad\\text{is the only vector boundary intertwiner}",
+  familyASTEqual[familyASTFunction["K", familyASTSymbol["u"]],
+    familyASTInteger[0]], {}, "n=4,\\quad\\tau\\in[(14)]",
+  {familySource["qRE/files/results.tex", "T:all-K", "nonexistence"],
+   familySource["qRE/files/lowrank.tex", "sec:K:low-rank", "derivation"]}];
+
+$bd1NonQuasistandardFormula = familyFormula["nonQuasistandardMasterFormula",
+  "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(\\widetilde M_1(u)+\\frac{k_2(u)\\widetilde M_2(u)+(\\nu+\\nu^{-1})\\widetilde M_3(u)}{k_2(-\\nu^{-2}u)k_2(-\\nu^2u)}\\right)",
+  familyASTEqual[familyASTFunction["K", familyASTSymbol["u"]],
+    familyASTFunction["BD1NonQuasistandardFormula", familyASTSymbol["u"],
+      familyASTSymbol["lambda"], familyASTSymbol["mu"],
+      familyASTSymbol["nu"], familyASTSymbol["l"]]],
+  {familyDefinition["bd1-nqs-domain", "Non-quasistandard locus",
+     "1\\leq\\ell\\leq n-2,\\qquad r=\\ell+2,\\qquad\\nu\\in\\mathbb K^\\times",
+     familyASTFunction["ParameterDomain", familyASTSymbol["l"],
+       familyASTSymbol["r"], familyASTSymbol["nu"]]],
+   familyDefinition["bd1-nqs-specialization", "Quasistandard specialization",
+     "\\nu^2=-1\\quad\\Longrightarrow\\quad K_{\\mathrm{nqs}}(u)=K_{\\mathrm{qs}}(u)",
+     familyASTFunction["Specialization", familyASTSymbol["nu^2=-1"]]]},
+  "1\\leq\\ell\\leq n-2,\\quad r=\\ell+2,\\quad\\nu\\neq0",
+  {familySource["qRE/files/resultsnqs.tex", "sec:nqs"],
+   familySource["qRE/files/resultsnqs.tex", "K:C1-nstd", "formula"]}];
+
+$bd1Endpoint02Formula = familyFormula["nonQuasistandardEndpoint02",
+  "K(u)=\\operatorname{Id}+\\frac{(u-u^{-1})\\lambda^2u^2}{\\prod_{a\\in\\{\\nu_0/\\nu_1,\\nu_1/\\nu_0,\\nu_0\\nu_1,(\\nu_0\\nu_1)^{-1}\\}}k_1(au)}\\left(k_1(u)k_2(u)M_2+\\alpha(u/\\lambda)\\widetilde M_3^-+\\alpha(\\lambda/u)\\widetilde M_3^+\\right)",
+  familyASTEqual[familyASTFunction["K", familyASTSymbol["u"]],
+    familyASTFunction["BD1Endpoint02Formula", familyASTSymbol["u"],
+      familyASTSymbol["nu0"], familyASTSymbol["nu1"]]],
+  {familyDefinition["bd1-endpoint-domain", "Endpoint parameters",
+     "(\\ell,r)=(0,2),\\qquad\\nu_0,\\nu_1\\in\\mathbb K^\\times",
+     familyASTFunction["ParameterDomain", familyASTSymbol["nu0"],
+       familyASTSymbol["nu1"]]]},
+  "(\\ell,r)=(0,2)",
+  {familySource["qRE/files/resultsnqs.tex", "sec:nqs", "endpointFormula"]}];
+
+$b1RightEndpointFormula = familyFormula["nonQuasistandardRightEndpoint",
+  "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(\\widetilde M_1(u)+\\frac{k_1(u^{-1})^2\\widetilde M_2(u)+q^{1/4}(\\nu-\\nu^{-1})[2]_{q^{1/2}}^{1/2}\\widetilde M_3(u)}{k_1(\\nu^2u^{-1})k_1(\\nu^{-2}u^{-1})k_2(u)}\\right)",
+  familyASTEqual[familyASTFunction["K", familyASTSymbol["u"]],
+    familyASTFunction["B1RightEndpointFormula", familyASTSymbol["u"],
+      familyASTSymbol["nu"]]],
+  {familyDefinition["b1-right-endpoint-domain", "Short-root endpoint",
+     "(\\ell,r)=(n-1,n),\\qquad\\nu\\in\\mathbb K^\\times",
+     familyASTFunction["ParameterDomain", familyASTSymbol["nu"]]]},
+  "(\\ell,r)=(n-1,n)",
+  {familySource["qRE/files/resultsnqs.tex", "sec:nqs", "shortRootEndpoint"]}];
+
 $c1NonQuasistandardFormula = familyFormula["nonQuasistandardMasterFormula",
   "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(\\widetilde M_1(u)+\\frac{k_2(u)\\widetilde M_2(u)+(\\nu+\\nu^{-1})\\widetilde M_3(u)}{k_2(-\\nu^{-2}u)k_2(-\\nu^2u)}\\right)",
   familyASTEqual[familyASTFunction["K", familyASTSymbol["u"]],
@@ -272,6 +481,87 @@ $c1NonQuasistandardFormula = familyFormula["nonQuasistandardMasterFormula",
   "1\\leq\\ell\\leq n-3,\\quad r=\\ell+2,\\quad \\nu\\neq0",
   {familySource["qRE/files/resultsnqs.tex", "Res:C1-nstd"],
    familySource["qRE/files/resultsnqs.tex", "K:C1-nstd", "formula"]}];
+
+twistedMasterFormula[family_String, spectralPower_Integer, denominatorSign_String,
+    termDescription_String, parameterLatex_String, source_String,
+    anchor_String] := Module[{xLatex, prefactorLatex},
+  xLatex = If[spectralPower == 1, "u", "u^2"];
+  prefactorLatex = If[spectralPower == 1, "u-u^{-1}",
+    "u^2-u^{-2}"];
+  familyFormula[If[spectralPower == 1, "masterFormula",
+      "quadraticSpectralMasterFormula"],
+    "K(u)=\\operatorname{Id}+\\frac{" <> prefactorLatex <>
+      "}{k_1(" <> xLatex <> ")}\\left(M_1(" <> xLatex <>
+      ")+\\frac{M_2(" <> xLatex <> ")}{k_2(" <> xLatex <> ")}\\right)" <>
+      If[spectralPower == 2,
+        "+\\left(u^2\\frac{k_1(u^{-2})}{k_1(u^2)}-1\\right)E_{0'0'}", ""],
+    familyASTEqual[familyASTFunction["K", familyASTSymbol["u"]],
+      familyASTFunction["TwistedFamilyFormula", familyASTSymbol[family],
+        familyASTSymbol["u"], familyASTSymbol["lambda"],
+        familyASTSymbol["mu"]]],
+    {familyDefinition[ToLowerCase[family] <> "-denominators", "Denominators",
+       "k_1(x)=\\lambda\\mu-x,\\qquad k_2(x)=\\lambda^{-1}" <>
+         denominatorSign <> "(\\mu x)^{-1}",
+       familyASTFunction["Definitions", familyASTSymbol["k1"],
+         familyASTSymbol["k2"]]],
+     familyDefinition[ToLowerCase[family] <> "-terms", "Matrix-unit terms",
+       termDescription,
+       familyASTFunction["IndexedMatrixSums", familyASTSymbol["M1"],
+         familyASTSymbol["M2"]]],
+     familyDefinition[ToLowerCase[family] <> "-parameters", "Parameters",
+       parameterLatex,
+       familyASTFunction["ParameterSpecialization", familyASTSymbol["lambda"],
+         familyASTSymbol["mu"]]]},
+    "0\\leq\\ell\\leq r\\leq n",
+    {familySource[source, anchor, "formulaAndProperties"]}]
+];
+
+$twistedFamilyFormulae = <|
+  "B*.1" -> twistedMasterFormula["B*.1", 1, "+",
+    "M_1(u)=\\sum_{\\bar\\ell\\leq i\\leq n}(\\lambda\\mu uE_{-i,-i}+E_{ii}),\\quad M_2(u)=\\sum_{\\bar r\\leq i<\\bar\\ell}(\\lambda E_{-i,-i}+\\lambda^{-1}E_{ii}+E_{-i,i}+E_{i,-i})",
+    "\\lambda=\\mathrm{i}q^{n-r+1},\\quad\\mu=q^{-\\ell};\\qquad\\lambda\\in\\mathbb K^\\times\\ (r=n)",
+    "qRE_II/plain_temp.tex", "res:B*1"],
+  "B*.2" -> twistedMasterFormula["B*.2", 1, "-",
+    "M_1(u)\\text{ is diagonal and }M_2(u)\\text{ is the alternating matrix-unit sum with the }\\delta_{\\ell,1}E_{nn}\\text{ endpoint term}",
+    "\\lambda=\\mathrm{i}q^{n-r},\\quad\\mu=q^{-\\ell+1};\\qquad\\mu\\in\\mathbb K^\\times\\ (\\ell\\in\\{0,1\\})",
+    "qRE_II/alt_temp.tex", "res:B*2"],
+  "tB*.1" -> twistedMasterFormula["tB*.1", 1, "-",
+    "M_1(u)\\text{ is diagonal and }M_2(u)=\\sum_{\\bar r\\leq i<\\bar\\ell}(-\\lambda E_{-i,-i}+\\lambda^{-1}E_{ii}+E_{-i,i}-E_{i,-i})",
+    "\\lambda=\\mathrm{i}q^{n-r},\\quad\\mu=q^{-\\ell-1};\\qquad\\lambda\\in\\mathbb K^\\times\\ (r=n)",
+    "qRE_II/plain_temp.tex", "res:tB*1"],
+  "tB*.2" -> twistedMasterFormula["tB*.2", 1, "+",
+    "M_1(u)\\text{ is diagonal and }M_2(u)\\text{ is the symmetric alternating sum with }\\delta_{r,n-1}(\\lambda+\\lambda^{-1})E_{11}",
+    "\\lambda=\\mathrm{i}q^{n-r-1},\\quad\\mu=q^{-\\ell};\\qquad\\lambda\\in\\mathbb K^\\times\\ (r\\in\\{n-1,n\\})",
+    "qRE_II/alt_temp.tex", "res:tB*2"],
+  "C**.1" -> twistedMasterFormula["C**.1", 1, "-",
+    "M_1(u)\\text{ is diagonal and }M_2(u)=\\sum_{\\bar r\\leq i<\\bar\\ell}(-\\lambda E_{-i,-i}+\\lambda^{-1}E_{ii}+E_{-i,i}-E_{i,-i})",
+    "\\lambda=\\mathrm{i}q^{n+1/2-r},\\quad\\mu=q^{-\\ell-1};\\qquad\\mu\\in\\mathbb K^\\times\\ (\\ell=0)",
+    "qRE_II/plain_temp.tex", "res:C**1"],
+  "C**.2" -> twistedMasterFormula["C**.2", 1, "+",
+    "M_1(u)\\text{ is diagonal and }M_2(u)\\text{ is the symmetric alternating matrix-unit sum}",
+    "\\lambda=\\mathrm{i}q^{n-r-1/2},\\quad\\mu=q^{-\\ell}",
+    "qRE_II/alt_temp.tex", "res:C**2"],
+  "tC**.1" -> twistedMasterFormula["tC**.1", 2, "+",
+    "M_1(u^2)\\text{ and }M_2(u^2)\\text{ are the plain paired sums; }E_{0'0'}\\text{ is the distinguished quadratic-spectral direction}",
+    "\\lambda=\\mathrm{i}q^{n+1-r},\\quad\\mu=q^{-\\ell-1/2};\\qquad\\lambda\\in\\mathbb K^\\times\\ (r=n)",
+    "qRE_II/plain_temp.tex", "res:tC**1"],
+  "tC**.2" -> twistedMasterFormula["tC**.2", 2, "-",
+    "M_1(u^2)\\text{ and }M_2(u^2)\\text{ are the alternating paired sums; }E_{0'0'}\\text{ is the distinguished quadratic-spectral direction}",
+    "\\lambda=\\mathrm{i}q^{n-r},\\quad\\mu=q^{-\\ell+1/2}",
+    "qRE_II/alt_temp.tex", "res:tC**2"],
+  "C*.1" -> twistedMasterFormula["C*.1", 2, "+",
+    "M_1(u^2)\\text{ and }M_2(u^2)\\text{ are the plain paired sums on }\\{-n,\\ldots,n,0'\\}",
+    "\\lambda=q^{n-r+1/2},\\quad\\mu=q^{-\\ell-1/2}",
+    "qRE_II/plain_temp.tex", "res:C*1"],
+  "C*.2" -> twistedMasterFormula["C*.2", 2, "-",
+    "M_1(u^2)\\text{ and }M_2(u^2)\\text{ are the alternating paired sums on }\\{-n,\\ldots,n,0'\\}",
+    "\\lambda=q^{n-r-1/2},\\quad\\mu=q^{-\\ell+1/2}",
+    "qRE_II/alt_temp.tex", "res:C*2"],
+  "C*.4" -> twistedMasterFormula["C*.4", 2, "+",
+    "M_1(u^2)=\\sum_{1\\leq i\\leq n}E_{ii},\\quad M_2(u^2)\\text{ is the explicit paired sum including the }0,0'\\text{ block}",
+    "\\lambda\\in\\mathbb K^\\times,\\qquad\\mu=q^{-n+2\\ell}\\lambda",
+    "qRE_II/par_temp.tex", "res:C*.4"]
+|>;
 
 $familyRegistry = <|
   "A.1" -> <|"AffineTypes" -> {"A(1)"}, "Description" ->
@@ -311,6 +601,62 @@ $familyRegistry = <|
       familyConstraint["a4-rank", "rankParity", "N>2\\text{ even}"]}, "Branches" -> {}|>,
     "GeneralFormula" -> $a4Formula, "Properties" -> {},
     "SourceAnchors" -> $a4Formula["SourceAnchors"]|>,
+  "B.1" -> <|"AffineTypes" -> {"B(1)"}, "Description" ->
+    "Untwisted odd-orthogonal exchange family of the BD.1 master class.",
+    "ContentStatus" -> "published", "Regimes" -> {"MainCatalogue", "NonQuasistandard"},
+    "ParameterOrder" -> {"l", "r"},
+    "ParameterDomain" -> <|"Parameters" -> {
+      familyParameter["l", "\\ell"], familyParameter["r", "r"]},
+      "Constraints" -> {familyConstraint["b1-order", "inequality",
+        "0\\leq\\ell\\leq r\\leq n"]},
+      "Branches" -> {
+        <|"BranchID" -> "B.1a", "Label" -> "Identity representative",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {
+            "\\ell\\text{ even}"}|>,
+        <|"BranchID" -> "B.1b", "Label" -> "Left-flipped representative",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {
+            "\\ell\\text{ odd}"}|>,
+        <|"BranchID" -> "nonquasistandard", "Label" -> "Non-quasistandard",
+          "Regime" -> "NonQuasistandard", "ConstraintsLaTeX" -> {
+            "r=\\ell+2"}|>}|>,
+    "GeneralFormula" -> $b1Formula,
+    "RegimeFormulas" -> {
+      <|"Regime" -> "NonQuasistandard", "Formula" -> $bd1NonQuasistandardFormula|>,
+      <|"Regime" -> "NonQuasistandardEndpoint02", "Formula" -> $bd1Endpoint02Formula|>,
+      <|"Regime" -> "NonQuasistandardRightEndpoint",
+        "Formula" -> $b1RightEndpointFormula|>},
+    "Properties" -> {
+      <|"Kind" -> "eigendecomposition", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)=V D(u)V^{-1}"|>,
+      <|"Kind" -> "unitarity", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
+    "SourceAnchors" -> Join[$b1Formula["SourceAnchors"],
+      $bd1NonQuasistandardFormula["SourceAnchors"],
+      $bd1Endpoint02Formula["SourceAnchors"],
+      $b1RightEndpointFormula["SourceAnchors"]]|>,
+  "B.2" -> <|"AffineTypes" -> {"B(1)"}, "Description" ->
+    "Untwisted odd-orthogonal alternating family of the BD.2 master class.",
+    "ContentStatus" -> "published", "Regimes" -> {"MainCatalogue"},
+    "ParameterOrder" -> {"l", "r"},
+    "ParameterDomain" -> <|"Parameters" -> {
+      familyParameter["l", "\\ell"], familyParameter["r", "r"],
+      familyParameter["Mu", "\\mu"]},
+      "Constraints" -> {familyConstraint["b2-order", "inequality",
+        "0\\leq\\ell\\leq r\\leq n"],
+        familyConstraint["b2-mu", "conditional",
+          "\\mu\\in\\mathbb K^\\times\\text{ is free for }\\ell\\in\\{0,1\\}"]},
+      "Branches" -> {
+        <|"BranchID" -> "B.2a", "Label" -> "Identity representative",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {}|>,
+        <|"BranchID" -> "B.2b", "Label" -> "Left-flipped representative",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {}|>}|>,
+    "GeneralFormula" -> $b2Formula,
+    "Properties" -> {
+      <|"Kind" -> "eigendecomposition", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)=V D(u)V^{-1}"|>,
+      <|"Kind" -> "unitarity", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
+    "SourceAnchors" -> $b2Formula["SourceAnchors"]|>,
   "C.1" -> <|"AffineTypes" -> {"C(1)"}, "Description" ->
     "Identity-involution family parametrised by the distinguished nodes ell and r.",
     "ContentStatus" -> "published", "Regimes" -> {"MainCatalogue", "NonQuasistandard"},
@@ -339,6 +685,139 @@ $familyRegistry = <|
         "LaTeX" -> "K(u)=V D(u)V^{-1}"|>},
     "SourceAnchors" -> Join[$c1Formula["SourceAnchors"],
       $c1NonQuasistandardFormula["SourceAnchors"]]|>
+  ,
+  "C.2" -> <|"AffineTypes" -> {"C(1)"}, "Description" ->
+    "Alternating untwisted C family with paired white-node orbits.",
+    "ContentStatus" -> "published", "Regimes" -> {"MainCatalogue"},
+    "ParameterOrder" -> {"l", "r"},
+    "ParameterDomain" -> <|"Parameters" -> {
+      familyParameter["l", "\\ell"], familyParameter["r", "r"]},
+      "Constraints" -> {
+        familyConstraint["c2-order", "inequality", "0\\leq\\ell\\leq r\\leq n"],
+        familyConstraint["c2-parity", "parity", "r-\\ell\\text{ even}"]},
+      "Branches" -> {<|"BranchID" -> "representative",
+        "Label" -> "Representative", "Regime" -> "MainCatalogue",
+        "ConstraintsLaTeX" -> {"0\\leq\\ell\\leq r\\leq n",
+          "r-\\ell\\text{ even}"}|>}|>,
+    "GeneralFormula" -> $c2Formula,
+    "Properties" -> {
+      <|"Kind" -> "eigendecomposition", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)=V D(u)V^{-1}"|>,
+      <|"Kind" -> "unitarity", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
+    "SourceAnchors" -> $c2Formula["SourceAnchors"]|>,
+  "C.4" -> <|"AffineTypes" -> {"C(1)"}, "Description" ->
+    "Paired involutive untwisted C family with a free boundary parameter.",
+    "ContentStatus" -> "published", "Regimes" -> {"MainCatalogue"},
+    "ParameterOrder" -> {"l"},
+    "ParameterDomain" -> <|"Parameters" -> {
+      familyParameter["l", "\\ell"],
+      familyParameter["Lambda", "\\lambda"]},
+      "Constraints" -> {familyConstraint["c4-range", "inequality",
+        "0\\leq\\ell\\leq\\lfloor n/2\\rfloor"],
+        familyConstraint["c4-lambda", "nonzero", "\\lambda\\in\\mathbb K^\\times"]},
+      "Branches" -> {<|"BranchID" -> "representative",
+        "Label" -> "Representative", "Regime" -> "MainCatalogue",
+        "ConstraintsLaTeX" -> {"0\\leq\\ell\\leq\\lfloor n/2\\rfloor"}|>}|>,
+    "GeneralFormula" -> $c4Formula,
+    "Properties" -> {
+      <|"Kind" -> "eigendecomposition", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)=V D(u)V^{-1}"|>,
+      <|"Kind" -> "unitarity", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
+    "SourceAnchors" -> $c4Formula["SourceAnchors"]|>,
+  "D.1" -> <|"AffineTypes" -> {"D(1)"}, "Description" ->
+    "Untwisted even-orthogonal exchange family of the BD.1 master class.",
+    "ContentStatus" -> "published", "Regimes" -> {"MainCatalogue", "NonQuasistandard"},
+    "ParameterOrder" -> {"l", "r"},
+    "ParameterDomain" -> <|"Parameters" -> {
+      familyParameter["l", "\\ell"], familyParameter["r", "r"]},
+      "Constraints" -> {familyConstraint["d1-order", "inequality",
+        "0\\leq\\ell\\leq r\\leq n"]},
+      "Branches" -> {
+        <|"BranchID" -> "D.1a", "Label" -> "Identity representative",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {}|>,
+        <|"BranchID" -> "D.1b", "Label" -> "One-fork-flipped representative",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {}|>,
+        <|"BranchID" -> "D.1c", "Label" -> "Two-fork-flipped representative",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {}|>,
+        <|"BranchID" -> "nonquasistandard", "Label" -> "Non-quasistandard",
+          "Regime" -> "NonQuasistandard", "ConstraintsLaTeX" -> {
+            "r=\\ell+2"}|>}|>,
+    "GeneralFormula" -> $d1Formula,
+    "RegimeFormulas" -> {
+      <|"Regime" -> "NonQuasistandard", "Formula" -> $bd1NonQuasistandardFormula|>,
+      <|"Regime" -> "NonQuasistandardEndpoint02", "Formula" -> $bd1Endpoint02Formula|>},
+    "Properties" -> {
+      <|"Kind" -> "eigendecomposition", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)=V D(u)V^{-1}"|>,
+      <|"Kind" -> "unitarity", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
+    "SourceAnchors" -> Join[$d1Formula["SourceAnchors"],
+      $bd1NonQuasistandardFormula["SourceAnchors"],
+      $bd1Endpoint02Formula["SourceAnchors"]]|>,
+  "D.2" -> <|"AffineTypes" -> {"D(1)"}, "Description" ->
+    "Untwisted even-orthogonal alternating family with endpoint corrections.",
+    "ContentStatus" -> "published", "Regimes" -> {"MainCatalogue"},
+    "ParameterOrder" -> {"l", "r"},
+    "ParameterDomain" -> <|"Parameters" -> {
+      familyParameter["l", "\\ell"], familyParameter["r", "r"],
+      familyParameter["Lambda", "\\lambda"], familyParameter["Mu", "\\mu"]},
+      "Constraints" -> {familyConstraint["d2-order", "inequality",
+        "0\\leq\\ell\\leq r\\leq n"],
+        familyConstraint["d2-free-parameters", "conditional",
+          "\\mu\\text{ is free for }\\ell\\in\\{0,1\\};\\quad\\lambda\\text{ is free for }r\\in\\{n-1,n\\}"]},
+      "Branches" -> {
+        <|"BranchID" -> "D.2a", "Label" -> "Identity representative",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {}|>,
+        <|"BranchID" -> "D.2b", "Label" -> "Mixed-fork representative",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {}|>,
+        <|"BranchID" -> "D.2c", "Label" -> "Two-fork-flipped representative",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {}|>}|>,
+    "GeneralFormula" -> $d2Formula,
+    "Properties" -> {
+      <|"Kind" -> "eigendecomposition", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)=V D(u)V^{-1}"|>,
+      <|"Kind" -> "unitarity", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
+    "SourceAnchors" -> $d2Formula["SourceAnchors"]|>,
+  "D.3" -> <|"AffineTypes" -> {"D(1)"}, "Description" ->
+    "Exceptional D4 triality family: the only vector boundary intertwiner is zero.",
+    "ContentStatus" -> "publishedNonexistence", "Regimes" -> {"NoVectorKMatrix"},
+    "ParameterOrder" -> {},
+    "ParameterDomain" -> <|"Parameters" -> {}, "Constraints" -> {
+      familyConstraint["d3-rank", "rank", "n=4"],
+      familyConstraint["d3-triality", "automorphism", "\\tau\\in[(14)]"]},
+      "Branches" -> {}|>,
+    "GeneralFormula" -> $d3NonexistenceFormula,
+    "Properties" -> {<|"Kind" -> "nonexistence", "Status" -> "sourceIdentity",
+      "LaTeX" -> "\\dim\\operatorname{Hom}_{B}(V(u),V(u^{-1}))=0\\text{ for nonzero intertwiners}"|>},
+    "SourceAnchors" -> $d3NonexistenceFormula["SourceAnchors"]|>,
+  "D.4" -> <|"AffineTypes" -> {"D(1)"}, "Description" ->
+    "Fork-sensitive paired untwisted D family, including the exceptional ell=1 branch.",
+    "ContentStatus" -> "published", "Regimes" -> {"MainCatalogue", "TwoExceptionalOrbits"},
+    "ParameterOrder" -> {"l"},
+    "ParameterDomain" -> <|"Parameters" -> {
+      familyParameter["l", "\\ell"], familyParameter["Lambda", "\\lambda"],
+      familyParameter["Alpha", "\\alpha"]},
+      "Constraints" -> {familyConstraint["d4-range", "inequality",
+        "0\\leq\\ell\\leq\\lfloor n/2\\rfloor"]},
+      "Branches" -> {
+        <|"BranchID" -> "generic", "Label" -> "One exceptional orbit",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {}|>,
+        <|"BranchID" -> "ell-one", "Label" -> "Two exceptional orbits",
+          "Regime" -> "TwoExceptionalOrbits", "ConstraintsLaTeX" -> {
+            "n\\text{ odd}", "\\ell=1"}|>}|>,
+    "GeneralFormula" -> $d4Formula,
+    "RegimeFormulas" -> {<|"Regime" -> "TwoExceptionalOrbits",
+      "Formula" -> $d4SpecialFormula|>},
+    "Properties" -> {
+      <|"Kind" -> "eigendecomposition", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)=V D(u)V^{-1}"|>,
+      <|"Kind" -> "unitarity", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
+    "SourceAnchors" -> Join[$d4Formula["SourceAnchors"],
+      $d4SpecialFormula["SourceAnchors"]]|>
 |>;
 
 $familyStubs = <|
@@ -373,6 +852,28 @@ KeyValueMap[(If[!KeyExistsQ[$familyRegistry, #1],
     "GeneralFormula" -> Missing["PendingMigration"], "RegimeFormulas" -> {},
     "Properties" -> {},
     "SourceAnchors" -> {}|>]]) &, $familyStubs];
+
+KeyValueMap[Function[{family, formula},
+  $familyRegistry[family] = Join[$familyRegistry[family], <|
+    "ContentStatus" -> If[family === "C*.4", "publishedPartialProperties",
+      "published"],
+    "Regimes" -> If[StringEndsQ[family, ".1"],
+      {"MainCatalogue", "NonQuasistandard"}, {"MainCatalogue"}],
+    "ParameterDomain" -> Join[$familyRegistry[family, "ParameterDomain"], <|
+      "Constraints" -> If[family === "C*.4",
+        {familyConstraint["cstar4-domain", "integerRange",
+          "0\\leq\\ell\\leq\\lfloor n/2\\rfloor"]},
+        {familyConstraint[ToLowerCase[family] <> "-domain", "integerRange",
+          "0\\leq\\ell\\leq r\\leq n"]}]|>],
+    "GeneralFormula" -> formula,
+    "Properties" -> {
+      <|"Kind" -> "eigendecomposition", "Status" ->
+          If[family === "C*.4", "conditional", "sourceIdentity"],
+        "LaTeX" -> "K(u)=V D(u)V^{-1}"|>,
+      <|"Kind" -> "unitarity", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
+    "SourceAnchors" -> formula["SourceAnchors"]|>]
+], $twistedFamilyFormulae];
 
 KMatrixFamilies[type_String] := Module[{canonical = canonicalType[type]},
   If[MissingQ[canonical], Return[$Failed]];
@@ -737,7 +1238,7 @@ ClassifySatakeDiagram[d_?SatakeDiagramQ] := Module[
   {type = d["AffineType"], n = d["Rank"], x = d["X"], tau = d["Tau"],
    size, nodes, identity, halfRotation, family, params = <||>, t, whiteHalf,
    candidates = {}, orbitCandidates = {}, status = "ClassifierPending", equation,
-   images, matches,
+   images, matches, a3Matches,
    directMatches, chosen = <||>, representativeFamily = Missing["NotAvailable"],
    regime = "MainCatalogue"},
   size = n + 1;
@@ -752,17 +1253,31 @@ ClassifySatakeDiagram[d_?SatakeDiagramQ] := Module[
       EvenQ[size] && tau === halfRotation && x === {},
         family = "A.4"; status = "Classified",
       !cyclicRotationQ[tau],
-        family = "A.3";
-        t = If[First[tau] == 0, size, First[tau]];
-        whiteHalf = Complement[Range[0, Floor[t/2]], x];
-        If[whiteHalf =!= {},
-          params = <|"l" -> Min[whiteHalf], "r" -> Max[whiteHalf], "t" -> t|>;
-          status = "Classified",
+        images = diagramImageData[d, #] & /@ dihedralAutomorphisms[size];
+        a3Matches = DeleteCases[Map[Function[image,
+          t = If[First[image["Tau"]] == 0, size, First[image["Tau"]]];
+          whiteHalf = Complement[Range[0, Floor[t/2]], image["X"]];
+          If[MemberQ[{size - 1, size}, t] && whiteHalf =!= {},
+            <|"Family" -> "A.3", "Parameters" -> <|
+                "l" -> Min[whiteHalf], "r" -> Max[whiteHalf], "t" -> t|>,
+              "RepresentativePermutation" -> image["Permutation"]|>,
+            Nothing]], images], Nothing];
+        If[a3Matches =!= {},
+          chosen = SelectFirst[a3Matches,
+            #["RepresentativePermutation"] === identity &, First[a3Matches]];
+          params = chosen["Parameters"];
+          candidates = {"A.3"}; orbitCandidates = {"A.3"};
+          representativeFamily = "A.3";
+          If[chosen["RepresentativePermutation"] === identity,
+            family = "A.3"; status = "Classified",
+            family = Missing["RequiresDiagramAutomorphism", "A.3"];
+            status = "ClassifiedUpToDiagramAutomorphism"],
+          family = "A.3"; candidates = {"A.3"};
           status = "ParameterExtractionFailed"
         ],
       True, family = Missing["UnclassifiedFamily"]
     ];
-    If[StringQ[family], candidates = {family}],
+    If[StringQ[family] && candidates === {}, candidates = {family}],
     images = diagramImageData[d, #] & /@ diagramAutomorphisms[type, n];
     matches = Flatten[Join[
       identityFamilyMatches[type, n, #], parallelFamilyMatches[type, n, #],
@@ -819,6 +1334,8 @@ ClassifySatakeDiagram[d_?SatakeDiagramQ] := Module[
 ];
 
 nonQuasiEndpointQ[family_, n_, ell_, r_] := Switch[family,
+  "B.1", MemberQ[{{0, 2}, {n - 1, n}}, {ell, r}],
+  "D.1", {ell, r} === {0, 2},
   "B*.1", {ell, r} === {0, 2},
   "C**.1", {ell, r} === {n - 1, n},
   "tC**.1" | "C*.1", {ell, r} === {0, 1},
@@ -830,6 +1347,7 @@ supportedNonQuasiFormulaQ[family_, n_, ell_, r_] :=
     (nonQuasiEndpointQ[family, n, ell, r] ||
       (r === ell + 2 && Switch[family,
         "C.1", 1 <= ell <= n - 3,
+        "B.1" | "D.1", 1 <= ell <= n - 2,
         "B*.1" | "tB*.1", 1 <= ell <= n - 3,
         "C**.1" | "tC**.1", 1 <= ell <= n - 2,
         "C*.1", 0 <= ell <= n - 2,
@@ -838,6 +1356,8 @@ supportedNonQuasiFormulaQ[family_, n_, ell_, r_] :=
 
 nonQuasiParameterRequestQ[family_, n_, ell_, r_, params_Association] :=
   supportedNonQuasiFormulaQ[family, n, ell, r] && Switch[family,
+    "B.1" | "D.1", KeyExistsQ[params, "Nu"] ||
+      KeyExistsQ[params, "Nu0"] || KeyExistsQ[params, "Nu1"],
     "B*.1", KeyExistsQ[params, "Nu0"] || KeyExistsQ[params, "Nu1"],
     "C.1" | "C**.1" | "tC**.1" | "C*.1", KeyExistsQ[params, "Nu"],
     _, False
@@ -940,6 +1460,13 @@ CanonicalCoidealParameters[d_?SatakeDiagramQ, q_: q, OptionsPattern[]] := Module
 ];
 
 composePermutations[p_List, q_List] := p[[q + 1]];
+
+dihedralAutomorphisms[size_Integer] := Module[{nodes, rotations, reflections},
+  nodes = Range[0, size - 1];
+  rotations = Table[Mod[nodes + k, size], {k, 0, size - 1}];
+  reflections = Table[Mod[k - nodes, size], {k, 0, size - 1}];
+  DeleteDuplicates[Join[rotations, reflections]]
+];
 
 involutiveDihedralAutomorphisms[size_Integer] := Module[{nodes, rotations, reflections},
   nodes = Range[0, size - 1];
@@ -1865,6 +2392,102 @@ bareBD1[type_String, n_Integer, ell_Integer, r_Integer, u_, q_, params_Associati
   id + (u - u^-1)/k1 (m1 + m2/k2)
 ];
 
+bareNonQuasiBD1[family_String, n_Integer, ell_Integer, r_Integer,
+    u_, q_, params_Association] := Module[
+  {labels, id, lambda, mu, nu, k1, k2, bar, a, b, c, d, m1, m2, m3},
+  If[!MemberQ[{"B.1", "D.1"}, family] || r =!= ell + 2 ||
+      !(1 <= ell <= n - 2), Return[$Failed]];
+  labels = If[family === "B.1", Range[-n, n],
+    Join[Range[-n, -1], Range[1, n]]];
+  id = IdentityMatrix[Length[labels], SparseArray];
+  lambda = Lookup[params, "Lambda", q^(Length[labels]/2 - r)];
+  mu = Lookup[params, "Mu", q^-ell];
+  nu = Lookup[params, "Nu", Symbol["\[Nu]"]];
+  k1[x_] := lambda mu - x;
+  k2[x_] := lambda^-1 + (mu x)^-1;
+  bar = n + 1 - ell;
+  {a, b, c, d} = {2 - bar, bar - 2, 1 - bar, bar - 1};
+  m1 = Sum[
+    lambda mu u matrixUnit[labels, -i, -i] + matrixUnit[labels, i, i],
+    {i, bar - 1, n}];
+  m2 = lambda matrixUnit[labels, a, a] +
+    lambda^-1 matrixUnit[labels, b, b] + matrixUnit[labels, a, b] +
+    matrixUnit[labels, b, a] - mu u matrixUnit[labels, c, c] -
+    (mu u)^-1 matrixUnit[labels, d, d] + matrixUnit[labels, c, d] +
+    matrixUnit[labels, d, c];
+  m3 = matrixUnit[labels, c, a] - matrixUnit[labels, a, c] +
+    lambda^-1 (matrixUnit[labels, c, b] - matrixUnit[labels, b, c]) +
+    (mu u)^-1 (matrixUnit[labels, a, d] - matrixUnit[labels, d, a] +
+      lambda^-1 (matrixUnit[labels, b, d] - matrixUnit[labels, d, b]));
+  id + (u - u^-1)/k1[u] (m1 +
+    (k2[u] m2 + (nu + nu^-1) m3)/
+      (k2[-nu^-2 u] k2[-nu^2 u]))
+];
+
+bareNonQuasiBD1Endpoint02[family_String, n_Integer, ell_Integer,
+    r_Integer, u_, q_, params_Association] := Module[
+  {labels, id, lambda, mu = 1, nu0, nu1, k1, k2, alpha, m2,
+   m3minus, m3plus, denominator},
+  If[!MemberQ[{"B.1", "D.1"}, family] || {ell, r} =!= {0, 2} ||
+      n < 2, Return[$Failed]];
+  labels = If[family === "B.1", Range[-n, n],
+    Join[Range[-n, -1], Range[1, n]]];
+  id = IdentityMatrix[Length[labels], SparseArray];
+  lambda = Lookup[params, "Lambda", q^(Length[labels]/2 - 2)];
+  nu0 = Lookup[params, "Nu0", Symbol["\[Nu]0"]];
+  nu1 = Lookup[params, "Nu1", Symbol["\[Nu]1"]];
+  k1[x_] := lambda mu - x;
+  k2[x_] := lambda^-1 + (mu x)^-1;
+  alpha[x_] := (nu1 + nu1^-1) x - (nu0 + nu0^-1);
+  m2 = Sum[
+    lambda matrixUnit[labels, -i, -i] +
+      lambda^-1 matrixUnit[labels, i, i] + matrixUnit[labels, -i, i] +
+      matrixUnit[labels, i, -i], {i, n - 1, n}];
+  m3minus = matrixUnit[labels, -n, n - 1] -
+      matrixUnit[labels, n - 1, -n] +
+    lambda (matrixUnit[labels, -n, 1 - n] -
+      matrixUnit[labels, 1 - n, -n] +
+      (nu1 + nu1^-1) matrixUnit[labels, -n, -n]);
+  m3plus = matrixUnit[labels, n, 1 - n] -
+      matrixUnit[labels, 1 - n, n] +
+    lambda^-1 (matrixUnit[labels, n, n - 1] -
+      matrixUnit[labels, n - 1, n] -
+      (nu1 + nu1^-1) matrixUnit[labels, n, n]);
+  denominator = k1[nu0 u/nu1] k1[nu1 u/nu0]
+    k1[nu0 nu1 u] k1[u/(nu0 nu1)];
+  id + (u - u^-1) lambda^2 u^2/denominator *
+    (k1[u] k2[u] m2 + alpha[u/lambda] m3minus +
+      alpha[lambda/u] m3plus)
+];
+
+bareNonQuasiB1EndpointRight[n_Integer, ell_Integer, r_Integer,
+    u_, q_, params_Association] := Module[
+  {labels = Range[-n, n], id, lambda, mu, nu, k1, k2, qTwo,
+   coefficient, m1, m2, m3},
+  If[{ell, r} =!= {n - 1, n} || n < 2, Return[$Failed]];
+  id = IdentityMatrix[2 n + 1, SparseArray];
+  lambda = Lookup[params, "Lambda", q^(1/2)];
+  mu = Lookup[params, "Mu", q^(1 - n)];
+  nu = Lookup[params, "Nu", Symbol["\[Nu]"]];
+  k1[x_] := lambda mu - x;
+  k2[x_] := lambda^-1 + (mu x)^-1;
+  qTwo = q^(1/2) + q^(-1/2);
+  coefficient = q^(1/4) (nu - nu^-1) Sqrt[qTwo];
+  m1 = Sum[
+    lambda mu u matrixUnit[labels, -i, -i] + matrixUnit[labels, i, i],
+    {i, 1, n}];
+  m2 = -mu u matrixUnit[labels, -1, -1] -
+    (mu u)^-1 matrixUnit[labels, 1, 1] +
+    matrixUnit[labels, -1, 1] + matrixUnit[labels, 1, -1];
+  m3 = k1[u^-1] (u^-1 (matrixUnit[labels, 0, 1] +
+      matrixUnit[labels, 1, 0]) - mu (matrixUnit[labels, -1, 0] +
+      matrixUnit[labels, 0, -1])) -
+    coefficient mu u^-1 matrixUnit[labels, 0, 0];
+  id + (u - u^-1)/k1[u] (m1 +
+    (k1[u^-1]^2 m2 + coefficient m3)/
+      (k1[nu^2 u^-1] k1[nu^-2 u^-1] k2[u]))
+];
+
 bareC1[n_Integer, ell_Integer, r_Integer, u_, q_, params_Association] := Module[
   {labels, lambda, mu, id, k1, k2, m1, m2},
   If[!(0 <= ell <= r <= n), Return[$Failed]];
@@ -2225,7 +2848,7 @@ KMatrix[d_Association, u_, OptionsPattern[]] := Module[
   {method = OptionValue["Method"], family = OptionValue["Family"], params,
    data, result, dress = OptionValue["DressingMatrix"], n, ell, r, cparams, sparams,
    classification = <||>, explicitBoundaryData, catalogueEntry, transported,
-   nonQuasiFormula = False},
+   nonQuasiFormula = False, supportedFamilies},
   If[SatakeDiagramQ[d], classification = ClassifySatakeDiagram[d]];
   If[family === Automatic, family = Lookup[d, "Family", Automatic]];
   If[family === Automatic && AssociationQ[classification],
@@ -2233,6 +2856,13 @@ KMatrix[d_Association, u_, OptionsPattern[]] := Module[
   ];
   params = Join[Lookup[classification, "Parameters", <||>],
     Lookup[d, "Parameters", <||>], OptionValue["Parameters"]];
+  If[!StringQ[family] && Lookup[classification, "Regime", None] ===
+      "NonQuasistandard",
+    supportedFamilies = Select[Lookup[classification, "CandidateFamilies", {}],
+      supportedNonQuasiFormulaQ[#, Lookup[d, "Rank", Missing[]],
+        Lookup[params, "l", Missing[]], Lookup[params, "r", Missing[]]] &];
+    If[Length[supportedFamilies] == 1, family = First[supportedFamilies]]
+  ];
   nonQuasiFormula = Lookup[classification, "Regime", None] ===
       "NonQuasistandard" ||
     Lookup[params, "Regime", None] === "NonQuasistandard" ||
@@ -2358,7 +2988,19 @@ KMatrix[d_Association, u_, OptionsPattern[]] := Module[
           ell = Lookup[params, "l", Missing["l"]];
           r = Lookup[params, "r", Missing["r"]];
           result = If[And @@ (IntegerQ /@ {n, ell, r}),
-            bareBD1[family, n, ell, r, u, OptionValue["QuantumParameter"], params], $Failed];
+            If[nonQuasiFormula,
+              Which[
+                {ell, r} === {0, 2},
+                  bareNonQuasiBD1Endpoint02[family, n, ell, r, u,
+                    OptionValue["QuantumParameter"], params],
+                family === "B.1" && {ell, r} === {n - 1, n},
+                  bareNonQuasiB1EndpointRight[n, ell, r, u,
+                    OptionValue["QuantumParameter"], params],
+                True,
+                  bareNonQuasiBD1[family, n, ell, r, u,
+                    OptionValue["QuantumParameter"], params]],
+              bareBD1[family, n, ell, r, u,
+                OptionValue["QuantumParameter"], params]], $Failed];
           If[result === $Failed,
             Message[KMatrix::familyparams, family, <|"l" -> ell, "r" -> r|>];
             Return[$Failed]
@@ -2367,8 +3009,18 @@ KMatrix[d_Association, u_, OptionsPattern[]] := Module[
             "Family" -> family, "Equation" -> "Standard",
             "BasisLabels" -> If[family === "B.1", Range[-n, n],
               Join[Range[-n, -1], Range[1, n]]], "Parameters" -> params,
-            "Provenance" -> <|"Source" -> "qRE/files/results.tex",
-              "Formula" -> family, "ResearchStatus" -> "qREFormula"|>|>,
+            "Provenance" -> <|"Source" -> If[nonQuasiFormula,
+                "qRE/files/resultsnqs.tex", "qRE/files/resultsBD1C2.tex"],
+              "Formula" -> family,
+              "Branch" -> Which[
+                nonQuasiFormula && {ell, r} === {0, 2},
+                  "NonQuasistandardEndpoint02",
+                nonQuasiFormula && family === "B.1" &&
+                    {ell, r} === {n - 1, n},
+                  "NonQuasistandardRightEndpoint",
+                nonQuasiFormula, "NonQuasistandardGeneric",
+                True, "MainCatalogue"],
+              "ResearchStatus" -> "qREFormula"|>|>,
         "C.1" | "C.2",
           n = Lookup[d, "Rank", Missing["Rank"]];
           ell = Lookup[params, "l", Missing["l"]];
@@ -2607,7 +3259,7 @@ KMatrix[d_Association, u_, OptionsPattern[]] := Module[
                 True, "KDC1"],
               "Branch" -> Which[
                 nonQuasiFormula && {ell, r} === {0, 2},
-                  "NonQuasistandardEndpoint01",
+                  "NonQuasistandardEndpoint02",
                 nonQuasiFormula, "NonQuasistandardGeneric",
                 True, "MainCatalogue"],
               "ResearchStatus" -> "NotebookChecked"
@@ -2684,6 +3336,215 @@ propertyVerification[status_String, method_String, residual_] := <|
   "residualNonzeroCount" -> residual,
   "engineVersion" -> $qreKMatricesVersion|>;
 
+aPropertySource[family_String] := Switch[family,
+  "A.3", {
+    <|"Source" -> "qRE/files/results.tex", "Anchor" -> "T:all-K",
+      "Role" -> "classification"|>,
+    <|"Source" -> "qRE/files/resultsA3.tex", "Anchor" -> "Res:A3",
+      "Role" -> "formulaAndProperties"|>},
+  _, {
+    <|"Source" -> "qRE/files/results.tex", "Anchor" -> "T:all-K",
+      "Role" -> "classification"|>,
+    <|"Source" -> "qRE/files/resultsA124.tex", "Anchor" ->
+      "sec:K:tw", "Role" -> "formulaAndProperties"|>}
+];
+
+aPropertyRecord[family_String, id_String, kind_String, label_String,
+    status_String, latex_String, expression_, assumptions_List,
+    verification_Association, extra_: <||>] := Join[<|
+  "PropertyID" -> id, "Kind" -> kind, "Label" -> label,
+  "Status" -> status, "LaTeX" -> latex, "Expression" -> expression,
+  "AssumptionsLaTeX" -> assumptions, "Verification" -> verification,
+  "SourceAnchors" -> aPropertySource[family]|>, extra];
+
+aDressingData[family_String, basis_List] := Module[
+  {size = Length[basis], half, omegas, diagonal, parameters},
+  Switch[family,
+    "A.1",
+      omegas = Table[Symbol["\[Omega]" <> ToString[i]], {i, size}];
+      diagonal = omegas,
+    "A.2" | "A.4",
+      If[!EvenQ[size], Return[$Failed]];
+      half = size/2;
+      omegas = Table[Symbol["\[Omega]" <> ToString[i]], {i, half}];
+      diagonal = If[family === "A.2",
+        Flatten[Table[{omegas[[i]], 1}, {i, half}]],
+        Join[omegas, ConstantArray[1, half]]],
+    "A.3",
+      omegas = Table[Symbol["\[Omega]" <> ToString[i]], {i, size}];
+      diagonal = omegas,
+    _, Return[$Failed]
+  ];
+  parameters = Association@Table[
+    "omega" <> ToString[i] -> omegas[[i]], {i, Length[omegas]}];
+  <|"Matrix" -> SparseArray[DiagonalMatrix[diagonal]],
+    "Parameters" -> parameters,
+    "LaTeX" -> Switch[family,
+      "A.1" | "A.3", "G(\\boldsymbol\\omega)=\\operatorname{diag}(\\omega_1,\\ldots,\\omega_N)",
+      "A.2", "G(\\boldsymbol\\omega)=\\operatorname{diag}(\\omega_1,1,\\ldots,\\omega_{N/2},1)",
+      "A.4", "G(\\boldsymbol\\omega)=\\operatorname{diag}(\\omega_1,\\ldots,\\omega_{N/2},1,\\ldots,1)"],
+    "AssumptionsLaTeX" -> {"\\omega_i\\in\\mathbb K^\\times"}|>
+];
+
+aEigenvalueGroups[result_Association, u_, q_] := Module[
+  {family = result["Family"], matrix = result["KMatrix"],
+   params = Lookup[result, "Parameters", <||>], size, ell, r, t,
+   lambda, mu, k1, k2, h1, h2, realization, transformations,
+   dressingParameters, omegas, half, groups},
+  size = Length[matrix];
+  realization = ToLowerCase[ToString[Lookup[result, "Realization", "bare"]]];
+  transformations = Lookup[result, "Transformations", {}];
+  dressingParameters = If[realization === "dressed" && transformations =!= {},
+    Lookup[First[transformations], "Parameters", <||>], <||>];
+  omegas = Values[dressingParameters];
+  groups = Switch[family,
+    "A.1",
+      If[realization === "dressed",
+        (<|"Value" -> #^2, "LaTeX" ->
+            "\\omega_{" <> ToString[#2] <> "}^2",
+            "Multiplicity" -> 1|> & @@@ Thread[{omegas, Range[Length[omegas]]}]),
+        {<|"Value" -> 1, "LaTeX" -> "1", "Multiplicity" -> size|>}],
+    "A.2",
+      half = size/2;
+      If[realization === "dressed",
+        Flatten[Table[{
+          <|"Value" -> I omegas[[i]], "LaTeX" ->
+            "\\mathrm{i}\\omega_{" <> ToString[i] <> "}", "Multiplicity" -> 1|>,
+          <|"Value" -> -I omegas[[i]], "LaTeX" ->
+            "-\\mathrm{i}\\omega_{" <> ToString[i] <> "}", "Multiplicity" -> 1|>},
+          {i, half}], 1],
+        {<|"Value" -> I, "LaTeX" -> "\\mathrm{i}", "Multiplicity" -> half|>,
+         <|"Value" -> -I, "LaTeX" -> "-\\mathrm{i}", "Multiplicity" -> half|>}],
+    "A.3",
+      ell = Lookup[params, "l", Missing[]];
+      r = Lookup[params, "r", Missing[]];
+      t = Lookup[params, "t", size];
+      If[!And @@ (IntegerQ /@ {ell, r, t}), Return[{}]];
+      lambda = Lookup[params, "Lambda", Symbol["\[Lambda]"]];
+      mu = Lookup[params, "Mu", Symbol["\[Mu]"]];
+      k1[x_] := lambda mu - x;
+      k2[x_] := lambda^-1 + (mu x)^-1;
+      h1 = Together[k1[u^-1]/k1[u]];
+      h2 = Together[k2[u^-1]/k2[u]];
+      {
+        <|"Value" -> Together[u^2 h1], "LaTeX" -> "u^2h_1(u)",
+          "Multiplicity" -> ell|>,
+        <|"Value" -> 1, "LaTeX" -> "1",
+          "Multiplicity" -> t - r - ell|>,
+        <|"Value" -> Together[h1 h2], "LaTeX" -> "h_1(u)h_2(u)",
+          "Multiplicity" -> r - ell|>,
+        <|"Value" -> h1, "LaTeX" -> "h_1(u)",
+          "Multiplicity" -> size - t + ell|>
+      },
+    "A.4",
+      half = size/2;
+      If[realization === "dressed",
+        Flatten[Table[{
+          <|"Value" -> omegas[[i]] Sqrt[u], "LaTeX" ->
+            "\\omega_{" <> ToString[i] <> "}\\sqrt{u}", "Multiplicity" -> 1|>,
+          <|"Value" -> -omegas[[i]] Sqrt[u], "LaTeX" ->
+            "-\\omega_{" <> ToString[i] <> "}\\sqrt{u}", "Multiplicity" -> 1|>},
+          {i, half}], 1],
+        {<|"Value" -> Sqrt[u], "LaTeX" -> "\\sqrt{u}", "Multiplicity" -> half|>,
+         <|"Value" -> -Sqrt[u], "LaTeX" -> "-\\sqrt{u}", "Multiplicity" -> half|>}],
+    _, {}
+  ];
+  Select[groups, Lookup[#, "Multiplicity", 0] > 0 &]
+];
+
+aKMatrixPropertyData[result_Association, u_, q_, verify_] := Module[
+  {family = result["Family"], matrix = result["KMatrix"], groups,
+   eigenvalues, size, x, characteristicPolynomial, minimalPolynomial,
+   identity, verified = False, determinant, assumptions, realization,
+   genericRegularity, inversionLatex, inversionResidual, inversionVerified,
+   factorizationLatex, exactStatus, exactVerification},
+  groups = aEigenvalueGroups[result, u, q];
+  If[groups === {}, Return[{}]];
+  size = Length[matrix];
+  eigenvalues = DeleteDuplicates[Lookup[groups, "Value"]];
+  x = Symbol["x$K"];
+  characteristicPolynomial = Times @@
+    (((x - #Value)^#Multiplicity & /@ groups) /. Association -> List);
+  minimalPolynomial = Times @@ ((x - #) & /@ eigenvalues);
+  identity = Fold[Dot, IdentityMatrix[size, SparseArray],
+    (matrix - # IdentityMatrix[size, SparseArray]) & /@ eigenvalues];
+  If[TrueQ[verify], verified = zeroMatrixQ[Map[Together, identity, {2}], True]];
+  determinant = Together[Times @@
+    ((#Value^#Multiplicity) & /@ groups) /. Association -> List];
+  realization = ToLowerCase[ToString[Lookup[result, "Realization", "bare"]]];
+  assumptions = {"q,u,\\lambda,\\mu,\\omega_i\\in\\mathbb K^\\times",
+    "\\text{all displayed denominators are nonzero}",
+    "\\text{the displayed eigenvalues are generically distinct}"};
+  genericRegularity = Switch[family,
+    "A.1", "K(u)=\\operatorname{Id}",
+    "A.2", "K(u)=K_0,\\qquad K_0^{-1}=-K_0",
+    "A.3", "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}",
+    "A.4", "K(u)^{-1}=u^{-1}K(u)", _ , ""];
+  {inversionLatex, inversionResidual} = Switch[family,
+    "A.1", {"K(u)K(u^{-1})=\\operatorname{Id}",
+      matrix.matrix - IdentityMatrix[size]},
+    "A.2", {"K(u)^2=-\\operatorname{Id}",
+      matrix.matrix + IdentityMatrix[size]},
+    "A.3", {"K(u)K(u^{-1})=\\operatorname{Id}",
+      matrix.SparseArray[Normal[matrix] /. u -> u^-1] - IdentityMatrix[size]},
+    "A.4", {"K(u)^2=u\\operatorname{Id}",
+      matrix.matrix - u IdentityMatrix[size]},
+    _, {"", matrix}
+  ];
+  inversionVerified = realization === "bare" || family === "A.3";
+  If[inversionVerified && TrueQ[verify],
+    inversionVerified = zeroMatrixQ[Map[Together, inversionResidual, {2}], True]];
+  factorizationLatex = Switch[family,
+    "A.1", "K(u)=\\operatorname{Id}",
+    "A.2", "K(u)=\\bigoplus_{i=1}^{N/2}\\begin{pmatrix}0&q^{1/2}\\\\-q^{-1/2}&0\\end{pmatrix}",
+    "A.3", "K(u)=V D(u)V^{-1}",
+    "A.4", "K(u)=\\bigoplus_{i=1}^{N/2}\\begin{pmatrix}0&1\\\\u&0\\end{pmatrix}", _ , ""];
+  exactStatus = If[verified, "verifiedExact", "sourceIdentity"];
+  exactVerification = propertyVerification[
+    If[verified, "verified", "sourceIdentity"],
+    If[verified, "sourceSpectrumAndExactMatrixResidual", "manuscriptSpectrum"],
+    If[verified, 0, Null]];
+  {
+    aPropertyRecord[family, ToLowerCase[family] <> "-spectrum", "eigenvalues",
+      "Eigenvalues", exactStatus,
+      "\\operatorname{Spec}K(u)=\\{\\kappa_1(u),\\ldots,\\kappa_s(u)\\}",
+      eigenvalues, assumptions, exactVerification, <|"Spectrum" -> groups|>],
+    aPropertyRecord[family, ToLowerCase[family] <> "-characteristic",
+      "characteristicIdentity", "Characteristic identity", exactStatus,
+      "\\chi_{K(u)}(x)=\\prod_\\kappa(x-\\kappa)^{m_\\kappa}",
+      characteristicPolynomial, assumptions, exactVerification],
+    aPropertyRecord[family, ToLowerCase[family] <> "-minimal", "minimalIdentity",
+      "Generic minimal identity", If[verified, "verifiedExact", "conditional"],
+      "m_{K(u)}(x)=\\prod_{\\kappa\\in\\operatorname{Spec}_{\\rm distinct}K(u)}(x-\\kappa)",
+      minimalPolynomial, assumptions, exactVerification],
+    aPropertyRecord[family, ToLowerCase[family] <> "-determinant", "determinant",
+      "Determinant", "computedExact", "\\det K(u)=\\prod_\\kappa\\kappa^{m_\\kappa}",
+      determinant, assumptions,
+      propertyVerification["computed", "productOfVerifiedEigenvalues", Null]],
+    aPropertyRecord[family, ToLowerCase[family] <> "-factorization", "factorization",
+      "Factorization", "sourceIdentity", factorizationLatex, Null, assumptions,
+      propertyVerification["sourceIdentity", "manuscriptBlockOrSpectralFactorization", Null]],
+    aPropertyRecord[family, ToLowerCase[family] <> "-rank-loci", "rankLoci",
+      "Rank-drop locus", "conditional",
+      "\\operatorname{rank}K(u)<N\\quad\\Longleftrightarrow\\quad\\det K(u)=0",
+      determinant, assumptions,
+      propertyVerification["conditional", "determinantCriterionAwayFromPoles", Null]],
+    aPropertyRecord[family, ToLowerCase[family] <> "-regularity", "regularity",
+      "Regularity and inversion", If[realization === "bare", "sourceIdentity", "conditional"],
+      If[realization === "bare", genericRegularity,
+        "K^{G}(u)=" <> If[Lookup[result, "Equation", "Standard"] === "Standard",
+          "G^{-1}K(u)G", "G K(u)G"]], Null, assumptions,
+      propertyVerification[If[realization === "bare", "sourceIdentity", "conditional"],
+        If[realization === "bare", "manuscriptIdentity", "dressingTransformation"], Null]],
+    aPropertyRecord[family, ToLowerCase[family] <> "-unitarity", "unitarity",
+      If[MemberQ[{"A.2", "A.4"}, family], "Polynomial inversion identity", "Boundary unitarity"],
+      If[inversionVerified, "verifiedExact", "unavailable"], inversionLatex, Null,
+      assumptions, propertyVerification[If[inversionVerified, "verified", "unavailable"],
+        If[inversionVerified, "exactMatrixResidual", "genericDressingDoesNotPreserveScalarIdentity"],
+        If[inversionVerified, 0, Null]]]
+  }
+];
+
 c1PropertyRecord[id_String, kind_String, label_String, status_String,
     latex_String, expression_, assumptions_List, verification_Association,
     extra_: <||>] := Join[<|
@@ -2692,8 +3553,7 @@ c1PropertyRecord[id_String, kind_String, label_String, status_String,
   "AssumptionsLaTeX" -> assumptions, "Verification" -> verification,
   "SourceAnchors" -> c1PropertySource[]|>, extra];
 
-Options[KMatrixPropertyData] = {"Verify" -> True};
-KMatrixPropertyData[result_Association, u_, q_: q, OptionsPattern[]] /;
+c1KMatrixPropertyData[result_Association, u_, q_, verify_] /;
     KeyExistsQ[result, "KMatrix"] := Module[
   {family = Lookup[result, "Family", Missing[]], matrix, params, basis, n, ell,
    r, provenance, nonQuasi, groups, eigenvalues, x, polynomial, identity,
@@ -2713,10 +3573,10 @@ KMatrixPropertyData[result_Association, u_, q_: q, OptionsPattern[]] /;
   groups = c1EigenvalueGroups[n, ell, r, u, q, params, nonQuasi];
   eigenvalues = DeleteDuplicates[Lookup[groups, "Value"]];
   x = Symbol["x$K"];
-  polynomial = Expand[Times @@ ((x - #) & /@ eigenvalues)];
+  polynomial = Times @@ ((x - #) & /@ eigenvalues);
   identity = Fold[Dot, IdentityMatrix[Length[matrix], SparseArray],
     (matrix - # IdentityMatrix[Length[matrix], SparseArray]) & /@ eigenvalues];
-  If[TrueQ[OptionValue["Verify"]],
+  If[TrueQ[verify],
     characteristicVerified = zeroMatrixQ[Map[Together, identity, {2}], True];
     unitarityVerified = AllTrue[eigenvalues,
       PossibleZeroQ[Together[# (# /. u -> u^-1) - 1]] &]
@@ -2780,6 +3640,803 @@ KMatrixPropertyData[result_Association, u_, q_: q, OptionsPattern[]] /;
   properties
 ];
 
+c24PropertySource[family_String] := Switch[family,
+  "C.2", {
+    familySource["qRE/files/results.tex", "T:all-K", "classification"],
+    familySource["qRE/files/resultsBD1C2.tex", "Res:C2",
+      "formulaAndProperties"]},
+  "C.4", {
+    familySource["qRE/files/results.tex", "T:all-K", "classification"],
+    familySource["qRE/files/resultsCD4.tex", "Res:CD4",
+      "formulaAndProperties"]},
+  "D.4", {
+    familySource["qRE/files/results.tex", "T:all-K", "classification"],
+    familySource["qRE/files/resultsCD4.tex", "Res:CD4",
+      "formulaAndProperties"],
+    familySource["qRE/files/resultsCD4.tex", "D4:K:spec",
+      "exceptionalEllOneBranch"]},
+  _, {}
+];
+
+c24PropertyRecord[family_String, id_String, kind_String, label_String,
+    status_String, latex_String, expression_, assumptions_List,
+    verification_Association, extra_: <||>] := Join[<|
+  "PropertyID" -> id, "Kind" -> kind, "Label" -> label,
+  "Status" -> status, "LaTeX" -> latex, "Expression" -> expression,
+  "AssumptionsLaTeX" -> assumptions, "Verification" -> verification,
+  "SourceAnchors" -> c24PropertySource[family]|>, extra];
+
+c24EigenvalueGroups[result_Association, u_, q_] := Module[
+  {family = Lookup[result, "Family", Missing[]], matrix = result["KMatrix"],
+   params = Lookup[result, "Parameters", <||>], n, ell, r, lambda, mu,
+   alpha, k1, k2, k2minus, h1, h2, h2minus, groups},
+  n = Length[matrix]/2;
+  ell = Lookup[params, "l", Missing[]];
+  If[!IntegerQ[n] || !IntegerQ[ell], Return[{}]];
+  groups = Switch[family,
+    "C.2",
+      r = Lookup[params, "r", Missing[]];
+      If[!IntegerQ[r], Return[{}]];
+      lambda = Lookup[params, "Lambda", q^(n - r)];
+      mu = Lookup[params, "Mu", q^-ell];
+      k1[x_] := lambda mu - x;
+      k2[x_] := lambda^-1 + (mu x)^-1;
+      h1 = Together[k1[u^-1]/k1[u]];
+      h2 = Together[k2[u^-1]/k2[u]];
+      {
+        <|"Value" -> 1, "LaTeX" -> "1",
+          "Multiplicity" -> 2 n - r - ell|>,
+        <|"Value" -> Together[h1 h2], "LaTeX" -> "h_1(u)h_2(u)",
+          "Multiplicity" -> r - ell|>,
+        <|"Value" -> Together[u^2 h1], "LaTeX" -> "u^2h_1(u)",
+          "Multiplicity" -> ell|>,
+        <|"Value" -> h1, "LaTeX" -> "h_1(u)",
+          "Multiplicity" -> ell|>
+      },
+    "C.4" | "D.4",
+      lambda = Lookup[params, "Lambda", Symbol["\[Lambda]"]];
+      alpha = Lookup[params, "Alpha", 1];
+      mu = Lookup[params, "Mu", q^(-n + 2 ell) *
+        If[family === "D.4" && ell == 1, alpha, 1] lambda];
+      k1[x_] := lambda mu - x;
+      k2[x_] := lambda^-1 + (mu x)^-1;
+      h1 = Together[k1[u^-1]/k1[u]];
+      h2 = Together[k2[u^-1]/k2[u]];
+      If[family === "D.4" && ell == 1,
+        k2minus[x_] := (alpha lambda)^-1 + alpha (mu x)^-1;
+        h2minus = Together[k2minus[u^-1]/k2minus[u]];
+        {
+          <|"Value" -> Together[h1 h2minus],
+            "LaTeX" -> "h_1(u)h_2^-(u)", "Multiplicity" -> 1|>,
+          <|"Value" -> Together[u^-2 h2],
+            "LaTeX" -> "u^{-2}h_2^+(u)", "Multiplicity" -> 1|>,
+          <|"Value" -> 1, "LaTeX" -> "1", "Multiplicity" -> n - 1|>,
+          <|"Value" -> h1, "LaTeX" -> "h_1(u)",
+            "Multiplicity" -> n - 1|>
+        },
+        {
+          <|"Value" -> Together[h1 h2], "LaTeX" -> "h_1(u)h_2(u)",
+            "Multiplicity" -> ell|>,
+          <|"Value" -> Together[u^-2 h2], "LaTeX" -> "u^{-2}h_2(u)",
+            "Multiplicity" -> ell|>,
+          <|"Value" -> 1, "LaTeX" -> "1",
+            "Multiplicity" -> n - ell|>,
+          <|"Value" -> h1, "LaTeX" -> "h_1(u)",
+            "Multiplicity" -> n - ell|>
+        }],
+    _, {}
+  ];
+  Select[groups, Lookup[#, "Multiplicity", 0] > 0 &]
+];
+
+c24RegularityLatex["C.2", n_Integer, ell_Integer, r_Integer, q_] := Which[
+  EvenQ[n] && ell + r == n && ell == 0,
+    "K(u)\\text{ is a non-regular generalized involution on the }\\ell=0,r=n\\text{ locus}",
+  EvenQ[n] && ell + r == n && 0 < ell < n/2,
+    "K(-1)=\\operatorname{Id},\\qquad K(1)\\neq\\operatorname{Id}",
+  True,
+    "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}"
+];
+c24RegularityLatex["C.4", n_Integer, ell_Integer, r_, q_] := If[
+  2 ell == n,
+  "K(1)=\\operatorname{Id},\\qquad K(-1)\\neq\\operatorname{Id};\\quad \\lambda=\\pm1\\text{ is non-regular}",
+  "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically};\\quad \\lambda=\\pm q^{n/2-\\ell}\\text{ or }\\pm\\mathrm{i}q^{n/2-\\ell}\\text{ gives singly regular reductions}"
+];
+c24RegularityLatex["D.4", n_Integer, ell_Integer, r_, q_] := Which[
+  ell == 1,
+    "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically; the listed }\\lambda,\\mu,\\alpha\\text{ relations give singly regular reductions}",
+  2 ell == n,
+    "K(1)=\\operatorname{Id},\\qquad K(-1)\\neq\\operatorname{Id};\\quad \\lambda=\\pm1\\text{ is non-regular}",
+  True,
+    "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically, with the CD.4 special-}\\lambda\\text{ singly regular reductions}"
+];
+
+c24KMatrixPropertyData[result_Association, u_, q_, verify_] /;
+    KeyExistsQ[result, "KMatrix"] := Module[
+  {family = Lookup[result, "Family", Missing[]], matrix, params, n, ell, r,
+   groups, eigenvalues, x, characteristicPolynomial, minimalPolynomial,
+   identity, characteristicVerified = False, unitarityVerified = False,
+   determinant, assumptions, regularityLatex, verificationMethod,
+   sourceStem, factorizationLatex},
+  If[!MemberQ[{"C.2", "C.4", "D.4"}, family], Return[{}]];
+  matrix = result["KMatrix"];
+  params = Lookup[result, "Parameters", <||>];
+  n = Length[matrix]/2;
+  ell = Lookup[params, "l", Missing[]];
+  r = Lookup[params, "r", Null];
+  If[!IntegerQ[n] || !IntegerQ[ell] ||
+      (family === "C.2" && !IntegerQ[r]), Return[{}]];
+  groups = c24EigenvalueGroups[result, u, q];
+  If[groups === {}, Return[{}]];
+  eigenvalues = DeleteDuplicates[Lookup[groups, "Value"]];
+  x = Symbol["x$K"];
+  characteristicPolynomial = Times @@
+    (((x - #["Value"])^#["Multiplicity"]) & /@ groups);
+  minimalPolynomial = Times @@ ((x - #) & /@ eigenvalues);
+  identity = Fold[Dot, IdentityMatrix[Length[matrix], SparseArray],
+    (matrix - # IdentityMatrix[Length[matrix], SparseArray]) & /@ eigenvalues];
+  If[TrueQ[verify],
+    characteristicVerified = zeroMatrixQ[Map[Together, identity, {2}], True];
+    unitarityVerified = AllTrue[eigenvalues,
+      PossibleZeroQ[Together[# (# /. u -> u^-1) - 1]] &]
+  ];
+  determinant = Together[Times @@
+    ((#["Value"]^#["Multiplicity"]) & /@ groups)];
+  assumptions = {"q,u,\\lambda,\\mu,\\omega_i\\in\\mathbb K^\\times",
+    "\\text{all displayed denominators are nonzero}",
+    "\\text{the displayed eigenvalues are generically distinct}"};
+  regularityLatex = c24RegularityLatex[family, n, ell, r, q];
+  verificationMethod = If[characteristicVerified,
+    "sourceSpectrumAndExactMatrixResidual", "sourceEigendecomposition"];
+  sourceStem = ToLowerCase[StringReplace[family, "." -> ""]];
+  factorizationLatex = Switch[family,
+    "C.2",
+      "K(u)=V D(u)V^{-1},\\quad V=\\operatorname{Id}+\\lambda\\sum_{\\bar r\\leq i<\\bar\\ell}\\varepsilon_i(E_{-i-\\varepsilon_i,i}-E_{i,-i-\\varepsilon_i})",
+    "C.4",
+      "K(u)=V D(u)V^{-1},\\quad V=\\operatorname{Id}+\\sum_{1\\leq i\\leq\\ell}(\\lambda(E_{-\\bar\\imath,-i}-E_{-i,-\\bar\\imath})+\\mu(E_{\\bar\\imath,i}-E_{i,\\bar\\imath}))"
+    ,
+    "D.4",
+      If[ell == 1,
+        "K(u)=V D(u)V^{-1}\\quad\\text{with the exceptional }M_2^+,M_2^-\\text{ factorization}",
+        "K(u)=V D(u)V^{-1}\\quad\\text{with the CD.4 paired factorization}"]
+  ];
+  {
+    c24PropertyRecord[family, sourceStem <> "-spectrum", "eigenvalues",
+      "Eigenvalues", If[characteristicVerified, "verifiedExact", "sourceIdentity"],
+      "\\operatorname{Spec}K(u)=\\{1,\\ h_1(u)h_2(u),\\ u^{\\pm2}h_j(u),\\ h_1(u)\\}",
+      eigenvalues, assumptions,
+      propertyVerification[If[characteristicVerified, "verified", "sourceIdentity"],
+        verificationMethod, If[characteristicVerified, 0, Null]],
+      <|"Spectrum" -> groups|>],
+    c24PropertyRecord[family, sourceStem <> "-characteristic",
+      "characteristicIdentity", "Characteristic identity",
+      If[characteristicVerified, "verifiedExact", "sourceIdentity"],
+      "\\chi_{K(u)}(x)=\\prod_\\kappa(x-\\kappa)^{m_\\kappa}",
+      characteristicPolynomial, assumptions,
+      propertyVerification[If[characteristicVerified, "verified", "sourceIdentity"],
+        verificationMethod, If[characteristicVerified, 0, Null]]],
+    c24PropertyRecord[family, sourceStem <> "-minimal", "minimalIdentity",
+      "Generic minimal identity",
+      If[characteristicVerified, "verifiedExact", "conditional"],
+      "m_{K(u)}(x)=\\prod_{\\kappa\\in\\operatorname{Spec}_{\\rm distinct}K(u)}(x-\\kappa)",
+      minimalPolynomial, Append[assumptions,
+        "\\text{the displayed eigenvalues are distinct}"],
+      propertyVerification[If[characteristicVerified, "verified", "conditional"],
+        verificationMethod, If[characteristicVerified, 0, Null]]],
+    c24PropertyRecord[family, sourceStem <> "-determinant", "determinant",
+      "Determinant", "computedExact",
+      "\\det K(u)=\\prod_\\kappa\\kappa^{m_\\kappa}", determinant,
+      assumptions, propertyVerification["computed",
+        "productOfSourceEigenvalues", Null]],
+    c24PropertyRecord[family, sourceStem <> "-factorization", "factorization",
+      "Spectral factorization", "sourceIdentity", factorizationLatex, Null,
+      assumptions, propertyVerification["sourceIdentity",
+        "manuscriptEigendecomposition", Null]],
+    c24PropertyRecord[family, sourceStem <> "-rank-loci", "rankLoci",
+      "Rank-drop locus", "conditional",
+      "\\operatorname{rank}K(u)<2n\\quad\\Longleftrightarrow\\quad\\det K(u)=0",
+      determinant, assumptions, propertyVerification["conditional",
+        "determinantCriterionAwayFromPoles", Null]],
+    c24PropertyRecord[family, sourceStem <> "-regularity", "regularity",
+      "Regularity", "sourceIdentity", regularityLatex, Null, assumptions,
+      propertyVerification["sourceIdentity", "qRERegularityClassification", Null]],
+    c24PropertyRecord[family, sourceStem <> "-unitarity", "unitarity",
+      "Boundary unitarity",
+      If[unitarityVerified, "verifiedExact", "sourceIdentity"],
+      "K(u)K(u^{-1})=\\operatorname{Id}", Null, assumptions,
+      propertyVerification[If[unitarityVerified, "verified", "sourceIdentity"],
+        If[unitarityVerified, "exactSpectralIdentity", "qREUnitarityTheorem"],
+        If[unitarityVerified, 0, Null]]]
+  }
+];
+
+bPropertySource[family_String] := Switch[family,
+  "B.1", {
+    familySource["qRE/files/results.tex", "T:all-K", "classification"],
+    familySource["qRE/files/resultsBD1C2.tex", "res:BD1",
+      "formulaAndProperties"],
+    familySource["qRE/files/resultsnqs.tex", "sec:nqs",
+      "nonQuasistandardFormulaAndProperties"]},
+  "B.2", {
+    familySource["qRE/files/results.tex", "T:all-K", "classification"],
+    familySource["qRE/files/resultsC1BD2.tex", "D2:K",
+      "formulaAndProperties"]},
+  "D.1", {
+    familySource["qRE/files/results.tex", "T:all-K", "classification"],
+    familySource["qRE/files/resultsBD1C2.tex", "res:BD1",
+      "formulaAndProperties"],
+    familySource["qRE/files/resultsnqs.tex", "sec:nqs",
+      "nonQuasistandardFormulaAndProperties"]},
+  "D.2", {
+    familySource["qRE/files/results.tex", "T:all-K", "classification"],
+    familySource["qRE/files/resultsC1BD2.tex", "D2:K",
+      "formulaAndProperties"]},
+  _, {}
+];
+
+bPropertyRecord[family_String, id_String, kind_String, label_String,
+    status_String, latex_String, expression_, assumptions_List,
+    verification_Association, extra_: <||>] := Join[<|
+  "PropertyID" -> id, "Kind" -> kind, "Label" -> label,
+  "Status" -> status, "LaTeX" -> latex, "Expression" -> expression,
+  "AssumptionsLaTeX" -> assumptions, "Verification" -> verification,
+  "SourceAnchors" -> bPropertySource[family]|>, extra];
+
+bEigenvalueGroups[result_Association, u_, q_] := Module[
+  {family = Lookup[result, "Family", Missing[]], matrix = result["KMatrix"],
+   params = Lookup[result, "Parameters", <||>], size, n, ell, r, lambda,
+   mu, nu, nu0, nu1, k1, k2, h1, h2, exceptional, groups,
+   provenance, branch, nonQuasi},
+  size = Length[matrix];
+  n = If[MemberQ[{"B.1", "B.2"}, family], (size - 1)/2, size/2];
+  ell = Lookup[params, "l", Missing[]];
+  r = Lookup[params, "r", Missing[]];
+  If[!And @@ (IntegerQ /@ {n, ell, r}), Return[{}]];
+  provenance = Lookup[result, "Provenance", <||>];
+  branch = ToString[Lookup[provenance, "Branch", "MainCatalogue"]];
+  nonQuasi = StringStartsQ[branch, "NonQuasistandard"];
+  groups = Switch[family,
+    "B.1" | "D.1",
+      lambda = Lookup[params, "Lambda", q^(size/2 - r)];
+      mu = Lookup[params, "Mu", q^-ell];
+      k1[x_] := lambda mu - x;
+      k2[x_] := lambda^-1 + (mu x)^-1;
+      h1 = Together[k1[u^-1]/k1[u]];
+      h2 = Together[k2[u^-1]/k2[u]];
+      Which[
+        branch === "NonQuasistandardEndpoint02",
+          nu0 = Lookup[params, "Nu0", Symbol["\[Nu]0"]];
+          nu1 = Lookup[params, "Nu1", Symbol["\[Nu]1"]];
+          {
+            <|"Value" -> 1, "LaTeX" -> "1", "Multiplicity" -> size - 2|>,
+            <|"Value" -> Together[u^2
+                k1[nu0^-1 nu1 u^-1]/k1[nu0^-1 nu1 u]
+                k1[nu0 nu1 u^-1]/k1[nu0 nu1 u]],
+              "LaTeX" -> "u^2\\frac{k_1(\\nu_0^{-1}\\nu_1u^{-1})}{k_1(\\nu_0^{-1}\\nu_1u)}\\frac{k_1(\\nu_0\\nu_1u^{-1})}{k_1(\\nu_0\\nu_1u)}",
+              "Multiplicity" -> 1|>,
+            <|"Value" -> Together[u^2
+                k1[nu0 nu1^-1 u^-1]/k1[nu0 nu1^-1 u]
+                k1[nu0^-1 nu1^-1 u^-1]/k1[nu0^-1 nu1^-1 u]],
+              "LaTeX" -> "u^2\\frac{k_1(\\nu_0\\nu_1^{-1}u^{-1})}{k_1(\\nu_0\\nu_1^{-1}u)}\\frac{k_1(\\nu_0^{-1}\\nu_1^{-1}u^{-1})}{k_1(\\nu_0^{-1}\\nu_1^{-1}u)}",
+              "Multiplicity" -> 1|>
+          },
+        branch === "NonQuasistandardRightEndpoint",
+          nu = Lookup[params, "Nu", Symbol["\[Nu]"]];
+          {
+            <|"Value" -> Together[h1 k1[nu^-2 u]/k1[nu^-2 u^-1]],
+              "LaTeX" -> "h_1(u)\\frac{k_1(\\nu^{-2}u)}{k_1(\\nu^{-2}u^{-1})}",
+              "Multiplicity" -> 1|>,
+            <|"Value" -> Together[h1 k1[nu^2 u]/k1[nu^2 u^-1]],
+              "LaTeX" -> "h_1(u)\\frac{k_1(\\nu^2u)}{k_1(\\nu^2u^{-1})}",
+              "Multiplicity" -> 1|>,
+            <|"Value" -> Together[h1 h2], "LaTeX" -> "h_1(u)h_2(u)",
+              "Multiplicity" -> 1|>,
+            <|"Value" -> Together[u^2 h1], "LaTeX" -> "u^2h_1(u)",
+              "Multiplicity" -> n - 1|>,
+            <|"Value" -> h1, "LaTeX" -> "h_1(u)",
+              "Multiplicity" -> n - 1|>
+          },
+        nonQuasi,
+          nu = Lookup[params, "Nu", Symbol["\[Nu]"]];
+          {
+            <|"Value" -> 1, "LaTeX" -> "1",
+              "Multiplicity" -> size - 2 ell - 2|>,
+            <|"Value" -> Together[h1 k2[-nu^2 u^-1]/k2[-nu^2 u]],
+              "LaTeX" -> "h_1(u)\\frac{k_2(-\\nu^2u^{-1})}{k_2(-\\nu^2u)}",
+              "Multiplicity" -> 1|>,
+            <|"Value" -> Together[h1 k2[-nu^-2 u^-1]/k2[-nu^-2 u]],
+              "LaTeX" -> "h_1(u)\\frac{k_2(-\\nu^{-2}u^{-1})}{k_2(-\\nu^{-2}u)}",
+              "Multiplicity" -> 1|>,
+            <|"Value" -> Together[u^2 h1], "LaTeX" -> "u^2h_1(u)",
+              "Multiplicity" -> ell|>,
+            <|"Value" -> h1, "LaTeX" -> "h_1(u)",
+              "Multiplicity" -> ell|>
+          },
+        True,
+          {
+            <|"Value" -> 1, "LaTeX" -> "1",
+              "Multiplicity" -> size - r - ell|>,
+            <|"Value" -> Together[h1 h2], "LaTeX" -> "h_1(u)h_2(u)",
+              "Multiplicity" -> r - ell|>,
+            <|"Value" -> Together[u^2 h1], "LaTeX" -> "u^2h_1(u)",
+              "Multiplicity" -> ell|>,
+            <|"Value" -> h1, "LaTeX" -> "h_1(u)",
+              "Multiplicity" -> ell|>
+          }
+      ],
+    "B.2" | "D.2",
+      lambda = Lookup[params, "Lambda",
+        If[family === "D.2" && MemberQ[{n - 1, n}, r],
+          Symbol["\[Lambda]"], q^(size/2 - r - 1)]];
+      mu = Lookup[params, "Mu",
+        If[MemberQ[{0, 1}, ell], Symbol["\[Mu]"], q^(-ell + 1)]];
+      k1[x_] := lambda mu - x;
+      k2[x_] := lambda^-1 - (mu x)^-1;
+      h1 = Together[k1[u^-1]/k1[u]];
+      h2 = Together[k2[u^-1]/k2[u]];
+      exceptional = Together[h1 -
+        KroneckerDelta[ell, 1] (u - u^-1) u^-1 (mu - mu^-1)/
+          (k1[u] k2[u])];
+      Join[{
+        <|"Value" -> 1, "LaTeX" -> "1",
+          "Multiplicity" -> size - r - ell -
+            If[family === "D.2" && r == n - 1, 1, 0]|>,
+        <|"Value" -> Together[h1 h2], "LaTeX" -> "h_1(u)h_2(u)",
+          "Multiplicity" -> r - ell|>,
+        <|"Value" -> Together[u^2 h1], "LaTeX" -> "u^2h_1(u)",
+          "Multiplicity" -> ell|>,
+        <|"Value" -> h1, "LaTeX" -> "h_1(u)",
+          "Multiplicity" -> Max[ell - 1, 0]|>},
+        If[ell == 1, {<|"Value" -> exceptional,
+          "LaTeX" -> "h_1(u)-\\frac{(u-u^{-1})u^{-1}(\\mu-\\mu^{-1})}{k_1(u)k_2(u)}",
+          "Multiplicity" -> 1|>}, {}],
+        If[family === "D.2" && r == n - 1,
+          {<|"Value" -> Together[1 - (u - u^-1) (lambda - lambda^-1)/
+              (k1[u] k2[u])],
+            "LaTeX" -> "1-\\frac{(u-u^{-1})(\\lambda-\\lambda^{-1})}{k_1(u)k_2(u)}",
+            "Multiplicity" -> 1|>}, {}]],
+    _, {}
+  ];
+  Select[groups, Lookup[#, "Multiplicity", 0] > 0 &]
+];
+
+bKMatrixPropertyData[result_Association, u_, q_, verify_] /;
+    KeyExistsQ[result, "KMatrix"] := Module[
+  {family = Lookup[result, "Family", Missing[]], matrix, params, size, n,
+   ell, r, groups, eigenvalues, x, characteristicPolynomial,
+   minimalPolynomial, identity, characteristicVerified = False,
+   unitarityVerified = False, determinant, assumptions, regularityLatex,
+   verificationMethod, sourceStem, factorizationLatex},
+  If[!MemberQ[{"B.1", "B.2", "D.1", "D.2"}, family], Return[{}]];
+  matrix = result["KMatrix"];
+  params = Lookup[result, "Parameters", <||>];
+  size = Length[matrix];
+  n = If[MemberQ[{"B.1", "B.2"}, family], (size - 1)/2, size/2];
+  ell = Lookup[params, "l", Missing[]];
+  r = Lookup[params, "r", Missing[]];
+  If[!And @@ (IntegerQ /@ {n, ell, r}), Return[{}]];
+  groups = bEigenvalueGroups[result, u, q];
+  If[groups === {}, Return[{}]];
+  eigenvalues = DeleteDuplicates[Lookup[groups, "Value"]];
+  x = Symbol["x$K"];
+  characteristicPolynomial = Times @@
+    (((x - #["Value"])^#["Multiplicity"]) & /@ groups);
+  minimalPolynomial = Times @@ ((x - #) & /@ eigenvalues);
+  identity = Fold[Dot, IdentityMatrix[size, SparseArray],
+    (matrix - # IdentityMatrix[size, SparseArray]) & /@ eigenvalues];
+  If[TrueQ[verify],
+    characteristicVerified = zeroMatrixQ[Map[Together, identity, {2}], True];
+    unitarityVerified = AllTrue[eigenvalues,
+      PossibleZeroQ[Together[# (# /. u -> u^-1) - 1]] &]
+  ];
+  determinant = Together[Times @@
+    ((#["Value"]^#["Multiplicity"]) & /@ groups)];
+  assumptions = {"q,u,\\lambda,\\mu,\\omega_i\\in\\mathbb K^\\times",
+    "\\text{all displayed denominators are nonzero}",
+    "\\text{the displayed eigenvalues are generically distinct}"};
+  regularityLatex = Switch[family,
+    "B.1", "K(1)=K(-1)=\\operatorname{Id}",
+    "D.1", If[ell == 0 && r == n,
+      "K(u)=-J\\quad\\text{is a non-regular generalized involution}",
+      "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}"],
+    "B.2",
+      "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically};\\quad \\mu\\in\\{\\pm\\lambda,\\pm\\lambda^{-1}\\}\\text{ gives singly regular reductions for }\\ell\\in\\{0,1\\}",
+    "D.2",
+      "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically, with singly regular endpoint and }\\ell+r=n\\text{ reductions}"
+  ];
+  verificationMethod = If[characteristicVerified,
+    "sourceSpectrumAndExactMatrixResidual", "sourceEigendecomposition"];
+  sourceStem = ToLowerCase[StringReplace[family, "." -> ""]];
+  factorizationLatex = Switch[family,
+    "B.1" | "D.1",
+      "K(u)=V D(u)V^{-1},\\quad V=\\operatorname{Id}+\\lambda\\sum_{\\bar r\\leq i<\\bar\\ell}(E_{-i,i}-E_{i,-i})",
+    "B.2" | "D.2",
+      "K(u)=V D(u)V^{-1},\\quad V=\\operatorname{Id}-\\lambda\\sum_{\\bar r\\leq i<\\bar\\ell}\\varepsilon_i(E_{-i-\\varepsilon_i,i}-E_{i,-i-\\varepsilon_i})"
+  ];
+  {
+    bPropertyRecord[family, sourceStem <> "-spectrum", "eigenvalues",
+      "Eigenvalues", If[characteristicVerified, "verifiedExact", "sourceIdentity"],
+      "\\operatorname{Spec}K(u)=\\{\\kappa_1(u),\\ldots,\\kappa_s(u)\\}",
+      eigenvalues, assumptions,
+      propertyVerification[If[characteristicVerified, "verified", "sourceIdentity"],
+        verificationMethod, If[characteristicVerified, 0, Null]],
+      <|"Spectrum" -> groups|>],
+    bPropertyRecord[family, sourceStem <> "-characteristic",
+      "characteristicIdentity", "Characteristic identity",
+      If[characteristicVerified, "verifiedExact", "sourceIdentity"],
+      "\\chi_{K(u)}(x)=\\prod_\\kappa(x-\\kappa)^{m_\\kappa}",
+      characteristicPolynomial, assumptions,
+      propertyVerification[If[characteristicVerified, "verified", "sourceIdentity"],
+        verificationMethod, If[characteristicVerified, 0, Null]]],
+    bPropertyRecord[family, sourceStem <> "-minimal", "minimalIdentity",
+      "Generic minimal identity",
+      If[characteristicVerified, "verifiedExact", "conditional"],
+      "m_{K(u)}(x)=\\prod_{\\kappa\\in\\operatorname{Spec}_{\\rm distinct}K(u)}(x-\\kappa)",
+      minimalPolynomial, Append[assumptions,
+        "\\text{the displayed eigenvalues are distinct}"],
+      propertyVerification[If[characteristicVerified, "verified", "conditional"],
+        verificationMethod, If[characteristicVerified, 0, Null]]],
+    bPropertyRecord[family, sourceStem <> "-determinant", "determinant",
+      "Determinant", "computedExact",
+      "\\det K(u)=\\prod_\\kappa\\kappa^{m_\\kappa}", determinant,
+      assumptions, propertyVerification["computed", "productOfSourceEigenvalues", Null]],
+    bPropertyRecord[family, sourceStem <> "-factorization", "factorization",
+      "Spectral factorization", "sourceIdentity", factorizationLatex, Null,
+      assumptions, propertyVerification["sourceIdentity",
+        "manuscriptEigendecomposition", Null]],
+    bPropertyRecord[family, sourceStem <> "-rank-loci", "rankLoci",
+      "Rank-drop locus", "conditional",
+      "\\operatorname{rank}K(u)<N\\quad\\Longleftrightarrow\\quad\\det K(u)=0",
+      determinant, assumptions, propertyVerification["conditional",
+        "determinantCriterionAwayFromPoles", Null]],
+    bPropertyRecord[family, sourceStem <> "-regularity", "regularity",
+      "Regularity", "sourceIdentity", regularityLatex, Null, assumptions,
+      propertyVerification["sourceIdentity", "qRERegularityClassification", Null]],
+    bPropertyRecord[family, sourceStem <> "-unitarity", "unitarity",
+      "Boundary unitarity", If[unitarityVerified, "verifiedExact", "sourceIdentity"],
+      "K(u)K(u^{-1})=\\operatorname{Id}", Null, assumptions,
+      propertyVerification[If[unitarityVerified, "verified", "sourceIdentity"],
+        If[unitarityVerified, "exactSpectralIdentity", "qREUnitarityTheorem"],
+        If[unitarityVerified, 0, Null]]]
+  }
+];
+
+twistedPropertySource[family_String] := Module[{formula = Lookup[
+    $twistedFamilyFormulae, family, Missing[]]},
+  If[AssociationQ[formula], formula["SourceAnchors"], {}]
+];
+
+twistedPropertyStem[family_String] := ToLowerCase[StringReplace[family,
+  {"*" -> "star", "." -> ""}]];
+
+twistedSpectralGroups[result_Association, u_, q_] := Module[
+  {family = Lookup[result, "Family", Missing[]], matrix = result["KMatrix"],
+   params = Lookup[result, "Parameters", <||>], provenance, branch, size, n,
+   ell, r, lambda, mu, x, k1, k2, h1, h2, plus, quadratic,
+   untouched, endpoint, exceptional, groups},
+  If[!MemberQ[Keys[$twistedFamilyFormulae], family] || family === "C*.4",
+    Return[{}]];
+  provenance = Lookup[result, "Provenance", <||>];
+  branch = ToString[Lookup[provenance, "Branch", "MainCatalogue"]];
+  size = Length[matrix];
+  n = Switch[family,
+    "B*.1" | "B*.2" | "tB*.1" | "tB*.2", size/2,
+    "C**.1" | "C**.2" | "tC**.1" | "tC**.2", (size - 1)/2,
+    "C*.1" | "C*.2", (size - 2)/2];
+  ell = Lookup[params, "l", Missing[]];
+  r = Lookup[params, "r", Missing[]];
+  If[!And @@ (IntegerQ /@ {n, ell, r}), Return[{}]];
+  lambda = Lookup[params, "Lambda", Switch[family,
+    "B*.1", If[r == n, Symbol["\[Lambda]"], I q^(n - r + 1)],
+    "B*.2", I q^(n - r),
+    "tB*.1", If[r == n, Symbol["\[Lambda]"], I q^(n - r)],
+    "tB*.2", If[MemberQ[{n - 1, n}, r], Symbol["\[Lambda]"],
+      I q^(n - r - 1)],
+    "C**.1", I q^(n + 1/2 - r),
+    "C**.2", I q^(n - r - 1/2),
+    "tC**.1", If[r == n, Symbol["\[Lambda]"], I q^(n + 1 - r)],
+    "tC**.2", I q^(n - r),
+    "C*.1", q^(n - r + 1/2),
+    "C*.2", q^(n - r - 1/2)]];
+  mu = Lookup[params, "Mu", Switch[family,
+    "B*.1", q^-ell,
+    "B*.2", If[MemberQ[{0, 1}, ell], Symbol["\[Mu]"], q^(-ell + 1)],
+    "tB*.1", q^(-ell - 1),
+    "tB*.2", q^-ell,
+    "C**.1", If[ell == 0, Symbol["\[Mu]"], q^(-ell - 1)],
+    "C**.2", q^-ell,
+    "tC**.1" | "C*.1", q^(-ell - 1/2),
+    "tC**.2" | "C*.2", q^(-ell + 1/2)]];
+  quadratic = MemberQ[{"tC**.1", "tC**.2", "C*.1", "C*.2"}, family];
+  plus = MemberQ[{"B*.1", "tB*.2", "C**.2", "tC**.1", "C*.1"},
+    family];
+  x = If[quadratic, u^2, u];
+  k1[y_] := lambda mu - y;
+  k2[y_] := lambda^-1 + If[plus, 1, -1] (mu y)^-1;
+  h1 = Together[k1[x^-1]/k1[x]];
+  h2 = Together[k2[x^-1]/k2[x]];
+  If[StringStartsQ[branch, "NonQuasistandard"],
+    Module[{nu = Lookup[params, "Nu", Symbol["\[Nu]"]], nu0, nu1,
+      argumentSign},
+      If[family === "B*.1" && branch === "NonQuasistandardEndpoint02",
+        nu0 = Lookup[params, "Nu0", Symbol["\[Nu]0"]];
+        nu1 = Lookup[params, "Nu1", Symbol["\[Nu]1"]];
+        Return[{
+          <|"Value" -> 1, "LaTeX" -> "1", "Multiplicity" -> size - 2|>,
+          <|"Value" -> Together[u^2
+              k1[nu0^-1 nu1 u^-1]/k1[nu0^-1 nu1 u]
+              k1[nu0 nu1 u^-1]/k1[nu0 nu1 u]],
+            "LaTeX" -> "u^2\\frac{k_1(\\nu_0^{-1}\\nu_1u^{-1})}{k_1(\\nu_0^{-1}\\nu_1u)}\\frac{k_1(\\nu_0\\nu_1u^{-1})}{k_1(\\nu_0\\nu_1u)}",
+            "Multiplicity" -> 1|>,
+          <|"Value" -> Together[u^2
+              k1[nu0 nu1^-1 u^-1]/k1[nu0 nu1^-1 u]
+              k1[nu0^-1 nu1^-1 u^-1]/k1[nu0^-1 nu1^-1 u]],
+            "LaTeX" -> "u^2\\frac{k_1(\\nu_0\\nu_1^{-1}u^{-1})}{k_1(\\nu_0\\nu_1^{-1}u)}\\frac{k_1(\\nu_0^{-1}\\nu_1^{-1}u^{-1})}{k_1(\\nu_0^{-1}\\nu_1^{-1}u)}",
+            "Multiplicity" -> 1|>}]
+      ];
+      If[branch =!= "NonQuasistandardGeneric", Return[{}]];
+      argumentSign = If[family === "C**.1", 1, -1];
+      If[quadratic,
+        Return[Select[{
+          <|"Value" -> 1, "LaTeX" -> "1",
+            "Multiplicity" -> size - 2 ell - 3|>,
+          <|"Value" -> Together[h1
+              k2[-nu^2 x^-1]/k2[-nu^2 x]],
+            "LaTeX" -> "h_1(u^2)\\frac{k_2(-\\nu^2u^{-2})}{k_2(-\\nu^2u^2)}",
+            "Multiplicity" -> 1|>,
+          <|"Value" -> Together[h1
+              k2[-nu^-2 x^-1]/k2[-nu^-2 x]],
+            "LaTeX" -> "h_1(u^2)\\frac{k_2(-\\nu^{-2}u^{-2})}{k_2(-\\nu^{-2}u^2)}",
+            "Multiplicity" -> 1|>,
+          <|"Value" -> Together[u^4 h1],
+            "LaTeX" -> "u^4h_1(u^2)", "Multiplicity" -> ell|>,
+          <|"Value" -> h1, "LaTeX" -> "h_1(u^2)",
+            "Multiplicity" -> ell|>,
+          <|"Value" -> Together[u^2 h1],
+            "LaTeX" -> "u^2h_1(u^2)", "Multiplicity" -> 1|>},
+          Lookup[#, "Multiplicity", 0] > 0 &]]
+      ];
+      Return[Select[{
+        <|"Value" -> 1, "LaTeX" -> "1",
+          "Multiplicity" -> size - 2 ell - 2|>,
+        <|"Value" -> Together[h1
+            k2[argumentSign nu^2 u^-1]/k2[argumentSign nu^2 u]],
+          "LaTeX" -> "h_1(u)\\frac{k_2(\\epsilon\\nu^2u^{-1})}{k_2(\\epsilon\\nu^2u)}",
+          "Multiplicity" -> 1|>,
+        <|"Value" -> Together[h1
+            k2[argumentSign nu^-2 u^-1]/k2[argumentSign nu^-2 u]],
+          "LaTeX" -> "h_1(u)\\frac{k_2(\\epsilon\\nu^{-2}u^{-1})}{k_2(\\epsilon\\nu^{-2}u)}",
+          "Multiplicity" -> 1|>,
+        <|"Value" -> Together[u^2 h1], "LaTeX" -> "u^2h_1(u)",
+          "Multiplicity" -> ell|>,
+        <|"Value" -> h1, "LaTeX" -> "h_1(u)",
+          "Multiplicity" -> ell|>}, Lookup[#, "Multiplicity", 0] > 0 &]]
+    ]
+  ];
+  If[quadratic,
+    untouched = If[MemberQ[{"C*.1", "C*.2"}, family], 1, 0];
+    groups = {
+      <|"Value" -> 1, "LaTeX" -> "1",
+        "Multiplicity" -> 2 n - r - ell + untouched|>,
+      <|"Value" -> Together[h1 h2],
+        "LaTeX" -> "h_1(u^2)h_2(u^2)", "Multiplicity" -> r - ell|>,
+      <|"Value" -> Together[u^4 h1],
+        "LaTeX" -> "u^4h_1(u^2)", "Multiplicity" -> ell|>,
+      <|"Value" -> h1, "LaTeX" -> "h_1(u^2)",
+        "Multiplicity" -> ell|>,
+      <|"Value" -> Together[u^2 h1],
+        "LaTeX" -> "u^2h_1(u^2)", "Multiplicity" -> 1|>},
+    endpoint = If[family === "tB*.2" && r == n - 1, 1, 0];
+    exceptional = Together[h1 -
+      KroneckerDelta[Boole[family === "B*.2"], 1]
+        KroneckerDelta[ell, 1] (u - u^-1) u^-1 (mu - mu^-1)/
+          (k1[u] k2[u])];
+    groups = Join[{
+      <|"Value" -> 1, "LaTeX" -> "1",
+        "Multiplicity" -> size - r - ell - endpoint|>,
+      <|"Value" -> Together[h1 h2], "LaTeX" -> "h_1(u)h_2(u)",
+        "Multiplicity" -> r - ell|>,
+      <|"Value" -> Together[u^2 h1], "LaTeX" -> "u^2h_1(u)",
+        "Multiplicity" -> ell|>,
+      <|"Value" -> h1, "LaTeX" -> "h_1(u)",
+        "Multiplicity" -> If[family === "B*.2", Max[ell - 1, 0], ell]|>},
+      If[family === "B*.2" && ell == 1,
+        {<|"Value" -> exceptional,
+          "LaTeX" -> "h_1(u)-\\frac{(u-u^{-1})u^{-1}(\\mu-\\mu^{-1})}{k_1(u)k_2(u)}",
+          "Multiplicity" -> 1|>}, {}],
+      If[endpoint == 1,
+        {<|"Value" -> Together[1 + (u - u^-1) (lambda + lambda^-1)/
+              (k1[u] k2[u])],
+          "LaTeX" -> "1+\\frac{(u-u^{-1})(\\lambda+\\lambda^{-1})}{k_1(u)k_2(u)}",
+          "Multiplicity" -> 1|>}, {}]]
+  ];
+  Select[groups, Lookup[#, "Multiplicity", 0] > 0 &]
+];
+
+spectralPropertyDossier[result_Association, u_, groups_List, sources_List,
+    factorizationLatex_String, regularityLatex_String, verify_] := Module[
+  {family = result["Family"], matrix = result["KMatrix"], eigenvalues, x,
+   characteristicPolynomial, minimalPolynomial, identity,
+   characteristicVerified = False, unitarityVerified = False, determinant,
+   assumptions, verificationMethod, stem},
+  If[groups === {}, Return[{}]];
+  eigenvalues = DeleteDuplicates[Lookup[groups, "Value"]];
+  x = Symbol["x$K"];
+  characteristicPolynomial = Times @@
+    (((x - #["Value"])^#["Multiplicity"]) & /@ groups);
+  minimalPolynomial = Times @@ ((x - #) & /@ eigenvalues);
+  identity = Fold[Dot, IdentityMatrix[Length[matrix], SparseArray],
+    (matrix - # IdentityMatrix[Length[matrix], SparseArray]) & /@ eigenvalues];
+  If[TrueQ[verify],
+    characteristicVerified = zeroMatrixQ[Map[Together, identity, {2}], True];
+    unitarityVerified = AllTrue[eigenvalues,
+      PossibleZeroQ[Together[# (# /. u -> u^-1) - 1]] &]
+  ];
+  determinant = Together[Times @@
+    ((#["Value"]^#["Multiplicity"]) & /@ groups)];
+  assumptions = {"q,u,\\lambda,\\mu,\\omega_i\\in\\mathbb K^\\times",
+    "\\text{all displayed denominators are nonzero}",
+    "\\text{the displayed eigenvalues are generically distinct}"};
+  verificationMethod = If[characteristicVerified,
+    "sourceSpectrumAndExactMatrixResidual", "sourceEigendecomposition"];
+  stem = twistedPropertyStem[family];
+  Map[Function[property, Append[property, "SourceAnchors" -> sources]], {
+    <|"PropertyID" -> stem <> "-spectrum", "Kind" -> "eigenvalues",
+      "Label" -> "Eigenvalues",
+      "Status" -> If[characteristicVerified, "verifiedExact", "sourceIdentity"],
+      "LaTeX" -> "\\operatorname{Spec}K(u)=\\{\\kappa_1(u),\\ldots,\\kappa_s(u)\\}",
+      "Expression" -> eigenvalues, "AssumptionsLaTeX" -> assumptions,
+      "Verification" -> propertyVerification[
+        If[characteristicVerified, "verified", "sourceIdentity"],
+        verificationMethod, If[characteristicVerified, 0, Null]],
+      "Spectrum" -> groups|>,
+    <|"PropertyID" -> stem <> "-characteristic", "Kind" -> "characteristicIdentity",
+      "Label" -> "Characteristic identity",
+      "Status" -> If[characteristicVerified, "verifiedExact", "sourceIdentity"],
+      "LaTeX" -> "\\chi_{K(u)}(x)=\\prod_\\kappa(x-\\kappa)^{m_\\kappa}",
+      "Expression" -> characteristicPolynomial, "AssumptionsLaTeX" -> assumptions,
+      "Verification" -> propertyVerification[
+        If[characteristicVerified, "verified", "sourceIdentity"],
+        verificationMethod, If[characteristicVerified, 0, Null]], "Spectrum" -> {}|>,
+    <|"PropertyID" -> stem <> "-minimal", "Kind" -> "minimalIdentity",
+      "Label" -> "Generic minimal identity",
+      "Status" -> If[characteristicVerified, "verifiedExact", "conditional"],
+      "LaTeX" -> "m_{K(u)}(x)=\\prod_{\\kappa\\in\\operatorname{Spec}_{\\rm distinct}K(u)}(x-\\kappa)",
+      "Expression" -> minimalPolynomial,
+      "AssumptionsLaTeX" -> Append[assumptions,
+        "\\text{the displayed eigenvalues are distinct}"],
+      "Verification" -> propertyVerification[
+        If[characteristicVerified, "verified", "conditional"],
+        verificationMethod, If[characteristicVerified, 0, Null]], "Spectrum" -> {}|>,
+    <|"PropertyID" -> stem <> "-determinant", "Kind" -> "determinant",
+      "Label" -> "Determinant", "Status" -> "computedExact",
+      "LaTeX" -> "\\det K(u)=\\prod_\\kappa\\kappa^{m_\\kappa}",
+      "Expression" -> determinant, "AssumptionsLaTeX" -> assumptions,
+      "Verification" -> propertyVerification["computed",
+        "productOfSourceEigenvalues", Null], "Spectrum" -> {}|>,
+    <|"PropertyID" -> stem <> "-factorization", "Kind" -> "factorization",
+      "Label" -> "Spectral factorization", "Status" -> "sourceIdentity",
+      "LaTeX" -> factorizationLatex, "Expression" -> Null,
+      "AssumptionsLaTeX" -> assumptions,
+      "Verification" -> propertyVerification["sourceIdentity",
+        "qREIISpectralFactorization", Null], "Spectrum" -> {}|>,
+    <|"PropertyID" -> stem <> "-rank-loci", "Kind" -> "rankLoci",
+      "Label" -> "Rank-drop locus", "Status" -> "conditional",
+      "LaTeX" -> "\\operatorname{rank}K(u)<N\\Longleftrightarrow\\det K(u)=0",
+      "Expression" -> determinant, "AssumptionsLaTeX" -> assumptions,
+      "Verification" -> propertyVerification["conditional",
+        "determinantCriterionAwayFromPoles", Null], "Spectrum" -> {}|>,
+    <|"PropertyID" -> stem <> "-regularity", "Kind" -> "regularity",
+      "Label" -> "Regularity", "Status" -> "sourceIdentity",
+      "LaTeX" -> regularityLatex, "Expression" -> Null,
+      "AssumptionsLaTeX" -> assumptions,
+      "Verification" -> propertyVerification["sourceIdentity",
+        "qREIIRegularityClassification", Null], "Spectrum" -> {}|>,
+    <|"PropertyID" -> stem <> "-unitarity", "Kind" -> "unitarity",
+      "Label" -> "Boundary unitarity",
+      "Status" -> If[unitarityVerified, "verifiedExact", "sourceIdentity"],
+      "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}", "Expression" -> Null,
+      "AssumptionsLaTeX" -> assumptions,
+      "Verification" -> propertyVerification[
+        If[unitarityVerified, "verified", "sourceIdentity"],
+        If[unitarityVerified, "exactSpectralIdentity", "qREIIUnitarityIdentity"],
+        If[unitarityVerified, 0, Null]], "Spectrum" -> {}|>
+  }]
+];
+
+twistedKMatrixPropertyData[result_Association, u_, q_, verify_] := Module[
+  {family = Lookup[result, "Family", Missing[]], groups, power,
+   factorization, regularity, provenance, branch, exactVerify},
+  groups = twistedSpectralGroups[result, u, q];
+  If[groups === {}, Return[{}]];
+  provenance = Lookup[result, "Provenance", <||>];
+  branch = ToString[Lookup[provenance, "Branch", "MainCatalogue"]];
+  exactVerify = TrueQ[verify] &&
+    !StringStartsQ[branch, "NonQuasistandardGeneric"];
+  power = If[MemberQ[{"tC**.1", "tC**.2", "C*.1", "C*.2"}, family],
+    "u^2", "u"];
+  factorization = "K(u)=V D(u)V^{-1},\\qquad D(u)\\text{ is the displayed " <>
+    power <> "-spectral diagonal form}";
+  regularity = If[power === "u^2",
+    "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}",
+    "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}"];
+  spectralPropertyDossier[result, u, groups, twistedPropertySource[family],
+    factorization, regularity, exactVerify]
+];
+
+cStar4PartialPropertyData[result_Association, u_, verify_] := Module[
+  {matrix = result["KMatrix"], size, identity, regularityVerified = False,
+   unitarityVerified = False, sources, assumptions, stem = "cstar4", record},
+  size = Length[matrix];
+  identity = IdentityMatrix[size, SparseArray];
+  sources = twistedPropertySource["C*.4"];
+  assumptions = {"q,u,\\lambda\\in\\mathbb K^\\times",
+    "\\text{all displayed denominators are nonzero}"};
+  If[TrueQ[verify],
+    regularityVerified = zeroMatrixQ[Map[Together,
+      SparseArray[Normal[matrix] /. u -> 1] - identity, {2}], True] &&
+      zeroMatrixQ[Map[Together,
+        SparseArray[Normal[matrix] /. u -> -1] - identity, {2}], True];
+    unitarityVerified = zeroMatrixQ[Map[Together,
+      matrix.SparseArray[Normal[matrix] /. u -> u^-1] - identity, {2}], True]
+  ];
+  record[id_, kind_, label_, status_, latex_, verification_] := <|
+    "PropertyID" -> stem <> "-" <> id, "Kind" -> kind, "Label" -> label,
+    "Status" -> status, "LaTeX" -> latex, "Expression" -> Null,
+    "AssumptionsLaTeX" -> assumptions, "Verification" -> verification,
+    "SourceAnchors" -> sources, "Spectrum" -> {}|>;
+  {
+    record["spectrum", "eigenvalues", "Eigenvalues", "unavailable",
+      "\\operatorname{Spec}K(u)\\text{ awaits completion of the }0,0'\\text{ spectral block in qRE\\_II}",
+      propertyVerification["unavailable", "sourceEigendecompositionIncomplete", Null]],
+    record["characteristic", "characteristicIdentity", "Characteristic identity",
+      "unavailable", "\\chi_{K(u)}(x)\\text{ is not asserted while the source spectral block is unfinished}",
+      propertyVerification["unavailable", "dependsOnIncompleteSourceSpectrum", Null]],
+    record["minimal", "minimalIdentity", "Generic minimal identity", "unavailable",
+      "m_{K(u)}(x)\\text{ is not asserted while the source spectral block is unfinished}",
+      propertyVerification["unavailable", "dependsOnIncompleteSourceSpectrum", Null]],
+    record["determinant", "determinant", "Determinant", "unavailable",
+      "\\det K(u)\\text{ has not yet been normalized into a published family formula}",
+      propertyVerification["unavailable", "sourcePropertyUnfinished", Null]],
+    record["factorization", "factorization", "Spectral factorization", "unavailable",
+      "K(u)=V D(u)V^{-1}\\quad\\text{with the }0,0'\\text{ coefficients explicitly marked unfinished in qRE\\_II}",
+      propertyVerification["unavailable", "sourceEigendecompositionIncomplete", Null]],
+    record["rank-loci", "rankLoci", "Rank-drop locus", "conditional",
+      "\\operatorname{rank}K(u)<N\\Longleftrightarrow\\det K(u)=0",
+      propertyVerification["conditional", "determinantCriterionAwayFromPoles", Null]],
+    record["regularity", "regularity", "Regularity",
+      If[regularityVerified, "verifiedExact", "sourceIdentity"],
+      "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}",
+      propertyVerification[If[regularityVerified, "verified", "sourceIdentity"],
+        If[regularityVerified, "exactMatrixResidual", "qREIIRegularityIdentity"],
+        If[regularityVerified, 0, Null]]],
+    record["unitarity", "unitarity", "Boundary unitarity",
+      If[unitarityVerified, "verifiedExact", "sourceIdentity"],
+      "K(u)K(u^{-1})=\\operatorname{Id}",
+      propertyVerification[If[unitarityVerified, "verified", "sourceIdentity"],
+        If[unitarityVerified, "exactMatrixResidual", "qREIIUnitarityIdentity"],
+        If[unitarityVerified, 0, Null]]]
+  }
+];
+
+Options[KMatrixPropertyData] = {"Verify" -> True};
+KMatrixPropertyData[result_Association, u_, q_: q, OptionsPattern[]] /;
+    KeyExistsQ[result, "KMatrix"] := Switch[Lookup[result, "Family", Missing[]],
+  "A.1" | "A.2" | "A.3" | "A.4",
+    aKMatrixPropertyData[result, u, q, TrueQ[OptionValue["Verify"]]],
+  "C.1", c1KMatrixPropertyData[result, u, q, TrueQ[OptionValue["Verify"]]],
+  "C.2" | "C.4" | "D.4",
+    c24KMatrixPropertyData[result, u, q, TrueQ[OptionValue["Verify"]]],
+  "B.1" | "B.2" | "D.1" | "D.2",
+    bKMatrixPropertyData[result, u, q, TrueQ[OptionValue["Verify"]]],
+  "B*.1" | "B*.2" | "tB*.1" | "tB*.2" | "C**.1" | "C**.2" |
+      "tC**.1" | "tC**.2" | "C*.1" | "C*.2",
+    twistedKMatrixPropertyData[result, u, q, TrueQ[OptionValue["Verify"]]],
+  "C*.4", cStar4PartialPropertyData[result, u,
+    TrueQ[OptionValue["Verify"]]],
+  _, {}
+];
+
 Options[KMatrixRealizationData] = Join[
   DeleteCases[Options[KMatrix], HoldPattern["DressingMatrix" -> _]], {
   "DressingMatrix" -> Automatic, "Realization" -> "Bare",
@@ -2801,18 +4458,25 @@ KMatrixRealizationData[result_Association, u_, opts : OptionsPattern[]] /;
     KeyExistsQ[result, "KMatrix"] := Module[
   {kind = ToLowerCase[ToString[OptionValue["Realization"]]], matrix,
    dressing = OptionValue["DressingMatrix"], dressingData, transformed,
-   transformations = {}, properties, provenance},
+   transformations = {}, properties, provenance, realizedResult, family},
   matrix = result["KMatrix"];
+  family = Lookup[result, "Family", Missing[]];
   provenance = Lookup[result, "Provenance", <||>];
   Switch[kind,
     "bare", transformed = matrix,
     "dressed",
       If[dressing === Automatic,
-        If[Lookup[result, "Family", None] =!= "C.1",
+        dressingData = If[MemberQ[{"B.1", "B.2", "C.1", "C.2", "C.4",
+            "D.1", "D.2", "D.4", "B*.1", "B*.2", "tB*.1", "tB*.2",
+            "C**.1", "C**.2", "tC**.1", "tC**.2", "C*.1", "C*.2",
+            "C*.4"}, family],
+          c1DressingData[Lookup[result, "BasisLabels", Range[Length[matrix]]]],
+          If[MemberQ[{"A.1", "A.2", "A.3", "A.4"}, family],
+            aDressingData[family, Lookup[result, "BasisLabels",
+              Range[Length[matrix]]]], $Failed]];
+        If[!AssociationQ[dressingData],
           Return[Failure["CanonicalDressingUnavailable", <|
-            "Family" -> Lookup[result, "Family", Missing[]]|>]]];
-        dressingData = c1DressingData[Lookup[result, "BasisLabels",
-          Range[Length[matrix]]]];
+            "Family" -> family|>]]];
         dressing = dressingData["Matrix"],
         dressingData = <|"Matrix" -> dressing, "Parameters" -> <||>,
           "LaTeX" -> propertyTeX[dressing], "AssumptionsLaTeX" -> {}|>
@@ -2835,7 +4499,9 @@ KMatrixRealizationData[result_Association, u_, opts : OptionsPattern[]] /;
         "AssumptionsLaTeX" -> {}|>},
     _, Return[Failure["UnknownRealization", <|"Realization" -> kind|>]]
   ];
-  properties = KMatrixPropertyData[result, u, OptionValue["QuantumParameter"],
+  realizedResult = Join[result, <|"KMatrix" -> transformed,
+    "Realization" -> kind, "Transformations" -> transformations|>];
+  properties = KMatrixPropertyData[realizedResult, u, OptionValue["QuantumParameter"],
     "Verify" -> TrueQ[OptionValue["VerifyProperties"]]];
   If[kind === "dressed",
     properties = Map[Function[property, ReplacePart[property,
@@ -3412,24 +5078,45 @@ webCachedReflectionEquationCertificate[matrix_?MatrixQ,
 ];
 
 webSolutionData[result_Association, diagram_?SatakeDiagramQ,
-    diagramID_String, quantumParameter_, ordinal_Integer : 1] /;
+    diagramID_String, quantumParameter_, ordinal_Integer : 1,
+    maximumExactRank_ : Infinity] /;
     KeyExistsQ[result, "KMatrix"] := Module[
   {matrix = result["KMatrix"], family, equation, basis, params, provenance,
-   solutionID, certificate = Null, properties = {}, derived = {}, dressed},
+   solutionID, certificate = Null, properties = {}, derived = {}, dressed,
+   transported, transformations = {}, realization = "bare"},
   family = ToString[Lookup[result, "Family", "Unspecified"]];
   equation = ToString[Lookup[result, "Equation", "Standard"]];
   solutionID = StringRiffle[{diagramID, webSlug[family], ToString[ordinal]}, "--"];
   basis = webBasisLabel /@ Lookup[result, "BasisLabels", Range[Length[matrix]]];
   params = webExpressionAssociation[Lookup[result, "Parameters", <||>]];
   provenance = webJSONSafe[Lookup[result, "Provenance", <||>]];
-  If[family === "C.1",
-    properties = KMatrixPropertyData[result, u, quantumParameter];
+  If[KeyExistsQ[result, "Transport"],
+    transported = KMatrixRealizationData[result, u,
+      "Realization" -> "Transported", "QuantumParameter" -> quantumParameter,
+      "VerifyProperties" -> False];
+    If[AssociationQ[transported],
+      realization = "transported";
+      transformations = webTransformationData /@
+        Lookup[transported, "Transformations", {}]]
+  ];
+  If[MemberQ[{"A.1", "A.2", "A.3", "A.4", "B.1", "B.2",
+      "C.1", "C.2", "C.4", "D.1", "D.2", "D.4", "B*.1", "B*.2",
+      "tB*.1", "tB*.2", "C**.1", "C**.2", "tC**.1", "tC**.2",
+      "C*.1", "C*.2", "C*.4"}, family],
+    properties = KMatrixPropertyData[result, u, quantumParameter,
+      "Verify" -> (diagram["Rank"] <= maximumExactRank)];
     dressed = KMatrixRealizationData[result, u, "Realization" -> "Dressed",
-      "QuantumParameter" -> quantumParameter, "VerifyProperties" -> True];
+      "QuantumParameter" -> quantumParameter,
+      "VerifyProperties" -> (diagram["Rank"] <= maximumExactRank)];
+    If[AssociationQ[dressed] && transformations =!= {},
+      dressed = ReplacePart[dressed, "Transformations" -> Join[
+        Lookup[transported, "Transformations", {}],
+        Lookup[dressed, "Transformations", {}]]]];
     If[AssociationQ[dressed],
       derived = {webDerivedRealizationData[dressed, solutionID]}]
   ];
-  If[webReflectionCertificationScopeQ[diagram, family],
+  If[webReflectionCertificationScopeQ[diagram, family] &&
+      diagram["Rank"] <= maximumExactRank,
     certificate = webCachedReflectionEquationCertificate[matrix, diagram,
       quantumParameter, equation];
     If[AssociationQ[certificate],
@@ -3448,8 +5135,8 @@ webSolutionData[result_Association, diagram_?SatakeDiagramQ,
     "solutionId" -> solutionID,
     "family" -> family,
     "equation" -> equation,
-    "realization" -> "bare",
-    "transformations" -> {},
+    "realization" -> realization,
+    "transformations" -> transformations,
     "basisLabels" -> basis,
     "parameters" -> params,
     "matrix" -> webMatrixData[matrix],
@@ -3461,14 +5148,16 @@ webSolutionData[result_Association, diagram_?SatakeDiagramQ,
   |>
 ];
 
-webComputationData[row_Association, diagramID_String, include_, quantumParameter_] := Module[
+webComputationData[row_Association, diagramID_String, include_, quantumParameter_,
+    maximumExactRank_] := Module[
   {result, solution = Null, candidates = {}, status},
   If[!TrueQ[include], Return[<|
     "status" -> "NotRequested", "solution" -> Null, "candidates" -> {}|>]];
   result = row["Result"];
   status = ToString[row["Status"]];
   If[AssociationQ[result] && KeyExistsQ[result, "KMatrix"],
-    solution = webSolutionData[result, row["Diagram"], diagramID, quantumParameter]
+    solution = webSolutionData[result, row["Diagram"], diagramID,
+      quantumParameter, 1, maximumExactRank]
   ];
   If[AssociationQ[result] && KeyExistsQ[result, "Candidates"],
     candidates = MapIndexed[
@@ -3476,7 +5165,7 @@ webComputationData[row_Association, diagramID_String, include_, quantumParameter
         If[AssociationQ[candidate] && AssociationQ[Lookup[candidate, "Result", None]] &&
             KeyExistsQ[candidate["Result"], "KMatrix"],
           webSolutionData[candidate["Result"], row["Diagram"], diagramID,
-            quantumParameter, First[index]], Nothing]
+            quantumParameter, First[index], maximumExactRank], Nothing]
       ],
       result["Candidates"]
     ]
@@ -3484,7 +5173,8 @@ webComputationData[row_Association, diagramID_String, include_, quantumParameter
   <|"status" -> status, "solution" -> solution, "candidates" -> candidates|>
 ];
 
-webReflectionVerification[computation_Association] := Module[
+webReflectionVerification[computation_Association, diagram_Association,
+    maximumExactRank_] := Module[
   {solutions, certificates},
   solutions = DeleteCases[Join[{computation["solution"]},
     computation["candidates"]], Null];
@@ -3493,6 +5183,11 @@ webReflectionVerification[computation_Association] := Module[
   certificates = DeleteCases[
     (Lookup[#, "reflectionEquationCertificate", Null] & /@ solutions), Null];
   Which[
+    certificates === {} && diagram["Rank"] > maximumExactRank &&
+        AnyTrue[solutions,
+          webReflectionCertificationScopeQ[diagram, Lookup[#, "family", ""]] &],
+      <|"status" -> "sourceIdentity", "method" ->
+          "qREFamilyTheoremBeyondExactExportThreshold", "certificateIds" -> {}|>,
     certificates === {},
       <|"status" -> "notComputed", "method" -> Null, "certificateIds" -> {}|>,
     Length[certificates] === Length[solutions] &&
@@ -3510,6 +5205,9 @@ webReflectionVerification[computation_Association] := Module[
         "certificateIds" -> Lookup[certificates, "certificateId"]|>
   ]
 ];
+webReflectionVerification[computation_Association] :=
+  webReflectionVerification[computation,
+    <|"Rank" -> 0, "AffineType" -> ""|>, Infinity];
 
 webComputationPropertyKinds[computation_Association] := Module[{solutions},
   solutions = DeleteCases[Join[{computation["solution"]},
@@ -3610,14 +5308,17 @@ webFamilyMembershipData[classification_Association, n_Integer] := Module[
 
 Options[WebCatalogueData] = {
   "IncludeKMatrices" -> False,
-  "QuantumParameter" -> q
+  "QuantumParameter" -> q,
+  "MaximumExactCertificationRank" -> 4
 };
 WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
   {canonical = canonicalType[type], diagrams, rows, include,
-   records, statuses, catalogueID, ambient, rMatrixID, familyIDs, familyRecords},
+   records, statuses, catalogueID, ambient, rMatrixID, familyIDs, familyRecords,
+   maximumExactRank},
   If[MissingQ[canonical], Return[$Failed]];
   If[Quiet[CartanMatrixOf[canonical, n]] === $Failed, Return[$Failed]];
   include = TrueQ[OptionValue["IncludeKMatrices"]];
+  maximumExactRank = OptionValue["MaximumExactCertificationRank"];
   If[include, $webReflectionCertificateCache = <||>];
   diagrams = GeneralizedSatakeDiagrams[canonical, n];
   If[diagrams === $Failed, Return[$Failed]];
@@ -3640,7 +5341,7 @@ WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
       classification = row["Classification"];
       diagramID = webDiagramID[diagram];
       computation = webComputationData[row, diagramID, include,
-        OptionValue["QuantumParameter"]];
+        OptionValue["QuantumParameter"], maximumExactRank];
       <|
         "id" -> diagramID,
         "spec" -> <|
@@ -3658,7 +5359,8 @@ WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
         "qsp" -> QSPPresentationData[diagram],
         "reflectionEquation" -> ReplacePart[
           ReflectionEquationData[diagram, rMatrixID],
-          "verification" -> webReflectionVerification[computation]],
+          "verification" -> webReflectionVerification[computation, diagram,
+            maximumExactRank]],
         "capabilities" -> <|
           "qspAlgebra" -> True,
           "kMatrix" -> (computation["solution"] =!= Null ||
@@ -3699,36 +5401,88 @@ WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
   |>
 ];
 
+webDiagramSummaryData[record_Association, catalogueID_String] := <|
+  "id" -> record["id"],
+  "spec" -> record["spec"],
+  "data" -> record["data"],
+  "classification" -> record["classification"],
+  "familyMemberships" -> record["familyMemberships"],
+  "capabilities" -> record["capabilities"],
+  "detailPath" -> FileNameJoin[{"details", catalogueID,
+    record["id"] <> ".json"}]
+|>;
+
+webCatalogueIndexData[data_Association] := Module[
+  {catalogueID = data["catalogue", "id"], summaries},
+  summaries = webDiagramSummaryData[#, catalogueID] & /@ data["diagrams"];
+  ReplacePart[data, {
+    "catalogue" -> Append[data["catalogue"], "layout" -> "lazy-v1"],
+    "summary" -> Append[data["summary"], "detailCount" -> Length[summaries]],
+    "diagrams" -> summaries}]
+];
+
+webDiagramDetailData[data_Association, record_Association] := <|
+  "schemaVersion" -> data["schemaVersion"],
+  "engine" -> data["engine"],
+  "catalogue" -> Append[data["catalogue"], "layout" -> "lazy-v1"],
+  "diagram" -> record
+|>;
+
 Options[ExportWebCatalogue] = {
   "Types" -> Automatic,
   "Ranks" -> {3},
+  "TypeRanks" -> Automatic,
   "IncludeKMatrices" -> False,
-  "QuantumParameter" -> q
+  "QuantumParameter" -> q,
+  "MaximumExactCertificationRank" -> 4
 };
 ExportWebCatalogue[path_String, OptionsPattern[]] := Module[
-  {types, ranks, outputDirectory, files = {}, data, filename, manifest},
+  {types, ranks, typeRanks, specifications, outputDirectory, files = {}, data,
+   index, filename, manifest, catalogueID, detailDirectory, detailPath, type,
+   rank, specification},
   types = Replace[OptionValue["Types"], Automatic -> AffineTypes[]];
   ranks = OptionValue["Ranks"];
+  typeRanks = OptionValue["TypeRanks"];
   If[!ListQ[types] || !ListQ[ranks], Return[$Failed]];
+  If[typeRanks =!= Automatic && !AssociationQ[typeRanks], Return[$Failed]];
+  specifications = Flatten[Map[Function[currentType,
+    ({currentType, #} & /@ If[AssociationQ[typeRanks],
+      Lookup[typeRanks, currentType, ranks], ranks])], types], 1];
   outputDirectory = ExpandFileName[path];
   If[!DirectoryQ[outputDirectory],
     CreateDirectory[outputDirectory, CreateIntermediateDirectories -> True]];
   Do[
+    type = specification[[1]];
+    rank = specification[[2]];
     data = Quiet[WebCatalogueData[type, rank,
       "IncludeKMatrices" -> OptionValue["IncludeKMatrices"],
-      "QuantumParameter" -> OptionValue["QuantumParameter"]]];
+      "QuantumParameter" -> OptionValue["QuantumParameter"],
+      "MaximumExactCertificationRank" ->
+        OptionValue["MaximumExactCertificationRank"]]];
     If[AssociationQ[data] && data["summary", "diagramCount"] > 0,
       filename = data["catalogue", "id"] <> ".json";
-      Export[FileNameJoin[{outputDirectory, filename}], data, "RawJSON"];
+      catalogueID = data["catalogue", "id"];
+      detailDirectory = FileNameJoin[{outputDirectory, "details", catalogueID}];
+      If[!DirectoryQ[detailDirectory],
+        CreateDirectory[detailDirectory, CreateIntermediateDirectories -> True]];
+      Scan[Function[record,
+        detailPath = FileNameJoin[{detailDirectory, record["id"] <> ".json"}];
+        Export[detailPath, webDiagramDetailData[data, record], "RawJSON"]],
+        data["diagrams"]];
+      index = webCatalogueIndexData[data];
+      Export[FileNameJoin[{outputDirectory, filename}], index, "RawJSON"];
       AppendTo[files, <|
         "id" -> data["catalogue", "id"],
         "affineType" -> data["catalogue", "affineType"],
         "rank" -> data["catalogue", "rank"],
         "path" -> filename,
         "diagramCount" -> data["summary", "diagramCount"],
+        "layout" -> "lazy-v1",
+        "detailBasePath" -> FileNameJoin[{"details", catalogueID}],
+        "detailCount" -> Length[data["diagrams"]],
         "families" -> Lookup[data["families"], "familyId"]|>]
     ],
-    {type, types}, {rank, ranks}
+    {specification, specifications}
   ];
   manifest = <|
     "schemaVersion" -> $webCatalogueSchemaVersion,

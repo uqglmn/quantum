@@ -7,7 +7,7 @@ export function buildSolutionBundle(
   ambient: Catalogue["ambient"],
 ) {
   return {
-    schemaVersion: "1.5.0",
+    schemaVersion: "1.6.0",
     engine,
     exportedAt: new Date().toISOString(),
     diagram: {

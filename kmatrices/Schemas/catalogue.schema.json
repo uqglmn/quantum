@@ -5,7 +5,7 @@
   "type": "object",
   "required": ["schemaVersion", "engine", "catalogue", "ambient", "families", "summary", "diagrams"],
   "properties": {
-    "schemaVersion": { "const": "1.5.0" },
+    "schemaVersion": { "const": "1.6.0" },
     "engine": {
       "type": "object",
       "required": ["name", "version"],
@@ -17,11 +17,12 @@
     },
     "catalogue": {
       "type": "object",
-      "required": ["id", "affineType", "rank"],
+      "required": ["id", "affineType", "rank", "layout"],
       "properties": {
         "id": { "type": "string", "minLength": 1 },
         "affineType": { "type": "string", "minLength": 1 },
-        "rank": { "type": "integer", "minimum": 1 }
+        "rank": { "type": "integer", "minimum": 1 },
+        "layout": { "const": "lazy-v1" }
       },
       "additionalProperties": false
     },
@@ -32,9 +33,10 @@
     },
     "summary": {
       "type": "object",
-      "required": ["diagramCount", "statuses"],
+      "required": ["diagramCount", "detailCount", "statuses"],
       "properties": {
         "diagramCount": { "type": "integer", "minimum": 0 },
+        "detailCount": { "type": "integer", "minimum": 0 },
         "statuses": {
           "type": "object",
           "additionalProperties": { "type": "integer", "minimum": 0 }
@@ -44,7 +46,7 @@
     },
     "diagrams": {
       "type": "array",
-      "items": { "$ref": "#/$defs/diagramRecord" }
+      "items": { "$ref": "#/$defs/diagramSummary" }
     }
   },
   "additionalProperties": false,
@@ -315,7 +317,7 @@
           "type": "object",
           "required": ["status", "method", "certificateIds"],
           "properties": {
-            "status": { "enum": ["notComputed", "verified", "failed", "conditional"] },
+            "status": { "enum": ["notComputed", "sourceIdentity", "verified", "failed", "conditional"] },
             "method": { "type": ["string", "null"] },
             "certificateIds": {
               "type": "array",
@@ -600,6 +602,20 @@
         "status": { "type": "string" },
         "solution": { "oneOf": [{ "$ref": "#/$defs/solution" }, { "type": "null" }] },
         "candidates": { "type": "array", "items": { "$ref": "#/$defs/solution" } }
+      },
+      "additionalProperties": false
+    },
+    "diagramSummary": {
+      "type": "object",
+      "required": ["id", "spec", "data", "classification", "familyMemberships", "capabilities", "detailPath"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "spec": { "$ref": "#/$defs/diagramSpec" },
+        "data": { "$ref": "#/$defs/diagramData" },
+        "classification": { "$ref": "#/$defs/classification" },
+        "familyMemberships": { "type": "array", "items": { "$ref": "#/$defs/familyMembership" } },
+        "capabilities": { "$ref": "#/$defs/capabilities" },
+        "detailPath": { "type": "string", "pattern": "^details/[^/]+/[^/]+\\.json$" }
       },
       "additionalProperties": false
     },

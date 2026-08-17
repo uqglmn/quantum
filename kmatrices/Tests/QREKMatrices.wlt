@@ -411,7 +411,7 @@ VerificationTest[
       Together[Normal[specialized - base]] ===
         ConstantArray[0, Dimensions[base]]}
   ],
-  {"KDC1xx", "NonQuasistandardEndpoint01", True, True},
+  {"KDC1xx", "NonQuasistandardEndpoint02", True, True},
   TestID -> "Bstar1-endpoint-nonquasistandard-verified"
 ]
 
@@ -802,7 +802,7 @@ VerificationTest[
 
 VerificationTest[
   QREKMatricesVersion[],
-  "0.17.0",
+  "0.19.0",
   TestID -> "web-engine-version"
 ]
 
@@ -858,6 +858,305 @@ VerificationTest[
 ]
 
 VerificationTest[
+  Module[{specifications, dossiers},
+    specifications = {
+      {"A.1", 6, <||>},
+      {"A.2", 5, <||>},
+      {"A.3", 6, <|"l" -> 1, "r" -> 3, "t" -> 7|>},
+      {"A.4", 5, <||>}};
+    dossiers = Map[Function[spec, Module[{result, properties, dressed},
+      result = KMatrix[<|"Rank" -> spec[[2]], "Family" -> spec[[1]],
+        "Parameters" -> spec[[3]]|>, u];
+      properties = KMatrixPropertyData[result, u];
+      dressed = KMatrixRealizationData[result, u,
+        "Realization" -> "Dressed", "VerifyProperties" -> True];
+      {result["Family"], Dimensions[result["KMatrix"]],
+        Lookup[properties, "Kind"], Lookup[properties[[1 ;; 3]], "Status"],
+        AssociationQ[dressed], Length[dressed["Properties"]]}
+    ]], specifications];
+    dossiers
+  ],
+  {
+    {"A.1", {7, 7}, {"eigenvalues", "characteristicIdentity",
+      "minimalIdentity", "determinant", "factorization", "rankLoci",
+      "regularity", "unitarity"},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, True, 8},
+    {"A.2", {6, 6}, {"eigenvalues", "characteristicIdentity",
+      "minimalIdentity", "determinant", "factorization", "rankLoci",
+      "regularity", "unitarity"},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, True, 8},
+    {"A.3", {7, 7}, {"eigenvalues", "characteristicIdentity",
+      "minimalIdentity", "determinant", "factorization", "rankLoci",
+      "regularity", "unitarity"},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, True, 8},
+    {"A.4", {6, 6}, {"eigenvalues", "characteristicIdentity",
+      "minimalIdentity", "determinant", "factorization", "rankLoci",
+      "regularity", "unitarity"},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, True, 8}
+  },
+  TestID -> "A-families-rank-six-realization-and-property-dossiers"
+]
+
+VerificationTest[
+  Module[{diagram, result, solution, computation, verification},
+    diagram = CreateSatakeDiagram["A(1)", 5, {}];
+    result = KMatrix[diagram, u];
+    solution = QREKMatrices`Private`webSolutionData[result, diagram,
+      QREKMatrices`Private`webDiagramID[diagram], q, 1, 4];
+    computation = <|"status" -> "Computed", "solution" -> solution,
+      "candidates" -> {}|>;
+    verification = QREKMatrices`Private`webReflectionVerification[
+      computation, diagram, 4];
+    {Length[solution["properties"]], Length[solution["derivedRealizations"]],
+      solution["reflectionEquationCertificate"], verification["status"],
+      verification["method"]}
+  ],
+  {8, 1, Null, "sourceIdentity",
+    "qREFamilyTheoremBeyondExactExportThreshold"},
+  TestID -> "A-high-rank-source-reflection-evidence-is-not-exact-certificate"
+]
+
+VerificationTest[
+  Module[{tables},
+    tables = Table[KMatrixTable["A(1)", n, u,
+      "QuantumParameter" -> 2], {n, 2, 6}];
+    {Length /@ tables, Counts /@ (Lookup[#, "Status"] & /@ tables),
+      Count[Lookup[Flatten[tables], "Classification"],
+        association_Association /;
+          association["ClassificationStatus"] ===
+            "ClassifiedUpToDiagramAutomorphism"] > 0}
+  ],
+  {{10, 22, 31, 52, 71},
+    {<|"Computed" -> 10|>, <|"Computed" -> 22|>, <|"Computed" -> 31|>,
+      <|"Computed" -> 52|>, <|"Computed" -> 71|>}, True},
+  TestID -> "A-all-diagrams-through-rank-six-compute-with-dihedral-transport"
+]
+
+VerificationTest[
+  Module[{specifications, dossiers},
+    specifications = {
+      {"C.2", 6, <|"l" -> 1, "r" -> 5|>},
+      {"C.4", 6, <|"l" -> 2, "Lambda" -> 3|>}};
+    dossiers = Map[Function[spec, Module[{result, properties, dressed},
+      result = KMatrix[<|"Rank" -> spec[[2]], "Family" -> spec[[1]],
+        "Parameters" -> spec[[3]]|>, u, "QuantumParameter" -> 4];
+      properties = KMatrixPropertyData[result, u, 4];
+      dressed = KMatrixRealizationData[result, u,
+        "Realization" -> "Dressed", "QuantumParameter" -> 4,
+        "VerifyProperties" -> True];
+      {result["Family"], Dimensions[result["KMatrix"]],
+        Lookup[properties, "Kind"], Lookup[properties[[1 ;; 3]], "Status"],
+        Total[Lookup[properties[[1, "Spectrum"]], "Multiplicity"]],
+        AssociationQ[dressed], Length[dressed["Properties"]]}
+    ]], specifications];
+    dossiers
+  ],
+  {
+    {"C.2", {12, 12}, {"eigenvalues", "characteristicIdentity",
+      "minimalIdentity", "determinant", "factorization", "rankLoci",
+      "regularity", "unitarity"},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, 12, True, 8},
+    {"C.4", {12, 12}, {"eigenvalues", "characteristicIdentity",
+      "minimalIdentity", "determinant", "factorization", "rankLoci",
+      "regularity", "unitarity"},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, 12, True, 8}
+  },
+  TestID -> "C24-families-rank-six-realization-and-property-dossiers"
+]
+
+VerificationTest[
+  Module[{c2, c4},
+    c2 = KMatrixFamilyData["C.2"];
+    c4 = KMatrixFamilyData["C.4"];
+    {c2["ContentStatus"], c4["ContentStatus"],
+      MissingQ[c2["GeneralFormula"]], MissingQ[c4["GeneralFormula"]],
+      Lookup[c2["SourceAnchors"], "Anchor"],
+      Lookup[c4["SourceAnchors"], "Anchor"]}
+  ],
+  {"published", "published", False, False,
+    {"T:all-K", "Res:C2"}, {"T:all-K", "Res:CD4"}},
+  TestID -> "C24-family-registry-has-structured-source-content"
+]
+
+VerificationTest[
+  Module[{specifications, dossiers},
+    specifications = {
+      {"B.1", 6, <|"l" -> 1, "r" -> 5|>},
+      {"B.2", 6, <|"l" -> 1, "r" -> 5, "Mu" -> 3|>}};
+    dossiers = Map[Function[spec, Module[{result, properties, dressed},
+      result = KMatrix[<|"Rank" -> spec[[2]], "Family" -> spec[[1]],
+        "Parameters" -> spec[[3]]|>, u, "QuantumParameter" -> 4];
+      properties = KMatrixPropertyData[result, u, 4];
+      dressed = KMatrixRealizationData[result, u,
+        "Realization" -> "Dressed", "QuantumParameter" -> 4,
+        "VerifyProperties" -> True];
+      {result["Family"], Dimensions[result["KMatrix"]],
+        Lookup[properties, "Kind"], Lookup[properties[[1 ;; 3]], "Status"],
+        Total[Lookup[properties[[1, "Spectrum"]], "Multiplicity"]],
+        AssociationQ[dressed], Length[dressed["Properties"]]}
+    ]], specifications];
+    dossiers
+  ],
+  {
+    {"B.1", {13, 13}, {"eigenvalues", "characteristicIdentity",
+      "minimalIdentity", "determinant", "factorization", "rankLoci",
+      "regularity", "unitarity"},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, 13, True, 8},
+    {"B.2", {13, 13}, {"eigenvalues", "characteristicIdentity",
+      "minimalIdentity", "determinant", "factorization", "rankLoci",
+      "regularity", "unitarity"},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, 13, True, 8}
+  },
+  TestID -> "B-families-rank-six-realization-and-property-dossiers"
+]
+
+VerificationTest[
+  Module[{b1, b2},
+    b1 = KMatrixFamilyData["B.1"];
+    b2 = KMatrixFamilyData["B.2"];
+    {b1["ContentStatus"], b2["ContentStatus"],
+      MissingQ[b1["GeneralFormula"]], MissingQ[b2["GeneralFormula"]],
+      MemberQ[Lookup[b1["SourceAnchors"], "Anchor"], "res:BD1"],
+      Lookup[b2["SourceAnchors"], "Anchor"]}
+  ],
+  {"published", "published", False, False,
+    True, {"T:all-K", "D2:K"}},
+  TestID -> "B-family-registry-has-structured-source-content"
+]
+
+VerificationTest[
+  Module[{specifications, dossiers},
+    specifications = {
+      {"B.1", <|"l" -> 2, "r" -> 4, "Nu" -> 3,
+        "Regime" -> "NonQuasistandard"|>},
+      {"D.1", <|"l" -> 2, "r" -> 4, "Nu" -> 3,
+        "Regime" -> "NonQuasistandard"|>},
+      {"D.1", <|"l" -> 0, "r" -> 2, "Nu0" -> 2, "Nu1" -> 3,
+        "Regime" -> "NonQuasistandard"|>},
+      {"B.1", <|"l" -> 5, "r" -> 6, "Nu" -> 3,
+        "Regime" -> "NonQuasistandard"|>}};
+    dossiers = Map[Function[spec, Module[{result, properties},
+      result = KMatrix[<|"Rank" -> 6, "Family" -> spec[[1]],
+        "Parameters" -> spec[[2]]|>, u, "QuantumParameter" -> 4];
+      properties = KMatrixPropertyData[result, u, 4];
+      {result["Provenance", "Branch"], Dimensions[result["KMatrix"]],
+        Lookup[properties[[1 ;; 3]], "Status"],
+        Total[Lookup[properties[[1, "Spectrum"]], "Multiplicity"]]}
+    ]], specifications];
+    dossiers
+  ],
+  {{"NonQuasistandardGeneric", {13, 13},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, 13},
+    {"NonQuasistandardGeneric", {12, 12},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, 12},
+    {"NonQuasistandardEndpoint02", {12, 12},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, 12},
+    {"NonQuasistandardRightEndpoint", {13, 13},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, 13}},
+  TestID -> "BD1-nonquasistandard-generic-and-endpoint-dossiers"
+]
+
+VerificationTest[
+  Module[{specifications, dossiers},
+    specifications = {
+      {"D.1", 6, <|"l" -> 2, "r" -> 4|>},
+      {"D.2", 6, <|"l" -> 1, "r" -> 5, "Lambda" -> 2, "Mu" -> 3|>},
+      {"D.4", 6, <|"l" -> 1, "Lambda" -> 2, "Alpha" -> 3|>}};
+    dossiers = Map[Function[spec, Module[{result, properties, dressed},
+      result = KMatrix[<|"Rank" -> spec[[2]], "Family" -> spec[[1]],
+        "Parameters" -> spec[[3]]|>, u, "QuantumParameter" -> 4];
+      properties = KMatrixPropertyData[result, u, 4];
+      dressed = KMatrixRealizationData[result, u,
+        "Realization" -> "Dressed", "QuantumParameter" -> 4,
+        "VerifyProperties" -> True];
+      {result["Family"], Dimensions[result["KMatrix"]],
+        Lookup[properties, "Kind"], Lookup[properties[[1 ;; 3]], "Status"],
+        Total[Lookup[properties[[1, "Spectrum"]], "Multiplicity"]],
+        AssociationQ[dressed], Length[dressed["Properties"]]}
+    ]], specifications];
+    dossiers
+  ],
+  {
+    {"D.1", {12, 12}, {"eigenvalues", "characteristicIdentity",
+      "minimalIdentity", "determinant", "factorization", "rankLoci",
+      "regularity", "unitarity"},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, 12, True, 8},
+    {"D.2", {12, 12}, {"eigenvalues", "characteristicIdentity",
+      "minimalIdentity", "determinant", "factorization", "rankLoci",
+      "regularity", "unitarity"},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, 12, True, 8},
+    {"D.4", {12, 12}, {"eigenvalues", "characteristicIdentity",
+      "minimalIdentity", "determinant", "factorization", "rankLoci",
+      "regularity", "unitarity"},
+      {"verifiedExact", "verifiedExact", "verifiedExact"}, 12, True, 8}
+  },
+  TestID -> "D-families-rank-six-realization-and-property-dossiers"
+]
+
+VerificationTest[
+  Module[{families},
+    families = KMatrixFamilyData /@ {"D.1", "D.2", "D.3", "D.4"};
+    {Lookup[families, "ContentStatus"],
+      MissingQ /@ Lookup[families, "GeneralFormula"],
+      Lookup[families[[3, "Properties", 1]], {"Kind", "Status"}],
+      Lookup[families[[4, "SourceAnchors"]], "Anchor"]}
+  ],
+  {{"published", "published", "publishedNonexistence", "published"},
+    {False, False, False, False}, {"nonexistence", "sourceIdentity"},
+    {"T:all-K", "Res:CD4", "D4:K:spec"}},
+  TestID -> "D-family-registry-includes-formulas-and-D3-nonexistence"
+]
+
+VerificationTest[
+  Module[{families, records},
+    families = {"B*.1", "B*.2", "tB*.1", "tB*.2", "C**.1", "C**.2",
+      "tC**.1", "tC**.2", "C*.1", "C*.2", "C*.4"};
+    records = KMatrixFamilyData /@ families;
+    {Length[records], And @@ (StringStartsQ[#, "published"] & /@
+        Lookup[records, "ContentStatus"]),
+      And @@ (AssociationQ /@ Lookup[records, "GeneralFormula"]),
+      Union[Length /@ Lookup[records, "Properties"]]}
+  ],
+  {11, True, True, {2}},
+  TestID -> "twisted-family-registry-has-published-structured-formulas"
+]
+
+VerificationTest[
+  Module[{families, results, properties},
+    families = {"B*.1", "B*.2", "tB*.1", "tB*.2", "C**.1", "C**.2",
+      "tC**.1", "tC**.2", "C*.1", "C*.2"};
+    results = KMatrix[
+        <|"Rank" -> 6, "Family" -> #,
+          "Parameters" -> <|"l" -> 2, "r" -> 4|>|>, u,
+        "QuantumParameter" -> q] & /@ families;
+    properties = KMatrixPropertyData[#, u, q, "Verify" -> False] & /@ results;
+    {Dimensions /@ Lookup[results, "KMatrix"], Length /@ properties,
+      Union[Sort[Lookup[#, "Kind"]] & /@ properties]}
+  ],
+  {{{12, 12}, {12, 12}, {12, 12}, {12, 12}, {13, 13}, {13, 13},
+      {13, 13}, {13, 13}, {14, 14}, {14, 14}},
+    ConstantArray[8, 10],
+    {Sort[{"eigenvalues", "characteristicIdentity", "minimalIdentity",
+      "determinant", "factorization", "rankLoci", "regularity", "unitarity"}]}},
+  TestID -> "twisted-main-families-rank-six-property-dossiers"
+]
+
+VerificationTest[
+  Module[{result, properties},
+    result = KMatrix[<|"Rank" -> 6, "Family" -> "C*.4",
+      "Parameters" -> <|"l" -> 2|>|>, u, "QuantumParameter" -> q];
+    properties = KMatrixPropertyData[result, u, q];
+    {Dimensions[result["KMatrix"]], Length[properties],
+      Lookup[Take[properties, 5], "Status"],
+      Lookup[properties[[{7, 8}, "Verification"]],
+        {"status", "residualNonzeroCount"}]}
+  ],
+  {{14, 14}, 8, ConstantArray["unavailable", 5],
+    {{"verified", 0}, {"verified", 0}}},
+  TestID -> "Cstar4-source-gap-is-explicit-with-exact-regularity-and-unitarity"
+]
+
+VerificationTest[
   Module[{data},
     data = WebExpressionData[SparseArray[{{1, 2} -> q/2}, {2, 2}]];
     {data["kind"], data["dimensions"], data["indexBase"],
@@ -866,6 +1165,25 @@ VerificationTest[
   ],
   {"sparseMatrix", {2, 2}, 0, {0, 1}, "call"},
   TestID -> "web-expression-sparse-symbolic-matrix"
+]
+
+VerificationTest[
+  Module[{diagram, result, solution, computation, verification},
+    diagram = CreateSatakeDiagram["B(1)", 5, {}];
+    result = KMatrix[diagram, u];
+    solution = QREKMatrices`Private`webSolutionData[result, diagram,
+      QREKMatrices`Private`webDiagramID[diagram], q, 1, 4];
+    computation = <|"status" -> "Computed", "solution" -> solution,
+      "candidates" -> {}|>;
+    verification = QREKMatrices`Private`webReflectionVerification[
+      computation, diagram, 4];
+    {Length[solution["properties"]], Length[solution["derivedRealizations"]],
+      solution["reflectionEquationCertificate"], verification["status"],
+      verification["method"]}
+  ],
+  {8, 1, Null, "sourceIdentity",
+    "qREFamilyTheoremBeyondExactExportThreshold"},
+  TestID -> "BCD-high-rank-source-reflection-evidence-is-not-exact-certificate"
 ]
 
 VerificationTest[
@@ -879,25 +1197,31 @@ VerificationTest[
       Lookup[data["families"], "familyId"],
       Union[Length /@ Lookup[records, "familyMemberships"]]}
   ],
-  {"1.5.0", "0.17.0", 7, True, {"NotRequested"},
+  {"1.6.0", "0.19.0", 7, True, {"NotRequested"},
     {"C**.1", "C**.2"}, {1, 2}},
   TestID -> "web-catalogue-stable-records"
 ]
 
 VerificationTest[
-  Module[{directory, manifest, imported},
+  Module[{directory, manifest, imported, index, detail},
     directory = FileNameJoin[{$TemporaryDirectory,
       "qre-web-export-" <> IntegerString[Hash[$SessionID]]}];
     manifest = ExportWebCatalogue[directory,
       "Types" -> {"A2n(2)"}, "Ranks" -> {2},
       "IncludeKMatrices" -> False];
     imported = Import[FileNameJoin[{directory, "manifest.json"}], "RawJSON"];
+    index = Import[FileNameJoin[{directory, imported["files"][[1, "path"]]}],
+      "RawJSON"];
+    detail = Import[FileNameJoin[{directory, index["diagrams"][[1,
+      "detailPath"]]}], "RawJSON"];
     {manifest["files"][[1, "diagramCount"]],
       imported["schemaVersion"],
       imported["files"][[1, "families"]],
-      FileExistsQ[FileNameJoin[{directory, imported["files"][[1, "path"]]}]]}
+      imported["files"][[1, "layout"]],
+      index["summary", "detailCount"],
+      detail["diagram", "id"] === index["diagrams"][[1, "id"]]}
   ],
-  {7, "1.5.0", {"C**.1", "C**.2"}, True},
+  {7, "1.6.0", {"C**.1", "C**.2"}, "lazy-v1", 7, True},
   TestID -> "web-catalogue-export-manifest"
 ]
 
@@ -917,7 +1241,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-  Module[{data, computations, solutions, certificates, unavailable},
+  Module[{data, computations, solutions, certificates},
     data = WebCatalogueData["A(1)", 2,
       "IncludeKMatrices" -> True, "QuantumParameter" -> q];
     computations = Lookup[data["diagrams"], "computation"];
@@ -925,15 +1249,11 @@ VerificationTest[
       (Join[DeleteCases[{#["solution"]}, Null], #["candidates"]] &) /@
         computations, 1];
     certificates = Lookup[solutions, "reflectionEquationCertificate"];
-    unavailable = Select[data["diagrams"], #["computation", "solution"] === Null &&
-      #["computation", "candidates"] === {} &];
     {Length[solutions], Union[Lookup[certificates, "status"]],
       Union[Lookup[certificates, "level"]],
-      Union[Lookup[certificates, "residualNonzeroCount"]],
-      Union[Lookup[Lookup[unavailable, "reflectionEquation"],
-        "verification"][[All, "status"]]]}
+      Union[Lookup[certificates, "residualNonzeroCount"]]}
   ],
-  {9, {"verified"}, {"exactSymbolic"}, {0}, {"notComputed"}},
+  {10, {"verified"}, {"exactSymbolic"}, {0}},
   TestID -> "web-catalogue-type-a-exact-reflection-certificates"
 ]
 
@@ -950,8 +1270,22 @@ VerificationTest[
       Union[Lookup[certificates, "level"]],
       Union[Lookup[certificates, "residualNonzeroCount"]]}
   ],
-  {13, {"verified"}, {"exactSymbolic"}, {0}},
+  {14, {"verified"}, {"exactSymbolic"}, {0}},
   TestID -> "web-catalogue-untwisted-B-exact-reflection-certificates"
+]
+
+VerificationTest[
+  Module[{diagram, result, solution},
+    diagram = CreateSatakeDiagram["A(1)", 2, {0, 1}, {1, 0, 2}];
+    result = KMatrix[diagram, u, "QuantumParameter" -> q];
+    solution = QREKMatrices`Private`webSolutionData[result, diagram,
+      QREKMatrices`Private`webDiagramID[diagram], q, 1, 3];
+    {KeyExistsQ[result, "Transport"], solution["realization"],
+      Lookup[solution["transformations"], "kind"],
+      Lookup[solution["derivedRealizations"][[1, "transformations"]], "kind"]}
+  ],
+  {True, "transported", {"transport"}, {"transport", "dress"}},
+  TestID -> "web-solution-materializes-dihedral-transport-chain"
 ]
 
 VerificationTest[

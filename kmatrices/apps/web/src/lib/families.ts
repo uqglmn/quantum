@@ -1,4 +1,4 @@
-import type { DiagramRecord, FamilyRecord } from "../domain";
+import type { DiagramRecord, DiagramSummary, FamilyRecord } from "../domain";
 import { formatExpression } from "./expression";
 
 export type FamilyStatus = "published" | "computational";
@@ -80,7 +80,7 @@ function exportedFamilyDefinition(record: FamilyRecord): FamilyDefinition {
     affineTypes: record.affineTypes,
     title: record.title,
     description: record.description,
-    status: record.contentStatus === "published" ? "published" : "computational",
+    status: record.contentStatus.startsWith("published") ? "published" : "computational",
     parameterOrder: record.parameterOrder,
     parameterDomain: record.parameterDomain,
     regimeFormulas: (record.regimeFormulas ?? []).map(({ regime, formula }) => ({
@@ -112,12 +112,14 @@ export function familiesForAffineType(affineType: string): FamilyDefinition[] {
   return definitions.filter((definition) => definition.affineTypes.includes(affineType));
 }
 
-export function recordBelongsToFamily(record: DiagramRecord, familyId: string): boolean {
+type NavigableDiagram = DiagramRecord | DiagramSummary;
+
+export function recordBelongsToFamily(record: NavigableDiagram, familyId: string): boolean {
   return record.familyMemberships?.some((membership) => membership.familyId === familyId)
     ?? (record.classification.family === familyId || record.classification.candidateFamilies.includes(familyId));
 }
 
-export function parameterValue(record: DiagramRecord, key: string): string | null {
+export function parameterValue(record: NavigableDiagram, key: string): string | null {
   const value = record.classification.parameters[key];
   return value ? formatExpression(value) : null;
 }

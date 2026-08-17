@@ -1,4 +1,4 @@
-import type { Catalogue, CatalogueManifest, DiagramRecord } from "../domain";
+import type { Catalogue, CatalogueManifest, DiagramSummary } from "../domain";
 import type { FamilyDefinition } from "../lib/families";
 import { parameterLabel, parameterValue, recordBelongsToFamily } from "../lib/families";
 import { SatakeDiagram } from "./SatakeDiagram";
@@ -7,12 +7,12 @@ interface FamilyConfiguratorProps {
   family: FamilyDefinition;
   manifest: CatalogueManifest;
   catalogue: Catalogue;
-  selected: DiagramRecord;
+  selected: DiagramSummary;
   onFileChange: (fileId: string) => void;
   onDiagramChange: (diagramId: string) => void;
 }
 
-function recordLabel(record: DiagramRecord) {
+function recordLabel(record: DiagramSummary) {
   const x = record.spec.X.length ? `{${record.spec.X.join(",")}}` : "∅";
   return `X=${x} · ${record.classification.regime}`;
 }

@@ -1,14 +1,15 @@
 {
   "name": "qre-satake-explorer",
   "private": true,
-  "version": "0.9.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "validate:data": "node scripts/validate-catalogue.mjs"
+    "validate:data": "node scripts/validate-catalogue.mjs",
+    "check": "npm run validate:data && npm test -- --run && npm run build"
   },
   "dependencies": {
     "katex": "^0.18.4",

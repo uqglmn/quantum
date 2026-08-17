@@ -105,3 +105,20 @@ out of scope.
 
 The static application must degrade gracefully when the compute provider is
 unhealthy or absent.
+
+## Static catalogue scaling
+
+The rank-six build contains 41 catalogue indexes and 1,095 lazy diagram
+details. Characteristic and minimal identities must remain in factored form in
+the interchange layer. Expanding the spectral products caused a measured
+6.7 GB build and individual details above 100 MB; preserving
+`product (x-kappa)^multiplicity` reduced the same exact catalogue to about
+260 MB, with the largest detail below 700 KB.
+
+The next storage step, if higher ranks or representations require it, is
+content-addressed shared artifacts: store repeated family formulas,
+representation/R-matrix data, and invariant dossiers once and reference them by
+stable IDs. Diagram details should remain independently cacheable and should
+never embed an expanded symbolic expression merely for display. A future
+dynamic compute provider may return expanded expressions on explicit request,
+subject to response-size and execution limits.

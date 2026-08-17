@@ -24,6 +24,9 @@ export interface CatalogueManifest {
     rank: number;
     path: string;
     diagramCount: number;
+    layout: "lazy-v1";
+    detailBasePath: string;
+    detailCount: number;
     families: string[];
   }>;
 }
@@ -222,7 +225,7 @@ export interface ReflectionEquationRecord {
   latex: string;
   rMatrixId: string;
   verification: {
-    status: "notComputed" | "verified" | "failed" | "conditional";
+    status: "notComputed" | "sourceIdentity" | "verified" | "failed" | "conditional";
     method: string | null;
     certificateIds: string[];
   };
@@ -273,14 +276,31 @@ export interface DiagramRecord {
   };
 }
 
+export interface DiagramSummary {
+  id: string;
+  spec: DiagramRecord["spec"];
+  data: DiagramRecord["data"];
+  classification: DiagramRecord["classification"];
+  familyMemberships: FamilyMembership[];
+  capabilities: DiagramRecord["capabilities"];
+  detailPath: string;
+}
+
+export interface DiagramDetail {
+  schemaVersion: string;
+  engine: { name: "QREKMatrices"; version: string };
+  catalogue: { id: string; affineType: string; rank: number; layout: "lazy-v1" };
+  diagram: DiagramRecord;
+}
+
 export interface Catalogue {
   schemaVersion: string;
   engine: { name: "QREKMatrices"; version: string };
-  catalogue: { id: string; affineType: string; rank: number };
+  catalogue: { id: string; affineType: string; rank: number; layout: "lazy-v1" };
   ambient: { representation: RepresentationRecord; rMatrix: RMatrixRecord };
   families: FamilyRecord[];
-  summary: { diagramCount: number; statuses: Record<string, number> };
-  diagrams: DiagramRecord[];
+  summary: { diagramCount: number; detailCount: number; statuses: Record<string, number> };
+  diagrams: DiagramSummary[];
 }
 
 export type Realization = "bare" | "dressed" | "transported";

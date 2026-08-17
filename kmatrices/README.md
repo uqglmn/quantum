@@ -280,8 +280,10 @@ The main all-rank formula families have been extracted from qRE/qRE_II:
 - untwisted A.1--A.4, B.1/B.2, C.1/C.2/C.4, and D.1/D.2/D.4;
 - twisted B*.1/B*.2, tB*.1/tB*.2, C**.1/C**.2,
   tC**.1/tC**.2, and C*.1/C*.2/C*.4;
-- generic non-quasistandard `r = l + 2` branches of B*.1, tB*.1,
-  C**.1, tC**.1, and C*.1.
+- generic non-quasistandard `r = l + 2` branches of untwisted B.1/C.1/D.1
+  and twisted B*.1, tB*.1, C**.1, tC**.1, and C*.1. The untwisted
+  BD.1 `(l,r)=(0,2)` two-parameter endpoint and the B.1 short-root endpoint
+  `(l,r)=(n-1,n)` are also implemented.
 
 For example:
 
@@ -439,20 +441,25 @@ sparse K-matrices where computed, explicit candidate-family selection,
 self-hosted mathematical rendering, provenance, and JSON/LaTeX downloads. It
 also exports instantiated QSP generator presentations, shared representation
 records, sparse ambient R-matrices, and convention-bound reflection equations.
-Family content is package-owned and exported as first-class records: A.1--A.4
-and C.1 currently include their general formulas, semantic expression trees,
-parameter domains, branch constraints, and manuscript anchors; all other
-twisted and untwisted families have stable extensible records ready for content
-transcription. C.1 is the first complete scientific dossier: the package exports
-its quasistandard and generic non-quasistandard formulas, bare and canonical
-diagonally dressed matrices, spectra with multiplicities, characteristic and
-minimal identities, determinant and rank loci, factorisation, regularity, and
-boundary unitarity. Each property carries assumptions, provenance, and its
-verification method. The R panel supports formula, sparse-entry, provenance,
-and JSON views. Exact
-expanded QSP relations, catalogue-wide reflection-equation certificates,
-interactive free-parameter substitution, and corresponding dossiers for the
-remaining families remain extension boundaries. See `Documentation/PlatformArchitecture.md`,
+Family content is package-owned and exported as first-class records. Every
+untwisted family A.1--A.4, B.1/B.2, C.1/C.2/C.4, and D.1--D.4, and every
+twisted family B*.1/B*.2, tB*.1/tB*.2, C**.1/C**.2, tC**.1/tC**.2, and
+C*.1/C*.2/C*.4 now has a structured theorem formula (or, for D.3, the
+source-backed nonexistence statement), semantic expression tree, parameter
+domain, branch constraints, and manuscript anchors. Computable solutions
+export bare and canonical diagonally dressed matrices, spectra with multiplicities,
+characteristic and minimal identities, determinant and rank loci,
+factorisation, regularity, and boundary unitarity. The B.1/C.1/D.1
+and twisted non-quasistandard branches retain their distinct formulas and
+spectra. Each property carries assumptions, provenance, and its verification
+method. C*.4 explicitly marks the unfinished source eigendecomposition while
+still verifying regularity and unitarity directly. The exporter is configured
+through rank six for every supported presentation (A2n-1(2) and its transpose
+start at rank three; D(1) starts at rank four), using lazy per-diagram detail
+files. The current local build contains 41 catalogues and 1,095 diagrams. The R
+panel supports formula, sparse-entry, provenance, and JSON views. Exact expanded
+QSP relations, twisted reflection-equation convention reconciliation, and
+interactive free-parameter substitution remain extension boundaries. See `Documentation/PlatformArchitecture.md`,
 `Documentation/PlatformRoadmap.md`, and `Documentation/PlatformDeployment.md`.
 
 ## Current research boundary
@@ -463,6 +470,7 @@ parameters are supplied. It also exposes the main closed-form
 catalogue and structurally classifies the B/C/D and twisted families. It does
 not yet resolve genuinely overlapping regimes from coideal parameter data,
 encode all canonical coideal assignments, handle representation-changing
-exceptional automorphisms, or provide the explicitly unfinished tB*.1
-non-quasistandard endpoint. Those are the next extraction layers; see
+exceptional automorphisms, or invent formulas for the 31 endpoint diagrams
+whose source branches are absent or explicitly unfinished. Those are the next
+extraction layers; see
 `Documentation/ResearchNotes.md`.

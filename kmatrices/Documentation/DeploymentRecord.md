@@ -181,3 +181,30 @@ build.
 Validation for this increment includes 71 Wolfram tests, nine frontend unit
 tests, schema validation of all 23 generated catalogues, cross-record checks,
 and a production build.
+
+## Rank-six classical catalogue and twisted dossiers — 2026-08-17
+
+- frontend: `1.0.0`;
+- QREKMatrices engine: `0.19.0`;
+- expanded the local static catalogue to all nine supported affine
+  presentations through rank six, yielding 41 indexes and 1,095 diagram
+  details;
+- migrated structured formulas and source anchors for all eleven twisted
+  families and added eight-part property dossiers for their computable main and
+  generic non-quasistandard solutions;
+- retained the unfinished C*.4 spectral block as an explicit unavailable
+  capability while exactly verifying its regularity and unitarity identities;
+- materialized canonical diagonal dressings for twisted families and explicit
+  diagram-automorphism transport chains for non-representative type-A diagrams;
+- added orphan-aware semantic validation, including computation-status,
+  property-completeness, and reflection-evidence summaries;
+- kept exact bulk tensor certification capped at rank three and used
+  source-identity evidence above that threshold to keep the static build
+  reproducible.
+- retained characteristic and minimal identities as exact factored spectral
+  products, reducing the rank-six static catalogue from 6.7 GB to about 260 MB
+  and the largest detail from roughly 130 MB to below 700 KB.
+
+Validation for this increment includes 86 Wolfram tests, nine frontend tests,
+schema and semantic validation of all 41 catalogues and 1,095 details, and the
+production build. This increment is the rank-six public release.

@@ -143,15 +143,30 @@ future evaluation in other finite-dimensional modules.
   compatible diagram automorphisms by a spectral representation intertwiner
   derived from the Chevalley generators. The transported formula
   `G(eta/u)^(-1) K(u) G(eta u)` is independently checked by boundary inference.
-- The ambient R-matrix and reflection-equation layer now gives exact symbolic
-  tensor certificates for every exported untwisted A/B/C/D K-matrix. All but
-  one of the 206 candidates verify. The exception is the low-rank D.2 proposal
+- The ambient R-matrix and reflection-equation layer gives exact symbolic
+  tensor certificates for untwisted A/B/C/D K-matrices within the configured
+  bulk certification threshold (currently rank three), and source-identity
+  evidence above it. The independent rank-four audit found one exception: the
+  low-rank D.2 proposal
   on `X={0,1}`, `tau=(3 4)` in D4(1): its `(l,r)=(2,3)` lies outside the
   source table's D.2 admissibility ranges and has a nonzero exact residual,
   while the diagram's D.1 alternative verifies. The platform preserves this
-  as a conditional mixed-candidate audit result.
+  as a conditional mixed-candidate audit result. Twisted reflection equations
+  remain source-backed until their R/K normalization and crossing conventions
+  are reconciled.
 
 ## Next extraction stages
+
+The rank-six catalogue leaves 31 diagrams at
+`NonQuasistandardFormulaRequired`. This is a source boundary, not a classifier
+failure: nine are the two C.1 end loci `(0,2)` and `(n-2,n)` where present; four
+are the B*.1 right endpoints `(n-2,n)`; eight are the two tB*.1 endpoints
+`(0,2)` and `(n-2,n)`; five are the C**.1 left endpoints `(0,2)`; and five are
+the tC**.1 left endpoints `(0,2)`. The implemented generic ranges and the
+manuscript-complete exceptional endpoints remain computed. Any future formula
+for these 31 records must be labelled conjectural unless it is recovered from
+additional source calculations and independently passes the represented
+boundary equation.
 
 1. Use explicit coideal data to select among the alternatives already exposed
    for genuinely overlapping regimes, and encode the remaining low-rank
