@@ -34,3 +34,18 @@ used for the initial deployment did not have GitHub's `workflow` scope, so the
 first release was published directly from `gh-pages`. Once workflow scope is
 granted, install the template as `.github/workflows/pages.yml` to automate
 validation and deployment from `main`.
+
+## Scientific interface increment — 2026-08-17
+
+- frontend: `0.2.0`;
+- QREKMatrices engine: `0.11.1`;
+- added explicit candidate-family selection for ambiguous diagrams;
+- added self-hosted KaTeX rendering for QSP, K-matrix, and reflection formulas;
+- added safe-AST sparse-entry rendering;
+- added downloadable JSON research bundles and LaTeX documents;
+- added engine, realization, transformation-chain, and source provenance views;
+- removed private Wolfram contexts from all 437 exported solution LaTeX strings.
+
+Validation for this increment includes four frontend unit tests, the 57-test
+Wolfram suite, schema validation, production build, and scripted browser
+interaction that selects the `B.2` candidate of an ambiguous `B.1/B.2` record.

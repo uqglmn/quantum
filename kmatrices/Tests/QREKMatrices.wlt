@@ -802,7 +802,7 @@ VerificationTest[
 
 VerificationTest[
   QREKMatricesVersion[],
-  "0.11.0",
+  "0.11.1",
   TestID -> "web-engine-version"
 ]
 
@@ -826,7 +826,7 @@ VerificationTest[
       data["summary", "diagramCount"], DuplicateFreeQ[ids],
       Union[Lookup[Lookup[records, "computation"], "status"]]}
   ],
-  {"1.0.0", "0.11.0", 7, True, {"NotRequested"}},
+  {"1.0.0", "0.11.1", 7, True, {"NotRequested"}},
   TestID -> "web-catalogue-stable-records"
 ]
 
@@ -854,8 +854,9 @@ VerificationTest[
       "solution"], Null];
     solution = First[solutions];
     {solution["realization"], solution["transformations"],
-      solution["matrix", "kind"], StringQ[solution["latex"]]}
+      solution["matrix", "kind"], StringQ[solution["latex"]],
+      StringFreeQ[solution["latex"], "QREKMatrices"]}
   ],
-  {"bare", {}, "sparseMatrix", True},
+  {"bare", {}, "sparseMatrix", True, True},
   TestID -> "web-catalogue-includes-safe-k-matrices"
 ]

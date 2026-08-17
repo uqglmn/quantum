@@ -72,7 +72,7 @@ $twistedTypes = {
   "A2n-1(2)", "A2n-1(2)T", "A2n(2)", "A2n(2)T", "Dn+1(2)"
 };
 $canonicalTypes = Join[$untwistedTypes, $twistedTypes];
-$qreKMatricesVersion = "0.11.0";
+$qreKMatricesVersion = "0.11.1";
 $webCatalogueSchemaVersion = "1.0.0";
 
 QREKMatricesVersion[] := $qreKMatricesVersion;
@@ -2441,6 +2441,11 @@ webBasisLabel[value_Integer] := value;
 webBasisLabel[value_String] := value;
 webBasisLabel[value_] := ToString[value, InputForm];
 
+webMatrixLatex[matrix_] := Block[
+  {$ContextPath = DeleteDuplicates[Join[{"QREKMatrices`Private`"}, $ContextPath]]},
+  ToString[TeXForm[MatrixForm[Normal[matrix]]]]
+];
+
 webSolutionData[result_Association, diagramID_String, ordinal_Integer : 1] /;
     KeyExistsQ[result, "KMatrix"] := Module[
   {matrix = result["KMatrix"], family, equation, basis, params, provenance},
@@ -2458,7 +2463,7 @@ webSolutionData[result_Association, diagramID_String, ordinal_Integer : 1] /;
     "basisLabels" -> basis,
     "parameters" -> params,
     "matrix" -> webMatrixData[matrix],
-    "latex" -> ToString[TeXForm[MatrixForm[Normal[matrix]]]],
+    "latex" -> webMatrixLatex[matrix],
     "provenance" -> provenance,
     "properties" -> {}
   |>

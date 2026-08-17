@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Catalogue, CatalogueManifest, DiagramRecord, Realization, Solution } from "./domain";
+import { MathFormula } from "./components/MathFormula";
 import { SatakeDiagram } from "./components/SatakeDiagram";
 import { staticCatalogueProvider } from "./lib/catalogue";
-import { formatExpression } from "./lib/expression";
+import { expressionToLatex, formatExpression } from "./lib/expression";
+import { buildSolutionBundle, downloadText, safeFilename, solutionLatexDocument } from "./lib/solutionExport";
 
 function Badge({ children, tone = "neutral" }: { children: React.ReactNode; tone?: "neutral" | "good" | "warn" }) {
   return <span className={`badge badge--${tone}`}>{children}</span>;
@@ -14,26 +16,78 @@ function Availability({ available, children }: { available: boolean; children: R
   </span>;
 }
 
-function MatrixView({ solution }: { solution: Solution }) {
-  const [view, setView] = useState<"sparse" | "latex">("sparse");
+function MatrixView({ record, solution, engine }: {
+  record: DiagramRecord;
+  solution: Solution;
+  engine: Catalogue["engine"];
+}) {
+  const [view, setView] = useState<"rendered" | "sparse" | "latex" | "provenance">("rendered");
+  const [copied, setCopied] = useState(false);
+  useEffect(() => { setView("rendered"); setCopied(false); }, [solution.solutionId]);
+
+  const stem = safeFilename(`${record.id}-${solution.family}`);
+  const copyLatex = async () => {
+    await navigator.clipboard.writeText(solution.latex);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1500);
+  };
+  const downloadJson = () => downloadText(
+    `${stem}.json`,
+    JSON.stringify(buildSolutionBundle(record, solution, engine), null, 2),
+    "application/json",
+  );
+  const downloadLatex = () => downloadText(
+    `${stem}.tex`, solutionLatexDocument(record, solution), "text/x-tex",
+  );
+
   return <div className="matrix-view">
-    <div className="subtabs">
-      <button className={view === "sparse" ? "is-active" : ""} onClick={() => setView("sparse")}>Sparse entries</button>
-      <button className={view === "latex" ? "is-active" : ""} onClick={() => setView("latex")}>LaTeX</button>
+    <div className="matrix-toolbar">
+      <div className="subtabs">
+        <button className={view === "rendered" ? "is-active" : ""} onClick={() => setView("rendered")}>Matrix</button>
+        <button className={view === "sparse" ? "is-active" : ""} onClick={() => setView("sparse")}>Sparse entries</button>
+        <button className={view === "latex" ? "is-active" : ""} onClick={() => setView("latex")}>LaTeX</button>
+        <button className={view === "provenance" ? "is-active" : ""} onClick={() => setView("provenance")}>Provenance</button>
+      </div>
+      <div className="export-actions">
+        <button onClick={downloadJson}>JSON ↓</button>
+        <button onClick={downloadLatex}>TeX ↓</button>
+      </div>
     </div>
-    {view === "sparse" ? <div className="sparse-table" role="table">
+    {view === "rendered" && <div className="rendered-matrix">
+      <MathFormula latex={`K(u) = ${solution.latex}`} label={`${solution.family} K-matrix`} />
+    </div>}
+    {view === "sparse" && <div className="sparse-table" role="table">
       <div className="sparse-heading">{solution.matrix.dimensions.join(" × ")} · {solution.matrix.entries.length} nonzero entries · basis [{solution.basisLabels.join(", ")}]</div>
       {solution.matrix.entries.map((entry) => <div className="sparse-row" key={entry.index.join("-")}>
         <code>K<sub>{entry.index[0] + 1},{entry.index[1] + 1}</sub></code>
-        <span>{formatExpression(entry.value)}</span>
+        <MathFormula latex={expressionToLatex(entry.value)} display={false} label={formatExpression(entry.value)} />
       </div>)}
-    </div> : <pre className="latex-source">{solution.latex}</pre>}
+    </div>}
+    {view === "latex" && <div className="latex-pane">
+      <button className="copy-button" onClick={copyLatex}>{copied ? "Copied" : "Copy LaTeX"}</button>
+      <pre className="latex-source">{solution.latex}</pre>
+    </div>}
+    {view === "provenance" && <div className="provenance-pane">
+      <dl>
+        <div><dt>Solution ID</dt><dd><code>{solution.solutionId}</code></dd></div>
+        <div><dt>Engine</dt><dd>{engine.name} {engine.version}</dd></div>
+        <div><dt>Realisation</dt><dd>{solution.realization}</dd></div>
+        <div><dt>Transformation chain</dt><dd>{solution.transformations.length ? solution.transformations.map(({ kind }) => kind).join(" → ") : "none (bare)"}</dd></div>
+      </dl>
+      <pre>{JSON.stringify(solution.provenance, null, 2)}</pre>
+    </div>}
   </div>;
 }
 
-function FormulaPanel({ record, realization }: { record: DiagramRecord; realization: Realization }) {
+function FormulaPanel({ record, realization, engine }: {
+  record: DiagramRecord;
+  realization: Realization;
+  engine: Catalogue["engine"];
+}) {
   const solutions = [record.computation.solution, ...record.computation.candidates].filter(Boolean) as Solution[];
-  const selected = solutions[0];
+  const [solutionId, setSolutionId] = useState(solutions[0]?.solutionId ?? "");
+  useEffect(() => setSolutionId(solutions[0]?.solutionId ?? ""), [record.id]);
+  const selected = solutions.find((solution) => solution.solutionId === solutionId) ?? solutions[0];
   if (realization === "dressed") return <div className="empty-state">
     <strong>Dressing is a transformation layer.</strong>
     <p>The static catalogue preserves the bare matrix. A diagonal or general dressing matrix G will produce G⁻¹KG (standard) or GKG (transposed) through the compute provider.</p>
@@ -47,17 +101,24 @@ function FormulaPanel({ record, realization }: { record: DiagramRecord; realizat
     <p>Status: {record.computation.status}. The diagram and classification remain browsable; a later compute provider can fill this panel without changing the page model.</p>
   </div>;
   return <>
-    {solutions.length > 1 && <p className="notice">The diagram admits {solutions.length} catalogue candidates. Showing {selected.family}; family selection is the next UI increment.</p>}
+    {solutions.length > 1 && <div className="candidate-picker">
+      <div><strong>Choose a compatible K-matrix family</strong><span>The diagram alone does not resolve the coideal-parameter regime.</span></div>
+      <div className="candidate-buttons">
+        {solutions.map((solution) => <button key={solution.solutionId}
+          className={solution.solutionId === selected.solutionId ? "is-active" : ""}
+          onClick={() => setSolutionId(solution.solutionId)}>{solution.family}</button>)}
+      </div>
+    </div>}
     <div className="solution-meta">
       <Badge tone="good">{selected.family}</Badge>
       <span>{selected.equation} reflection equation</span>
       <span>{selected.matrix.dimensions[0]} dimensional representation</span>
     </div>
-    <MatrixView solution={selected} />
+    <MatrixView record={record} solution={selected} engine={engine} />
   </>;
 }
 
-function Inspector({ record }: { record: DiagramRecord }) {
+function Inspector({ record, engine }: { record: DiagramRecord; engine: Catalogue["engine"] }) {
   const [tab, setTab] = useState<"qsp" | "k" | "r" | "equation" | "properties">("qsp");
   const [realization, setRealization] = useState<Realization>(
     record.classification.regime === "Nonquasistandard" ? "nonstandard" : "bare",
@@ -95,8 +156,8 @@ function Inspector({ record }: { record: DiagramRecord }) {
     <section className="object-panel">
       {tab === "qsp" && <>
         <div className="panel-heading"><div><div className="eyebrow">Coideal presentation</div><h3>B<sub>c,s</sub>(X, τ)</h3></div><Availability available={record.capabilities.qspAlgebra}>{record.capabilities.qspAlgebra ? "explicit" : "formal template"}</Availability></div>
-        <div className="formula-block">B<sub>c,s</sub>(X,τ) = ⟨ U<sub>q</sub>(𝔤<sub>X</sub>), U<sup>0</sup><sub>Θ</sub>, B<sub>i</sub> : i ∉ X ⟩</div>
-        <div className="formula-block">B<sub>i</sub> = F<sub>i</sub> + c<sub>i</sub> θ<sub>q</sub>(F<sub>i</sub>K<sub>i</sub>)K<sub>i</sub><sup>−1</sup> + s<sub>i</sub>K<sub>i</sub><sup>−1</sup></div>
+        <div className="formula-block"><MathFormula latex={String.raw`\mathcal B_{c,s}(X,\tau)=\left\langle U_q(\mathfrak g_X),\ U^0_\Theta,\ B_i\ :\ i\in I\setminus X\right\rangle`} /></div>
+        <div className="formula-block"><MathFormula latex={String.raw`B_i=F_i+c_i\,\theta_q(F_iK_i)K_i^{-1}+s_iK_i^{-1}`} /></div>
         <p className="fine-print">This is the generic QSP generator template instantiated by the displayed X and τ. Explicit θ<sub>q</sub>, parameter constraints, and relation expansion are a separate engine capability and are not yet asserted by this record.</p>
       </>}
       {tab === "k" && <>
@@ -106,7 +167,7 @@ function Inspector({ record }: { record: DiagramRecord }) {
           <button className={realization === "dressed" ? "is-active" : ""} onClick={() => setRealization("dressed")}>Dressed</button>
           <button className={realization === "nonstandard" ? "is-active" : ""} onClick={() => setRealization("nonstandard")}>Non-standard</button>
         </div>
-        <FormulaPanel record={record} realization={realization} />
+        <FormulaPanel record={record} realization={realization} engine={engine} />
       </>}
       {tab === "r" && <>
         <div className="panel-heading"><div><div className="eyebrow">Representation data</div><h3>Ambient R-matrix</h3></div><Availability available={record.capabilities.rMatrix}>{record.capabilities.rMatrix ? "available" : "not exported"}</Availability></div>
@@ -115,8 +176,8 @@ function Inspector({ record }: { record: DiagramRecord }) {
       {tab === "equation" && <>
         <div className="panel-heading"><div><div className="eyebrow">Boundary identity</div><h3>{record.classification.equation} reflection equation</h3></div><Badge>{record.classification.equation}</Badge></div>
         {record.classification.equation === "Transposed" ?
-          <div className="formula-block formula-block--large">R<sub>21</sub>(u/v) K<sub>1</sub>(u) R<sup>t₁</sup><sub>12</sub>(uv) K<sub>2</sub>(v) = K<sub>2</sub>(v) R<sup>t₁</sup><sub>21</sub>(uv) K<sub>1</sub>(u) R<sub>12</sub>(u/v)</div> :
-          <div className="formula-block formula-block--large">R<sub>21</sub>(u/v) K<sub>1</sub>(u) R<sub>12</sub>(uv) K<sub>2</sub>(v) = K<sub>2</sub>(v) R<sub>21</sub>(uv) K<sub>1</sub>(u) R<sub>12</sub>(u/v)</div>}
+          <div className="formula-block formula-block--large"><MathFormula latex={String.raw`R_{21}(u/v)K_1(u)R_{12}^{t_1}(uv)K_2(v)=K_2(v)R_{21}^{t_1}(uv)K_1(u)R_{12}(u/v)`} /></div> :
+          <div className="formula-block formula-block--large"><MathFormula latex={String.raw`R_{21}(u/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u/v)`} /></div>}
         <p className="fine-print">Convention-sensitive ordering and transposition metadata will be bound to the ambient R record before this identity is marked verified.</p>
       </>}
       {tab === "properties" && <>
@@ -187,7 +248,7 @@ export function App() {
           </button>)}
         </nav>
       </aside>
-      {error ? <main className="load-error"><h2>Catalogue unavailable</h2><p>{error}</p><p>Run the catalogue export script before starting the app.</p></main> : selected ? <Inspector record={selected} /> : <main className="loading">Loading mathematical catalogue…</main>}
+      {error ? <main className="load-error"><h2>Catalogue unavailable</h2><p>{error}</p><p>Run the catalogue export script before starting the app.</p></main> : selected && catalogue ? <Inspector record={selected} engine={catalogue.engine} /> : <main className="loading">Loading mathematical catalogue…</main>}
     </div>
   </div>;
 }

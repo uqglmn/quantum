@@ -43,13 +43,17 @@ control, but storage and computation must not conflate them.
   views;
 - strict JSON schemas, deterministic IDs, validation, build, and deployment.
 
-### 2. Scientific completeness
+### 2. Scientific completeness — in progress
 
 - explicit QSP generator and parameter-relation exporter;
 - representation registry and convention-labelled ambient R-matrices;
 - exact reflection-equation tensors and verification certificates;
-- family selector for ambiguous diagrams;
-- MathJax rendering and copy/download as LaTeX, JSON, WL, and MatrixMarket.
+- implemented: explicit family selector for ambiguous diagrams, with the
+  mathematical reason for the ambiguity retained in the interface;
+- implemented: self-hosted KaTeX rendering for QSP templates, reflection
+  equations, full K-matrices, and safe-AST sparse entries;
+- implemented: provenance views and self-describing JSON/LaTeX downloads;
+- remaining export formats: Wolfram Language and MatrixMarket.
 
 ### 3. Transformations and properties
 
