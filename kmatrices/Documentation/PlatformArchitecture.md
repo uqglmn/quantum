@@ -71,6 +71,13 @@ manuscript identifiers such as `A.3` and `C.1`; each diagram carries explicit
 classified or candidate memberships, including its family parameters and any
 transport permutation.
 
+Realizations are immutable artifacts linked to a base solution. A dressed
+artifact stores the admissible dressing parameters, transformation formula,
+materialized matrix, and inherited property dossier. Property records are
+semantic objects rather than display strings: they contain an expression tree,
+assumptions, optional spectrum with multiplicities, verification method and
+residual diagnostics, engine version, and manuscript anchors.
+
 ## Extension rules
 
 - New affine type: register Cartan, representation, layout, classifier, and

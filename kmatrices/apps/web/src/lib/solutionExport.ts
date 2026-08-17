@@ -7,7 +7,7 @@ export function buildSolutionBundle(
   ambient: Catalogue["ambient"],
 ) {
   return {
-    schemaVersion: "1.4.0",
+    schemaVersion: "1.5.0",
     engine,
     exportedAt: new Date().toISOString(),
     diagram: {
@@ -31,6 +31,16 @@ export function solutionLatexDocument(
   ambient: Catalogue["ambient"],
 ): string {
   const parameters = Object.keys(solution.parameters).join(", ") || "none";
+  const transformations = solution.transformations.flatMap((transformation) => [
+    `% Transformation: ${transformation.kind}`,
+    ...(transformation.latex ? ["\\[", transformation.latex, "\\]"] : []),
+  ]);
+  const properties = solution.properties.flatMap((property) => [
+    `% Property: ${property.label}; status: ${property.status}; method: ${property.verification.method}`,
+    "\\[",
+    property.latex,
+    "\\]",
+  ]);
   return [
     `% QREKMatrices solution ${solution.solutionId}`,
     `% Diagram: ${record.spec.affineType}, n=${record.spec.rank}, X={${record.spec.X.join(",")}}, tau=[${record.spec.tau.join(",")}]`,
@@ -49,6 +59,8 @@ export function solutionLatexDocument(
     `\\[`,
     `K(u) = ${solution.latex}`,
     `\\]`,
+    ...transformations,
+    ...properties,
     "",
   ].join("\n");
 }

@@ -13,6 +13,8 @@ const solution = {
   matrix: { kind: "sparseMatrix", dimensions: [2, 2], indexBase: 0, entries: [] },
   latex: "\\begin{pmatrix}1&0\\\\0&1\\end{pmatrix}",
   provenance: { Source: "fixture" },
+  properties: [],
+  derivedRealizations: [],
   reflectionEquationCertificate: null,
 } satisfies Solution;
 
@@ -55,8 +57,9 @@ const ambient = {
 describe("solution exports", () => {
   it("preserves engine, diagram, and solution provenance", () => {
     vi.setSystemTime(new Date("2026-08-17T12:00:00Z"));
-    const bundle = buildSolutionBundle(record, solution, { name: "QREKMatrices", version: "0.16.0" }, ambient);
+    const bundle = buildSolutionBundle(record, solution, { name: "QREKMatrices", version: "0.17.0" }, ambient);
     expect(bundle.diagram.id).toBe(record.id);
+    expect(bundle.schemaVersion).toBe("1.5.0");
     expect(bundle.solution.provenance).toEqual({ Source: "fixture" });
     expect(bundle.diagram.qsp.qspId).toBe("a--n1--qsp");
     expect(bundle.diagram.familyMemberships[0].familyId).toBe("A.1");

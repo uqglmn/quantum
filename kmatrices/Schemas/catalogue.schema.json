@@ -5,7 +5,7 @@
   "type": "object",
   "required": ["schemaVersion", "engine", "catalogue", "ambient", "families", "summary", "diagrams"],
   "properties": {
-    "schemaVersion": { "const": "1.4.0" },
+    "schemaVersion": { "const": "1.5.0" },
     "engine": {
       "type": "object",
       "required": ["name", "version"],
@@ -145,7 +145,7 @@
     },
     "familyRecord": {
       "type": "object",
-      "required": ["familyId", "title", "affineTypes", "description", "contentStatus", "regimes", "parameterOrder", "parameterDomain", "generalFormula", "properties", "sourceAnchors", "instanceIds"],
+      "required": ["familyId", "title", "affineTypes", "description", "contentStatus", "regimes", "parameterOrder", "parameterDomain", "generalFormula", "regimeFormulas", "properties", "sourceAnchors", "instanceIds"],
       "properties": {
         "familyId": { "type": "string", "minLength": 1 },
         "title": { "type": "string", "minLength": 1 },
@@ -156,6 +156,18 @@
         "parameterOrder": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
         "parameterDomain": { "$ref": "#/$defs/familyParameterDomain" },
         "generalFormula": { "oneOf": [{ "$ref": "#/$defs/familyFormula" }, { "type": "null" }] },
+        "regimeFormulas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["regime", "formula"],
+            "properties": {
+              "regime": { "type": "string", "minLength": 1 },
+              "formula": { "$ref": "#/$defs/familyFormula" }
+            },
+            "additionalProperties": false
+          }
+        },
         "properties": { "type": "array", "items": { "$ref": "#/$defs/familyProperty" } },
         "sourceAnchors": { "type": "array", "items": { "$ref": "#/$defs/sourceAnchor" } },
         "instanceIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
@@ -426,7 +438,7 @@
     },
     "solution": {
       "type": "object",
-      "required": ["solutionId", "family", "equation", "realization", "transformations", "basisLabels", "parameters", "matrix", "latex", "provenance", "reflectionEquationCertificate"],
+      "required": ["solutionId", "family", "equation", "realization", "transformations", "basisLabels", "parameters", "matrix", "latex", "provenance", "properties", "derivedRealizations", "reflectionEquationCertificate"],
       "properties": {
         "solutionId": { "type": "string" },
         "family": { "type": "string" },
@@ -439,7 +451,9 @@
             "required": ["kind", "parameters"],
             "properties": {
               "kind": { "enum": ["dress", "transport", "normalize", "scalar"] },
-              "parameters": { "$ref": "#/$defs/parameterMap" }
+              "parameters": { "$ref": "#/$defs/parameterMap" },
+              "latex": { "type": "string" },
+              "assumptionsLatex": { "type": "array", "items": { "type": "string" } }
             },
             "additionalProperties": false
           }
@@ -455,7 +469,35 @@
             { "type": "null" }
           ]
         },
-        "properties": { "type": "array", "items": { "$ref": "#/$defs/property" } }
+        "properties": { "type": "array", "items": { "$ref": "#/$defs/property" } },
+        "derivedRealizations": { "type": "array", "items": { "$ref": "#/$defs/derivedRealization" } }
+      },
+      "additionalProperties": false
+    },
+    "derivedRealization": {
+      "type": "object",
+      "required": ["realizationId", "realization", "transformations", "matrix", "latex", "properties", "provenance"],
+      "properties": {
+        "realizationId": { "type": "string", "minLength": 1 },
+        "realization": { "enum": ["dressed", "transported"] },
+        "transformations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["kind", "parameters", "latex", "assumptionsLatex"],
+            "properties": {
+              "kind": { "enum": ["dress", "transport", "normalize", "scalar"] },
+              "parameters": { "$ref": "#/$defs/parameterMap" },
+              "latex": { "type": "string" },
+              "assumptionsLatex": { "type": "array", "items": { "type": "string" } }
+            },
+            "additionalProperties": false
+          }
+        },
+        "matrix": { "$ref": "expression.schema.json#/$defs/sparseMatrix" },
+        "latex": { "type": "string" },
+        "properties": { "type": "array", "items": { "$ref": "#/$defs/property" } },
+        "provenance": { "$ref": "#/$defs/provenance" }
       },
       "additionalProperties": false
     },
@@ -504,24 +546,50 @@
     },
     "property": {
       "type": "object",
-      "required": ["kind", "status", "value", "latex", "assumptions", "provenance"],
+      "required": ["propertyId", "kind", "label", "status", "latex", "expression", "assumptionsLatex", "verification", "sourceAnchors", "spectrum"],
       "properties": {
+        "propertyId": { "type": "string", "minLength": 1 },
         "kind": {
-          "enum": ["eigenvalues", "characteristicIdentity", "minimalIdentity", "factorization", "regularity", "unitarity", "reflectionEquationVerification"]
+          "enum": ["eigenvalues", "characteristicIdentity", "minimalIdentity", "determinant", "factorization", "rankLoci", "regularity", "unitarity", "reflectionEquationVerification"]
         },
-        "status": { "enum": ["computed", "verified", "conditional", "unavailable"] },
-        "value": {
+        "label": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["sourceIdentity", "computedExact", "verifiedExact", "conditional", "unavailable"] },
+        "latex": { "type": "string" },
+        "expression": {
           "oneOf": [
             { "$ref": "expression.schema.json#/$defs/expression" },
             { "type": "null" }
           ]
         },
-        "latex": { "type": ["string", "null"] },
-        "assumptions": {
+        "assumptionsLatex": {
           "type": "array",
-          "items": { "$ref": "expression.schema.json#/$defs/expression" }
+          "items": { "type": "string" }
         },
-        "provenance": { "$ref": "#/$defs/provenance" }
+        "verification": {
+          "type": "object",
+          "required": ["status", "method", "residualNonzeroCount", "engineVersion"],
+          "properties": {
+            "status": { "enum": ["verified", "computed", "sourceIdentity", "conditional", "unavailable"] },
+            "method": { "type": "string", "minLength": 1 },
+            "residualNonzeroCount": { "type": ["integer", "null"], "minimum": 0 },
+            "engineVersion": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        },
+        "sourceAnchors": { "type": "array", "items": { "$ref": "#/$defs/sourceAnchor" } },
+        "spectrum": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value", "latex", "multiplicity"],
+            "properties": {
+              "value": { "$ref": "expression.schema.json#/$defs/expression" },
+              "latex": { "type": "string" },
+              "multiplicity": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        }
       },
       "additionalProperties": false
     },

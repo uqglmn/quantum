@@ -5,7 +5,7 @@
   "type": "object",
   "required": ["schemaVersion", "engine", "files"],
   "properties": {
-    "schemaVersion": { "const": "1.4.0" },
+    "schemaVersion": { "const": "1.5.0" },
     "engine": {
       "type": "object",
       "required": ["name", "version"],

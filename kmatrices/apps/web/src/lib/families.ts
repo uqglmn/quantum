@@ -19,6 +19,7 @@ export interface FamilyDefinition {
   parameterOrder: string[];
   parameterDomain?: FamilyRecord["parameterDomain"];
   formula?: FamilyFormulaDefinition;
+  regimeFormulas?: Array<{ regime: string; formula: FamilyFormulaDefinition }>;
 }
 
 const masterFormula: FamilyFormulaDefinition = {
@@ -82,6 +83,17 @@ function exportedFamilyDefinition(record: FamilyRecord): FamilyDefinition {
     status: record.contentStatus === "published" ? "published" : "computational",
     parameterOrder: record.parameterOrder,
     parameterDomain: record.parameterDomain,
+    regimeFormulas: (record.regimeFormulas ?? []).map(({ regime, formula }) => ({
+      regime,
+      formula: {
+        latex: formula.latex,
+        definitions: formula.definitions.map(({ label, latex }) => ({ label, latex })),
+        assumptions: formula.assumptionsLatex,
+        source: formula.sourceAnchors[0]
+          ? `${formula.sourceAnchors[0].source}${formula.sourceAnchors[0].anchor ? `, ${formula.sourceAnchors[0].anchor}` : ""}`
+          : "Exported regime formula",
+      },
+    })),
     formula: record.generalFormula ? {
       latex: record.generalFormula.latex,
       definitions: record.generalFormula.definitions.map(({ label, latex }) => ({ label, latex })),

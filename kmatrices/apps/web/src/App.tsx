@@ -148,26 +148,87 @@ function RMatrixView({ ambient }: { ambient: Catalogue["ambient"] }) {
   </div>;
 }
 
-function FormulaPanel({ record, realization, engine, ambient }: {
+function realizedSolution(solution: Solution | undefined, realization: Realization): Solution | undefined {
+  if (!solution) return undefined;
+  if (realization === "bare") return solution;
+  const artifact = (solution.derivedRealizations ?? []).find((candidate) => candidate.realization === realization);
+  if (!artifact) return solution.realization === realization ? solution : undefined;
+  return {
+    ...solution,
+    solutionId: artifact.realizationId,
+    realization: artifact.realization,
+    transformations: artifact.transformations,
+    matrix: artifact.matrix,
+    latex: artifact.latex,
+    properties: artifact.properties,
+    provenance: artifact.provenance,
+    reflectionEquationCertificate: null,
+  };
+}
+
+function PropertyPanel({ solution }: { solution: Solution | undefined }) {
+  if (!solution || solution.properties.length === 0) return <div className="empty-state">
+    <strong>No structured property dossier for this realization yet.</strong>
+    <p>Property providers are being added family by family. This is an unavailable capability, not a negative mathematical result.</p>
+  </div>;
+  return <div className="property-dossier">
+    <div className="property-dossier-summary">
+      <Badge tone="good">{solution.family}</Badge>
+      <strong>{solution.realization} realization</strong>
+      <span>{solution.properties.filter(({ status }) => status === "verifiedExact").length} exact identities</span>
+    </div>
+    <div className="property-grid property-grid--populated">
+      {solution.properties.map((property) => <article key={property.propertyId}>
+        <div className="property-heading">
+          <span className={`property-status property-status--${property.status === "verifiedExact" ? "verified" : property.status === "conditional" ? "conditional" : "source"}`}>
+            {property.status === "verifiedExact" ? "exact" : property.status === "computedExact" ? "computed" : property.status === "sourceIdentity" ? "source identity" : property.status}
+          </span>
+          <h4>{property.label}</h4>
+        </div>
+        <MathFormula latex={property.latex} />
+        {property.spectrum.length > 0 && <div className="spectrum-table">
+          <div><span>Eigenvalue</span><span>Multiplicity</span></div>
+          {property.spectrum.map((item, index) => <div key={`${property.propertyId}-${index}`}>
+            <MathFormula latex={item.latex} display={false} />
+            <code>{item.multiplicity}</code>
+          </div>)}
+        </div>}
+        {property.expression && property.kind === "determinant" && <div className="property-expression">
+          <span>Exact expression</span><MathFormula latex={expressionToLatex(property.expression)} />
+        </div>}
+        <details><summary>Verification and assumptions</summary>
+          <dl>
+            <div><dt>Method</dt><dd><code>{property.verification.method}</code></dd></div>
+            <div><dt>Engine</dt><dd>{property.verification.engineVersion}</dd></div>
+            <div><dt>Residual</dt><dd>{property.verification.residualNonzeroCount ?? "not applicable"}</dd></div>
+            <div><dt>Source</dt><dd>{property.sourceAnchors.map(({ source, anchor }) => `${source}${anchor ? `, ${anchor}` : ""}`).join("; ")}</dd></div>
+          </dl>
+          {property.assumptionsLatex.map((assumption) => <MathFormula key={assumption} latex={assumption} display={false} />)}
+        </details>
+      </article>)}
+    </div>
+  </div>;
+}
+
+function FormulaPanel({ record, realization, engine, ambient, solutions, selected, onSelect }: {
   record: DiagramRecord;
   realization: Realization;
   engine: Catalogue["engine"];
   ambient: Catalogue["ambient"];
+  solutions: Solution[];
+  selected: Solution | undefined;
+  onSelect: (solutionId: string) => void;
 }) {
-  const solutions = [record.computation.solution, ...record.computation.candidates].filter(Boolean) as Solution[];
-  const [solutionId, setSolutionId] = useState(solutions[0]?.solutionId ?? "");
-  useEffect(() => setSolutionId(solutions[0]?.solutionId ?? ""), [record.id]);
-  const selected = solutions.find((solution) => solution.solutionId === solutionId) ?? solutions[0];
-  if (realization === "dressed") return <div className="empty-state">
-    <strong>Dressing is a transformation layer.</strong>
-    <p>The static catalogue preserves the bare matrix. A diagonal or general dressing matrix G will produce G⁻¹KG (standard) or GKG (transposed) through the compute provider.</p>
-    <code>bare → dress(G) → normalise(u₀) → analyse</code>
+  const active = realizedSolution(selected, realization);
+  if (realization === "dressed" && !active) return <div className="empty-state">
+    <strong>No materialized dressing for this family yet.</strong>
+    <p>C.1 exports its canonical symplectic diagonal dressing. Other families remain visible while their admissible dressing groups are transcribed.</p>
   </div>;
-  if (realization === "transported" && !solutions.some((solution) => solution.realization === "transported")) return <div className="empty-state">
+  if (realization === "transported" && !active) return <div className="empty-state">
     <strong>No transported matrix artifact in this static record.</strong>
     <p>The representative permutation is retained with the diagram. Its transported matrix will be materialized by the transformation provider rather than treated as a separate coideal regime.</p>
   </div>;
-  if (!selected) return <div className="empty-state">
+  if (!active) return <div className="empty-state">
     <strong>No matrix artifact in this static record.</strong>
     <p>Status: {record.computation.status}. The diagram and classification remain browsable; a later compute provider can fill this panel without changing the page model.</p>
   </div>;
@@ -176,19 +237,25 @@ function FormulaPanel({ record, realization, engine, ambient }: {
       <div><strong>Choose a compatible K-matrix family</strong><span>The diagram alone does not resolve the coideal-parameter regime.</span></div>
       <div className="candidate-buttons">
         {solutions.map((solution) => <button key={solution.solutionId}
-          className={solution.solutionId === selected.solutionId ? "is-active" : ""}
-          onClick={() => setSolutionId(solution.solutionId)}>{solution.family}</button>)}
+          className={solution.solutionId === selected?.solutionId ? "is-active" : ""}
+          onClick={() => onSelect(solution.solutionId)}>{solution.family}</button>)}
       </div>
     </div>}
     <div className="solution-meta">
-      <Badge tone="good">{selected.family}</Badge>
-      {selected.reflectionEquationCertificate && <Badge tone={selected.reflectionEquationCertificate.status === "verified" ? "good" : "warn"}>
-        {selected.reflectionEquationCertificate.status} {selected.reflectionEquationCertificate.level}
+      <Badge tone="good">{active.family}</Badge>
+      <Badge>{active.realization}</Badge>
+      {active.reflectionEquationCertificate && <Badge tone={active.reflectionEquationCertificate.status === "verified" ? "good" : "warn"}>
+        {active.reflectionEquationCertificate.status} {active.reflectionEquationCertificate.level}
       </Badge>}
-      <span>{selected.equation} reflection equation</span>
-      <span>{selected.matrix.dimensions[0]} dimensional representation</span>
+      <span>{active.equation} reflection equation</span>
+      <span>{active.matrix.dimensions[0]} dimensional representation</span>
     </div>
-    <MatrixView record={record} solution={selected} engine={engine} ambient={ambient} />
+    {active.transformations.map((transformation, index) => <div className="transformation-card" key={`${transformation.kind}-${index}`}>
+      <div><span>Transformation {index + 1}</span><strong>{transformation.kind}</strong></div>
+      {transformation.latex && <MathFormula latex={transformation.latex} />}
+      <code>{Object.keys(transformation.parameters).join(", ") || "no free parameters"}</code>
+    </div>)}
+    <MatrixView record={record} solution={active} engine={engine} ambient={ambient} />
   </>;
 }
 
@@ -211,7 +278,11 @@ function Inspector({ record, engine, ambient, family, manifest, catalogue, onFil
   const [realization, setRealization] = useState<Realization>(
     "bare",
   );
+  const solutions = [record.computation.solution, ...record.computation.candidates].filter(Boolean) as Solution[];
+  const [solutionId, setSolutionId] = useState(solutions[0]?.solutionId ?? "");
+  const selectedSolution = solutions.find((solution) => solution.solutionId === solutionId) ?? solutions[0];
   useEffect(() => setRealization("bare"), [record.id]);
+  useEffect(() => setSolutionId(solutions[0]?.solutionId ?? ""), [record.id]);
   useEffect(() => {
     const url = new URL(window.location.href);
     url.searchParams.set("view", tab);
@@ -271,7 +342,8 @@ function Inspector({ record, engine, ambient, family, manifest, catalogue, onFil
           <button className={realization === "dressed" ? "is-active" : ""} onClick={() => setRealization("dressed")}>Dressed</button>
           <button className={realization === "transported" ? "is-active" : ""} onClick={() => setRealization("transported")}>Transported</button>
         </div>
-        <FormulaPanel record={record} realization={realization} engine={engine} ambient={ambient} />
+        <FormulaPanel record={record} realization={realization} engine={engine} ambient={ambient}
+          solutions={solutions} selected={selectedSolution} onSelect={setSolutionId} />
       </>}
       {tab === "r" && <>
         <div className="panel-heading"><div><div className="eyebrow">Representation data</div><h3>Ambient R-matrix</h3></div><Availability available={record.capabilities.rMatrix}>sparse matrix</Availability></div>
@@ -310,15 +382,13 @@ function Inspector({ record, engine, ambient, family, manifest, catalogue, onFil
         <p className="fine-print">The identity is bound to the displayed ambient R-record and this diagram’s equation type. A verified label means the exported sparse K-matrix has zero exact symbolic tensor residual as a rational-function identity, for generic parameters away from poles. Certification covers the computable untwisted A/B/C/D catalogue. Mixed candidate outcomes are labelled conditional; twisted families remain explicitly not computed.</p>
       </>}
       {tab === "properties" && <>
-        <div className="panel-heading"><div><div className="eyebrow">Symbolic analysis</div><h3>Properties and identities</h3></div><Availability available={record.capabilities.properties.length > 0}>{record.capabilities.properties.length} computed</Availability></div>
-        <div className="property-grid">
-          {[
-            ["Eigenvalues", "Spectrum, multiplicities and genericity conditions"],
-            ["Characteristic identity", "Minimal and characteristic polynomial identities"],
-            ["Factorisation", "Scalar, block and polynomial factorisations"],
-            ["Regularity", "K(1), unitarity and normalization checks"],
-          ].map(([title, description]) => <article key={title}><span>planned</span><h4>{title}</h4><p>{description}</p></article>)}
+        <div className="panel-heading"><div><div className="eyebrow">Symbolic analysis</div><h3>Properties and identities</h3></div><Availability available={record.capabilities.properties.length > 0}>{record.capabilities.properties.length} available</Availability></div>
+        <div className="segmented" aria-label="Property realization">
+          <button className={realization === "bare" ? "is-active" : ""} onClick={() => setRealization("bare")}>Bare</button>
+          <button className={realization === "dressed" ? "is-active" : ""} onClick={() => setRealization("dressed")}>Dressed</button>
+          <button className={realization === "transported" ? "is-active" : ""} onClick={() => setRealization("transported")}>Transported</button>
         </div>
+        <PropertyPanel solution={realizedSolution(selectedSolution, realization)} />
       </>}
     </section>
   </main>;

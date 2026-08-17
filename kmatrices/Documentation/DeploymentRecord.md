@@ -158,3 +158,26 @@ browser visual check at desktop width.
 Validation for this increment includes 69 Wolfram tests, nine frontend unit
 tests, schema validation of all 23 generated catalogues, and a production
 build.
+
+## C.1 scientific dossier — 2026-08-17
+
+- frontend: `0.9.0`;
+- QREKMatrices engine: `0.17.0`;
+- catalogue schema: `1.5.0`;
+- added reusable `KMatrixRealizationData` and `KMatrixPropertyData` APIs;
+- implemented the generic C.1 non-quasistandard formula from
+  `Res:C1-nstd`, including exact specialization to the quasistandard matrix at
+  `nu^2=-1`;
+- materialized the admissible symplectic diagonal dressing
+  `G(omega)^(-1) K(u) G(omega)` with an inspectable transformation record;
+- exported typed spectra with multiplicities, characteristic and generic
+  minimal identities, determinant and rank loci, factorization, regularity,
+  and boundary unitarity;
+- added exact/source/conditional verification states, assumptions, engine
+  receipts, and manuscript anchors to every property;
+- replaced the properties placeholder and dressed-matrix notice with working
+  dossier and matrix views, including JSON and TeX exports.
+
+Validation for this increment includes 71 Wolfram tests, nine frontend unit
+tests, schema validation of all 23 generated catalogues, cross-record checks,
+and a production build.

@@ -71,13 +71,20 @@ control, but storage and computation must not conflate them.
 
 ### 3. Transformations and properties
 
+- implemented pilot: C.1 bare and canonical symplectic diagonal dressing with
+  materialized matrices and inspectable transformation records;
+- implemented pilot: the generic C.1 non-quasistandard formula with parameter
+  `nu`, its separate regime formula, and its exact `nu^2=-1` specialization;
+- implemented pilot: C.1 spectra and multiplicities, characteristic and
+  generic minimal identities, determinant and rank loci, factorization,
+  regularity, boundary unitarity, assumptions, provenance, and verification
+  badges;
 - parameter editor with symbolic presets and assumptions;
-- bare/dressed/transported transformation pipeline with an inspectable history;
+- extend the bare/dressed/transported pipeline and property providers from the
+  C.1 pilot to the remaining families;
 - non-quasistandard endpoint selection where formulas are complete;
-- eigenvalues and multiplicities;
-- characteristic and minimal identities;
-- factorization, regularity, boundary unitarity, determinant, and rank loci;
-- exact, conditional, and sampled verification badges.
+- family-specific reduction and singular loci beyond the generic C.1 record;
+- sampled verification badges for formulas too expensive for exact export.
 
 ### 4. Compute service
 

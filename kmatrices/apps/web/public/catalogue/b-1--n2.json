@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.4.0",
+	"schemaVersion":"1.5.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.16.0"
+		"version":"0.17.0"
 	},
 	"catalogue":{
 		"id":"b-1--n2",
@@ -11199,6 +11199,7 @@
 				"branches":[]
 			},
 			"generalFormula":null,
+			"regimeFormulas":[],
 			"properties":[],
 			"sourceAnchors":[],
 			"instanceIds":[
@@ -11242,6 +11243,7 @@
 				"branches":[]
 			},
 			"generalFormula":null,
+			"regimeFormulas":[],
 			"properties":[],
 			"sourceAnchors":[],
 			"instanceIds":[
@@ -12583,6 +12585,7 @@
 						"ResearchStatus":"qREFormula"
 					},
 					"properties":[],
+					"derivedRealizations":[],
 					"reflectionEquationCertificate":{
 						"status":"verified",
 						"level":"exactSymbolic",
@@ -12607,7 +12610,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.16.0"
+							"version":"0.17.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -14354,6 +14357,7 @@
 						"ResearchStatus":"qREFormula"
 					},
 					"properties":[],
+					"derivedRealizations":[],
 					"reflectionEquationCertificate":{
 						"status":"verified",
 						"level":"exactSymbolic",
@@ -14378,7 +14382,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.16.0"
+							"version":"0.17.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -15263,6 +15267,7 @@
 						"ResearchStatus":"qREFormula"
 					},
 					"properties":[],
+					"derivedRealizations":[],
 					"reflectionEquationCertificate":{
 						"status":"verified",
 						"level":"exactSymbolic",
@@ -15287,7 +15292,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.16.0"
+							"version":"0.17.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -16024,6 +16029,7 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":{
 							"status":"verified",
 							"level":"exactSymbolic",
@@ -16048,7 +16054,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.16.0"
+								"version":"0.17.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -16549,6 +16555,7 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":{
 							"status":"verified",
 							"level":"exactSymbolic",
@@ -16573,7 +16580,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.16.0"
+								"version":"0.17.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -17111,6 +17118,7 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":{
 							"status":"verified",
 							"level":"exactSymbolic",
@@ -17135,7 +17143,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.16.0"
+								"version":"0.17.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -17596,6 +17604,7 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":{
 							"status":"verified",
 							"level":"exactSymbolic",
@@ -17620,7 +17629,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.16.0"
+								"version":"0.17.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -17957,6 +17966,7 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":{
 							"status":"verified",
 							"level":"exactSymbolic",
@@ -17981,7 +17991,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.16.0"
+								"version":"0.17.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -18080,6 +18090,7 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":{
 							"status":"verified",
 							"level":"exactSymbolic",
@@ -18104,7 +18115,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.16.0"
+								"version":"0.17.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -19871,6 +19882,7 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":{
 							"status":"verified",
 							"level":"exactSymbolic",
@@ -19895,7 +19907,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.16.0"
+								"version":"0.17.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -21142,6 +21154,7 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":{
 							"status":"verified",
 							"level":"exactSymbolic",
@@ -21166,7 +21179,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.16.0"
+								"version":"0.17.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -21500,6 +21513,7 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":{
 							"status":"verified",
 							"level":"exactSymbolic",
@@ -21524,7 +21538,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.16.0"
+								"version":"0.17.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -21623,6 +21637,7 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":{
 							"status":"verified",
 							"level":"exactSymbolic",
@@ -21647,7 +21662,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.16.0"
+								"version":"0.17.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",

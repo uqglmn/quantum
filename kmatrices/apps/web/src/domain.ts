@@ -68,6 +68,7 @@ export interface FamilyRecord {
     }>;
   };
   generalFormula: FamilyFormulaRecord | null;
+  regimeFormulas: Array<{ regime: string; formula: FamilyFormulaRecord }>;
   properties: Array<{ kind: string; status: string; latex: string }>;
   sourceAnchors: FamilySourceAnchor[];
   instanceIds: string[];
@@ -90,14 +91,52 @@ export interface Solution {
   transformations: Array<{
     kind: "dress" | "transport" | "normalize" | "scalar";
     parameters: Record<string, Expression>;
+    latex?: string;
+    assumptionsLatex?: string[];
   }>;
   basisLabels: Array<string | number>;
   parameters: Record<string, Expression>;
   matrix: SparseMatrix;
   latex: string;
   provenance: Record<string, unknown>;
-  properties?: Array<Record<string, unknown>>;
+  properties: KMatrixProperty[];
+  derivedRealizations: DerivedRealization[];
   reflectionEquationCertificate: ReflectionEquationCertificate | null;
+}
+
+export interface KMatrixProperty {
+  propertyId: string;
+  kind: "eigenvalues" | "characteristicIdentity" | "minimalIdentity" |
+    "determinant" | "factorization" | "rankLoci" | "regularity" | "unitarity" |
+    "reflectionEquationVerification";
+  label: string;
+  status: "sourceIdentity" | "computedExact" | "verifiedExact" | "conditional" | "unavailable";
+  latex: string;
+  expression: Expression | null;
+  assumptionsLatex: string[];
+  verification: {
+    status: "verified" | "computed" | "sourceIdentity" | "conditional" | "unavailable";
+    method: string;
+    residualNonzeroCount: number | null;
+    engineVersion: string;
+  };
+  sourceAnchors: FamilySourceAnchor[];
+  spectrum: Array<{ value: Expression; latex: string; multiplicity: number }>;
+}
+
+export interface DerivedRealization {
+  realizationId: string;
+  realization: "dressed" | "transported";
+  transformations: Array<{
+    kind: "dress" | "transport" | "normalize" | "scalar";
+    parameters: Record<string, Expression>;
+    latex: string;
+    assumptionsLatex: string[];
+  }>;
+  matrix: SparseMatrix;
+  latex: string;
+  properties: KMatrixProperty[];
+  provenance: Record<string, unknown>;
 }
 
 export interface ReflectionEquationCertificate {

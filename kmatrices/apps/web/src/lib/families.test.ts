@@ -42,6 +42,7 @@ describe("family registry", () => {
         assumptionsLatex: String.raw`N>2`,
         sourceAnchors: [{ source: "engine", anchor: "A.1", role: "formula" }],
       },
+      regimeFormulas: [],
       properties: [],
       sourceAnchors: [],
       instanceIds: ["A(1)-n2-X0-tau0"],

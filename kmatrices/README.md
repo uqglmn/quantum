@@ -443,11 +443,16 @@ Family content is package-owned and exported as first-class records: A.1--A.4
 and C.1 currently include their general formulas, semantic expression trees,
 parameter domains, branch constraints, and manuscript anchors; all other
 twisted and untwisted families have stable extensible records ready for content
-transcription. The R panel supports formula, sparse-entry, provenance, and JSON
-views. Exact
+transcription. C.1 is the first complete scientific dossier: the package exports
+its quasistandard and generic non-quasistandard formulas, bare and canonical
+diagonally dressed matrices, spectra with multiplicities, characteristic and
+minimal identities, determinant and rank loci, factorisation, regularity, and
+boundary unitarity. Each property carries assumptions, provenance, and its
+verification method. The R panel supports formula, sparse-entry, provenance,
+and JSON views. Exact
 expanded QSP relations, catalogue-wide reflection-equation certificates,
-dressing, eigenvalues, characteristic identities, and factorisation remain
-extension boundaries. See `Documentation/PlatformArchitecture.md`,
+interactive free-parameter substitution, and corresponding dossiers for the
+remaining families remain extension boundaries. See `Documentation/PlatformArchitecture.md`,
 `Documentation/PlatformRoadmap.md`, and `Documentation/PlatformDeployment.md`.
 
 ## Current research boundary

@@ -154,11 +154,11 @@ VerificationTest[
   Module[{nonstandard, exceptional},
     nonstandard = CreateSatakeDiagram["C(1)", 5, {0, 1, 5}];
     exceptional = CreateSatakeDiagram["D(1)", 4, {}, {0, 4, 2, 3, 1}];
-    {FailureQ[Quiet[KMatrix[nonstandard, u], KMatrix::nonquasi]],
+    {AssociationQ[Quiet[KMatrix[nonstandard, u], KMatrix::nonquasi]],
       FailureQ[Quiet[KMatrix[exceptional, u], KMatrix::novector]]}
   ],
   {True, True},
-  TestID -> "unsafe-catalogue-regimes-are-guarded"
+  TestID -> "special-catalogue-regimes-are-dispatched-safely"
 ]
 
 VerificationTest[
@@ -802,7 +802,7 @@ VerificationTest[
 
 VerificationTest[
   QREKMatricesVersion[],
-  "0.16.0",
+  "0.17.0",
   TestID -> "web-engine-version"
 ]
 
@@ -813,12 +813,48 @@ VerificationTest[
     {aFamilies, c1["ContentStatus"], c1["ParameterOrder"],
       c1["GeneralFormula", "Kind"],
       c1["GeneralFormula", "Expression", "kind"],
-      Lookup[c1["Properties"], "Kind"]}
+      Lookup[c1["Properties"], "Kind"],
+      Lookup[c1["RegimeFormulas"], "Regime"]}
   ],
   {{"A.1", "A.2", "A.3", "A.4"}, "published", {"l", "r"},
     "masterFormula", "call",
-    {"eigendecomposition", "barSymmetry", "factorisation"}},
+    {"eigendecomposition", "barSymmetry", "factorisation"},
+    {"NonQuasistandard"}},
   TestID -> "family-record-C1-structured-content"
+]
+
+VerificationTest[
+  Module[{specializedResult, specialized, ordinary, residual},
+    specializedResult = KMatrix[<|"Rank" -> 4, "Family" -> "C.1",
+      "Parameters" -> <|"l" -> 1, "r" -> 3, "Nu" -> I|>|>, u];
+    specialized = specializedResult["KMatrix"];
+    ordinary = KMatrix[<|"Rank" -> 4, "Family" -> "C.1",
+      "Parameters" -> <|"l" -> 1, "r" -> 3|>|>, u]["KMatrix"];
+    residual = FullSimplify[Normal[specialized - ordinary]];
+    {specializedResult["Provenance", "Branch"],
+      residual === ConstantArray[0, {8, 8}]}
+  ],
+  {"NonQuasistandardGeneric", True},
+  TestID -> "C1-nonquasistandard-specializes-at-nu-squared-minus-one"
+]
+
+VerificationTest[
+  Module[{result, properties, dressed},
+    result = KMatrix[<|"Rank" -> 3, "Family" -> "C.1",
+      "Parameters" -> <|"l" -> 1, "r" -> 2|>|>, u];
+    properties = KMatrixPropertyData[result, u];
+    dressed = KMatrixRealizationData[result, u, "Realization" -> "Dressed",
+      "VerifyProperties" -> False];
+    {Lookup[properties, "Kind"],
+      Lookup[properties[[1 ;; 3]], "Status"],
+      dressed["Realization"], Length[dressed["Transformations"]],
+      Dimensions[dressed["KMatrix"]], Length[dressed["Properties"]]}
+  ],
+  {{"eigenvalues", "characteristicIdentity", "minimalIdentity", "determinant",
+    "factorization", "rankLoci", "regularity", "unitarity"},
+   {"verifiedExact", "verifiedExact", "verifiedExact"},
+   "dressed", 1, {6, 6}, 8},
+  TestID -> "C1-realization-and-property-dossier"
 ]
 
 VerificationTest[
@@ -843,7 +879,7 @@ VerificationTest[
       Lookup[data["families"], "familyId"],
       Union[Length /@ Lookup[records, "familyMemberships"]]}
   ],
-  {"1.4.0", "0.16.0", 7, True, {"NotRequested"},
+  {"1.5.0", "0.17.0", 7, True, {"NotRequested"},
     {"C**.1", "C**.2"}, {1, 2}},
   TestID -> "web-catalogue-stable-records"
 ]
@@ -861,7 +897,7 @@ VerificationTest[
       imported["files"][[1, "families"]],
       FileExistsQ[FileNameJoin[{directory, imported["files"][[1, "path"]]}]]}
   ],
-  {7, "1.4.0", {"C**.1", "C**.2"}, True},
+  {7, "1.5.0", {"C**.1", "C**.2"}, True},
   TestID -> "web-catalogue-export-manifest"
 ]
 
