@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.6.0",
+	"schemaVersion":"1.7.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.19.0"
+		"version":"0.20.0"
 	},
 	"catalogue":{
 		"id":"c-1--n5",
@@ -46485,27 +46485,57 @@
 					{
 						"branchId":"representative",
 						"label":"Representative",
+						"kind":"classification",
 						"regime":"MainCatalogue",
+						"description":"",
 						"constraintsLatex":[
 							"\\ell+r\\leq n"
-						]
+						],
+						"formula":null,
+						"properties":[],
+						"verification":{
+							"status":"notComputed",
+							"level":"notComputed",
+							"equation":"Standard",
+							"method":"notComputed"
+						}
 					},
 					{
 						"branchId":"transported",
 						"label":"Rotated non-representative",
+						"kind":"classification",
 						"regime":"MainCatalogue",
+						"description":"",
 						"constraintsLatex":[
 							"\\ell+r>n"
-						]
+						],
+						"formula":null,
+						"properties":[],
+						"verification":{
+							"status":"notComputed",
+							"level":"notComputed",
+							"equation":"Standard",
+							"method":"notComputed"
+						}
 					},
 					{
 						"branchId":"nonquasistandard",
 						"label":"Non-quasistandard",
+						"kind":"classification",
 						"regime":"NonQuasistandard",
+						"description":"",
 						"constraintsLatex":[
 							"1\\leq\\ell\\leq n-3",
 							"r=\\ell+2"
-						]
+						],
+						"formula":null,
+						"properties":[],
+						"verification":{
+							"status":"notComputed",
+							"level":"notComputed",
+							"equation":"Standard",
+							"method":"notComputed"
+						}
 					}
 				]
 			},
@@ -46984,11 +47014,21 @@
 					{
 						"branchId":"representative",
 						"label":"Representative",
+						"kind":"classification",
 						"regime":"MainCatalogue",
+						"description":"",
 						"constraintsLatex":[
 							"0\\leq\\ell\\leq r\\leq n",
 							"r-\\ell\\text{ even}"
-						]
+						],
+						"formula":null,
+						"properties":[],
+						"verification":{
+							"status":"notComputed",
+							"level":"notComputed",
+							"equation":"Standard",
+							"method":"notComputed"
+						}
 					}
 				]
 			},
@@ -47319,10 +47359,20 @@
 					{
 						"branchId":"representative",
 						"label":"Representative",
+						"kind":"classification",
 						"regime":"MainCatalogue",
+						"description":"",
 						"constraintsLatex":[
 							"0\\leq\\ell\\leq\\lfloor n\/2\\rfloor"
-						]
+						],
+						"formula":null,
+						"properties":[],
+						"verification":{
+							"status":"notComputed",
+							"level":"notComputed",
+							"equation":"Standard",
+							"method":"notComputed"
+						}
 					}
 				]
 			},
@@ -47742,6 +47792,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -47917,6 +47968,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -48092,6 +48144,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -48268,6 +48321,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -48444,6 +48498,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -48620,6 +48675,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -48797,6 +48853,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"NonQuasistandard",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -48965,6 +49022,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"NonQuasistandard",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -49142,6 +49200,7 @@
 					"familyId":"C.2",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -49319,6 +49378,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"NonQuasistandard",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -49496,6 +49556,7 @@
 					"familyId":"C.2",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -49673,6 +49734,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"NonQuasistandard",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -49842,6 +49904,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -50020,6 +50083,7 @@
 					"familyId":"C.2",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -50198,6 +50262,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -50376,6 +50441,7 @@
 					"familyId":"C.2",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -50554,6 +50620,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -50732,6 +50799,7 @@
 					"familyId":"C.2",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -50910,6 +50978,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -51088,6 +51157,7 @@
 					"familyId":"C.2",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -51266,6 +51336,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -51446,6 +51517,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -51470,6 +51542,7 @@
 					"familyId":"C.2",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -51650,6 +51723,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -51674,6 +51748,7 @@
 					"familyId":"C.2",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -51854,6 +51929,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -51878,6 +51954,7 @@
 					"familyId":"C.2",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -52058,6 +52135,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -52082,6 +52160,7 @@
 					"familyId":"C.2",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -52262,6 +52341,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -52286,6 +52366,7 @@
 					"familyId":"C.2",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -52466,6 +52547,7 @@
 					"familyId":"C.1",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -52490,6 +52572,7 @@
 					"familyId":"C.2",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -52659,6 +52742,7 @@
 					"familyId":"C.4",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -52827,6 +52911,7 @@
 					"familyId":"C.4",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -52997,6 +53082,7 @@
 					"familyId":"C.4",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{
 						"l":{
 							"kind":"integer",

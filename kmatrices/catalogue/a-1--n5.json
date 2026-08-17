@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.6.0",
+	"schemaVersion":"1.7.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.19.0"
+		"version":"0.20.0"
 	},
 	"catalogue":{
 		"id":"a-1--n5",
@@ -8862,12 +8862,1492 @@
 				],
 				"branches":[
 					{
-						"branchId":"representative",
-						"label":"Representative orbit",
+						"branchId":"interior",
+						"label":"General case",
+						"kind":"generic",
 						"regime":"MainCatalogue",
+						"description":"Both index intervals are nonempty and the paired block does not reach its maximal endpoint.",
 						"constraintsLatex":[
+							"\\ell>0",
+							"r<\\lfloor t\/2\\rfloor",
 							"t\\in\\{N-1,N\\}"
-						]
+						],
+						"formula":{
+							"kind":"masterFormula",
+							"status":"published",
+							"latex":"K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
+							"expression":{
+								"kind":"call",
+								"head":"Equal",
+								"arguments":[
+									{
+										"kind":"call",
+										"head":"K",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"u"
+											}
+										]
+									},
+									{
+										"kind":"call",
+										"head":"Plus",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"Id"
+											},
+											{
+												"kind":"call",
+												"head":"Times",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Plus",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Times",
+																		"arguments":[
+																			{
+																				"kind":"integer",
+																				"value":"-1"
+																			},
+																			{
+																				"kind":"call",
+																				"head":"Power",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"u"
+																					},
+																					{
+																						"kind":"integer",
+																						"value":"-1"
+																					}
+																				]
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"k1",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"-1"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"M1",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"M2",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Power",
+																		"arguments":[
+																			{
+																				"kind":"call",
+																				"head":"k2",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"u"
+																					}
+																				]
+																			},
+																			{
+																				"kind":"integer",
+																				"value":"-1"
+																			}
+																		]
+																	}
+																]
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								]
+							},
+							"definitions":[
+								{
+									"definitionId":"a3-k1",
+									"label":"First denominator",
+									"latex":"k_1(u)=\\lambda\\mu-u",
+									"expression":{
+										"kind":"call",
+										"head":"Equal",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"k1",
+												"arguments":[
+													{
+														"kind":"symbol",
+														"name":"u"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"lambda"
+															},
+															{
+																"kind":"symbol",
+																"name":"mu"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"integer",
+																"value":"-1"
+															},
+															{
+																"kind":"symbol",
+																"name":"u"
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								},
+								{
+									"definitionId":"a3-k2",
+									"label":"Second denominator",
+									"latex":"k_2(u)=\\lambda^{-1}+(\\mu u)^{-1}",
+									"expression":{
+										"kind":"call",
+										"head":"Equal",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"k2",
+												"arguments":[
+													{
+														"kind":"symbol",
+														"name":"u"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"lambda"
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"mu"
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								},
+								{
+									"definitionId":"a3-m1",
+									"label":"Diagonal term",
+									"latex":"M_1(u)=\\sum_{1\\leq i\\leq\\ell}\\lambda\\mu uE_{ii}+\\sum_{t-\\ell<i\\leq N}E_{ii}",
+									"expression":{
+										"kind":"call",
+										"head":"A3M1",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"u"
+											},
+											{
+												"kind":"symbol",
+												"name":"N"
+											},
+											{
+												"kind":"symbol",
+												"name":"l"
+											},
+											{
+												"kind":"symbol",
+												"name":"t"
+											}
+										]
+									}
+								},
+								{
+									"definitionId":"a3-m2",
+									"label":"Paired term",
+									"latex":"M_2(u)=\\sum_{\\ell<i\\leq r}\\left(\\lambda E_{ii}+\\lambda^{-1}E_{t+1-i,t+1-i}+E_{i,t+1-i}+E_{t+1-i,i}\\right)",
+									"expression":{
+										"kind":"call",
+										"head":"A3M2",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"u"
+											},
+											{
+												"kind":"symbol",
+												"name":"N"
+											},
+											{
+												"kind":"symbol",
+												"name":"l"
+											},
+											{
+												"kind":"symbol",
+												"name":"r"
+											},
+											{
+												"kind":"symbol",
+												"name":"t"
+											}
+										]
+									}
+								}
+							],
+							"assumptionsLatex":"0<\\ell\\leq r<\\lfloor t\/2\\rfloor",
+							"sourceAnchors":[
+								{
+									"source":"qRE\/files\/results.tex",
+									"anchor":"T:all-K",
+									"role":"formula"
+								},
+								{
+									"source":"qRE\/files\/resultsA3.tex",
+									"anchor":"Res:A3",
+									"role":"specialization"
+								}
+							]
+						},
+						"properties":[
+							{
+								"kind":"regularity",
+								"status":"sourceIdentity",
+								"latex":"K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}"
+							},
+							{
+								"kind":"unitarity",
+								"status":"verified",
+								"latex":"K(u)K(u^{-1})=\\operatorname{Id}"
+							}
+						],
+						"verification":{
+							"status":"verified",
+							"level":"exactSample",
+							"equation":"Standard",
+							"method":"exactCatalogueInstancesThroughRank3"
+						}
+					},
+					{
+						"branchId":"left-boundary",
+						"label":"Empty left block",
+						"kind":"boundary",
+						"regime":"MainCatalogue",
+						"description":"The first diagonal interval disappears; the master formula is read with the corresponding sum empty.",
+						"constraintsLatex":[
+							"\\ell=0",
+							"r<\\lfloor t\/2\\rfloor",
+							"t\\in\\{N-1,N\\}"
+						],
+						"formula":{
+							"kind":"masterFormula",
+							"status":"published",
+							"latex":"K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
+							"expression":{
+								"kind":"call",
+								"head":"Equal",
+								"arguments":[
+									{
+										"kind":"call",
+										"head":"K",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"u"
+											}
+										]
+									},
+									{
+										"kind":"call",
+										"head":"Plus",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"Id"
+											},
+											{
+												"kind":"call",
+												"head":"Times",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Plus",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Times",
+																		"arguments":[
+																			{
+																				"kind":"integer",
+																				"value":"-1"
+																			},
+																			{
+																				"kind":"call",
+																				"head":"Power",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"u"
+																					},
+																					{
+																						"kind":"integer",
+																						"value":"-1"
+																					}
+																				]
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"k1",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"-1"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"M1",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"M2",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Power",
+																		"arguments":[
+																			{
+																				"kind":"call",
+																				"head":"k2",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"u"
+																					}
+																				]
+																			},
+																			{
+																				"kind":"integer",
+																				"value":"-1"
+																			}
+																		]
+																	}
+																]
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								]
+							},
+							"definitions":[
+								{
+									"definitionId":"a3-k1",
+									"label":"First denominator",
+									"latex":"k_1(u)=\\lambda\\mu-u",
+									"expression":{
+										"kind":"call",
+										"head":"Equal",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"k1",
+												"arguments":[
+													{
+														"kind":"symbol",
+														"name":"u"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"lambda"
+															},
+															{
+																"kind":"symbol",
+																"name":"mu"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"integer",
+																"value":"-1"
+															},
+															{
+																"kind":"symbol",
+																"name":"u"
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								},
+								{
+									"definitionId":"a3-k2",
+									"label":"Second denominator",
+									"latex":"k_2(u)=\\lambda^{-1}+(\\mu u)^{-1}",
+									"expression":{
+										"kind":"call",
+										"head":"Equal",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"k2",
+												"arguments":[
+													{
+														"kind":"symbol",
+														"name":"u"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"lambda"
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"mu"
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								},
+								{
+									"definitionId":"a3-m1",
+									"label":"Diagonal term",
+									"latex":"M_1(u)=\\sum_{1\\leq i\\leq\\ell}\\lambda\\mu uE_{ii}+\\sum_{t-\\ell<i\\leq N}E_{ii}",
+									"expression":{
+										"kind":"call",
+										"head":"A3M1",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"u"
+											},
+											{
+												"kind":"symbol",
+												"name":"N"
+											},
+											{
+												"kind":"symbol",
+												"name":"l"
+											},
+											{
+												"kind":"symbol",
+												"name":"t"
+											}
+										]
+									}
+								},
+								{
+									"definitionId":"a3-m2",
+									"label":"Paired term",
+									"latex":"M_2(u)=\\sum_{\\ell<i\\leq r}\\left(\\lambda E_{ii}+\\lambda^{-1}E_{t+1-i,t+1-i}+E_{i,t+1-i}+E_{t+1-i,i}\\right)",
+									"expression":{
+										"kind":"call",
+										"head":"A3M2",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"u"
+											},
+											{
+												"kind":"symbol",
+												"name":"N"
+											},
+											{
+												"kind":"symbol",
+												"name":"l"
+											},
+											{
+												"kind":"symbol",
+												"name":"r"
+											},
+											{
+												"kind":"symbol",
+												"name":"t"
+											}
+										]
+									}
+								}
+							],
+							"assumptionsLatex":"\\ell=0,\\quad 0\\leq r<\\lfloor t\/2\\rfloor",
+							"sourceAnchors":[
+								{
+									"source":"qRE\/files\/results.tex",
+									"anchor":"T:all-K",
+									"role":"formula"
+								},
+								{
+									"source":"qRE\/files\/resultsA3.tex",
+									"anchor":"Res:A3",
+									"role":"specialization"
+								}
+							]
+						},
+						"properties":[
+							{
+								"kind":"regularity",
+								"status":"sourceIdentity",
+								"latex":"K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}"
+							},
+							{
+								"kind":"unitarity",
+								"status":"verified",
+								"latex":"K(u)K(u^{-1})=\\operatorname{Id}"
+							}
+						],
+						"verification":{
+							"status":"verified",
+							"level":"exactSample",
+							"equation":"Standard",
+							"method":"exactCatalogueInstancesThroughRank3"
+						}
+					},
+					{
+						"branchId":"right-boundary",
+						"label":"Maximal paired block",
+						"kind":"boundary",
+						"regime":"MainCatalogue",
+						"description":"The paired block reaches the midpoint of the t-interval.",
+						"constraintsLatex":[
+							"\\ell>0",
+							"r=\\lfloor t\/2\\rfloor",
+							"t\\in\\{N-1,N\\}"
+						],
+						"formula":{
+							"kind":"masterFormula",
+							"status":"published",
+							"latex":"K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
+							"expression":{
+								"kind":"call",
+								"head":"Equal",
+								"arguments":[
+									{
+										"kind":"call",
+										"head":"K",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"u"
+											}
+										]
+									},
+									{
+										"kind":"call",
+										"head":"Plus",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"Id"
+											},
+											{
+												"kind":"call",
+												"head":"Times",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Plus",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Times",
+																		"arguments":[
+																			{
+																				"kind":"integer",
+																				"value":"-1"
+																			},
+																			{
+																				"kind":"call",
+																				"head":"Power",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"u"
+																					},
+																					{
+																						"kind":"integer",
+																						"value":"-1"
+																					}
+																				]
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"k1",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"-1"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"M1",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"M2",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Power",
+																		"arguments":[
+																			{
+																				"kind":"call",
+																				"head":"k2",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"u"
+																					}
+																				]
+																			},
+																			{
+																				"kind":"integer",
+																				"value":"-1"
+																			}
+																		]
+																	}
+																]
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								]
+							},
+							"definitions":[
+								{
+									"definitionId":"a3-k1",
+									"label":"First denominator",
+									"latex":"k_1(u)=\\lambda\\mu-u",
+									"expression":{
+										"kind":"call",
+										"head":"Equal",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"k1",
+												"arguments":[
+													{
+														"kind":"symbol",
+														"name":"u"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"lambda"
+															},
+															{
+																"kind":"symbol",
+																"name":"mu"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"integer",
+																"value":"-1"
+															},
+															{
+																"kind":"symbol",
+																"name":"u"
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								},
+								{
+									"definitionId":"a3-k2",
+									"label":"Second denominator",
+									"latex":"k_2(u)=\\lambda^{-1}+(\\mu u)^{-1}",
+									"expression":{
+										"kind":"call",
+										"head":"Equal",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"k2",
+												"arguments":[
+													{
+														"kind":"symbol",
+														"name":"u"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"lambda"
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"mu"
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								},
+								{
+									"definitionId":"a3-m1",
+									"label":"Diagonal term",
+									"latex":"M_1(u)=\\sum_{1\\leq i\\leq\\ell}\\lambda\\mu uE_{ii}+\\sum_{t-\\ell<i\\leq N}E_{ii}",
+									"expression":{
+										"kind":"call",
+										"head":"A3M1",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"u"
+											},
+											{
+												"kind":"symbol",
+												"name":"N"
+											},
+											{
+												"kind":"symbol",
+												"name":"l"
+											},
+											{
+												"kind":"symbol",
+												"name":"t"
+											}
+										]
+									}
+								},
+								{
+									"definitionId":"a3-m2",
+									"label":"Paired term",
+									"latex":"M_2(u)=\\sum_{\\ell<i\\leq r}\\left(\\lambda E_{ii}+\\lambda^{-1}E_{t+1-i,t+1-i}+E_{i,t+1-i}+E_{t+1-i,i}\\right)",
+									"expression":{
+										"kind":"call",
+										"head":"A3M2",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"u"
+											},
+											{
+												"kind":"symbol",
+												"name":"N"
+											},
+											{
+												"kind":"symbol",
+												"name":"l"
+											},
+											{
+												"kind":"symbol",
+												"name":"r"
+											},
+											{
+												"kind":"symbol",
+												"name":"t"
+											}
+										]
+									}
+								}
+							],
+							"assumptionsLatex":"0<\\ell\\leq r=\\lfloor t\/2\\rfloor",
+							"sourceAnchors":[
+								{
+									"source":"qRE\/files\/results.tex",
+									"anchor":"T:all-K",
+									"role":"formula"
+								},
+								{
+									"source":"qRE\/files\/resultsA3.tex",
+									"anchor":"Res:A3",
+									"role":"specialization"
+								}
+							]
+						},
+						"properties":[
+							{
+								"kind":"regularity",
+								"status":"sourceIdentity",
+								"latex":"K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}"
+							},
+							{
+								"kind":"unitarity",
+								"status":"verified",
+								"latex":"K(u)K(u^{-1})=\\operatorname{Id}"
+							}
+						],
+						"verification":{
+							"status":"verified",
+							"level":"exactSample",
+							"equation":"Standard",
+							"method":"exactCatalogueInstancesThroughRank3"
+						}
+					},
+					{
+						"branchId":"corner",
+						"label":"Boundary intersection",
+						"kind":"corner",
+						"regime":"MainCatalogue",
+						"description":"Both degenerations occur simultaneously: the left interval is empty and the paired block is maximal.",
+						"constraintsLatex":[
+							"\\ell=0",
+							"r=\\lfloor t\/2\\rfloor",
+							"t\\in\\{N-1,N\\}"
+						],
+						"formula":{
+							"kind":"masterFormula",
+							"status":"published",
+							"latex":"K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
+							"expression":{
+								"kind":"call",
+								"head":"Equal",
+								"arguments":[
+									{
+										"kind":"call",
+										"head":"K",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"u"
+											}
+										]
+									},
+									{
+										"kind":"call",
+										"head":"Plus",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"Id"
+											},
+											{
+												"kind":"call",
+												"head":"Times",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Plus",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Times",
+																		"arguments":[
+																			{
+																				"kind":"integer",
+																				"value":"-1"
+																			},
+																			{
+																				"kind":"call",
+																				"head":"Power",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"u"
+																					},
+																					{
+																						"kind":"integer",
+																						"value":"-1"
+																					}
+																				]
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"k1",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"-1"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"M1",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"M2",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Power",
+																		"arguments":[
+																			{
+																				"kind":"call",
+																				"head":"k2",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"u"
+																					}
+																				]
+																			},
+																			{
+																				"kind":"integer",
+																				"value":"-1"
+																			}
+																		]
+																	}
+																]
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								]
+							},
+							"definitions":[
+								{
+									"definitionId":"a3-k1",
+									"label":"First denominator",
+									"latex":"k_1(u)=\\lambda\\mu-u",
+									"expression":{
+										"kind":"call",
+										"head":"Equal",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"k1",
+												"arguments":[
+													{
+														"kind":"symbol",
+														"name":"u"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"lambda"
+															},
+															{
+																"kind":"symbol",
+																"name":"mu"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"integer",
+																"value":"-1"
+															},
+															{
+																"kind":"symbol",
+																"name":"u"
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								},
+								{
+									"definitionId":"a3-k2",
+									"label":"Second denominator",
+									"latex":"k_2(u)=\\lambda^{-1}+(\\mu u)^{-1}",
+									"expression":{
+										"kind":"call",
+										"head":"Equal",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"k2",
+												"arguments":[
+													{
+														"kind":"symbol",
+														"name":"u"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"lambda"
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"mu"
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
+													}
+												]
+											}
+										]
+									}
+								},
+								{
+									"definitionId":"a3-m1",
+									"label":"Diagonal term",
+									"latex":"M_1(u)=\\sum_{1\\leq i\\leq\\ell}\\lambda\\mu uE_{ii}+\\sum_{t-\\ell<i\\leq N}E_{ii}",
+									"expression":{
+										"kind":"call",
+										"head":"A3M1",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"u"
+											},
+											{
+												"kind":"symbol",
+												"name":"N"
+											},
+											{
+												"kind":"symbol",
+												"name":"l"
+											},
+											{
+												"kind":"symbol",
+												"name":"t"
+											}
+										]
+									}
+								},
+								{
+									"definitionId":"a3-m2",
+									"label":"Paired term",
+									"latex":"M_2(u)=\\sum_{\\ell<i\\leq r}\\left(\\lambda E_{ii}+\\lambda^{-1}E_{t+1-i,t+1-i}+E_{i,t+1-i}+E_{t+1-i,i}\\right)",
+									"expression":{
+										"kind":"call",
+										"head":"A3M2",
+										"arguments":[
+											{
+												"kind":"symbol",
+												"name":"u"
+											},
+											{
+												"kind":"symbol",
+												"name":"N"
+											},
+											{
+												"kind":"symbol",
+												"name":"l"
+											},
+											{
+												"kind":"symbol",
+												"name":"r"
+											},
+											{
+												"kind":"symbol",
+												"name":"t"
+											}
+										]
+									}
+								}
+							],
+							"assumptionsLatex":"\\ell=0,\\quad r=\\lfloor t\/2\\rfloor",
+							"sourceAnchors":[
+								{
+									"source":"qRE\/files\/results.tex",
+									"anchor":"T:all-K",
+									"role":"formula"
+								},
+								{
+									"source":"qRE\/files\/resultsA3.tex",
+									"anchor":"Res:A3",
+									"role":"specialization"
+								}
+							]
+						},
+						"properties":[
+							{
+								"kind":"regularity",
+								"status":"sourceIdentity",
+								"latex":"K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}"
+							},
+							{
+								"kind":"unitarity",
+								"status":"verified",
+								"latex":"K(u)K(u^{-1})=\\operatorname{Id}"
+							}
+						],
+						"verification":{
+							"status":"verified",
+							"level":"exactSample",
+							"equation":"Standard",
+							"method":"exactCatalogueInstancesThroughRank3"
+						}
 					}
 				]
 			},
@@ -9076,13 +10556,109 @@
 						}
 					},
 					{
-						"definitionId":"a3-terms",
-						"label":"Family terms",
-						"latex":"M_1(u),\\ M_2(u)\\text{ are determined by }(N,\\ell,r,t)",
+						"definitionId":"a3-k2",
+						"label":"Second denominator",
+						"latex":"k_2(u)=\\lambda^{-1}+(\\mu u)^{-1}",
 						"expression":{
 							"kind":"call",
-							"head":"FamilyTerms",
+							"head":"Equal",
 							"arguments":[
+								{
+									"kind":"call",
+									"head":"k2",
+									"arguments":[
+										{
+											"kind":"symbol",
+											"name":"u"
+										}
+									]
+								},
+								{
+									"kind":"call",
+									"head":"Plus",
+									"arguments":[
+										{
+											"kind":"call",
+											"head":"Power",
+											"arguments":[
+												{
+													"kind":"symbol",
+													"name":"lambda"
+												},
+												{
+													"kind":"integer",
+													"value":"-1"
+												}
+											]
+										},
+										{
+											"kind":"call",
+											"head":"Power",
+											"arguments":[
+												{
+													"kind":"call",
+													"head":"Times",
+													"arguments":[
+														{
+															"kind":"symbol",
+															"name":"mu"
+														},
+														{
+															"kind":"symbol",
+															"name":"u"
+														}
+													]
+												},
+												{
+													"kind":"integer",
+													"value":"-1"
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					},
+					{
+						"definitionId":"a3-m1",
+						"label":"Diagonal term",
+						"latex":"M_1(u)=\\sum_{1\\leq i\\leq\\ell}\\lambda\\mu uE_{ii}+\\sum_{t-\\ell<i\\leq N}E_{ii}",
+						"expression":{
+							"kind":"call",
+							"head":"A3M1",
+							"arguments":[
+								{
+									"kind":"symbol",
+									"name":"u"
+								},
+								{
+									"kind":"symbol",
+									"name":"N"
+								},
+								{
+									"kind":"symbol",
+									"name":"l"
+								},
+								{
+									"kind":"symbol",
+									"name":"t"
+								}
+							]
+						}
+					},
+					{
+						"definitionId":"a3-m2",
+						"label":"Paired term",
+						"latex":"M_2(u)=\\sum_{\\ell<i\\leq r}\\left(\\lambda E_{ii}+\\lambda^{-1}E_{t+1-i,t+1-i}+E_{i,t+1-i}+E_{t+1-i,i}\\right)",
+						"expression":{
+							"kind":"call",
+							"head":"A3M2",
+							"arguments":[
+								{
+									"kind":"symbol",
+									"name":"u"
+								},
 								{
 									"kind":"symbol",
 									"name":"N"
@@ -9309,6 +10885,7 @@
 					"familyId":"A.1",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{},
 					"representative":false,
 					"transportPermutation":null
@@ -9454,6 +11031,7 @@
 					"familyId":"A.2",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{},
 					"representative":false,
 					"transportPermutation":null
@@ -9599,6 +11177,7 @@
 					"familyId":"A.2",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{},
 					"representative":false,
 					"transportPermutation":null
@@ -9740,6 +11319,7 @@
 					"familyId":"A.4",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":null,
 					"parameters":{},
 					"representative":false,
 					"transportPermutation":null
@@ -9901,6 +11481,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"corner",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -10084,6 +11665,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -10267,6 +11849,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -10451,6 +12034,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"interior",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -10636,6 +12220,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -10821,6 +12406,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -11007,6 +12593,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"interior",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -11193,6 +12780,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"interior",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -11380,6 +12968,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -11567,6 +13156,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -11748,6 +13338,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"corner",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -11932,6 +13523,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -12116,6 +13708,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -12302,6 +13895,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -12488,6 +14082,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"interior",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -12674,6 +14269,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -12855,6 +14451,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"corner",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -13038,6 +14635,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -13221,6 +14819,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -13405,6 +15004,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"interior",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -13590,6 +15190,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -13775,6 +15376,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -13961,6 +15563,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"interior",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -14147,6 +15750,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"interior",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -14334,6 +15938,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -14521,6 +16126,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -14702,6 +16308,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"corner",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -14886,6 +16493,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -15070,6 +16678,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -15256,6 +16865,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -15442,6 +17052,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -15628,6 +17239,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"interior",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -15809,6 +17421,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"corner",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -15992,6 +17605,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -16175,6 +17789,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -16359,6 +17974,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"interior",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -16544,6 +18160,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -16729,6 +18346,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -16915,6 +18533,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"interior",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -17101,6 +18720,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"interior",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -17288,6 +18908,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -17475,6 +19096,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"candidate",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -17656,6 +19278,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"corner",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -17840,6 +19463,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -18024,6 +19648,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -18210,6 +19835,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"right-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -18396,6 +20022,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"interior",
 					"parameters":{
 						"l":{
 							"kind":"integer",
@@ -18582,6 +20209,7 @@
 					"familyId":"A.3",
 					"membershipStatus":"classified",
 					"regime":"MainCatalogue",
+					"formulaBranchId":"left-boundary",
 					"parameters":{
 						"l":{
 							"kind":"integer",
