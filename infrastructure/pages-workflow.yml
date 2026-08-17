@@ -1,0 +1,68 @@
+name: Validate and deploy quantum projects
+
+on:
+  pull_request:
+    paths:
+      - "kmatrices/**"
+      - "site/**"
+      - ".github/workflows/pages.yml"
+  push:
+    branches: [main]
+    paths:
+      - "kmatrices/**"
+      - "site/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: quantum-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: kmatrices/apps/web/package-lock.json
+      - name: Install K-matrices frontend
+        run: npm ci
+        working-directory: kmatrices/apps/web
+      - name: Validate K-matrices catalogue
+        run: npm run validate:data
+        working-directory: kmatrices/apps/web
+      - name: Build K-matrices explorer
+        run: npm run build
+        working-directory: kmatrices/apps/web
+      - name: Assemble Pages site
+        run: |
+          mkdir -p .pages/kmatrices
+          cp -R site/. .pages/
+          cp -R kmatrices/apps/web/dist/. .pages/kmatrices/
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .pages
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

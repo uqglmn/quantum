@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qrekmatrices.org/schemas/expression.schema.json",
+  "title": "QRE web expression",
+  "description": "A safe, versioned expression tree. It is data, never executable source code.",
+  "$defs": {
+    "expression": {
+      "oneOf": [
+        { "$ref": "#/$defs/integer" },
+        { "$ref": "#/$defs/rational" },
+        { "$ref": "#/$defs/real" },
+        { "$ref": "#/$defs/complex" },
+        { "$ref": "#/$defs/symbol" },
+        { "$ref": "#/$defs/string" },
+        { "$ref": "#/$defs/call" },
+        { "$ref": "#/$defs/sparseMatrix" }
+      ]
+    },
+    "integer": {
+      "type": "object",
+      "required": ["kind", "value"],
+      "properties": {
+        "kind": { "const": "integer" },
+        "value": { "type": "string", "pattern": "^-?[0-9]+$" }
+      },
+      "additionalProperties": false
+    },
+    "rational": {
+      "type": "object",
+      "required": ["kind", "numerator", "denominator"],
+      "properties": {
+        "kind": { "const": "rational" },
+        "numerator": { "type": "string", "pattern": "^-?[0-9]+$" },
+        "denominator": { "type": "string", "pattern": "^[1-9][0-9]*$" }
+      },
+      "additionalProperties": false
+    },
+    "real": {
+      "type": "object",
+      "required": ["kind", "value"],
+      "properties": {
+        "kind": { "const": "real" },
+        "value": { "type": "string" },
+        "precision": { "type": ["number", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "complex": {
+      "type": "object",
+      "required": ["kind", "real", "imaginary"],
+      "properties": {
+        "kind": { "const": "complex" },
+        "real": { "$ref": "#/$defs/expression" },
+        "imaginary": { "$ref": "#/$defs/expression" }
+      },
+      "additionalProperties": false
+    },
+    "symbol": {
+      "type": "object",
+      "required": ["kind", "name"],
+      "properties": {
+        "kind": { "const": "symbol" },
+        "name": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "string": {
+      "type": "object",
+      "required": ["kind", "value"],
+      "properties": {
+        "kind": { "const": "string" },
+        "value": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "call": {
+      "type": "object",
+      "required": ["kind", "head", "arguments"],
+      "properties": {
+        "kind": { "const": "call" },
+        "head": { "type": "string", "minLength": 1 },
+        "arguments": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/expression" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "sparseMatrix": {
+      "type": "object",
+      "required": ["kind", "dimensions", "indexBase", "entries"],
+      "properties": {
+        "kind": { "const": "sparseMatrix" },
+        "dimensions": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "prefixItems": [
+            { "type": "integer", "minimum": 0 },
+            { "type": "integer", "minimum": 0 }
+          ],
+          "items": false
+        },
+        "indexBase": { "const": 0 },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["index", "value"],
+            "properties": {
+              "index": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "prefixItems": [
+                  { "type": "integer", "minimum": 0 },
+                  { "type": "integer", "minimum": 0 }
+                ],
+                "items": false
+              },
+              "value": { "$ref": "#/$defs/expression" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/expression"
+}

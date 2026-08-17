@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qrekmatrices.org/schemas/catalogue.schema.json",
+  "title": "QRE generalized Satake diagram catalogue",
+  "type": "object",
+  "required": ["schemaVersion", "engine", "catalogue", "summary", "diagrams"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "engine": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "const": "QREKMatrices" },
+        "version": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "catalogue": {
+      "type": "object",
+      "required": ["id", "affineType", "rank"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "affineType": { "type": "string", "minLength": 1 },
+        "rank": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": ["diagramCount", "statuses"],
+      "properties": {
+        "diagramCount": { "type": "integer", "minimum": 0 },
+        "statuses": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 }
+        }
+      },
+      "additionalProperties": false
+    },
+    "diagrams": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/diagramRecord" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "scalar": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "integer" }
+      ]
+    },
+    "parameterMap": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "expression.schema.json#/$defs/expression"
+      }
+    },
+    "diagramSpec": {
+      "type": "object",
+      "required": ["affineType", "rank", "nodes", "X", "tau"],
+      "properties": {
+        "affineType": { "type": "string" },
+        "rank": { "type": "integer", "minimum": 1 },
+        "nodes": { "type": "array", "items": { "type": "integer", "minimum": 0 } },
+        "X": { "type": "array", "items": { "type": "integer", "minimum": 0 }, "uniqueItems": true },
+        "tau": { "type": "array", "items": { "type": "integer", "minimum": 0 } }
+      },
+      "additionalProperties": false
+    },
+    "diagramData": {
+      "type": "object",
+      "required": ["cartanMatrix", "symmetrizers"],
+      "properties": {
+        "cartanMatrix": {
+          "type": "array",
+          "items": { "type": "array", "items": { "type": "integer" } }
+        },
+        "symmetrizers": {
+          "type": "array",
+          "items": { "$ref": "expression.schema.json#/$defs/expression" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "classification": {
+      "type": "object",
+      "required": ["status", "family", "candidateFamilies", "regime", "equation", "parameters"],
+      "properties": {
+        "status": { "type": "string" },
+        "family": { "type": ["string", "null"] },
+        "candidateFamilies": { "type": "array", "items": { "type": "string" } },
+        "regime": { "type": "string" },
+        "equation": { "type": "string" },
+        "parameters": { "$ref": "#/$defs/parameterMap" },
+        "representativeFamily": { "type": ["string", "null"] },
+        "representativePermutation": {
+          "type": ["array", "null"],
+          "items": { "type": "integer", "minimum": 0 }
+        }
+      },
+      "additionalProperties": false
+    },
+    "capabilities": {
+      "type": "object",
+      "required": ["qspAlgebra", "kMatrix", "rMatrix", "properties", "remoteComputation"],
+      "properties": {
+        "qspAlgebra": { "type": "boolean" },
+        "kMatrix": { "type": "boolean" },
+        "rMatrix": { "type": "boolean" },
+        "properties": { "type": "array", "items": { "type": "string" } },
+        "remoteComputation": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "integer" },
+          { "type": "number" },
+          { "type": "boolean" },
+          { "type": "null" },
+          { "type": "array" },
+          { "type": "object" }
+        ]
+      }
+    },
+    "solution": {
+      "type": "object",
+      "required": ["solutionId", "family", "equation", "realization", "transformations", "basisLabels", "parameters", "matrix", "latex", "provenance"],
+      "properties": {
+        "solutionId": { "type": "string" },
+        "family": { "type": "string" },
+        "equation": { "type": "string" },
+        "realization": { "enum": ["bare", "dressed", "transported"] },
+        "transformations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["kind", "parameters"],
+            "properties": {
+              "kind": { "enum": ["dress", "transport", "normalize", "scalar"] },
+              "parameters": { "$ref": "#/$defs/parameterMap" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "basisLabels": { "type": "array", "items": { "$ref": "#/$defs/scalar" } },
+        "parameters": { "$ref": "#/$defs/parameterMap" },
+        "matrix": { "$ref": "expression.schema.json#/$defs/sparseMatrix" },
+        "latex": { "type": "string" },
+        "provenance": { "$ref": "#/$defs/provenance" },
+        "properties": { "type": "array", "items": { "$ref": "#/$defs/property" } }
+      },
+      "additionalProperties": false
+    },
+    "property": {
+      "type": "object",
+      "required": ["kind", "status", "value", "latex", "assumptions", "provenance"],
+      "properties": {
+        "kind": {
+          "enum": ["eigenvalues", "characteristicIdentity", "minimalIdentity", "factorization", "regularity", "unitarity", "reflectionEquationVerification"]
+        },
+        "status": { "enum": ["computed", "verified", "conditional", "unavailable"] },
+        "value": {
+          "oneOf": [
+            { "$ref": "expression.schema.json#/$defs/expression" },
+            { "type": "null" }
+          ]
+        },
+        "latex": { "type": ["string", "null"] },
+        "assumptions": {
+          "type": "array",
+          "items": { "$ref": "expression.schema.json#/$defs/expression" }
+        },
+        "provenance": { "$ref": "#/$defs/provenance" }
+      },
+      "additionalProperties": false
+    },
+    "computation": {
+      "type": "object",
+      "required": ["status", "solution", "candidates"],
+      "properties": {
+        "status": { "type": "string" },
+        "solution": { "oneOf": [{ "$ref": "#/$defs/solution" }, { "type": "null" }] },
+        "candidates": { "type": "array", "items": { "$ref": "#/$defs/solution" } }
+      },
+      "additionalProperties": false
+    },
+    "diagramRecord": {
+      "type": "object",
+      "required": ["id", "spec", "data", "classification", "capabilities", "computation"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "spec": { "$ref": "#/$defs/diagramSpec" },
+        "data": { "$ref": "#/$defs/diagramData" },
+        "classification": { "$ref": "#/$defs/classification" },
+        "capabilities": { "$ref": "#/$defs/capabilities" },
+        "computation": { "$ref": "#/$defs/computation" }
+      },
+      "additionalProperties": false
+    }
+  }
+}
