@@ -5,7 +5,7 @@
   "type": "object",
   "required": ["schemaVersion", "engine", "catalogue", "ambient", "families", "summary", "diagrams"],
   "properties": {
-    "schemaVersion": { "const": "1.6.0" },
+    "schemaVersion": { "const": "1.7.0" },
     "engine": {
       "type": "object",
       "required": ["name", "version"],
@@ -132,12 +132,17 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["branchId", "label", "regime", "constraintsLatex"],
+            "required": ["branchId", "label", "kind", "regime", "description", "constraintsLatex", "formula", "properties", "verification"],
             "properties": {
               "branchId": { "type": "string", "minLength": 1 },
               "label": { "type": "string", "minLength": 1 },
+              "kind": { "enum": ["generic", "boundary", "corner", "exceptional", "classification"] },
               "regime": { "type": "string", "minLength": 1 },
-              "constraintsLatex": { "type": "array", "items": { "type": "string" } }
+              "description": { "type": "string" },
+              "constraintsLatex": { "type": "array", "items": { "type": "string" } },
+              "formula": { "oneOf": [{ "$ref": "#/$defs/familyFormula" }, { "type": "null" }] },
+              "properties": { "type": "array", "items": { "$ref": "#/$defs/familyProperty" } },
+              "verification": { "$ref": "#/$defs/familyBranchVerification" }
             },
             "additionalProperties": false
           }
@@ -186,13 +191,25 @@
       },
       "additionalProperties": false
     },
+    "familyBranchVerification": {
+      "type": "object",
+      "required": ["status", "level", "equation", "method"],
+      "properties": {
+        "status": { "enum": ["verified", "conditional", "notComputed"] },
+        "level": { "enum": ["exactSymbolic", "exactSample", "numericSample", "notComputed"] },
+        "equation": { "enum": ["Standard", "Transposed"] },
+        "method": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
     "familyMembership": {
       "type": "object",
-      "required": ["familyId", "membershipStatus", "regime", "parameters", "representative", "transportPermutation"],
+      "required": ["familyId", "membershipStatus", "regime", "formulaBranchId", "parameters", "representative", "transportPermutation"],
       "properties": {
         "familyId": { "type": "string", "minLength": 1 },
         "membershipStatus": { "enum": ["classified", "candidate"] },
         "regime": { "type": "string", "minLength": 1 },
+        "formulaBranchId": { "type": ["string", "null"] },
         "parameters": { "$ref": "#/$defs/parameterMap" },
         "representative": { "type": "boolean" },
         "transportPermutation": {

@@ -94,8 +94,8 @@ $twistedTypes = {
   "A2n-1(2)", "A2n-1(2)T", "A2n(2)", "A2n(2)T", "Dn+1(2)"
 };
 $canonicalTypes = Join[$untwistedTypes, $twistedTypes];
-$qreKMatricesVersion = "0.19.0";
-$webCatalogueSchemaVersion = "1.6.0";
+$qreKMatricesVersion = "0.20.0";
+$webCatalogueSchemaVersion = "1.7.0";
 
 QREKMatricesVersion[] := $qreKMatricesVersion;
 
@@ -206,11 +206,22 @@ $a3Formula = familyFormula["masterFormula",
        familyASTPlus[familyASTTimes[familyASTSymbol["lambda"],
          familyASTSymbol["mu"]], familyASTTimes[familyASTInteger[-1],
          familyASTSymbol["u"]]]]],
-   familyDefinition["a3-terms", "Family terms",
-     "M_1(u),\\ M_2(u)\\text{ are determined by }(N,\\ell,r,t)",
-     familyASTFunction["FamilyTerms", familyASTSymbol["N"],
-       familyASTSymbol["l"], familyASTSymbol["r"],
-       familyASTSymbol["t"]]]},
+   familyDefinition["a3-k2", "Second denominator",
+     "k_2(u)=\\lambda^{-1}+(\\mu u)^{-1}",
+     familyASTEqual[familyASTFunction["k2", familyASTSymbol["u"]],
+       familyASTPlus[familyASTPower[familyASTSymbol["lambda"], -1],
+         familyASTPower[familyASTTimes[familyASTSymbol["mu"],
+           familyASTSymbol["u"]], -1]]]],
+   familyDefinition["a3-m1", "Diagonal term",
+     "M_1(u)=\\sum_{1\\leq i\\leq\\ell}\\lambda\\mu uE_{ii}+\\sum_{t-\\ell<i\\leq N}E_{ii}",
+     familyASTFunction["A3M1", familyASTSymbol["u"],
+       familyASTSymbol["N"], familyASTSymbol["l"],
+       familyASTSymbol["t"]]],
+   familyDefinition["a3-m2", "Paired term",
+     "M_2(u)=\\sum_{\\ell<i\\leq r}\\left(\\lambda E_{ii}+\\lambda^{-1}E_{t+1-i,t+1-i}+E_{i,t+1-i}+E_{t+1-i,i}\\right)",
+     familyASTFunction["A3M2", familyASTSymbol["u"],
+       familyASTSymbol["N"], familyASTSymbol["l"],
+       familyASTSymbol["r"], familyASTSymbol["t"]]]},
   "0\\leq\\ell\\leq r\\leq\\lfloor t/2\\rfloor",
   {familySource["qRE/files/results.tex", "T:all-K"],
    familySource["qRE/files/resultsA3.tex", "Res:A3", "specialization"]}];
@@ -589,9 +600,68 @@ $familyRegistry = <|
       familyParameter["t", "t"]}, "Constraints" -> {
       familyConstraint["a3-order", "inequality",
         "0\\leq\\ell\\leq r\\leq\\lfloor t/2\\rfloor"]},
-      "Branches" -> {<|"BranchID" -> "representative",
-        "Label" -> "Representative orbit", "Regime" -> "MainCatalogue",
-        "ConstraintsLaTeX" -> {"t\\in\\{N-1,N\\}"}|>}|>,
+      "Branches" -> {
+        <|"BranchID" -> "interior", "Label" -> "General case",
+          "Kind" -> "generic", "Regime" -> "MainCatalogue",
+          "Description" -> "Both index intervals are nonempty and the paired block does not reach its maximal endpoint.",
+          "ConstraintsLaTeX" -> {"\\ell>0", "r<\\lfloor t/2\\rfloor",
+            "t\\in\\{N-1,N\\}"},
+          "Formula" -> Join[$a3Formula, <|"AssumptionsLaTeX" ->
+            "0<\\ell\\leq r<\\lfloor t/2\\rfloor"|>],
+          "Properties" -> {
+            <|"Kind" -> "regularity", "Status" -> "sourceIdentity",
+              "LaTeX" -> "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}"|>,
+            <|"Kind" -> "unitarity", "Status" -> "verified",
+              "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
+          "Verification" -> <|"Status" -> "verified",
+            "Level" -> "exactSample", "Equation" -> "Standard",
+            "Method" -> "exactCatalogueInstancesThroughRank3"|>|>,
+        <|"BranchID" -> "left-boundary", "Label" -> "Empty left block",
+          "Kind" -> "boundary", "Regime" -> "MainCatalogue",
+          "Description" -> "The first diagonal interval disappears; the master formula is read with the corresponding sum empty.",
+          "ConstraintsLaTeX" -> {"\\ell=0", "r<\\lfloor t/2\\rfloor",
+            "t\\in\\{N-1,N\\}"},
+          "Formula" -> Join[$a3Formula, <|"AssumptionsLaTeX" ->
+            "\\ell=0,\\quad 0\\leq r<\\lfloor t/2\\rfloor"|>],
+          "Properties" -> {
+            <|"Kind" -> "regularity", "Status" -> "sourceIdentity",
+              "LaTeX" -> "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}"|>,
+            <|"Kind" -> "unitarity", "Status" -> "verified",
+              "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
+          "Verification" -> <|"Status" -> "verified",
+            "Level" -> "exactSample", "Equation" -> "Standard",
+            "Method" -> "exactCatalogueInstancesThroughRank3"|>|>,
+        <|"BranchID" -> "right-boundary", "Label" -> "Maximal paired block",
+          "Kind" -> "boundary", "Regime" -> "MainCatalogue",
+          "Description" -> "The paired block reaches the midpoint of the t-interval.",
+          "ConstraintsLaTeX" -> {"\\ell>0", "r=\\lfloor t/2\\rfloor",
+            "t\\in\\{N-1,N\\}"},
+          "Formula" -> Join[$a3Formula, <|"AssumptionsLaTeX" ->
+            "0<\\ell\\leq r=\\lfloor t/2\\rfloor"|>],
+          "Properties" -> {
+            <|"Kind" -> "regularity", "Status" -> "sourceIdentity",
+              "LaTeX" -> "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}"|>,
+            <|"Kind" -> "unitarity", "Status" -> "verified",
+              "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
+          "Verification" -> <|"Status" -> "verified",
+            "Level" -> "exactSample", "Equation" -> "Standard",
+            "Method" -> "exactCatalogueInstancesThroughRank3"|>|>,
+        <|"BranchID" -> "corner", "Label" -> "Boundary intersection",
+          "Kind" -> "corner", "Regime" -> "MainCatalogue",
+          "Description" -> "Both degenerations occur simultaneously: the left interval is empty and the paired block is maximal.",
+          "ConstraintsLaTeX" -> {"\\ell=0", "r=\\lfloor t/2\\rfloor",
+            "t\\in\\{N-1,N\\}"},
+          "Formula" -> Join[$a3Formula, <|"AssumptionsLaTeX" ->
+            "\\ell=0,\\quad r=\\lfloor t/2\\rfloor"|>],
+          "Properties" -> {
+            <|"Kind" -> "regularity", "Status" -> "sourceIdentity",
+              "LaTeX" -> "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}"|>,
+            <|"Kind" -> "unitarity", "Status" -> "verified",
+              "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
+          "Verification" -> <|"Status" -> "verified",
+            "Level" -> "exactSample", "Equation" -> "Standard",
+            "Method" -> "exactCatalogueInstancesThroughRank3"|>|>
+      }|>,
     "GeneralFormula" -> $a3Formula, "Properties" -> {},
     "SourceAnchors" -> $a3Formula["SourceAnchors"]|>,
   "A.4" -> <|"AffineTypes" -> {"A(1)"}, "Description" ->
@@ -5249,6 +5319,20 @@ webFamilyFormulaData[formula_Association] := <|
 |>;
 webFamilyFormulaData[_] := Null;
 
+webFamilyPropertyData[property_Association] := <|
+  "kind" -> ToString[property["Kind"]],
+  "status" -> ToString[property["Status"]],
+  "latex" -> ToString[property["LaTeX"]]|>;
+
+webFamilyBranchVerificationData[verification_Association] := <|
+  "status" -> ToString[Lookup[verification, "Status", "notComputed"]],
+  "level" -> ToString[Lookup[verification, "Level", "notComputed"]],
+  "equation" -> ToString[Lookup[verification, "Equation", "Standard"]],
+  "method" -> ToString[Lookup[verification, "Method", "notComputed"]]|>;
+webFamilyBranchVerificationData[_] := <|"status" -> "notComputed",
+  "level" -> "notComputed", "equation" -> "Standard",
+  "method" -> "notComputed"|>;
+
 webFamilyParameterDomainData[domain_Association] := <|
   "parameters" -> Map[Function[parameter, <|
     "name" -> ToString[parameter["Name"]],
@@ -5261,8 +5345,15 @@ webFamilyParameterDomainData[domain_Association] := <|
   "branches" -> Map[Function[branch, <|
     "branchId" -> ToString[branch["BranchID"]],
     "label" -> ToString[branch["Label"]],
+    "kind" -> ToString[Lookup[branch, "Kind", "classification"]],
     "regime" -> ToString[branch["Regime"]],
-    "constraintsLatex" -> (ToString /@ Lookup[branch, "ConstraintsLaTeX", {}])|>],
+    "description" -> ToString[Lookup[branch, "Description", ""]],
+    "constraintsLatex" -> (ToString /@ Lookup[branch, "ConstraintsLaTeX", {}]),
+    "formula" -> webFamilyFormulaData[Lookup[branch, "Formula", Null]],
+    "properties" -> (webFamilyPropertyData /@
+      Lookup[branch, "Properties", {}]),
+    "verification" -> webFamilyBranchVerificationData[
+      Lookup[branch, "Verification", Null]]|>],
     Lookup[domain, "Branches", {}]]
 |>;
 
@@ -5280,13 +5371,24 @@ webFamilyRecordData[record_Association, instanceIDs_List] := <|
     "regime" -> ToString[item["Regime"]],
     "formula" -> webFamilyFormulaData[item["Formula"]]|>],
     Lookup[record, "RegimeFormulas", {}]],
-  "properties" -> Map[Function[property, <|
-    "kind" -> ToString[property["Kind"]],
-    "status" -> ToString[property["Status"]],
-    "latex" -> ToString[property["LaTeX"]]|>], record["Properties"]],
+  "properties" -> (webFamilyPropertyData /@ record["Properties"]),
   "sourceAnchors" -> (webSourceAnchorData /@ record["SourceAnchors"]),
   "instanceIds" -> instanceIDs
 |>;
+
+webA3FormulaBranchID[parameters_Association] := Module[{ell, r, t, maximum},
+  ell = Lookup[parameters, "l", Missing[]];
+  r = Lookup[parameters, "r", Missing[]];
+  t = Lookup[parameters, "t", Missing[]];
+  If[!And @@ (IntegerQ /@ {ell, r, t}), Return[Null]];
+  maximum = Floor[t/2];
+  Which[
+    ell > 0 && r < maximum, "interior",
+    ell == 0 && r < maximum, "left-boundary",
+    ell > 0 && r == maximum, "right-boundary",
+    ell == 0 && r == maximum, "corner",
+    True, Null]
+];
 
 webFamilyMembershipData[classification_Association, n_Integer] := Module[
   {families, selected, regime, parameters, permutation, representative},
@@ -5301,6 +5403,8 @@ webFamilyMembershipData[classification_Association, n_Integer] := Module[
     "membershipStatus" -> If[StringQ[selected] && selected === family,
       "classified", "candidate"],
     "regime" -> regime,
+    "formulaBranchId" -> If[family === "A.3",
+      webA3FormulaBranchID[Lookup[classification, "Parameters", <||>]], Null],
     "parameters" -> parameters,
     "representative" -> representative,
     "transportPermutation" -> webNullable[permutation]|>], families]

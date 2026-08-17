@@ -222,3 +222,27 @@ production build. This increment is the rank-six public release.
 Validation includes 13 frontend tests, schema and semantic validation of all
 41 catalogue indexes and 1,095 diagram details, a production build, and
 headless-browser checks of incompatible-rank deep links for A.2, A.4, and D.3.
+
+## A.3 formula-atlas interface — 2026-08-17
+
+- frontend: `1.1.0`;
+- QREKMatrices engine: `0.20.0`;
+- catalogue schema: `1.7.0`;
+- encoded four disjoint A.3 formula strata in the engine: the interior,
+  `l=0`, maximal `r`, and their boundary intersection;
+- added stable formula-branch memberships, specialized assumptions,
+  properties, evidence levels, and explicit `k_1`, `k_2`, `M_1`, and `M_2`
+  definitions;
+- introduced a progressive-disclosure formula atlas with accordion cases and
+  local Overview, Properties, Examples, and Verification tabs;
+- retained family/rank selection on the left while moving QSP, ambient
+  R-matrix, and reflection-equation details into one advanced disclosure;
+- added self-contained Mathematica notebook and Wolfram Language downloads
+  that reconstruct the selected K- and R-matrices and perform a deterministic
+  generic numerical reflection-equation check;
+- made the general/interior stratum the default A.3 landing state and retained
+  bare/dressed realization selection.
+
+Validation includes 87 Wolfram tests, 16 frontend tests, schema and semantic
+validation of all 41 catalogue indexes and 1,095 diagram details, a production
+build, and a desktop headless-browser inspection of the A.3 general case.

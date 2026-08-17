@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import type { Catalogue, DiagramRecord, Solution } from "../domain";
-import { buildSolutionBundle, safeFilename, solutionLatexDocument } from "./solutionExport";
+import type { Catalogue, DiagramRecord, Expression, Solution } from "../domain";
+import { buildSolutionBundle, expressionToWolfram, safeFilename, solutionLatexDocument, solutionWolframNotebook, solutionWolframScript } from "./solutionExport";
 
 const solution = {
   solutionId: "a--a.1--1",
@@ -23,7 +23,7 @@ const record = {
   spec: { affineType: "A(1)", rank: 1, nodes: [0, 1], X: [], tau: [0, 1] },
   data: { cartanMatrix: [[2, -2], [-2, 2]], symmetrizers: [] },
   classification: { status: "Classified", family: "A.1", candidateFamilies: ["A.1"], regime: "MainCatalogue", equation: "Standard", parameters: {} },
-  familyMemberships: [{ familyId: "A.1", membershipStatus: "classified", regime: "MainCatalogue", parameters: {}, representative: true, transportPermutation: [0, 1] }],
+  familyMemberships: [{ familyId: "A.1", membershipStatus: "classified", regime: "MainCatalogue", formulaBranchId: null, parameters: {}, representative: true, transportPermutation: [0, 1] }],
   qsp: {
     qspId: "a--n1--qsp", status: "instantiatedPresentation", nameLatex: "B", ambientAlgebraLatex: "U_q(g)",
     indexSets: { nodes: [0, 1], levi: [], boundary: [0, 1], torusOrbitRepresentatives: [0, 1] },
@@ -57,9 +57,9 @@ const ambient = {
 describe("solution exports", () => {
   it("preserves engine, diagram, and solution provenance", () => {
     vi.setSystemTime(new Date("2026-08-17T12:00:00Z"));
-    const bundle = buildSolutionBundle(record, solution, { name: "QREKMatrices", version: "0.19.0" }, ambient);
+    const bundle = buildSolutionBundle(record, solution, { name: "QREKMatrices", version: "0.20.0" }, ambient);
     expect(bundle.diagram.id).toBe(record.id);
-    expect(bundle.schemaVersion).toBe("1.6.0");
+    expect(bundle.schemaVersion).toBe("1.7.0");
     expect(bundle.solution.provenance).toEqual({ Source: "fixture" });
     expect(bundle.diagram.qsp.qspId).toBe("a--n1--qsp");
     expect(bundle.diagram.familyMemberships[0].familyId).toBe("A.1");
@@ -72,5 +72,19 @@ describe("solution exports", () => {
     expect(solutionLatexDocument(record, solution, ambient)).toContain("% Family: A.1");
     expect(solutionLatexDocument(record, solution, ambient)).toContain("R(u)=P");
     expect(safeFilename("A(1) / A.1 matrix")).toBe("a-1-a.1-matrix");
+  });
+
+  it("serializes sparse expressions into a self-contained Wolfram worksheet", () => {
+    const matrix: Expression = { kind: "sparseMatrix", dimensions: [2, 2], indexBase: 0, entries: [
+      { index: [0, 1], value: { kind: "call", head: "Times", arguments: [
+        { kind: "symbol", name: "λ" }, { kind: "rational", numerator: "1", denominator: "2" },
+      ] } },
+    ] };
+    expect(expressionToWolfram(matrix)).toContain("{1, 2} -> Times[λ, Rational[1, 2]]");
+    const script = solutionWolframScript(record, solution, ambient);
+    expect(script).toContain("ReflectionResidual[u_, v_]");
+    expect(script).toContain("R21[u/v].K1[u].R[u v].K2[v]");
+    expect(script).toContain('"Verified" ->');
+    expect(solutionWolframNotebook(record, solution, ambient)).toContain("Notebook[{");
   });
 });

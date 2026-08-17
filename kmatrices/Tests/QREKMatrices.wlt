@@ -802,7 +802,7 @@ VerificationTest[
 
 VerificationTest[
   QREKMatricesVersion[],
-  "0.19.0",
+  "0.20.0",
   TestID -> "web-engine-version"
 ]
 
@@ -1197,7 +1197,7 @@ VerificationTest[
       Lookup[data["families"], "familyId"],
       Union[Length /@ Lookup[records, "familyMemberships"]]}
   ],
-  {"1.6.0", "0.19.0", 7, True, {"NotRequested"},
+  {"1.7.0", "0.20.0", 7, True, {"NotRequested"},
     {"C**.1", "C**.2"}, {1, 2}},
   TestID -> "web-catalogue-stable-records"
 ]
@@ -1221,8 +1221,25 @@ VerificationTest[
       index["summary", "detailCount"],
       detail["diagram", "id"] === index["diagrams"][[1, "id"]]}
   ],
-  {7, "1.6.0", {"C**.1", "C**.2"}, "lazy-v1", 7, True},
+  {7, "1.7.0", {"C**.1", "C**.2"}, "lazy-v1", 7, True},
   TestID -> "web-catalogue-export-manifest"
+]
+
+VerificationTest[
+  Module[{data, family, memberships},
+    data = WebCatalogueData["A(1)", 3, "IncludeKMatrices" -> False];
+    family = SelectFirst[data["families"], #["familyId"] === "A.3" &];
+    memberships = Cases[data["diagrams"],
+      membership_Association /; Lookup[membership, "familyId", ""] === "A.3" :>
+        membership, Infinity];
+    {Lookup[family["parameterDomain", "branches"], "branchId"],
+      Union[DeleteCases[Lookup[memberships, "formulaBranchId"], Null]],
+      Lookup[First[family["parameterDomain", "branches"]], "verification", <||>]["level"]}
+  ],
+  {{"interior", "left-boundary", "right-boundary", "corner"},
+    {"corner", "interior", "left-boundary", "right-boundary"},
+    "exactSample"},
+  TestID -> "web-A3-formula-branch-atlas"
 ]
 
 VerificationTest[

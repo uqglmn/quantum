@@ -50,6 +50,28 @@ and provenance always win. The UI never imports Wolfram Language source and
 never infers mathematical meaning from display LaTeX. It consumes the semantic
 expression tree.
 
+Formula subfamilies are also engine-owned. A family parameter domain may expose
+disjoint `branches`; each branch carries a stable identifier, mathematical
+kind, constraints, specialized formula, generic properties, verification
+level, and source anchors. Diagram memberships point back to a branch by
+`formulaBranchId`. This supports the accordion formula atlas without teaching
+the React application family-specific Lie theory. A.3 is the first complete
+vertical slice, partitioned into the interior, `l=0`, maximal-`r`, and their
+intersection cases.
+
+The UI follows progressive disclosure at three levels:
+
+1. the left library selects affine type and family;
+2. the family page compares formula branches and concrete examples;
+3. ambient QSP, R-matrix, reflection-equation, provenance, and verification
+   detail remains available inside local tabs or an advanced disclosure.
+
+Download generators consume the same safe expression trees as the renderer.
+The Wolfram worksheet export is self-contained: it reconstructs the selected
+K- and R-matrices, tensor-leg permutation, applicable reflection equation, and
+a deterministic generic numerical residual. No arbitrary browser-authored
+expression is evaluated while producing the file.
+
 ## Versions
 
 Three versions are independent and appear in responses:

@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.6.0",
+	"schemaVersion":"1.7.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.19.0"
+		"version":"0.20.0"
 	},
 	"catalogue":{
 		"id":"b-1--n6",
@@ -170,6 +170,7 @@
 				"familyId":"B.1",
 				"membershipStatus":"classified",
 				"regime":"MainCatalogue",
+				"formulaBranchId":null,
 				"parameters":{
 					"l":{
 						"kind":"integer",
@@ -2989,7 +2990,7 @@
 							"status":"sourceIdentity",
 							"method":"sourceEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.19.0"
+							"engineVersion":"0.20.0"
 						},
 						"sourceAnchors":[
 							{
@@ -3404,7 +3405,7 @@
 							"status":"sourceIdentity",
 							"method":"sourceEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.19.0"
+							"engineVersion":"0.20.0"
 						},
 						"sourceAnchors":[
 							{
@@ -3631,7 +3632,7 @@
 							"status":"conditional",
 							"method":"sourceEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.19.0"
+							"engineVersion":"0.20.0"
 						},
 						"sourceAnchors":[
 							{
@@ -3843,7 +3844,7 @@
 							"status":"computed",
 							"method":"productOfSourceEigenvalues",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.19.0"
+							"engineVersion":"0.20.0"
 						},
 						"sourceAnchors":[
 							{
@@ -3880,7 +3881,7 @@
 							"status":"sourceIdentity",
 							"method":"manuscriptEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.19.0"
+							"engineVersion":"0.20.0"
 						},
 						"sourceAnchors":[
 							{
@@ -4092,7 +4093,7 @@
 							"status":"conditional",
 							"method":"determinantCriterionAwayFromPoles",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.19.0"
+							"engineVersion":"0.20.0"
 						},
 						"sourceAnchors":[
 							{
@@ -4129,7 +4130,7 @@
 							"status":"sourceIdentity",
 							"method":"qRERegularityClassification",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.19.0"
+							"engineVersion":"0.20.0"
 						},
 						"sourceAnchors":[
 							{
@@ -4166,7 +4167,7 @@
 							"status":"sourceIdentity",
 							"method":"qREUnitarityTheorem",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.19.0"
+							"engineVersion":"0.20.0"
 						},
 						"sourceAnchors":[
 							{
@@ -6962,7 +6963,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.19.0"
+									"engineVersion":"0.20.0"
 								},
 								"sourceAnchors":[
 									{
@@ -7377,7 +7378,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.19.0"
+									"engineVersion":"0.20.0"
 								},
 								"sourceAnchors":[
 									{
@@ -7604,7 +7605,7 @@
 									"status":"conditional",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.19.0"
+									"engineVersion":"0.20.0"
 								},
 								"sourceAnchors":[
 									{
@@ -7816,7 +7817,7 @@
 									"status":"computed",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.19.0"
+									"engineVersion":"0.20.0"
 								},
 								"sourceAnchors":[
 									{
@@ -7853,7 +7854,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.19.0"
+									"engineVersion":"0.20.0"
 								},
 								"sourceAnchors":[
 									{
@@ -8065,7 +8066,7 @@
 									"status":"conditional",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.19.0"
+									"engineVersion":"0.20.0"
 								},
 								"sourceAnchors":[
 									{
@@ -8102,7 +8103,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.19.0"
+									"engineVersion":"0.20.0"
 								},
 								"sourceAnchors":[
 									{
@@ -8139,7 +8140,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.19.0"
+									"engineVersion":"0.20.0"
 								},
 								"sourceAnchors":[
 									{

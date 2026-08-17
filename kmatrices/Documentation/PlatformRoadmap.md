@@ -67,7 +67,11 @@ control, but storage and computation must not conflate them.
 - implemented: self-hosted KaTeX rendering for QSP templates, reflection
   equations, full K-matrices, and safe-AST sparse entries;
 - implemented: provenance views and self-describing JSON/LaTeX downloads;
-- remaining export formats: Wolfram Language and MatrixMarket.
+- implemented for the A.3 formula-atlas slice: self-contained Wolfram Language
+  scripts and Mathematica notebooks with K, R, the applicable reflection
+  equation, and deterministic numerical verification;
+- remaining export format: MatrixMarket; extend Wolfram worksheet actions from
+  the A.3 branch component to the shared family component.
 
 ### 3. Transformations and properties
 
@@ -87,6 +91,18 @@ control, but storage and computation must not conflate them.
 - non-quasistandard endpoint selection where formulas are complete;
 - family-specific reduction and singular loci beyond the generic C.1 record;
 - sampled verification badges for formulas too expensive for exact export.
+
+### Formula-atlas interface — implemented A.3 vertical slice
+
+- four disjoint general/boundary strata encoded by the engine, including the
+  intersection `l=0, r=floor(t/2)`;
+- accordion branch cards with a representative diagram and family formula;
+- local Overview, Properties, Examples, and Verification tabs;
+- bare/dressed realization switch and explicit concrete K-matrices;
+- compact shared disclosure for the QSP presentation, ambient R-matrix, and
+  reflection equation;
+- reusable data and component boundaries ready to migrate the remaining
+  families one at a time.
 
 ### 4. Compute service
 

@@ -4,9 +4,11 @@ import { MathFormula } from "./components/MathFormula";
 import { FamilyConfigurator } from "./components/FamilyConfigurator";
 import { FamilyFormula } from "./components/FamilyFormula";
 import { FamilyLibrary } from "./components/FamilyLibrary";
+import { A3FamilyWorkspace } from "./components/A3FamilyWorkspace";
 import { nearestFamilyFile, staticCatalogueProvider } from "./lib/catalogue";
 import { expressionToLatex, formatExpression } from "./lib/expression";
 import { affineTypeLatex, familyDefinition, familiesForAffineType, recordBelongsToFamily, type FamilyDefinition } from "./lib/families";
+import { formulaBranchId } from "./lib/formulaBranches";
 import { buildSolutionBundle, downloadText, safeFilename, solutionLatexDocument } from "./lib/solutionExport";
 
 function Badge({ children, tone = "neutral" }: { children: React.ReactNode; tone?: "neutral" | "good" | "warn" }) {
@@ -438,7 +440,10 @@ export function App() {
           : availableFamilies[0]?.id ?? "";
       const familyRecords = value.diagrams.filter((record) => recordBelongsToFamily(record, nextFamily));
       const requestedDiagram = search.get("diagram");
-      const nextDiagram = familyRecords.find((record) => record.id === requestedDiagram) ?? familyRecords[0] ?? value.diagrams[0];
+      const preferredDiagram = nextFamily === "A.3"
+        ? familyRecords.find((record) => formulaBranchId(record, "A.3") === "interior")
+        : undefined;
+      const nextDiagram = familyRecords.find((record) => record.id === requestedDiagram) ?? preferredDiagram ?? familyRecords[0] ?? value.diagrams[0];
       setCatalogue(value); setDiagram(null); setFamilyId(nextFamily); setDiagramId(nextDiagram?.id ?? ""); setError("");
     }).catch((reason: Error) => setError(reason.message));
     return () => controller.abort();
@@ -484,7 +489,10 @@ export function App() {
       setFileId(nextFileId);
       return;
     }
-    const first = catalogue?.diagrams.find((record) => recordBelongsToFamily(record, nextFamilyId));
+    const familyRecords = catalogue?.diagrams.filter((record) => recordBelongsToFamily(record, nextFamilyId)) ?? [];
+    const first = nextFamilyId === "A.3"
+      ? familyRecords.find((record) => formulaBranchId(record, "A.3") === "interior") ?? familyRecords[0]
+      : familyRecords[0];
     setDiagramId(first?.id ?? "");
   };
 
@@ -497,8 +505,11 @@ export function App() {
     <div className="workspace">
       <FamilyLibrary manifest={manifest} selectedFileId={fileId} selectedFamilyId={familyId} onSelect={selectFamily} />
       {error ? <main className="load-error"><h2>Catalogue unavailable</h2><p>{error}</p><p>Run the catalogue export script before starting the app.</p></main>
-        : selected && diagram?.id === selected.id && catalogue && manifest && family ? <Inspector record={diagram} summary={selected} engine={catalogue.engine} ambient={catalogue.ambient}
-          family={family} manifest={manifest} catalogue={catalogue} onFileChange={setFileId} onDiagramChange={setDiagramId} />
+        : selected && diagram?.id === selected.id && catalogue && manifest && family ? (family.id === "A.3"
+          ? <A3FamilyWorkspace record={diagram} selected={selected} family={family} manifest={manifest} catalogue={catalogue}
+            onFileChange={setFileId} onDiagramChange={setDiagramId} />
+          : <Inspector record={diagram} summary={selected} engine={catalogue.engine} ambient={catalogue.ambient}
+            family={family} manifest={manifest} catalogue={catalogue} onFileChange={setFileId} onDiagramChange={setDiagramId} />)
           : <main className="loading">Loading mathematical catalogue…</main>}
     </div>
   </div>;

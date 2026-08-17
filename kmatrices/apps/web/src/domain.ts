@@ -52,6 +52,29 @@ export interface FamilyFormulaRecord {
   sourceAnchors: FamilySourceAnchor[];
 }
 
+export interface FamilyPropertyRecord {
+  kind: string;
+  status: "sourceIdentity" | "computed" | "verified" | "conditional";
+  latex: string;
+}
+
+export interface FamilyFormulaBranch {
+  branchId: string;
+  label: string;
+  kind: "generic" | "boundary" | "corner" | "exceptional" | "classification";
+  regime: string;
+  description: string;
+  constraintsLatex: string[];
+  formula: FamilyFormulaRecord | null;
+  properties: FamilyPropertyRecord[];
+  verification: {
+    status: "verified" | "conditional" | "notComputed";
+    level: "exactSymbolic" | "exactSample" | "numericSample" | "notComputed";
+    equation: "Standard" | "Transposed";
+    method: string;
+  };
+}
+
 export interface FamilyRecord {
   familyId: string;
   title: string;
@@ -63,16 +86,11 @@ export interface FamilyRecord {
   parameterDomain: {
     parameters: Array<{ name: string; label: string; type: "integer" }>;
     constraints: Array<{ constraintId: string; kind: string; latex: string }>;
-    branches: Array<{
-      branchId: string;
-      label: string;
-      regime: string;
-      constraintsLatex: string[];
-    }>;
+    branches: FamilyFormulaBranch[];
   };
   generalFormula: FamilyFormulaRecord | null;
   regimeFormulas: Array<{ regime: string; formula: FamilyFormulaRecord }>;
-  properties: Array<{ kind: string; status: string; latex: string }>;
+  properties: FamilyPropertyRecord[];
   sourceAnchors: FamilySourceAnchor[];
   instanceIds: string[];
 }
@@ -81,6 +99,7 @@ export interface FamilyMembership {
   familyId: string;
   membershipStatus: "classified" | "candidate";
   regime: string;
+  formulaBranchId: string | null;
   parameters: Record<string, Expression>;
   representative: boolean;
   transportPermutation: number[] | null;
