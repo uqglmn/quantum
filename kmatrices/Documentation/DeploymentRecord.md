@@ -49,3 +49,20 @@ validation and deployment from `main`.
 Validation for this increment includes four frontend unit tests, the 57-test
 Wolfram suite, schema validation, production build, and scripted browser
 interaction that selects the `B.2` candidate of an ambiguous `B.1/B.2` record.
+
+## QSP and ambient R-matrix increment — 2026-08-17
+
+- frontend: `0.3.0`;
+- QREKMatrices engine: `0.12.0`;
+- catalogue schema: `1.1.0`;
+- added reusable `QSPPresentationData`, `AmbientRMatrixData`, and
+  `ReflectionEquationData` package APIs;
+- exported instantiated QSP generator presentations for all 392 diagrams;
+- exported 23 shared representation and ambient R-matrix formula records,
+  covering twisted and untwisted catalogues;
+- bound every reflection-equation record to its ambient R-matrix convention;
+- extended JSON and TeX research bundles with QSP, R, and reflection data.
+
+Validation includes 60 Wolfram tests, 23 schema-valid catalogues, four
+frontend tests, a production build, cross-catalogue identifier checks, and a
+scripted browser walkthrough of the quadratic twisted R-matrix panel.

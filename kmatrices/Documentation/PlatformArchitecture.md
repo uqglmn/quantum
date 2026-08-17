@@ -13,10 +13,16 @@ The first slice supports:
 - diagram rendering and selection;
 - full classification, candidate-family, regime, and equation metadata;
 - optional exported catalogue K-matrices in sparse and LaTeX forms;
-- typed capability flags for QSP, R-matrix, property, and remote-compute layers.
+- instantiated QSP generator presentations and longest-parabolic words;
+- one shared, convention-labelled ambient R-matrix formula record per
+  representation catalogue;
+- reflection-equation records bound to their ambient R-matrix identifiers;
+- typed capability flags for property, verification, and remote-compute layers.
 
-Unavailable capabilities remain visible with an honest status. Later slices
-will populate them without changing the diagram or solution records.
+Unavailable capabilities remain visible with an honest status. In particular,
+source identities, instantiated presentations, and CAS verification
+certificates are distinct statuses. Later slices can populate materialized
+R-matrices and certificates without changing diagram or solution identity.
 
 ## Component boundaries
 

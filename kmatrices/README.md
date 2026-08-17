@@ -388,9 +388,11 @@ The current generated release covers twisted and untwisted type/rank
 catalogues, interactive diagram selection, classification and regime data,
 sparse K-matrices where computed, explicit candidate-family selection,
 self-hosted mathematical rendering, provenance, and JSON/LaTeX downloads. It
-also exposes planned boundaries for explicit QSP relations, ambient R,
-reflection-equation verification, dressing, eigenvalues, characteristic
-identities, and factorisation. See `Documentation/PlatformArchitecture.md`,
+also exports instantiated QSP generator presentations, shared representation
+and ambient R-matrix formula records, and convention-bound reflection
+equations. Exact expanded QSP relations, reflection-equation verification,
+dressing, eigenvalues, characteristic identities, and factorisation remain
+extension boundaries. See `Documentation/PlatformArchitecture.md`,
 `Documentation/PlatformRoadmap.md`, and `Documentation/PlatformDeployment.md`.
 
 ## Current research boundary

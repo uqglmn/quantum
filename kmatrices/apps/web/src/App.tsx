@@ -16,10 +16,11 @@ function Availability({ available, children }: { available: boolean; children: R
   </span>;
 }
 
-function MatrixView({ record, solution, engine }: {
+function MatrixView({ record, solution, engine, ambient }: {
   record: DiagramRecord;
   solution: Solution;
   engine: Catalogue["engine"];
+  ambient: Catalogue["ambient"];
 }) {
   const [view, setView] = useState<"rendered" | "sparse" | "latex" | "provenance">("rendered");
   const [copied, setCopied] = useState(false);
@@ -33,11 +34,11 @@ function MatrixView({ record, solution, engine }: {
   };
   const downloadJson = () => downloadText(
     `${stem}.json`,
-    JSON.stringify(buildSolutionBundle(record, solution, engine), null, 2),
+    JSON.stringify(buildSolutionBundle(record, solution, engine, ambient), null, 2),
     "application/json",
   );
   const downloadLatex = () => downloadText(
-    `${stem}.tex`, solutionLatexDocument(record, solution), "text/x-tex",
+    `${stem}.tex`, solutionLatexDocument(record, solution, ambient), "text/x-tex",
   );
 
   return <div className="matrix-view">
@@ -79,10 +80,11 @@ function MatrixView({ record, solution, engine }: {
   </div>;
 }
 
-function FormulaPanel({ record, realization, engine }: {
+function FormulaPanel({ record, realization, engine, ambient }: {
   record: DiagramRecord;
   realization: Realization;
   engine: Catalogue["engine"];
+  ambient: Catalogue["ambient"];
 }) {
   const solutions = [record.computation.solution, ...record.computation.candidates].filter(Boolean) as Solution[];
   const [solutionId, setSolutionId] = useState(solutions[0]?.solutionId ?? "");
@@ -114,11 +116,15 @@ function FormulaPanel({ record, realization, engine }: {
       <span>{selected.equation} reflection equation</span>
       <span>{selected.matrix.dimensions[0]} dimensional representation</span>
     </div>
-    <MatrixView record={record} solution={selected} engine={engine} />
+    <MatrixView record={record} solution={selected} engine={engine} ambient={ambient} />
   </>;
 }
 
-function Inspector({ record, engine }: { record: DiagramRecord; engine: Catalogue["engine"] }) {
+function Inspector({ record, engine, ambient }: {
+  record: DiagramRecord;
+  engine: Catalogue["engine"];
+  ambient: Catalogue["ambient"];
+}) {
   const [tab, setTab] = useState<"qsp" | "k" | "r" | "equation" | "properties">("qsp");
   const [realization, setRealization] = useState<Realization>(
     record.classification.regime === "Nonquasistandard" ? "nonstandard" : "bare",
@@ -155,10 +161,20 @@ function Inspector({ record, engine }: { record: DiagramRecord; engine: Catalogu
 
     <section className="object-panel">
       {tab === "qsp" && <>
-        <div className="panel-heading"><div><div className="eyebrow">Coideal presentation</div><h3>B<sub>c,s</sub>(X, τ)</h3></div><Availability available={record.capabilities.qspAlgebra}>{record.capabilities.qspAlgebra ? "explicit" : "formal template"}</Availability></div>
-        <div className="formula-block"><MathFormula latex={String.raw`\mathcal B_{c,s}(X,\tau)=\left\langle U_q(\mathfrak g_X),\ U^0_\Theta,\ B_i\ :\ i\in I\setminus X\right\rangle`} /></div>
-        <div className="formula-block"><MathFormula latex={String.raw`B_i=F_i+c_i\,\theta_q(F_iK_i)K_i^{-1}+s_iK_i^{-1}`} /></div>
-        <p className="fine-print">This is the generic QSP generator template instantiated by the displayed X and τ. Explicit θ<sub>q</sub>, parameter constraints, and relation expansion are a separate engine capability and are not yet asserted by this record.</p>
+        <div className="panel-heading"><div><div className="eyebrow">Coideal presentation</div><h3>B<sub>c,s</sub>(X, τ)</h3></div><Availability available={record.capabilities.qspAlgebra}>instantiated presentation</Availability></div>
+        <div className="scientific-metadata">
+          <div><span>QSP record</span><code>{record.qsp.qspId}</code></div>
+          <div><span>Levi nodes X</span><code>{record.qsp.indexSets.levi.join(", ") || "∅"}</code></div>
+          <div><span>Boundary nodes</span><code>{record.qsp.indexSets.boundary.join(", ") || "∅"}</code></div>
+          <div><span>Longest word</span><code>{record.qsp.theta.longestParabolicWord.join(" ") || "identity"}</code></div>
+        </div>
+        <div className="formula-block formula-block--large"><MathFormula latex={record.qsp.presentationLatex} /></div>
+        <div className="formula-stack">
+          <div><span>Quantum involution</span><MathFormula latex={record.qsp.theta.latex} /></div>
+          {record.qsp.generatorGroups.map((group) => <div key={group.kind}><span>{group.kind.replace(/([A-Z])/g, " $1")}</span><MathFormula latex={group.latex} /></div>)}
+          <div><span>Parameter domain</span><MathFormula latex={record.qsp.parameters.latex} /></div>
+        </div>
+        <p className="fine-print"><strong>Scope:</strong> this record instantiates the generator presentation and the reduced word for θ<sub>q</sub>. Expanded inhomogeneous Serre relations and family-specific admissibility constraints remain a separate symbolic provider. Source: <code>{String(record.qsp.provenance.Source)}</code>.</p>
       </>}
       {tab === "k" && <>
         <div className="panel-heading"><div><div className="eyebrow">Realisation</div><h3>Boundary K-matrix</h3></div><Availability available={record.capabilities.kMatrix}>{record.computation.status}</Availability></div>
@@ -167,18 +183,38 @@ function Inspector({ record, engine }: { record: DiagramRecord; engine: Catalogu
           <button className={realization === "dressed" ? "is-active" : ""} onClick={() => setRealization("dressed")}>Dressed</button>
           <button className={realization === "nonstandard" ? "is-active" : ""} onClick={() => setRealization("nonstandard")}>Non-standard</button>
         </div>
-        <FormulaPanel record={record} realization={realization} engine={engine} />
+        <FormulaPanel record={record} realization={realization} engine={engine} ambient={ambient} />
       </>}
       {tab === "r" && <>
-        <div className="panel-heading"><div><div className="eyebrow">Representation data</div><h3>Ambient R-matrix</h3></div><Availability available={record.capabilities.rMatrix}>{record.capabilities.rMatrix ? "available" : "not exported"}</Availability></div>
-        <div className="empty-state">The representation registry and normalized R-matrix provider are the next mathematical backend boundary. The UI already reserves provenance, normalization, basis, and sparse/dense views for it.</div>
+        <div className="panel-heading"><div><div className="eyebrow">Representation data</div><h3>Ambient R-matrix</h3></div><Availability available={record.capabilities.rMatrix}>source formula</Availability></div>
+        <div className="scientific-metadata">
+          <div><span>Representation</span><code>{ambient.representation.representationId}</code></div>
+          <div><span>Dimension</span><code>{ambient.representation.dimension} on V · {ambient.rMatrix.dimension} on V⊗V</code></div>
+          <div><span>Basis</span><code>[{ambient.representation.basisLabels.join(", ")}]</code></div>
+          <div><span>Convention</span><code>{ambient.representation.tensorBasisConvention} tensor basis</code></div>
+        </div>
+        <div className="formula-block formula-block--large"><MathFormula latex={ambient.rMatrix.latex} label="ambient R-matrix formula" /></div>
+        <div className="definition-list">
+          {ambient.rMatrix.operatorDefinitions.map((definition) => <details key={definition.symbol} open={definition.symbol === "f_q"}>
+            <summary>{definition.symbol}</summary>
+            <MathFormula latex={definition.latex} />
+          </details>)}
+        </div>
+        <div className="identity-row">
+          {ambient.rMatrix.properties.map((property) => <div key={property.kind}><Badge tone="good">source identity</Badge><span>{property.kind}</span><MathFormula latex={property.latex} /></div>)}
+        </div>
+        <p className="fine-print">Formula record <code>{ambient.rMatrix.rMatrixId}</code>, with regular normalization and provenance <code>{String(ambient.rMatrix.provenance.Source)}</code>. A dense or sparse {ambient.rMatrix.dimension} × {ambient.rMatrix.dimension} materialization is intentionally deferred; the operator-basis formula is the canonical static artifact.</p>
       </>}
       {tab === "equation" && <>
-        <div className="panel-heading"><div><div className="eyebrow">Boundary identity</div><h3>{record.classification.equation} reflection equation</h3></div><Badge>{record.classification.equation}</Badge></div>
-        {record.classification.equation === "Transposed" ?
-          <div className="formula-block formula-block--large"><MathFormula latex={String.raw`R_{21}(u/v)K_1(u)R_{12}^{t_1}(uv)K_2(v)=K_2(v)R_{21}^{t_1}(uv)K_1(u)R_{12}(u/v)`} /></div> :
-          <div className="formula-block formula-block--large"><MathFormula latex={String.raw`R_{21}(u/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u/v)`} /></div>}
-        <p className="fine-print">Convention-sensitive ordering and transposition metadata will be bound to the ambient R record before this identity is marked verified.</p>
+        <div className="panel-heading"><div><div className="eyebrow">Boundary identity</div><h3>{record.reflectionEquation.kind} reflection equation</h3></div><Badge tone={record.reflectionEquation.verification.status === "verified" ? "good" : "warn"}>{record.reflectionEquation.verification.status}</Badge></div>
+        <div className="formula-block formula-block--large"><MathFormula latex={record.reflectionEquation.latex} /></div>
+        <div className="scientific-metadata">
+          <div><span>Ambient R</span><code>{record.reflectionEquation.rMatrixId}</code></div>
+          <div><span>Spectral convention</span><code>{record.reflectionEquation.conventions.spectralParameters}</code></div>
+          <div><span>Leg convention</span><code>{record.reflectionEquation.conventions.legNumbering}</code></div>
+          <div><span>Partial transpose</span><code>{record.reflectionEquation.conventions.partialTranspose ?? "none"}</code></div>
+        </div>
+        <p className="fine-print">The identity is now bound to the displayed ambient R-record and this diagram’s equation type. Exact tensor verification against each exported K-matrix is not yet computed, and is therefore not labelled verified.</p>
       </>}
       {tab === "properties" && <>
         <div className="panel-heading"><div><div className="eyebrow">Symbolic analysis</div><h3>Properties and identities</h3></div><Availability available={record.capabilities.properties.length > 0}>{record.capabilities.properties.length} computed</Availability></div>
@@ -248,7 +284,7 @@ export function App() {
           </button>)}
         </nav>
       </aside>
-      {error ? <main className="load-error"><h2>Catalogue unavailable</h2><p>{error}</p><p>Run the catalogue export script before starting the app.</p></main> : selected && catalogue ? <Inspector record={selected} engine={catalogue.engine} /> : <main className="loading">Loading mathematical catalogue…</main>}
+      {error ? <main className="load-error"><h2>Catalogue unavailable</h2><p>{error}</p><p>Run the catalogue export script before starting the app.</p></main> : selected && catalogue ? <Inspector record={selected} engine={catalogue.engine} ambient={catalogue.ambient} /> : <main className="loading">Loading mathematical catalogue…</main>}
     </div>
   </div>;
 }

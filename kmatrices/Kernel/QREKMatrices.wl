@@ -58,6 +58,12 @@ VerifyKMatrix::usage =
   "VerifyKMatrix[K, diagram, u, q, c, s] verifies a matrix against the represented standard or antipode--transpose boundary equation.";
 InferCoidealParameters::usage =
   "InferCoidealParameters[K, diagram, u, q] solves the represented boundary equations for coideal parameters c_i and admissible s_i compatible with K.";
+QSPPresentationData::usage =
+  "QSPPresentationData[diagram] gives a structured, convention-labelled presentation of the quantum symmetric pair algebra attached to a generalized Satake diagram.";
+AmbientRMatrixData::usage =
+  "AmbientRMatrixData[type, n] gives the registered vector representation and explicit operator formula for its normalized ambient trigonometric R-matrix.";
+ReflectionEquationData::usage =
+  "ReflectionEquationData[diagram, rMatrixId] gives the convention-labelled reflection equation associated to a generalized Satake diagram.";
 WebExpressionData::usage =
   "WebExpressionData[expr] converts an evaluated Wolfram expression to the safe versioned expression tree used by the web catalogue.";
 WebCatalogueData::usage =
@@ -72,8 +78,8 @@ $twistedTypes = {
   "A2n-1(2)", "A2n-1(2)T", "A2n(2)", "A2n(2)T", "Dn+1(2)"
 };
 $canonicalTypes = Join[$untwistedTypes, $twistedTypes];
-$qreKMatricesVersion = "0.11.1";
-$webCatalogueSchemaVersion = "1.0.0";
+$qreKMatricesVersion = "0.12.0";
+$webCatalogueSchemaVersion = "1.1.0";
 
 QREKMatricesVersion[] := $qreKMatricesVersion;
 
@@ -2366,6 +2372,141 @@ KMatrixTable[type_String, n_Integer, u_, opts : OptionsPattern[]] := Module[
   If[TrueQ[computedOnly], Select[records, #["Status"] === "Computed" &], records]
 ];
 
+(* Scientific presentation records --------------------------------------- *)
+
+QSPPresentationData[d_?SatakeDiagramQ] := Module[
+  {nodes = d["Nodes"], x = d["X"], tau = d["Tau"], outside, word,
+   orbitRepresentatives, diagramID},
+  outside = Complement[nodes, x];
+  word = LongestParabolicWord[d["CartanMatrix"], x];
+  orbitRepresentatives = DeleteDuplicates[
+    Min[#, tau[[# + 1]]] & /@ outside];
+  diagramID = webDiagramID[d];
+  <|
+    "qspId" -> diagramID <> "--qsp",
+    "status" -> "instantiatedPresentation",
+    "nameLatex" -> "B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+    "ambientAlgebraLatex" -> "U_q(\\mathfrak g)",
+    "indexSets" -> <|
+      "nodes" -> nodes, "levi" -> x, "boundary" -> outside,
+      "torusOrbitRepresentatives" -> orbitRepresentatives|>,
+    "theta" -> <|
+      "kind" -> "KolbQuantumInvolution",
+      "longestParabolicWord" -> word,
+      "latex" -> "\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"|>,
+    "generatorGroups" -> {
+      <|"kind" -> "positiveLevi", "nodes" -> x,
+        "latex" -> "U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"|>,
+      <|"kind" -> "thetaFixedTorus", "nodes" -> orbitRepresentatives,
+        "latex" -> "U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"|>,
+      <|"kind" -> "boundary", "nodes" -> nodes,
+        "latex" -> "b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"|>
+    },
+    "presentationLatex" ->
+      "B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+    "parameters" -> <|
+      "cNodes" -> outside, "sNodes" -> outside,
+      "latex" -> "\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"|>,
+    "relationStatus" -> "generatorPresentation",
+    "provenance" -> <|
+      "Source" -> "qRE/files/algebras.tex",
+      "Equations" -> {"theta_q", "def:b_j", "def:Bcs"},
+      "Convention" -> "KolbDef5.6Variation2"|>
+  |>
+];
+
+ambientRFormulaKind[type_String] := Switch[canonicalType[type],
+  "A(1)", "untwistedTypeA",
+  "B(1)" | "C(1)" | "D(1)", "untwistedBCD",
+  "A2n-1(2)" | "A2n-1(2)T" | "A2n(2)", "twistedLinear",
+  "A2n(2)T" | "Dn+1(2)", "twistedQuadratic"
+];
+
+ambientRFormulaLatex[kind_String] := Switch[kind,
+  "untwistedTypeA",
+    "R(u)=f_q(u)R_q+\\frac{(q-q^{-1})u}{q-q^{-1}u}P",
+  "untwistedBCD",
+    "R(u)=f_q(u)R_q+\\frac{(q-q^{-1})u}{q-q^{-1}u}\\left(P-\\frac{1-u}{q^{2\\kappa}-u}Q_q\\right)",
+  "twistedLinear",
+    "R(u)=f_q(u)R_q+\\frac{(q-q^{-1})u}{q-q^{-1}u}\\left(P-\\frac{1-u}{\\widetilde q^{\,2}-u}Q_q\\right)",
+  "twistedQuadratic",
+    "R(u)=f_q(u^2)R_q+\\frac{(q-q^{-1})u^2}{q-q^{-1}u^2}\\left(P+\\frac{1-u}{u}H-\\frac{1-u^2}{\\widetilde q^{\,4}-u^2}\\left(Q_q+E'+\\frac{\\sqrt{\\vartheta}\\,\\widetilde q^{\,2}}{u}D_q\\right)\\right)"
+];
+
+ambientRDefinitions[kind_String] := Join[
+  {
+    <|"symbol" -> "f_q", "latex" -> "f_q(u)=\\frac{1-u}{q-q^{-1}u}"|>,
+    <|"symbol" -> "P", "latex" -> "P=\\sum_{i,j\\in\\langle N\\rangle}E_{ij}\\otimes E_{ji}"|>
+  },
+  If[kind === "untwistedTypeA",
+    {<|"symbol" -> "R_q", "latex" -> "R_q=\\sum_{i,j}\\left(q^{\\delta_{ij}}E_{ii}\\otimes E_{jj}+\\delta_{i<j}(q-q^{-1})E_{ij}\\otimes E_{ji}\\right)"|>},
+    {
+      <|"symbol" -> "R_q", "latex" -> "R_q=\\sum_{i,j}q^{\\delta_{ij}-\\delta_{i,-j}}E_{ii}\\otimes E_{jj}+(q-q^{-1})\\sum_{i<j}\\left(E_{ij}\\otimes E_{ji}-\\vartheta_i\\vartheta_jq^{\\nu_i-\\nu_j}E_{ij}\\otimes E_{-i,-j}\\right)"|>,
+      <|"symbol" -> "Q_q", "latex" -> "Q_q=\\sum_{i,j}\\vartheta_i\\vartheta_jq^{\\nu_i-\\nu_j}E_{ij}\\otimes E_{-i,-j}"|>
+    }
+  ],
+  If[kind === "untwistedBCD",
+    {<|"symbol" -> "kappa", "latex" -> "\\kappa=\\frac N2-\\vartheta"|>}, {}],
+  If[MemberQ[{"twistedLinear", "twistedQuadratic"}, kind],
+    {<|"symbol" -> "qTilde", "latex" -> "\\widetilde q\\text{ is the crossing parameter fixed by the skew self-duality convention}"|>}, {}],
+  If[kind === "twistedQuadratic",
+    {
+      <|"symbol" -> "H", "latex" -> "H=\\sum_i(E_{0'i}\\otimes E_{i0'}+E_{i0'}\\otimes E_{0'i})"|>,
+      <|"symbol" -> "EPrime", "latex" -> "E'=E_{0'0'}\\otimes E_{0'0'}"|>,
+      <|"symbol" -> "D_q", "latex" -> "D_q=\\sum_i\\vartheta_i\\left(\\vartheta q^{\\nu_i}E_{i0'}\\otimes E_{-i,0'}+q^{-\\nu_i}E_{0'i}\\otimes E_{0',-i}\\right)"|>
+    }, {}]
+];
+
+AmbientRMatrixData[type_String, n_Integer] := Module[
+  {canonical = canonicalType[type], labels, kind, dimension, recordID, source},
+  If[MissingQ[canonical] || Quiet[VectorRepresentation[canonical, n]] === $Failed,
+    Return[$Failed]];
+  labels = representationBasis[canonical, n];
+  dimension = Length[labels];
+  kind = ambientRFormulaKind[canonical];
+  recordID = webSlug[canonical] <> "--n" <> ToString[n] <> "--vector-r";
+  source = If[MemberQ[$twistedTypes, canonical],
+    "qRE_II/Rmatrices.tex", "qRE/files/Rmatrices.tex"];
+  <|
+    "representation" -> <|
+      "representationId" -> webSlug[canonical] <> "--n" <> ToString[n] <> "--vector",
+      "kind" -> "vectorEvaluation", "dimension" -> dimension,
+      "basisLabels" -> (webBasisLabel /@ labels),
+      "spectralParameter" -> "u", "quantumParameter" -> "q",
+      "tensorBasisConvention" -> "lexicographic"|>,
+    "rMatrix" -> <|
+      "rMatrixId" -> recordID, "status" -> "sourceFormula",
+      "formulaKind" -> kind, "dimension" -> dimension^2,
+      "latex" -> ambientRFormulaLatex[kind],
+      "operatorDefinitions" -> ambientRDefinitions[kind],
+      "normalizationLatex" -> "R(1)=P",
+      "properties" -> {
+        <|"kind" -> "regularity", "status" -> "sourceIdentity", "latex" -> "R(1)=P"|>,
+        <|"kind" -> "unitarity", "status" -> "sourceIdentity", "latex" -> "R(u)^{-1}=R_{21}(u^{-1})"|>,
+        <|"kind" -> "yangBaxter", "status" -> "sourceIdentity", "latex" -> "R_{12}(u/v)R_{13}(u/w)R_{23}(v/w)=R_{23}(v/w)R_{13}(u/w)R_{12}(u/v)"|>
+      },
+      "provenance" -> <|
+        "Source" -> source, "Normalization" -> "regular",
+        "MatrixMaterialization" -> "notExported"|>
+    |>
+  |>
+];
+
+ReflectionEquationData[d_?SatakeDiagramQ, rMatrixId_String] := Module[
+  {equation = BoundaryEquationType[d], latex},
+  latex = If[equation === "Transposed",
+    "R_{21}(u/v)K_1(u)R_{12}^{t_1}(uv)K_2(v)=K_2(v)R_{21}^{t_1}(uv)K_1(u)R_{12}(u/v)",
+    "R_{21}(u/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u/v)"];
+  <|
+    "kind" -> equation, "status" -> "instantiatedIdentity",
+    "latex" -> latex, "rMatrixId" -> rMatrixId,
+    "verification" -> <|"status" -> "notComputed", "method" -> Null|>,
+    "conventions" -> <|
+      "spectralParameters" -> "multiplicative", "legNumbering" -> "12/21",
+      "partialTranspose" -> If[equation === "Transposed", "firstTensorFactor", Null]|>
+  |>
+];
+
 (* Web interchange --------------------------------------------------------- *)
 
 webSymbolName[s_Symbol] := Last[StringSplit[ToString[Unevaluated[s], InputForm], "`"]];
@@ -2510,7 +2651,7 @@ Options[WebCatalogueData] = {
 };
 WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
   {canonical = canonicalType[type], diagrams, rows, include,
-   records, statuses, catalogueID},
+   records, statuses, catalogueID, ambient, rMatrixID},
   If[MissingQ[canonical], Return[$Failed]];
   If[Quiet[CartanMatrixOf[canonical, n]] === $Failed, Return[$Failed]];
   include = TrueQ[OptionValue["IncludeKMatrices"]];
@@ -2526,6 +2667,9 @@ WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
       "Result" -> Null|>], diagrams]
   ];
   catalogueID = webSlug[canonical] <> "--n" <> ToString[n];
+  ambient = AmbientRMatrixData[canonical, n];
+  If[!AssociationQ[ambient], Return[$Failed]];
+  rMatrixID = ambient["rMatrix", "rMatrixId"];
   records = Map[
     Function[row, Module[{diagram = row["Diagram"], classification,
       diagramID, computation},
@@ -2544,11 +2688,13 @@ WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
             SymmetrizersOf[diagram["AffineType"], diagram["Rank"]])
         |>,
         "classification" -> webClassificationData[classification],
+        "qsp" -> QSPPresentationData[diagram],
+        "reflectionEquation" -> ReflectionEquationData[diagram, rMatrixID],
         "capabilities" -> <|
-          "qspAlgebra" -> False,
+          "qspAlgebra" -> True,
           "kMatrix" -> (computation["solution"] =!= Null ||
             computation["candidates"] =!= {}),
-          "rMatrix" -> False,
+          "rMatrix" -> True,
           "properties" -> {},
           "remoteComputation" -> False|>,
         "computation" -> computation
@@ -2563,6 +2709,7 @@ WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
     "engine" -> <|"name" -> "QREKMatrices", "version" -> $qreKMatricesVersion|>,
     "catalogue" -> <|"id" -> catalogueID, "affineType" -> canonical,
       "rank" -> n|>,
+    "ambient" -> ambient,
     "summary" -> <|"diagramCount" -> Length[records],
       "statuses" -> statuses|>,
     "diagrams" -> records

@@ -4,9 +4,10 @@ export function buildSolutionBundle(
   record: DiagramRecord,
   solution: Solution,
   engine: Catalogue["engine"],
+  ambient: Catalogue["ambient"],
 ) {
   return {
-    schemaVersion: "1.0.0",
+    schemaVersion: "1.1.0",
     engine,
     exportedAt: new Date().toISOString(),
     diagram: {
@@ -15,18 +16,35 @@ export function buildSolutionBundle(
       classification: record.classification,
       cartanMatrix: record.data.cartanMatrix,
       symmetrizers: record.data.symmetrizers,
+      qsp: record.qsp,
+      reflectionEquation: record.reflectionEquation,
     },
+    ambient,
     solution,
   };
 }
 
-export function solutionLatexDocument(record: DiagramRecord, solution: Solution): string {
+export function solutionLatexDocument(
+  record: DiagramRecord,
+  solution: Solution,
+  ambient: Catalogue["ambient"],
+): string {
   const parameters = Object.keys(solution.parameters).join(", ") || "none";
   return [
     `% QREKMatrices solution ${solution.solutionId}`,
     `% Diagram: ${record.spec.affineType}, n=${record.spec.rank}, X={${record.spec.X.join(",")}}, tau=[${record.spec.tau.join(",")}]`,
     `% Family: ${solution.family}; equation: ${solution.equation}; realization: ${solution.realization}`,
     `% Basis: ${solution.basisLabels.join(", ")}; parameters: ${parameters}`,
+    `% Ambient R record: ${ambient.rMatrix.rMatrixId}; normalization: ${ambient.rMatrix.normalizationLatex}`,
+    `\\[`,
+    record.qsp.presentationLatex,
+    `\\]`,
+    `\\[`,
+    ambient.rMatrix.latex,
+    `\\]`,
+    `\\[`,
+    record.reflectionEquation.latex,
+    `\\]`,
     `\\[`,
     `K(u) = ${solution.latex}`,
     `\\]`,

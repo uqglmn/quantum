@@ -3,9 +3,9 @@
   "$id": "https://qrekmatrices.org/schemas/catalogue.schema.json",
   "title": "QRE generalized Satake diagram catalogue",
   "type": "object",
-  "required": ["schemaVersion", "engine", "catalogue", "summary", "diagrams"],
+  "required": ["schemaVersion", "engine", "catalogue", "ambient", "summary", "diagrams"],
   "properties": {
-    "schemaVersion": { "const": "1.0.0" },
+    "schemaVersion": { "const": "1.1.0" },
     "engine": {
       "type": "object",
       "required": ["name", "version"],
@@ -25,6 +25,7 @@
       },
       "additionalProperties": false
     },
+    "ambient": { "$ref": "#/$defs/ambient" },
     "summary": {
       "type": "object",
       "required": ["diagramCount", "statuses"],
@@ -98,6 +99,153 @@
           "type": ["array", "null"],
           "items": { "type": "integer", "minimum": 0 }
         }
+      },
+      "additionalProperties": false
+    },
+    "qsp": {
+      "type": "object",
+      "required": ["qspId", "status", "nameLatex", "ambientAlgebraLatex", "indexSets", "theta", "generatorGroups", "presentationLatex", "parameters", "relationStatus", "provenance"],
+      "properties": {
+        "qspId": { "type": "string", "minLength": 1 },
+        "status": { "const": "instantiatedPresentation" },
+        "nameLatex": { "type": "string" },
+        "ambientAlgebraLatex": { "type": "string" },
+        "indexSets": {
+          "type": "object",
+          "required": ["nodes", "levi", "boundary", "torusOrbitRepresentatives"],
+          "properties": {
+            "nodes": { "type": "array", "items": { "type": "integer" } },
+            "levi": { "type": "array", "items": { "type": "integer" } },
+            "boundary": { "type": "array", "items": { "type": "integer" } },
+            "torusOrbitRepresentatives": { "type": "array", "items": { "type": "integer" } }
+          },
+          "additionalProperties": false
+        },
+        "theta": {
+          "type": "object",
+          "required": ["kind", "longestParabolicWord", "latex"],
+          "properties": {
+            "kind": { "const": "KolbQuantumInvolution" },
+            "longestParabolicWord": { "type": "array", "items": { "type": "integer" } },
+            "latex": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "generatorGroups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["kind", "nodes", "latex"],
+            "properties": {
+              "kind": { "enum": ["positiveLevi", "thetaFixedTorus", "boundary"] },
+              "nodes": { "type": "array", "items": { "type": "integer" } },
+              "latex": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "presentationLatex": { "type": "string" },
+        "parameters": {
+          "type": "object",
+          "required": ["cNodes", "sNodes", "latex"],
+          "properties": {
+            "cNodes": { "type": "array", "items": { "type": "integer" } },
+            "sNodes": { "type": "array", "items": { "type": "integer" } },
+            "latex": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "relationStatus": { "const": "generatorPresentation" },
+        "provenance": { "$ref": "#/$defs/provenance" }
+      },
+      "additionalProperties": false
+    },
+    "reflectionEquation": {
+      "type": "object",
+      "required": ["kind", "status", "latex", "rMatrixId", "verification", "conventions"],
+      "properties": {
+        "kind": { "enum": ["Standard", "Transposed"] },
+        "status": { "const": "instantiatedIdentity" },
+        "latex": { "type": "string" },
+        "rMatrixId": { "type": "string" },
+        "verification": {
+          "type": "object",
+          "required": ["status", "method"],
+          "properties": {
+            "status": { "enum": ["notComputed", "verified", "failed", "conditional"] },
+            "method": { "type": ["string", "null"] }
+          },
+          "additionalProperties": false
+        },
+        "conventions": {
+          "type": "object",
+          "required": ["spectralParameters", "legNumbering", "partialTranspose"],
+          "properties": {
+            "spectralParameters": { "const": "multiplicative" },
+            "legNumbering": { "const": "12/21" },
+            "partialTranspose": { "type": ["string", "null"] }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "ambient": {
+      "type": "object",
+      "required": ["representation", "rMatrix"],
+      "properties": {
+        "representation": { "$ref": "#/$defs/representation" },
+        "rMatrix": { "$ref": "#/$defs/rMatrix" }
+      },
+      "additionalProperties": false
+    },
+    "representation": {
+      "type": "object",
+      "required": ["representationId", "kind", "dimension", "basisLabels", "spectralParameter", "quantumParameter", "tensorBasisConvention"],
+      "properties": {
+        "representationId": { "type": "string" },
+        "kind": { "const": "vectorEvaluation" },
+        "dimension": { "type": "integer", "minimum": 1 },
+        "basisLabels": { "type": "array", "items": { "$ref": "#/$defs/scalar" } },
+        "spectralParameter": { "type": "string" },
+        "quantumParameter": { "type": "string" },
+        "tensorBasisConvention": { "const": "lexicographic" }
+      },
+      "additionalProperties": false
+    },
+    "rMatrix": {
+      "type": "object",
+      "required": ["rMatrixId", "status", "formulaKind", "dimension", "latex", "operatorDefinitions", "normalizationLatex", "properties", "provenance"],
+      "properties": {
+        "rMatrixId": { "type": "string" },
+        "status": { "const": "sourceFormula" },
+        "formulaKind": { "enum": ["untwistedTypeA", "untwistedBCD", "twistedLinear", "twistedQuadratic"] },
+        "dimension": { "type": "integer", "minimum": 1 },
+        "latex": { "type": "string" },
+        "operatorDefinitions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["symbol", "latex"],
+            "properties": { "symbol": { "type": "string" }, "latex": { "type": "string" } },
+            "additionalProperties": false
+          }
+        },
+        "normalizationLatex": { "type": "string" },
+        "properties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["kind", "status", "latex"],
+            "properties": {
+              "kind": { "enum": ["regularity", "unitarity", "yangBaxter"] },
+              "status": { "const": "sourceIdentity" },
+              "latex": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "provenance": { "$ref": "#/$defs/provenance" }
       },
       "additionalProperties": false
     },
@@ -191,12 +339,14 @@
     },
     "diagramRecord": {
       "type": "object",
-      "required": ["id", "spec", "data", "classification", "capabilities", "computation"],
+      "required": ["id", "spec", "data", "classification", "qsp", "reflectionEquation", "capabilities", "computation"],
       "properties": {
         "id": { "type": "string", "minLength": 1 },
         "spec": { "$ref": "#/$defs/diagramSpec" },
         "data": { "$ref": "#/$defs/diagramData" },
         "classification": { "$ref": "#/$defs/classification" },
+        "qsp": { "$ref": "#/$defs/qsp" },
+        "reflectionEquation": { "$ref": "#/$defs/reflectionEquation" },
         "capabilities": { "$ref": "#/$defs/capabilities" },
         "computation": { "$ref": "#/$defs/computation" }
       },

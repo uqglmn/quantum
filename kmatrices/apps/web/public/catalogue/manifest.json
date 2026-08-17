@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.0.0",
+	"schemaVersion":"1.1.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.11.1"
+		"version":"0.12.0"
 	},
 	"files":[
 		{

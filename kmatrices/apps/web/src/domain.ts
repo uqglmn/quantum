@@ -44,6 +44,75 @@ export interface Solution {
   properties?: Array<Record<string, unknown>>;
 }
 
+export interface QSPPresentation {
+  qspId: string;
+  status: "instantiatedPresentation";
+  nameLatex: string;
+  ambientAlgebraLatex: string;
+  indexSets: {
+    nodes: number[];
+    levi: number[];
+    boundary: number[];
+    torusOrbitRepresentatives: number[];
+  };
+  theta: {
+    kind: "KolbQuantumInvolution";
+    longestParabolicWord: number[];
+    latex: string;
+  };
+  generatorGroups: Array<{
+    kind: "positiveLevi" | "thetaFixedTorus" | "boundary";
+    nodes: number[];
+    latex: string;
+  }>;
+  presentationLatex: string;
+  parameters: { cNodes: number[]; sNodes: number[]; latex: string };
+  relationStatus: "generatorPresentation";
+  provenance: Record<string, unknown>;
+}
+
+export interface RepresentationRecord {
+  representationId: string;
+  kind: "vectorEvaluation";
+  dimension: number;
+  basisLabels: Array<string | number>;
+  spectralParameter: string;
+  quantumParameter: string;
+  tensorBasisConvention: "lexicographic";
+}
+
+export interface RMatrixRecord {
+  rMatrixId: string;
+  status: "sourceFormula";
+  formulaKind: "untwistedTypeA" | "untwistedBCD" | "twistedLinear" | "twistedQuadratic";
+  dimension: number;
+  latex: string;
+  operatorDefinitions: Array<{ symbol: string; latex: string }>;
+  normalizationLatex: string;
+  properties: Array<{
+    kind: "regularity" | "unitarity" | "yangBaxter";
+    status: "sourceIdentity";
+    latex: string;
+  }>;
+  provenance: Record<string, unknown>;
+}
+
+export interface ReflectionEquationRecord {
+  kind: "Standard" | "Transposed";
+  status: "instantiatedIdentity";
+  latex: string;
+  rMatrixId: string;
+  verification: {
+    status: "notComputed" | "verified" | "failed" | "conditional";
+    method: string | null;
+  };
+  conventions: {
+    spectralParameters: "multiplicative";
+    legNumbering: "12/21";
+    partialTranspose: string | null;
+  };
+}
+
 export interface DiagramRecord {
   id: string;
   spec: {
@@ -67,6 +136,8 @@ export interface DiagramRecord {
     representativeFamily?: string | null;
     representativePermutation?: number[] | null;
   };
+  qsp: QSPPresentation;
+  reflectionEquation: ReflectionEquationRecord;
   capabilities: {
     qspAlgebra: boolean;
     kMatrix: boolean;
@@ -85,6 +156,7 @@ export interface Catalogue {
   schemaVersion: string;
   engine: { name: "QREKMatrices"; version: string };
   catalogue: { id: string; affineType: string; rank: number };
+  ambient: { representation: RepresentationRecord; rMatrix: RMatrixRecord };
   summary: { diagramCount: number; statuses: Record<string, number> };
   diagrams: DiagramRecord[];
 }

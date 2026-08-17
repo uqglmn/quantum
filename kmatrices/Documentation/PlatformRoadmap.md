@@ -45,8 +45,16 @@ control, but storage and computation must not conflate them.
 
 ### 2. Scientific completeness — in progress
 
-- explicit QSP generator and parameter-relation exporter;
-- representation registry and convention-labelled ambient R-matrices;
+- implemented: explicit QSP generator presentation exporter, including the
+  instantiated index sets, longest-parabolic word, quantum involution, torus,
+  boundary generators, parameter domain, and source provenance;
+- implemented: representation registry and convention-labelled ambient
+  R-matrix operator formulas for all exported twisted and untwisted types;
+- implemented: reflection-equation records bound by stable identifier to their
+  ambient R-record, including partial-transpose and spectral conventions;
+- remaining: expanded inhomogeneous QSP relations and family-specific
+  admissibility constraints;
+- remaining: sparse/dense R-matrix materialization;
 - exact reflection-equation tensors and verification certificates;
 - implemented: explicit family selector for ambiguous diagrams, with the
   mathematical reason for the ambiguity retained in the interface;

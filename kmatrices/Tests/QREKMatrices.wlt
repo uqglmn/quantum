@@ -802,7 +802,7 @@ VerificationTest[
 
 VerificationTest[
   QREKMatricesVersion[],
-  "0.11.1",
+  "0.12.0",
   TestID -> "web-engine-version"
 ]
 
@@ -826,7 +826,7 @@ VerificationTest[
       data["summary", "diagramCount"], DuplicateFreeQ[ids],
       Union[Lookup[Lookup[records, "computation"], "status"]]}
   ],
-  {"1.0.0", "0.11.1", 7, True, {"NotRequested"}},
+  {"1.1.0", "0.12.0", 7, True, {"NotRequested"}},
   TestID -> "web-catalogue-stable-records"
 ]
 
@@ -842,7 +842,7 @@ VerificationTest[
       imported["schemaVersion"],
       FileExistsQ[FileNameJoin[{directory, imported["files"][[1, "path"]]}]]}
   ],
-  {7, "1.0.0", True},
+  {7, "1.1.0", True},
   TestID -> "web-catalogue-export-manifest"
 ]
 
@@ -859,4 +859,45 @@ VerificationTest[
   ],
   {"bare", {}, "sparseMatrix", True, True},
   TestID -> "web-catalogue-includes-safe-k-matrices"
+]
+
+VerificationTest[
+  Module[{diagram, qsp},
+    diagram = First[Select[GeneralizedSatakeDiagrams["A2n-1(2)", 3],
+      #["X"] =!= {} &]];
+    qsp = QSPPresentationData[diagram];
+    {qsp["status"], qsp["indexSets", "levi"] === diagram["X"],
+      qsp["indexSets", "boundary"] === Complement[diagram["Nodes"], diagram["X"]],
+      ListQ[qsp["theta", "longestParabolicWord"]],
+      StringContainsQ[qsp["generatorGroups"][[3, "latex"]], "s_i"]}
+  ],
+  {"instantiatedPresentation", True, True, True, True},
+  TestID -> "qsp-presentation-structured-record"
+]
+
+VerificationTest[
+  Module[{linear, quadratic},
+    linear = AmbientRMatrixData["A2n(2)", 2];
+    quadratic = AmbientRMatrixData["Dn+1(2)", 2];
+    {linear["representation", "dimension"],
+      linear["rMatrix", "formulaKind"],
+      quadratic["representation", "dimension"],
+      quadratic["rMatrix", "formulaKind"],
+      StringContainsQ[quadratic["rMatrix", "latex"], "D_q"]}
+  ],
+  {5, "twistedLinear", 6, "twistedQuadratic", True},
+  TestID -> "ambient-r-matrix-registry-covers-twisted-formulas"
+]
+
+VerificationTest[
+  Module[{diagram, standard, transposed},
+    diagram = CreateSatakeDiagram["B(1)", 2, {0}, Range[0, 2]];
+    standard = ReflectionEquationData[diagram, "b-r"];
+    diagram = CreateSatakeDiagram["A(1)", 2, {}, Range[0, 2]];
+    transposed = ReflectionEquationData[diagram, "a-r"];
+    {standard["kind"], standard["rMatrixId"],
+      transposed["kind"], transposed["conventions", "partialTranspose"]}
+  ],
+  {"Standard", "b-r", "Transposed", "firstTensorFactor"},
+  TestID -> "reflection-equation-record-binds-conventions"
 ]
