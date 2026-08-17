@@ -120,3 +120,22 @@ build.
 Validation for this increment includes 68 Wolfram tests, all 206 exact
 certificate computations, schema validation of 23 catalogues, four frontend
 tests, and the production build.
+
+## Family-first workbench — 2026-08-17
+
+- frontend: `0.7.0`;
+- replaced the flat type/rank dropdown and diagram thumbnail list with a
+  collapsible library browsable by affine type or K-matrix family;
+- added rank and family-parameter controls backed only by catalogue-valid
+  instances, with C.1 as the first theorem-level pilot;
+- separated the coideal regime from bare, dressed, and transported solution
+  realisations;
+- split the K-matrix presentation into the general family formula and the
+  explicit matrix for the current diagram;
+- revised SVG diagrams toward the preprint convention: small labelled nodes,
+  restrained line weights, and grey solid double-headed tau arrows;
+- added stable, shareable URL state for type, rank, family, and diagram.
+
+Validation for this increment includes eight frontend unit tests, schema
+validation of all 23 generated catalogues, a production build, and a headless
+browser visual check at desktop width.

@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Catalogue, CatalogueManifest, DiagramRecord, Realization, Solution } from "./domain";
 import { MathFormula } from "./components/MathFormula";
-import { SatakeDiagram } from "./components/SatakeDiagram";
+import { FamilyConfigurator } from "./components/FamilyConfigurator";
+import { FamilyFormula } from "./components/FamilyFormula";
+import { FamilyLibrary } from "./components/FamilyLibrary";
 import { staticCatalogueProvider } from "./lib/catalogue";
 import { expressionToLatex, formatExpression } from "./lib/expression";
+import { affineTypeLatex, familyDefinition, familiesForAffineType, recordBelongsToFamily, type FamilyDefinition } from "./lib/families";
 import { buildSolutionBundle, downloadText, safeFilename, solutionLatexDocument } from "./lib/solutionExport";
 
 function Badge({ children, tone = "neutral" }: { children: React.ReactNode; tone?: "neutral" | "good" | "warn" }) {
@@ -160,8 +163,9 @@ function FormulaPanel({ record, realization, engine, ambient }: {
     <p>The static catalogue preserves the bare matrix. A diagonal or general dressing matrix G will produce G⁻¹KG (standard) or GKG (transposed) through the compute provider.</p>
     <code>bare → dress(G) → normalise(u₀) → analyse</code>
   </div>;
-  if (realization === "nonstandard" && record.classification.regime !== "Nonquasistandard") return <div className="empty-state">
-    This diagram is not classified in the non-quasistandard regime.
+  if (realization === "transported" && !solutions.some((solution) => solution.realization === "transported")) return <div className="empty-state">
+    <strong>No transported matrix artifact in this static record.</strong>
+    <p>The representative permutation is retained with the diagram. Its transported matrix will be materialized by the transformation provider rather than treated as a separate coideal regime.</p>
   </div>;
   if (!selected) return <div className="empty-state">
     <strong>No matrix artifact in this static record.</strong>
@@ -188,29 +192,43 @@ function FormulaPanel({ record, realization, engine, ambient }: {
   </>;
 }
 
-function Inspector({ record, engine, ambient }: {
+function Inspector({ record, engine, ambient, family, manifest, catalogue, onFileChange, onDiagramChange }: {
   record: DiagramRecord;
   engine: Catalogue["engine"];
   ambient: Catalogue["ambient"];
+  family: FamilyDefinition;
+  manifest: CatalogueManifest;
+  catalogue: Catalogue;
+  onFileChange: (fileId: string) => void;
+  onDiagramChange: (diagramId: string) => void;
 }) {
-  const [tab, setTab] = useState<"qsp" | "k" | "r" | "equation" | "properties">("qsp");
+  type InspectorTab = "qsp" | "k" | "r" | "equation" | "properties";
+  const inspectorTabs: InspectorTab[] = ["qsp", "k", "r", "equation", "properties"];
+  const [tab, setTab] = useState<InspectorTab>(() => {
+    const requested = new URLSearchParams(window.location.search).get("view") as InspectorTab | null;
+    return requested && inspectorTabs.includes(requested) ? requested : "qsp";
+  });
   const [realization, setRealization] = useState<Realization>(
-    record.classification.regime === "Nonquasistandard" ? "nonstandard" : "bare",
+    "bare",
   );
-  useEffect(() => setRealization(record.classification.regime === "Nonquasistandard" ? "nonstandard" : "bare"), [record.id]);
+  useEffect(() => setRealization("bare"), [record.id]);
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("view", tab);
+    window.history.replaceState(null, "", url);
+  }, [tab]);
 
   return <main className="inspector">
-    <section className="hero-card">
-      <div>
-        <div className="eyebrow">{record.spec.affineType} · rank {record.spec.rank}</div>
-        <h2>{record.classification.family ?? "Ambiguous family"}</h2>
-        <div className="badge-row">
-          <Badge tone={record.classification.status.startsWith("Classified") ? "good" : "warn"}>{record.classification.status}</Badge>
-          <Badge>{record.classification.regime}</Badge>
-          <Badge>{record.classification.equation}</Badge>
-        </div>
+    <FamilyConfigurator family={family} manifest={manifest} catalogue={catalogue} selected={record}
+      onFileChange={onFileChange} onDiagramChange={onDiagramChange} />
+
+    <section className="instance-heading">
+      <div><div className="eyebrow">Current instance</div><h2><MathFormula latex={affineTypeLatex(record.spec.affineType)} display={false} /> · rank {record.spec.rank}</h2></div>
+      <div className="badge-row">
+        <Badge tone={record.classification.status.startsWith("Classified") ? "good" : "warn"}>{record.classification.status}</Badge>
+        <Badge>{record.classification.regime.toLowerCase() === "nonquasistandard" ? "Non-quasistandard regime" : record.classification.regime}</Badge>
+        <Badge>{record.classification.equation}</Badge>
       </div>
-      <SatakeDiagram record={record} />
     </section>
 
     <section className="datum-strip">
@@ -221,7 +239,7 @@ function Inspector({ record, engine, ambient }: {
     </section>
 
     <div className="tabs" role="tablist" aria-label="Mathematical objects">
-      {(["qsp", "k", "r", "equation", "properties"] as const).map((name) => <button key={name}
+      {inspectorTabs.map((name) => <button key={name}
         role="tab" aria-selected={tab === name} className={tab === name ? "is-active" : ""} onClick={() => setTab(name)}>
         {name === "qsp" ? "QSP algebra" : name === "k" ? "K-matrix" : name === "r" ? "Ambient R" : name === "equation" ? "Reflection equation" : "Properties"}
       </button>)}
@@ -245,11 +263,13 @@ function Inspector({ record, engine, ambient }: {
         <p className="fine-print"><strong>Scope:</strong> this record instantiates the generator presentation and the reduced word for θ<sub>q</sub>. Expanded inhomogeneous Serre relations and family-specific admissibility constraints remain a separate symbolic provider. Source: <code>{String(record.qsp.provenance.Source)}</code>.</p>
       </>}
       {tab === "k" && <>
-        <div className="panel-heading"><div><div className="eyebrow">Realisation</div><h3>Boundary K-matrix</h3></div><Availability available={record.capabilities.kMatrix}>{record.computation.status}</Availability></div>
+        <FamilyFormula family={family} regime={record.classification.regime} />
+        <div className="instance-divider"><span>Current instance</span></div>
+        <div className="panel-heading"><div><div className="eyebrow">Solution realisation</div><h3>Explicit boundary K-matrix</h3></div><Availability available={record.capabilities.kMatrix}>{record.computation.status}</Availability></div>
         <div className="segmented" aria-label="K-matrix realisation">
           <button className={realization === "bare" ? "is-active" : ""} onClick={() => setRealization("bare")}>Bare</button>
           <button className={realization === "dressed" ? "is-active" : ""} onClick={() => setRealization("dressed")}>Dressed</button>
-          <button className={realization === "nonstandard" ? "is-active" : ""} onClick={() => setRealization("nonstandard")}>Non-standard</button>
+          <button className={realization === "transported" ? "is-active" : ""} onClick={() => setRealization("transported")}>Transported</button>
         </div>
         <FormulaPanel record={record} realization={realization} engine={engine} ambient={ambient} />
       </>}
@@ -309,13 +329,20 @@ export function App() {
   const [fileId, setFileId] = useState("");
   const [catalogue, setCatalogue] = useState<Catalogue | null>(null);
   const [diagramId, setDiagramId] = useState("");
-  const [query, setQuery] = useState("");
+  const [familyId, setFamilyId] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
     staticCatalogueProvider.manifest(controller.signal).then((value) => {
-      setManifest(value); setFileId(value.files[0]?.id ?? "");
+      const search = new URLSearchParams(window.location.search);
+      const requestedType = search.get("type");
+      const requestedRank = Number(search.get("rank"));
+      const requestedFile = value.files.find((file) => file.affineType === requestedType && file.rank === requestedRank);
+      const pilotFile = value.files.find((file) => file.affineType === "C(1)" && file.rank === 4);
+      setManifest(value);
+      setFileId(requestedFile?.id ?? pilotFile?.id ?? value.files[0]?.id ?? "");
+      setFamilyId(search.get("family") ?? (requestedFile || pilotFile ? "C.1" : ""));
     }).catch((reason: Error) => setError(reason.message));
     return () => controller.abort();
   }, []);
@@ -325,39 +352,61 @@ export function App() {
     if (!file) return;
     const controller = new AbortController();
     staticCatalogueProvider.catalogue(file.path, controller.signal).then((value) => {
-      setCatalogue(value); setDiagramId(value.diagrams[0]?.id ?? ""); setError("");
+      const search = new URLSearchParams(window.location.search);
+      const availableFamilies = familiesForAffineType(value.catalogue.affineType);
+      const requestedFamily = search.get("family");
+      const nextFamily = availableFamilies.some((family) => family.id === familyId) ? familyId
+        : availableFamilies.some((family) => family.id === requestedFamily) ? requestedFamily!
+          : availableFamilies[0]?.id ?? "";
+      const familyRecords = value.diagrams.filter((record) => recordBelongsToFamily(record, nextFamily));
+      const requestedDiagram = search.get("diagram");
+      const nextDiagram = familyRecords.find((record) => record.id === requestedDiagram) ?? familyRecords[0] ?? value.diagrams[0];
+      setCatalogue(value); setFamilyId(nextFamily); setDiagramId(nextDiagram?.id ?? ""); setError("");
     }).catch((reason: Error) => setError(reason.message));
     return () => controller.abort();
   }, [manifest, fileId]);
 
-  const records = useMemo(() => catalogue?.diagrams.filter((record) => {
-    const haystack = `${record.id} ${record.classification.family} ${record.classification.candidateFamilies.join(" ")} ${record.classification.regime}`.toLowerCase();
-    return haystack.includes(query.toLowerCase());
-  }) ?? [], [catalogue, query]);
-  const selected = catalogue?.diagrams.find((record) => record.id === diagramId) ?? records[0];
+  const records = useMemo(() => catalogue?.diagrams.filter((record) => recordBelongsToFamily(record, familyId)) ?? [], [catalogue, familyId]);
+  const selected = catalogue?.diagrams.find((record) => record.id === diagramId && recordBelongsToFamily(record, familyId)) ?? records[0];
+  const family = familyDefinition(familyId);
+
+  useEffect(() => {
+    if (!catalogue || !familyId || selected) return;
+    setDiagramId(records[0]?.id ?? "");
+  }, [catalogue, familyId, records, selected]);
+
+  useEffect(() => {
+    if (!catalogue || !selected || !familyId) return;
+    const url = new URL(window.location.href);
+    url.searchParams.set("type", catalogue.catalogue.affineType);
+    url.searchParams.set("rank", String(catalogue.catalogue.rank));
+    url.searchParams.set("family", familyId);
+    url.searchParams.set("diagram", selected.id);
+    window.history.replaceState(null, "", url);
+  }, [catalogue, familyId, selected]);
+
+  const selectFamily = (nextFileId: string, nextFamilyId: string) => {
+    setFamilyId(nextFamilyId);
+    if (nextFileId !== fileId) {
+      setFileId(nextFileId);
+      return;
+    }
+    const first = catalogue?.diagrams.find((record) => recordBelongsToFamily(record, nextFamilyId));
+    setDiagramId(first?.id ?? "");
+  };
 
   return <div className="app-shell">
     <header className="topbar">
-      <div className="brand"><span className="brand-mark">K</span><div><strong>QRE</strong><small>Satake explorer</small></div></div>
+      <div className="brand"><span className="brand-mark">K</span><div><strong>QRE</strong><small>Family workbench</small></div></div>
       <div className="engine-status"><span></span>{manifest ? `engine ${manifest.engine.version} · schema ${manifest.schemaVersion}` : "loading catalogue"}</div>
-      <span className="source-label">Research prototype</span>
+      <span className="source-label">Interactive paper companion</span>
     </header>
     <div className="workspace">
-      <aside className="sidebar">
-        <div className="sidebar-heading"><div className="eyebrow">Catalogue</div><h1>Generalized Satake diagrams</h1></div>
-        <label className="field"><span>Affine type and rank</span><select value={fileId} onChange={(event) => setFileId(event.target.value)}>
-          {manifest?.files.map((file) => <option value={file.id} key={file.id}>{file.affineType} · n={file.rank} ({file.diagramCount})</option>)}
-        </select></label>
-        <label className="field"><span>Filter this catalogue</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="family, regime, ID…" /></label>
-        <div className="result-count">{records.length} diagram{records.length === 1 ? "" : "s"}</div>
-        <nav className="diagram-list" aria-label="Diagram results">
-          {records.map((record) => <button key={record.id} className={record.id === selected?.id ? "diagram-option is-active" : "diagram-option"} onClick={() => setDiagramId(record.id)}>
-            <SatakeDiagram record={record} compact />
-            <span><strong>{record.classification.family ?? (record.classification.candidateFamilies.join(" / ") || "Unclassified")}</strong><small>X={record.spec.X.length ? `{${record.spec.X.join(",")}}` : "∅"} · {record.classification.regime}</small></span>
-          </button>)}
-        </nav>
-      </aside>
-      {error ? <main className="load-error"><h2>Catalogue unavailable</h2><p>{error}</p><p>Run the catalogue export script before starting the app.</p></main> : selected && catalogue ? <Inspector record={selected} engine={catalogue.engine} ambient={catalogue.ambient} /> : <main className="loading">Loading mathematical catalogue…</main>}
+      <FamilyLibrary manifest={manifest} selectedFileId={fileId} selectedFamilyId={familyId} onSelect={selectFamily} />
+      {error ? <main className="load-error"><h2>Catalogue unavailable</h2><p>{error}</p><p>Run the catalogue export script before starting the app.</p></main>
+        : selected && catalogue && manifest && family ? <Inspector record={selected} engine={catalogue.engine} ambient={catalogue.ambient}
+          family={family} manifest={manifest} catalogue={catalogue} onFileChange={setFileId} onDiagramChange={setDiagramId} />
+          : <main className="loading">Loading mathematical catalogue…</main>}
     </div>
   </div>;
 }

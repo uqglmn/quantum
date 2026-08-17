@@ -41,6 +41,7 @@ function parallelOffset(a: Point, b: Point, amount: number): [number, number] {
 
 export function SatakeDiagram({ record, compact = false }: { record: DiagramRecord; compact?: boolean }) {
   const positions = nodePositions(record);
+  const markerKey = record.id.replace(/[^a-zA-Z0-9_-]/g, "-");
   const edges: Array<{ i: number; j: number; multiplicity: number; short: number | null }> = [];
   record.data.cartanMatrix.forEach((row, i) => row.forEach((entry, j) => {
     if (j <= i || entry === 0) return;
@@ -59,16 +60,22 @@ export function SatakeDiagram({ record, compact = false }: { record: DiagramReco
   return (
     <svg className={`satake ${compact ? "satake--compact" : ""}`} viewBox="0 0 440 225" role="img"
       aria-label={`Generalized Satake diagram ${record.id}`}>
+      <title>{record.classification.family ?? "Generalized"} Satake diagram</title>
+      <desc>Black nodes form X. Grey double-headed arrows show the nontrivial orbits of tau.</desc>
       <defs>
-        <marker id={`arrow-${record.id}`} markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+        <marker id={`dynkin-arrow-${markerKey}`} markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
           <path d="M0,0 L7,3.5 L0,7 Z" fill="var(--ink)" />
+        </marker>
+        <marker id={`tau-arrow-${markerKey}`} markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto-start-reverse">
+          <path d="M0,0 L6,3 L0,6 Z" fill="var(--tau)" />
         </marker>
       </defs>
       {tauPairs.map(([i, j]) => {
         const a = positions[i]; const b = positions[j];
         const lift = Math.max(34, Math.abs(b.x - a.x) * 0.28);
         return <path key={`tau-${i}-${j}`} className="tau-line"
-          d={`M ${a.x} ${a.y - 15} Q ${(a.x + b.x) / 2} ${Math.min(a.y, b.y) - lift} ${b.x} ${b.y - 15}`} />;
+          d={`M ${a.x} ${a.y - 11} Q ${(a.x + b.x) / 2} ${Math.min(a.y, b.y) - lift} ${b.x} ${b.y - 11}`}
+          markerStart={`url(#tau-arrow-${markerKey})`} markerEnd={`url(#tau-arrow-${markerKey})`} />;
       })}
       {edges.flatMap((edge) => {
         const a = positions[edge.i]; const b = positions[edge.j];
@@ -79,18 +86,18 @@ export function SatakeDiagram({ record, compact = false }: { record: DiagramReco
           const from = reverse ? b : a; const to = reverse ? a : b;
           return <line key={`${edge.i}-${edge.j}-${k}`} className="dynkin-edge"
             x1={from.x + dx} y1={from.y + dy} x2={to.x + dx} y2={to.y + dy}
-            markerEnd={edge.short !== null && k === Math.floor(edge.multiplicity / 2) ? `url(#arrow-${record.id})` : undefined} />;
+            markerEnd={edge.short !== null && k === Math.floor(edge.multiplicity / 2) ? `url(#dynkin-arrow-${markerKey})` : undefined} />;
         });
       })}
       {record.spec.nodes.map((node) => {
         const point = positions[node]; const black = record.spec.X.includes(node);
         return <g key={node} transform={`translate(${point.x},${point.y})`}>
-          <circle className={black ? "satake-node satake-node--black" : "satake-node"} r="13" />
-          <text className={black ? "node-label node-label--black" : "node-label"} y="4.5">{node}</text>
+          <circle className={black ? "satake-node satake-node--black" : "satake-node"} r="7" />
+          <text className="node-label" y="-15">{node}</text>
         </g>;
       })}
       {!compact && <text className="diagram-caption" x="220" y="211" textAnchor="middle">
-        black nodes X = {record.spec.X.length ? `{${record.spec.X.join(", ")}}` : "∅"}; dashed arcs encode τ
+        black nodes X = {record.spec.X.length ? `{${record.spec.X.join(", ")}}` : "∅"}; double arrows encode τ
       </text>}
     </svg>
   );

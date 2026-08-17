@@ -187,4 +187,4 @@ export interface Catalogue {
   diagrams: DiagramRecord[];
 }
 
-export type Realization = "bare" | "dressed" | "nonstandard";
+export type Realization = "bare" | "dressed" | "transported";
