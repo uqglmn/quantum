@@ -208,3 +208,17 @@ and a production build.
 Validation for this increment includes 86 Wolfram tests, nine frontend tests,
 schema and semantic validation of all 41 catalogues and 1,095 details, and the
 production build. This increment is the rank-six public release.
+
+## Family-aware rank navigation hotfix — 2026-08-17
+
+- frontend: `1.0.1`;
+- restricted each family configurator to ranks containing instances of that
+  family;
+- made family selection and deep links preserve a compatible rank or move to
+  the nearest compatible rank;
+- fixed indefinite loading for A.2 and A.4 at even ranks and for the
+  rank-four-only D.3 family at higher ranks.
+
+Validation includes 13 frontend tests, schema and semantic validation of all
+41 catalogue indexes and 1,095 diagram details, a production build, and
+headless-browser checks of incompatible-rank deep links for A.2, A.4, and D.3.

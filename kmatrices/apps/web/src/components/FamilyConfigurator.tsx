@@ -18,7 +18,8 @@ function recordLabel(record: DiagramSummary) {
 }
 
 export function FamilyConfigurator({ family, manifest, catalogue, selected, onFileChange, onDiagramChange }: FamilyConfiguratorProps) {
-  const rankFiles = manifest.files.filter((file) => file.affineType === catalogue.catalogue.affineType);
+  const rankFiles = manifest.files.filter((file) =>
+    file.affineType === catalogue.catalogue.affineType && file.families.includes(family.id));
   const familyRecords = catalogue.diagrams.filter((record) => recordBelongsToFamily(record, family.id));
   const parameterKeys = family.parameterOrder.filter((key) => familyRecords.some((record) => parameterValue(record, key) !== null));
 

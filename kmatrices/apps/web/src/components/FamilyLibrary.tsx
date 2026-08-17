@@ -6,6 +6,7 @@ import {
   familyDefinitions,
   isTwistedAffineType,
 } from "../lib/families";
+import { nearestFamilyFile } from "../lib/catalogue";
 import { MathFormula } from "./MathFormula";
 
 interface FamilyLibraryProps {
@@ -23,11 +24,8 @@ export function FamilyLibrary({ manifest, selectedFileId, selectedFamilyId, onSe
   const affineTypes = useMemo(() => Array.from(new Set(files.map((file) => file.affineType))), [files]);
   const normalizedQuery = query.trim().toLowerCase();
 
-  const chooseFile = (affineType: string) => {
-    if (selectedFile?.affineType === affineType) return selectedFile.id;
-    const choices = files.filter((file) => file.affineType === affineType);
-    return choices.at(-1)?.id ?? choices[0]?.id ?? "";
-  };
+  const chooseFile = (affineType: string, familyId: string) =>
+    nearestFamilyFile(files, affineType, familyId, selectedFile?.rank)?.id ?? "";
 
   const matches = (familyId: string, affineType: string) => !normalizedQuery
     || `${familyId} ${affineType}`.toLowerCase().includes(normalizedQuery);
@@ -46,7 +44,7 @@ export function FamilyLibrary({ manifest, selectedFileId, selectedFamilyId, onSe
         <div className="family-branch">
           {families.map((family) => <button key={family.id}
             className={activeType && selectedFamilyId === family.id ? "is-active" : ""}
-            onClick={() => onSelect(chooseFile(affineType), family.id)}>
+            onClick={() => onSelect(chooseFile(affineType, family.id), family.id)}>
             <span>{family.id}</span>
             <small>{family.status === "published" ? "paper formula" : "computational"}</small>
           </button>)}
@@ -64,7 +62,7 @@ export function FamilyLibrary({ manifest, selectedFileId, selectedFamilyId, onSe
           const affineType = family.affineTypes[0];
           const active = selectedFile?.affineType === affineType && selectedFamilyId === family.id;
           return <button key={`${affineType}-${family.id}`} className={active ? "is-active" : ""}
-            onClick={() => onSelect(chooseFile(affineType), family.id)}>
+            onClick={() => onSelect(chooseFile(affineType, family.id), family.id)}>
             <strong>{family.id}</strong>
             <span><MathFormula latex={affineTypeLatex(affineType)} display={false} /></span>
           </button>;

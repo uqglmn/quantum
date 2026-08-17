@@ -4,7 +4,7 @@ import { MathFormula } from "./components/MathFormula";
 import { FamilyConfigurator } from "./components/FamilyConfigurator";
 import { FamilyFormula } from "./components/FamilyFormula";
 import { FamilyLibrary } from "./components/FamilyLibrary";
-import { staticCatalogueProvider } from "./lib/catalogue";
+import { nearestFamilyFile, staticCatalogueProvider } from "./lib/catalogue";
 import { expressionToLatex, formatExpression } from "./lib/expression";
 import { affineTypeLatex, familyDefinition, familiesForAffineType, recordBelongsToFamily, type FamilyDefinition } from "./lib/families";
 import { buildSolutionBundle, downloadText, safeFilename, solutionLatexDocument } from "./lib/solutionExport";
@@ -410,11 +410,16 @@ export function App() {
       const search = new URLSearchParams(window.location.search);
       const requestedType = search.get("type");
       const requestedRank = Number(search.get("rank"));
-      const requestedFile = value.files.find((file) => file.affineType === requestedType && file.rank === requestedRank);
+      const requestedFamily = search.get("family");
+      const exactRequestedFile = value.files.find((file) => file.affineType === requestedType && file.rank === requestedRank);
+      const familyRequestedFile = requestedType && requestedFamily
+        ? nearestFamilyFile(value.files, requestedType, requestedFamily, requestedRank)
+        : undefined;
+      const requestedFile = familyRequestedFile ?? exactRequestedFile;
       const pilotFile = value.files.find((file) => file.affineType === "C(1)" && file.rank === 4);
       setManifest(value);
       setFileId(requestedFile?.id ?? pilotFile?.id ?? value.files[0]?.id ?? "");
-      setFamilyId(search.get("family") ?? (requestedFile || pilotFile ? "C.1" : ""));
+      setFamilyId(requestedFamily ?? (requestedFile || pilotFile ? "C.1" : ""));
     }).catch((reason: Error) => setError(reason.message));
     return () => controller.abort();
   }, []);
@@ -425,7 +430,8 @@ export function App() {
     const controller = new AbortController();
     staticCatalogueProvider.catalogue(file.path, controller.signal).then((value) => {
       const search = new URLSearchParams(window.location.search);
-      const availableFamilies = familiesForAffineType(value.catalogue.affineType);
+      const availableFamilies = familiesForAffineType(value.catalogue.affineType)
+        .filter((family) => file.families.includes(family.id));
       const requestedFamily = search.get("family");
       const nextFamily = availableFamilies.some((family) => family.id === familyId) ? familyId
         : availableFamilies.some((family) => family.id === requestedFamily) ? requestedFamily!
