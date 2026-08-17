@@ -1,13 +1,73 @@
 {
-	"schemaVersion":"1.0.0",
+	"schemaVersion":"1.1.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.11.1"
+		"version":"0.12.0"
 	},
 	"catalogue":{
 		"id":"a-1--n3",
 		"affineType":"A(1)",
 		"rank":3
+	},
+	"ambient":{
+		"representation":{
+			"representationId":"a-1--n3--vector",
+			"kind":"vectorEvaluation",
+			"dimension":4,
+			"basisLabels":[
+				1,
+				2,
+				3,
+				4
+			],
+			"spectralParameter":"u",
+			"quantumParameter":"q",
+			"tensorBasisConvention":"lexicographic"
+		},
+		"rMatrix":{
+			"rMatrixId":"a-1--n3--vector-r",
+			"status":"sourceFormula",
+			"formulaKind":"untwistedTypeA",
+			"dimension":16,
+			"latex":"R(u)=f_q(u)R_q+\\frac{(q-q^{-1})u}{q-q^{-1}u}P",
+			"operatorDefinitions":[
+				{
+					"symbol":"f_q",
+					"latex":"f_q(u)=\\frac{1-u}{q-q^{-1}u}"
+				},
+				{
+					"symbol":"P",
+					"latex":"P=\\sum_{i,j\\in\\langle N\\rangle}E_{ij}\\otimes E_{ji}"
+				},
+				{
+					"symbol":"R_q",
+					"latex":"R_q=\\sum_{i,j}\\left(q^{\\delta_{ij}}E_{ii}\\otimes E_{jj}+\\delta_{i<j}(q-q^{-1})E_{ij}\\otimes E_{ji}\\right)"
+				}
+			],
+			"normalizationLatex":"R(1)=P",
+			"properties":[
+				{
+					"kind":"regularity",
+					"status":"sourceIdentity",
+					"latex":"R(1)=P"
+				},
+				{
+					"kind":"unitarity",
+					"status":"sourceIdentity",
+					"latex":"R(u)^{-1}=R_{21}(u^{-1})"
+				},
+				{
+					"kind":"yangBaxter",
+					"status":"sourceIdentity",
+					"latex":"R_{12}(u\/v)R_{13}(u\/w)R_{23}(v\/w)=R_{23}(v\/w)R_{13}(u\/w)R_{12}(u\/v)"
+				}
+			],
+			"provenance":{
+				"Source":"qRE\/files\/Rmatrices.tex",
+				"Normalization":"regular",
+				"MatrixMaterialization":"notExported"
+			}
+		}
 	},
 	"summary":{
 		"diagramCount":22,
@@ -94,10 +154,110 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--xnone--tau0-1-2-3--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[],
+					"boundary":[
+						0,
+						1,
+						2,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						0,
+						1,
+						2,
+						3
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"sNodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Transposed",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}^{t_1}(uv)K_2(v)=K_2(v)R_{21}^{t_1}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":"firstTensorFactor"
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -257,10 +417,109 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x0-2--tau0-1-2-3--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						0,
+						2
+					],
+					"boundary":[
+						1,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						1,
+						3
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						0,
+						2
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							0,
+							2
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							1,
+							3
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						1,
+						3
+					],
+					"sNodes":[
+						1,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Transposed",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}^{t_1}(uv)K_2(v)=K_2(v)R_{21}^{t_1}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":"firstTensorFactor"
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -484,10 +743,109 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x1-3--tau0-1-2-3--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						1,
+						3
+					],
+					"boundary":[
+						0,
+						2
+					],
+					"torusOrbitRepresentatives":[
+						0,
+						2
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						1,
+						3
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							1,
+							3
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0,
+							2
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						2
+					],
+					"sNodes":[
+						0,
+						2
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Transposed",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}^{t_1}(uv)K_2(v)=K_2(v)R_{21}^{t_1}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":"firstTensorFactor"
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -708,10 +1066,106 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--xnone--tau2-3-0-1--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[],
+					"boundary":[
+						0,
+						1,
+						2,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						0,
+						1
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0,
+							1
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"sNodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Transposed",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}^{t_1}(uv)K_2(v)=K_2(v)R_{21}^{t_1}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":"firstTensorFactor"
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -881,10 +1335,108 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--xnone--tau0-3-2-1--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[],
+					"boundary":[
+						0,
+						1,
+						2,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						0,
+						1,
+						2
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0,
+							1,
+							2
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"sNodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -2337,10 +2889,109 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x0--tau0-3-2-1--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						0
+					],
+					"boundary":[
+						1,
+						2,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						1,
+						2
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						0
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							0
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							1,
+							2
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						1,
+						2,
+						3
+					],
+					"sNodes":[
+						1,
+						2,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -3351,10 +4002,109 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x2--tau0-3-2-1--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						2
+					],
+					"boundary":[
+						0,
+						1,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						0,
+						1
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						2
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							2
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0,
+							1
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						1,
+						3
+					],
+					"sNodes":[
+						0,
+						1,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -4174,10 +4924,107 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x0-2--tau0-3-2-1--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						0,
+						2
+					],
+					"boundary":[
+						1,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						1
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						0,
+						2
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							0,
+							2
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							1
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						1,
+						3
+					],
+					"sNodes":[
+						1,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -4556,10 +5403,110 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x0-1-3--tau0-3-2-1--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						0,
+						1,
+						3
+					],
+					"boundary":[
+						2
+					],
+					"torusOrbitRepresentatives":[
+						2
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						0,
+						1,
+						0,
+						3,
+						0,
+						1
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							0,
+							1,
+							3
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							2
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						2
+					],
+					"sNodes":[
+						2
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -5130,10 +6077,110 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x1-2-3--tau0-3-2-1--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						1,
+						2,
+						3
+					],
+					"boundary":[
+						0
+					],
+					"torusOrbitRepresentatives":[
+						0
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						1,
+						2,
+						1,
+						3,
+						2,
+						1
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							1,
+							2,
+							3
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0
+					],
+					"sNodes":[
+						0
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -5316,10 +6363,106 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--xnone--tau1-0-3-2--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[],
+					"boundary":[
+						0,
+						1,
+						2,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						0,
+						2
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0,
+							2
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"sNodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -5762,10 +6905,108 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x0-1--tau1-0-3-2--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						0,
+						1
+					],
+					"boundary":[
+						2,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						2
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						0,
+						1,
+						0
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							0,
+							1
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							2
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						2,
+						3
+					],
+					"sNodes":[
+						2,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":false,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -5868,10 +7109,108 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x2-3--tau1-0-3-2--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						2,
+						3
+					],
+					"boundary":[
+						0,
+						1
+					],
+					"torusOrbitRepresentatives":[
+						0
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						2,
+						3,
+						2
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							2,
+							3
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						1
+					],
+					"sNodes":[
+						0,
+						1
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -6324,10 +7663,108 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--xnone--tau2-1-0-3--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[],
+					"boundary":[
+						0,
+						1,
+						2,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						0,
+						1,
+						3
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0,
+							1,
+							3
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"sNodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -7326,10 +8763,109 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x1--tau2-1-0-3--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						1
+					],
+					"boundary":[
+						0,
+						2,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						0,
+						3
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						1
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							1
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0,
+							3
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						2,
+						3
+					],
+					"sNodes":[
+						0,
+						2,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -7694,10 +9230,109 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x3--tau2-1-0-3--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						3
+					],
+					"boundary":[
+						0,
+						1,
+						2
+					],
+					"torusOrbitRepresentatives":[
+						0,
+						1
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						3
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							3
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0,
+							1
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						1,
+						2
+					],
+					"sNodes":[
+						0,
+						1,
+						2
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -8697,10 +10332,107 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x1-3--tau2-1-0-3--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						1,
+						3
+					],
+					"boundary":[
+						0,
+						2
+					],
+					"torusOrbitRepresentatives":[
+						0
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						1,
+						3
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							1,
+							3
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						2
+					],
+					"sNodes":[
+						0,
+						2
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -9054,10 +10786,110 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x0-1-2--tau2-1-0-3--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						0,
+						1,
+						2
+					],
+					"boundary":[
+						3
+					],
+					"torusOrbitRepresentatives":[
+						3
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						0,
+						1,
+						0,
+						2,
+						1,
+						0
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							0,
+							1,
+							2
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							3
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						3
+					],
+					"sNodes":[
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":false,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -9161,10 +10993,110 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x0-2-3--tau2-1-0-3--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						0,
+						2,
+						3
+					],
+					"boundary":[
+						1
+					],
+					"torusOrbitRepresentatives":[
+						1
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						0,
+						2,
+						3,
+						0,
+						2,
+						3
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							0,
+							2,
+							3
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							1
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						1
+					],
+					"sNodes":[
+						1
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -9719,10 +11651,106 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--xnone--tau3-2-1-0--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[],
+					"boundary":[
+						0,
+						1,
+						2,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						0,
+						1
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0,
+							1
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"sNodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -10632,10 +12660,108 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x0-3--tau3-2-1-0--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						0,
+						3
+					],
+					"boundary":[
+						1,
+						2
+					],
+					"torusOrbitRepresentatives":[
+						1
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						0,
+						3,
+						0
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							0,
+							3
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							1
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						1,
+						2
+					],
+					"sNodes":[
+						1,
+						2
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
@@ -11103,10 +13229,108 @@
 				"representativeFamily":null,
 				"representativePermutation":null
 			},
+			"qsp":{
+				"qspId":"a-1--n3--x1-2--tau3-2-1-0--qsp",
+				"status":"instantiatedPresentation",
+				"nameLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)",
+				"ambientAlgebraLatex":"U_q(\\mathfrak g)",
+				"indexSets":{
+					"nodes":[
+						0,
+						1,
+						2,
+						3
+					],
+					"levi":[
+						1,
+						2
+					],
+					"boundary":[
+						0,
+						3
+					],
+					"torusOrbitRepresentatives":[
+						0
+					]
+				},
+				"theta":{
+					"kind":"KolbQuantumInvolution",
+					"longestParabolicWord":[
+						1,
+						2,
+						1
+					],
+					"latex":"\\theta_q=T_{w_X}\\,\\tau\\,\\omega_q"
+				},
+				"generatorGroups":[
+					{
+						"kind":"positiveLevi",
+						"nodes":[
+							1,
+							2
+						],
+						"latex":"U_q(\\mathfrak n_X^+)=\\langle x_i\\mid i\\in X\\rangle"
+					},
+					{
+						"kind":"thetaFixedTorus",
+						"nodes":[
+							0
+						],
+						"latex":"U_q(\\mathfrak h)^{\\theta_q}=\\langle k_i^{\\pm1}\\ (i\\in X),\\ k_jk_{\\tau(j)}^{-1},\\ k_j^{-1}k_{\\tau(j)}\\ (j\\in I^*)\\rangle"
+					},
+					{
+						"kind":"boundary",
+						"nodes":[
+							0,
+							1,
+							2,
+							3
+						],
+						"latex":"b_i=\\begin{cases}y_i,&i\\in X,\\\\ y_i+c_i\\theta_q(y_i k_i)k_i^{-1}-s_i k_i^{-1},&i\\notin X.\\end{cases}"
+					}
+				],
+				"presentationLatex":"B_{\\mathbf c,\\mathbf s}(X,\\tau)=\\langle U_q(\\mathfrak n_X^+),\\ U_q(\\mathfrak h)^{\\theta_q},\\ b_i\\ (i\\in I)\\rangle",
+				"parameters":{
+					"cNodes":[
+						0,
+						3
+					],
+					"sNodes":[
+						0,
+						3
+					],
+					"latex":"\\mathbf c\\in(\\mathbb K^\\times)^{I\\setminus X},\\qquad \\mathbf s\\in\\mathbb K^{I\\setminus X}"
+				},
+				"relationStatus":"generatorPresentation",
+				"provenance":{
+					"Source":"qRE\/files\/algebras.tex",
+					"Equations":[
+						"theta_q",
+						"def:b_j",
+						"def:Bcs"
+					],
+					"Convention":"KolbDef5.6Variation2"
+				}
+			},
+			"reflectionEquation":{
+				"kind":"Standard",
+				"status":"instantiatedIdentity",
+				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
+				"rMatrixId":"a-1--n3--vector-r",
+				"verification":{
+					"status":"notComputed",
+					"method":null
+				},
+				"conventions":{
+					"spectralParameters":"multiplicative",
+					"legNumbering":"12\/21",
+					"partialTranspose":null
+				}
+			},
 			"capabilities":{
-				"qspAlgebra":false,
+				"qspAlgebra":true,
 				"kMatrix":true,
-				"rMatrix":false,
+				"rMatrix":true,
 				"properties":[],
 				"remoteComputation":false
 			},
