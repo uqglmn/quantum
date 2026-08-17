@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.4.0",
+	"schemaVersion":"1.5.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.16.0"
+		"version":"0.17.0"
 	},
 	"catalogue":{
 		"id":"a2n-1-2--n3",
@@ -16556,6 +16556,7 @@
 				"branches":[]
 			},
 			"generalFormula":null,
+			"regimeFormulas":[],
 			"properties":[],
 			"sourceAnchors":[],
 			"instanceIds":[
@@ -16601,6 +16602,7 @@
 				"branches":[]
 			},
 			"generalFormula":null,
+			"regimeFormulas":[],
 			"properties":[],
 			"sourceAnchors":[],
 			"instanceIds":[
@@ -18494,6 +18496,7 @@
 						"ResearchStatus":"NotebookChecked"
 					},
 					"properties":[],
+					"derivedRealizations":[],
 					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
@@ -27235,6 +27238,7 @@
 						"ResearchStatus":"NotebookChecked"
 					},
 					"properties":[],
+					"derivedRealizations":[],
 					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
@@ -28687,6 +28691,7 @@
 						"ResearchStatus":"NotebookChecked"
 					},
 					"properties":[],
+					"derivedRealizations":[],
 					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
@@ -30571,6 +30576,7 @@
 						]
 					},
 					"properties":[],
+					"derivedRealizations":[],
 					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
@@ -32480,6 +32486,7 @@
 						"ResearchStatus":"NotebookChecked"
 					},
 					"properties":[],
+					"derivedRealizations":[],
 					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
@@ -33538,6 +33545,7 @@
 						"ResearchStatus":"NotebookChecked"
 					},
 					"properties":[],
+					"derivedRealizations":[],
 					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
@@ -34274,6 +34282,7 @@
 							"ResearchStatus":"NotebookChecked"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":null
 					},
 					{
@@ -34755,6 +34764,7 @@
 							"ResearchStatus":"NotebookChecked"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":null
 					}
 				]
@@ -35501,6 +35511,7 @@
 						"ResearchStatus":"NotebookChecked"
 					},
 					"properties":[],
+					"derivedRealizations":[],
 					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
@@ -35865,6 +35876,7 @@
 							"ResearchStatus":"NotebookChecked"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":null
 					},
 					{
@@ -35968,6 +35980,7 @@
 							"ResearchStatus":"NotebookChecked"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":null
 					}
 				]
@@ -38221,6 +38234,7 @@
 						"ResearchStatus":"NotebookChecked"
 					},
 					"properties":[],
+					"derivedRealizations":[],
 					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
@@ -40154,6 +40168,7 @@
 							"ResearchStatus":"NotebookChecked"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":null
 					},
 					{
@@ -41702,6 +41717,7 @@
 							"ResearchStatus":"NotebookChecked"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":null
 					}
 				]
@@ -42060,6 +42076,7 @@
 							"ResearchStatus":"NotebookChecked"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":null
 					},
 					{
@@ -42164,6 +42181,7 @@
 							"ResearchStatus":"NotebookChecked"
 						},
 						"properties":[],
+						"derivedRealizations":[],
 						"reflectionEquationCertificate":null
 					}
 				]
@@ -43178,6 +43196,7 @@
 						]
 					},
 					"properties":[],
+					"derivedRealizations":[],
 					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
