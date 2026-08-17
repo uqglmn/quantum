@@ -440,8 +440,10 @@ export function App() {
           : availableFamilies[0]?.id ?? "";
       const familyRecords = value.diagrams.filter((record) => recordBelongsToFamily(record, nextFamily));
       const requestedDiagram = search.get("diagram");
+      const requestedCase = search.get("case");
       const preferredDiagram = nextFamily === "A.3"
-        ? familyRecords.find((record) => formulaBranchId(record, "A.3") === "interior")
+        ? familyRecords.find((record) => formulaBranchId(record, "A.3") === requestedCase)
+          ?? familyRecords.find((record) => formulaBranchId(record, "A.3") === "interior")
         : undefined;
       const nextDiagram = familyRecords.find((record) => record.id === requestedDiagram) ?? preferredDiagram ?? familyRecords[0] ?? value.diagrams[0];
       setCatalogue(value); setDiagram(null); setFamilyId(nextFamily); setDiagramId(nextDiagram?.id ?? ""); setError("");
@@ -480,6 +482,9 @@ export function App() {
     url.searchParams.set("rank", String(catalogue.catalogue.rank));
     url.searchParams.set("family", familyId);
     url.searchParams.set("diagram", selected.id);
+    const selectedCase = formulaBranchId(selected, familyId);
+    if (selectedCase) url.searchParams.set("case", selectedCase);
+    else url.searchParams.delete("case");
     window.history.replaceState(null, "", url);
   }, [catalogue, familyId, selected]);
 

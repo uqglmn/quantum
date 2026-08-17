@@ -59,11 +59,19 @@ the React application family-specific Lie theory. A.3 is the first complete
 vertical slice, partitioned into the interior, `l=0`, maximal-`r`, and their
 intersection cases.
 
+A formula branch is a theorem-level, arbitrary-rank object. Its diagram is a
+symbolic template with variable-length chains and its formula is stated in
+`n` (with vector dimension `N=n+1`). Exported ranks two through six are an
+example library attached to that branch; choosing an example must never change
+the scope of the general formula or make a sampled check appear to be a
+general-rank verification.
+
 The UI follows progressive disclosure at three levels:
 
 1. the left library selects affine type and family;
-2. the family page compares formula branches and concrete examples;
-3. ambient QSP, R-matrix, reflection-equation, provenance, and verification
+2. the family page compares arbitrary-rank formula branches;
+3. each branch exposes concrete finite-rank specializations under Examples;
+4. ambient QSP, R-matrix, reflection-equation, provenance, and verification
    detail remains available inside local tabs or an advanced disclosure.
 
 Download generators consume the same safe expression trees as the renderer.

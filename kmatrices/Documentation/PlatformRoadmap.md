@@ -94,11 +94,15 @@ control, but storage and computation must not conflate them.
 
 ### Formula-atlas interface — implemented A.3 vertical slice
 
-- four disjoint general/boundary strata encoded by the engine, including the
+- four disjoint arbitrary-rank general/boundary strata encoded by the engine,
+  including the
   intersection `l=0, r=floor(t/2)`;
-- accordion branch cards with a representative diagram and family formula;
+- accordion branch cards with a symbolic general-rank Satake template and
+  family formula;
 - local Overview, Properties, Examples, and Verification tabs;
-- bare/dressed realization switch and explicit concrete K-matrices;
+- ranks two through six presented only as concrete specializations in the
+  Examples tab, with a bare/dressed realization switch and explicit matrices;
+- sampled-check badges explicitly distinguished from general-rank statements;
 - compact shared disclosure for the QSP presentation, ambient R-matrix, and
   reflection equation;
 - reusable data and component boundaries ready to migrate the remaining
