@@ -54,7 +54,7 @@ const ambient = {
 describe("solution exports", () => {
   it("preserves engine, diagram, and solution provenance", () => {
     vi.setSystemTime(new Date("2026-08-17T12:00:00Z"));
-    const bundle = buildSolutionBundle(record, solution, { name: "QREKMatrices", version: "0.14.0" }, ambient);
+    const bundle = buildSolutionBundle(record, solution, { name: "QREKMatrices", version: "0.15.0" }, ambient);
     expect(bundle.diagram.id).toBe(record.id);
     expect(bundle.solution.provenance).toEqual({ Source: "fixture" });
     expect(bundle.diagram.qsp.qspId).toBe("a--n1--qsp");

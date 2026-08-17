@@ -86,7 +86,7 @@ $twistedTypes = {
   "A2n-1(2)", "A2n-1(2)T", "A2n(2)", "A2n(2)T", "Dn+1(2)"
 };
 $canonicalTypes = Join[$untwistedTypes, $twistedTypes];
-$qreKMatricesVersion = "0.14.0";
+$qreKMatricesVersion = "0.15.0";
 $webCatalogueSchemaVersion = "1.3.0";
 
 QREKMatricesVersion[] := $qreKMatricesVersion;
@@ -2804,6 +2804,35 @@ webMatrixLatex[matrix_] := Block[
   ToString[TeXForm[MatrixForm[Normal[matrix]]]]
 ];
 
+$webReflectionCertificateCache = <||>;
+
+webReflectionCertificationScopeQ[diagram_?SatakeDiagramQ, family_String] :=
+  Switch[diagram["AffineType"],
+    "A(1)", MemberQ[{"A.1", "A.2", "A.3", "A.4"}, family],
+    "B(1)", MemberQ[{"B.1", "B.2"}, family],
+    "C(1)", MemberQ[{"C.1", "C.2", "C.4"}, family],
+    "D(1)", MemberQ[{"D.1", "D.2", "D.4"}, family],
+    _, False
+  ];
+
+webCachedReflectionEquationCertificate[matrix_?MatrixQ,
+    diagram_?SatakeDiagramQ, quantumParameter_, equation_String] := Module[
+  {normal = Normal[matrix], key, cached, match, certificate},
+  key = Hash[{diagram["AffineType"], diagram["Rank"], equation,
+    HoldComplete[quantumParameter], normal}, "SHA256"];
+  cached = Lookup[$webReflectionCertificateCache, key, {}];
+  match = SelectFirst[cached, SameQ[#["matrix"], normal] &,
+    Missing["NotCached"]];
+  If[AssociationQ[match], Return[match["certificate"]]];
+  certificate = Quiet[ReflectionEquationCertificate[matrix, diagram, {u, v},
+    quantumParameter, "Equation" -> equation]];
+  If[AssociationQ[certificate],
+    AssociateTo[$webReflectionCertificateCache,
+      key -> Append[cached, <|"matrix" -> normal,
+        "certificate" -> certificate|>]]];
+  certificate
+];
+
 webSolutionData[result_Association, diagram_?SatakeDiagramQ,
     diagramID_String, quantumParameter_, ordinal_Integer : 1] /;
     KeyExistsQ[result, "KMatrix"] := Module[
@@ -2815,12 +2844,19 @@ webSolutionData[result_Association, diagram_?SatakeDiagramQ,
   basis = webBasisLabel /@ Lookup[result, "BasisLabels", Range[Length[matrix]]];
   params = webExpressionAssociation[Lookup[result, "Parameters", <||>]];
   provenance = webJSONSafe[Lookup[result, "Provenance", <||>]];
-  If[diagram["AffineType"] === "A(1)" && MemberQ[{"A.1", "A.2", "A.3", "A.4"}, family],
-    certificate = Quiet[ReflectionEquationCertificate[matrix, diagram, {u, v},
-      quantumParameter, "Equation" -> equation]];
+  If[webReflectionCertificationScopeQ[diagram, family],
+    certificate = webCachedReflectionEquationCertificate[matrix, diagram,
+      quantumParameter, equation];
     If[AssociationQ[certificate],
       certificate = Append[certificate,
-        "certificateId" -> solutionID <> "--reflection-certificate"],
+        "certificateId" -> solutionID <> "--reflection-certificate"];
+      If[certificate["status"] === "failed" && family === "D.2" &&
+          diagram["AffineType"] === "D(1)" && diagram["Rank"] === 4 &&
+          diagram["X"] === {0, 1} && diagram["Tau"] === {0, 1, 2, 4, 3},
+        certificate = ReplacePart[certificate, "provenance" ->
+          Append[certificate["provenance"],
+            "AuditFinding" ->
+              "The structural low-rank classifier proposes D.2(l=2,r=3), but this parameter pair is outside the D.2 admissibility ranges in the source table; the alternative D.1 solution verifies."]]],
       certificate = Null]
   ];
   <|
@@ -2877,11 +2913,14 @@ webReflectionVerification[computation_Association] := Module[
         AllTrue[certificates, #["status"] === "verified" &],
       <|"status" -> "verified", "method" -> "perSolutionExactSymbolic",
         "certificateIds" -> Lookup[certificates, "certificateId"]|>,
-    AnyTrue[certificates, #["status"] === "failed" &],
+    Length[certificates] === Length[solutions] &&
+        AllTrue[certificates, #["status"] === "failed" &],
       <|"status" -> "failed", "method" -> "perSolutionExactSymbolic",
         "certificateIds" -> Lookup[certificates, "certificateId"]|>,
     True,
-      <|"status" -> "conditional", "method" -> "partialSolutionCoverage",
+      <|"status" -> "conditional", "method" ->
+          If[Length[certificates] === Length[solutions],
+            "mixedSolutionOutcomes", "partialSolutionCoverage"],
         "certificateIds" -> Lookup[certificates, "certificateId"]|>
   ]
 ];
@@ -2909,6 +2948,7 @@ WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
   If[MissingQ[canonical], Return[$Failed]];
   If[Quiet[CartanMatrixOf[canonical, n]] === $Failed, Return[$Failed]];
   include = TrueQ[OptionValue["IncludeKMatrices"]];
+  If[include, $webReflectionCertificateCache = <||>];
   diagrams = GeneralizedSatakeDiagrams[canonical, n];
   If[diagrams === $Failed, Return[$Failed]];
   rows = If[include,

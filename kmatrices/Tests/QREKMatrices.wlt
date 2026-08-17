@@ -802,7 +802,7 @@ VerificationTest[
 
 VerificationTest[
   QREKMatricesVersion[],
-  "0.14.0",
+  "0.15.0",
   TestID -> "web-engine-version"
 ]
 
@@ -826,7 +826,7 @@ VerificationTest[
       data["summary", "diagramCount"], DuplicateFreeQ[ids],
       Union[Lookup[Lookup[records, "computation"], "status"]]}
   ],
-  {"1.3.0", "0.14.0", 7, True, {"NotRequested"}},
+  {"1.3.0", "0.15.0", 7, True, {"NotRequested"}},
   TestID -> "web-catalogue-stable-records"
 ]
 
@@ -880,6 +880,47 @@ VerificationTest[
   ],
   {9, {"verified"}, {"exactSymbolic"}, {0}, {"notComputed"}},
   TestID -> "web-catalogue-type-a-exact-reflection-certificates"
+]
+
+VerificationTest[
+  Module[{data, computations, solutions, certificates},
+    data = WebCatalogueData["B(1)", 2,
+      "IncludeKMatrices" -> True, "QuantumParameter" -> 2];
+    computations = Lookup[data["diagrams"], "computation"];
+    solutions = Flatten[
+      (Join[DeleteCases[{#["solution"]}, Null], #["candidates"]] &) /@
+        computations, 1];
+    certificates = Lookup[solutions, "reflectionEquationCertificate"];
+    {Length[solutions], Union[Lookup[certificates, "status"]],
+      Union[Lookup[certificates, "level"]],
+      Union[Lookup[certificates, "residualNonzeroCount"]]}
+  ],
+  {13, {"verified"}, {"exactSymbolic"}, {0}},
+  TestID -> "web-catalogue-untwisted-B-exact-reflection-certificates"
+]
+
+VerificationTest[
+  Module[{diagram, result, certificate},
+    diagram = CreateSatakeDiagram["D(1)", 4, {0, 1}, {0, 1, 2, 4, 3}];
+    result = KMatrix[<|"Rank" -> 4, "Family" -> "D.2",
+      "Parameters" -> <|"l" -> 2, "r" -> 3|>|>, u];
+    certificate = ReflectionEquationCertificate[result["KMatrix"], diagram,
+      {u, v}, q, "Equation" -> "Standard"];
+    {certificate["status"], certificate["residualNonzeroCount"] > 0}
+  ],
+  {"failed", True},
+  TestID -> "D2-low-rank-inadmissible-candidate-is-not-certified"
+]
+
+VerificationTest[
+  QREKMatrices`Private`webReflectionVerification[<|
+    "solution" -> <|"reflectionEquationCertificate" ->
+      <|"status" -> "verified", "certificateId" -> "verified-id"|>|>,
+    "candidates" -> {<|"reflectionEquationCertificate" ->
+      <|"status" -> "failed", "certificateId" -> "failed-id"|>|>}
+  |>][[{"status", "method"}]],
+  <|"status" -> "conditional", "method" -> "mixedSolutionOutcomes"|>,
+  TestID -> "mixed-candidate-certificates-have-conditional-aggregate"
 ]
 
 VerificationTest[

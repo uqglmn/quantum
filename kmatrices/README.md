@@ -392,10 +392,14 @@ convention with `R(1/(u v))` partially transposed in the first tensor factor.
 `ReflectionEquationCertificate` records the equation and tensor conventions,
 method, residual dimensions, assumptions, engine version, and provenance. A
 zero symbolic residual is certified as an identity of rational functions for
-generic parameters away from poles. The generated web catalogue currently
-attaches these exact certificates to every computable untwisted type-A
-solution in ranks 2--4; uncatalogued cases and other affine types remain
-explicitly `notComputed` until their conventions are reconciled and tested.
+generic parameters away from poles. The generated web catalogue attaches
+exact certificates to all computable untwisted A/B/C/D solutions in the
+exported ranks. Of 206 certified solutions, 205 verify. The remaining
+low-rank D.2 candidate is retained as a failed audit record because its
+structurally inferred parameters lie outside the source table's D.2
+admissibility ranges; the same diagram's D.1 alternative verifies. Twisted
+affine types remain explicitly `notComputed` until their conventions are
+reconciled and tested.
 
 ## Tests
 

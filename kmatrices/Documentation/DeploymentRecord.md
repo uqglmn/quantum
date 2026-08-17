@@ -102,3 +102,21 @@ schema-valid catalogues, four frontend tests, and a production build.
 Validation for this increment includes 65 Wolfram tests, schema validation of
 all 23 generated catalogues, four frontend unit tests, and the production
 build.
+
+## Untwisted classical reflection certification — 2026-08-17
+
+- frontend: `0.6.0`;
+- QREKMatrices engine: `0.15.0`;
+- extended exact symbolic reflection-equation certification from type A to all
+  exported untwisted B/C/D solutions;
+- added collision-checked symbolic-matrix caching during catalogue export;
+- generated 206 untwisted certificates: 205 verified and one failed;
+- identified the failure as the structurally proposed low-rank D.2 candidate
+  `(l,r)=(2,3)` for `X={0,1}`, `tau=(3 4)` in D4(1), which is outside the
+  source table's D.2 admissibility range; its D.1 alternative verifies;
+- changed mixed candidate outcomes from a misleading diagram-level failure to
+  an explicit conditional aggregate, while retaining both certificates.
+
+Validation for this increment includes 68 Wolfram tests, all 206 exact
+certificate computations, schema validation of 23 catalogues, four frontend
+tests, and the production build.

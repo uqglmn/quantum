@@ -54,12 +54,14 @@ control, but storage and computation must not conflate them.
   tensor basis for all nine supported affine presentations;
 - implemented: reflection-equation records bound by stable identifier to their
   ambient R-record, including partial-transpose and spectral conventions;
-- implemented first certification milestone: exact symbolic tensor-residual
-  certificates for every computable untwisted type-A solution in ranks 2--4;
+- implemented: exact symbolic tensor-residual certificates for all 206
+  computable untwisted A/B/C/D solutions in the exported ranks; 205 verify,
+  while one source-inadmissible low-rank D.2 candidate is retained as a failed
+  audit record beside its verified D.1 alternative;
 - remaining: expanded inhomogeneous QSP relations and family-specific
   admissibility constraints;
 - remaining: convention reconciliation and exact certificate coverage for the
-  B/C/D and twisted catalogues;
+  twisted catalogues;
 - implemented: explicit family selector for ambiguous diagrams, with the
   mathematical reason for the ambiguity retained in the interface;
 - implemented: self-hosted KaTeX rendering for QSP templates, reflection

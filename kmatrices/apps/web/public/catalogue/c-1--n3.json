@@ -2,7 +2,7 @@
 	"schemaVersion":"1.3.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.14.0"
+		"version":"0.15.0"
 	},
 	"catalogue":{
 		"id":"c-1--n3",
@@ -16346,9 +16346,11 @@
 				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
 				"rMatrixId":"c-1--n3--vector-r",
 				"verification":{
-					"status":"notComputed",
-					"method":null,
-					"certificateIds":[]
+					"status":"verified",
+					"method":"perSolutionExactSymbolic",
+					"certificateIds":[
+						"c-1--n3--xnone--tau0-1-2-3--c-1--1--reflection-certificate"
+					]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -16360,7 +16362,9 @@
 				"qspAlgebra":true,
 				"kMatrix":true,
 				"rMatrix":true,
-				"properties":[],
+				"properties":[
+					"reflectionEquationVerification"
+				],
 				"remoteComputation":false
 			},
 			"computation":{
@@ -18440,7 +18444,38 @@
 						"ResearchStatus":"qREFormula"
 					},
 					"properties":[],
-					"reflectionEquationCertificate":null
+					"reflectionEquationCertificate":{
+						"status":"verified",
+						"level":"exactSymbolic",
+						"method":"sparseTensorResidual",
+						"equation":"Standard",
+						"residualDimensions":[
+							36,
+							36
+						],
+						"residualNonzeroCount":0,
+						"assumptions":[
+							"identityOfRationalFunctions",
+							"genericParametersAwayFromPoles"
+						],
+						"conventions":{
+							"spectralParameters":"multiplicative",
+							"kVariable":"u",
+							"secondVariable":"v",
+							"quantumParameter":"q",
+							"tensorBasis":"lexicographic",
+							"partialTranspose":null
+						},
+						"engine":{
+							"name":"QREKMatrices",
+							"version":"0.15.0"
+						},
+						"provenance":{
+							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+							"EquationSource":"qRE\/files\/Kmatrices.tex"
+						},
+						"certificateId":"c-1--n3--xnone--tau0-1-2-3--c-1--1--reflection-certificate"
+					}
 				},
 				"candidates":[]
 			}
@@ -19047,9 +19082,11 @@
 				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
 				"rMatrixId":"c-1--n3--vector-r",
 				"verification":{
-					"status":"notComputed",
-					"method":null,
-					"certificateIds":[]
+					"status":"verified",
+					"method":"perSolutionExactSymbolic",
+					"certificateIds":[
+						"c-1--n3--x0-1--tau0-1-2-3--c-1--1--reflection-certificate"
+					]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -19061,7 +19098,9 @@
 				"qspAlgebra":true,
 				"kMatrix":true,
 				"rMatrix":true,
-				"properties":[],
+				"properties":[
+					"reflectionEquationVerification"
+				],
 				"remoteComputation":false
 			},
 			"computation":{
@@ -20309,7 +20348,38 @@
 						"ResearchStatus":"qREFormula"
 					},
 					"properties":[],
-					"reflectionEquationCertificate":null
+					"reflectionEquationCertificate":{
+						"status":"verified",
+						"level":"exactSymbolic",
+						"method":"sparseTensorResidual",
+						"equation":"Standard",
+						"residualDimensions":[
+							36,
+							36
+						],
+						"residualNonzeroCount":0,
+						"assumptions":[
+							"identityOfRationalFunctions",
+							"genericParametersAwayFromPoles"
+						],
+						"conventions":{
+							"spectralParameters":"multiplicative",
+							"kVariable":"u",
+							"secondVariable":"v",
+							"quantumParameter":"q",
+							"tensorBasis":"lexicographic",
+							"partialTranspose":null
+						},
+						"engine":{
+							"name":"QREKMatrices",
+							"version":"0.15.0"
+						},
+						"provenance":{
+							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+							"EquationSource":"qRE\/files\/Kmatrices.tex"
+						},
+						"certificateId":"c-1--n3--x0-1--tau0-1-2-3--c-1--1--reflection-certificate"
+					}
 				},
 				"candidates":[]
 			}
@@ -20498,9 +20568,11 @@
 				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
 				"rMatrixId":"c-1--n3--vector-r",
 				"verification":{
-					"status":"notComputed",
-					"method":null,
-					"certificateIds":[]
+					"status":"verified",
+					"method":"perSolutionExactSymbolic",
+					"certificateIds":[
+						"c-1--n3--x0-2--tau0-1-2-3--c-2--1--reflection-certificate"
+					]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -20512,7 +20584,9 @@
 				"qspAlgebra":true,
 				"kMatrix":true,
 				"rMatrix":true,
-				"properties":[],
+				"properties":[
+					"reflectionEquationVerification"
+				],
 				"remoteComputation":false
 			},
 			"computation":{
@@ -21896,7 +21970,38 @@
 						"ResearchStatus":"qREFormula"
 					},
 					"properties":[],
-					"reflectionEquationCertificate":null
+					"reflectionEquationCertificate":{
+						"status":"verified",
+						"level":"exactSymbolic",
+						"method":"sparseTensorResidual",
+						"equation":"Standard",
+						"residualDimensions":[
+							36,
+							36
+						],
+						"residualNonzeroCount":0,
+						"assumptions":[
+							"identityOfRationalFunctions",
+							"genericParametersAwayFromPoles"
+						],
+						"conventions":{
+							"spectralParameters":"multiplicative",
+							"kVariable":"u",
+							"secondVariable":"v",
+							"quantumParameter":"q",
+							"tensorBasis":"lexicographic",
+							"partialTranspose":null
+						},
+						"engine":{
+							"name":"QREKMatrices",
+							"version":"0.15.0"
+						},
+						"provenance":{
+							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+							"EquationSource":"qRE\/files\/Kmatrices.tex"
+						},
+						"certificateId":"c-1--n3--x0-2--tau0-1-2-3--c-2--1--reflection-certificate"
+					}
 				},
 				"candidates":[]
 			}
@@ -22085,9 +22190,11 @@
 				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
 				"rMatrixId":"c-1--n3--vector-r",
 				"verification":{
-					"status":"notComputed",
-					"method":null,
-					"certificateIds":[]
+					"status":"verified",
+					"method":"perSolutionExactSymbolic",
+					"certificateIds":[
+						"c-1--n3--x0-3--tau0-1-2-3--c-1--1--reflection-certificate"
+					]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -22099,7 +22206,9 @@
 				"qspAlgebra":true,
 				"kMatrix":true,
 				"rMatrix":true,
-				"properties":[],
+				"properties":[
+					"reflectionEquationVerification"
+				],
 				"remoteComputation":false
 			},
 			"computation":{
@@ -22997,7 +23106,38 @@
 						"ResearchStatus":"qREFormula"
 					},
 					"properties":[],
-					"reflectionEquationCertificate":null
+					"reflectionEquationCertificate":{
+						"status":"verified",
+						"level":"exactSymbolic",
+						"method":"sparseTensorResidual",
+						"equation":"Standard",
+						"residualDimensions":[
+							36,
+							36
+						],
+						"residualNonzeroCount":0,
+						"assumptions":[
+							"identityOfRationalFunctions",
+							"genericParametersAwayFromPoles"
+						],
+						"conventions":{
+							"spectralParameters":"multiplicative",
+							"kVariable":"u",
+							"secondVariable":"v",
+							"quantumParameter":"q",
+							"tensorBasis":"lexicographic",
+							"partialTranspose":null
+						},
+						"engine":{
+							"name":"QREKMatrices",
+							"version":"0.15.0"
+						},
+						"provenance":{
+							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+							"EquationSource":"qRE\/files\/Kmatrices.tex"
+						},
+						"certificateId":"c-1--n3--x0-3--tau0-1-2-3--c-1--1--reflection-certificate"
+					}
 				},
 				"candidates":[]
 			}
@@ -23186,9 +23326,11 @@
 				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
 				"rMatrixId":"c-1--n3--vector-r",
 				"verification":{
-					"status":"notComputed",
-					"method":null,
-					"certificateIds":[]
+					"status":"verified",
+					"method":"perSolutionExactSymbolic",
+					"certificateIds":[
+						"c-1--n3--x1-3--tau0-1-2-3--c-2--1--reflection-certificate"
+					]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -23200,7 +23342,9 @@
 				"qspAlgebra":true,
 				"kMatrix":true,
 				"rMatrix":true,
-				"properties":[],
+				"properties":[
+					"reflectionEquationVerification"
+				],
 				"remoteComputation":false
 			},
 			"computation":{
@@ -24342,7 +24486,38 @@
 						"ResearchStatus":"qREFormula"
 					},
 					"properties":[],
-					"reflectionEquationCertificate":null
+					"reflectionEquationCertificate":{
+						"status":"verified",
+						"level":"exactSymbolic",
+						"method":"sparseTensorResidual",
+						"equation":"Standard",
+						"residualDimensions":[
+							36,
+							36
+						],
+						"residualNonzeroCount":0,
+						"assumptions":[
+							"identityOfRationalFunctions",
+							"genericParametersAwayFromPoles"
+						],
+						"conventions":{
+							"spectralParameters":"multiplicative",
+							"kVariable":"u",
+							"secondVariable":"v",
+							"quantumParameter":"q",
+							"tensorBasis":"lexicographic",
+							"partialTranspose":null
+						},
+						"engine":{
+							"name":"QREKMatrices",
+							"version":"0.15.0"
+						},
+						"provenance":{
+							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+							"EquationSource":"qRE\/files\/Kmatrices.tex"
+						},
+						"certificateId":"c-1--n3--x1-3--tau0-1-2-3--c-2--1--reflection-certificate"
+					}
 				},
 				"candidates":[]
 			}
@@ -24533,9 +24708,11 @@
 				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
 				"rMatrixId":"c-1--n3--vector-r",
 				"verification":{
-					"status":"notComputed",
-					"method":null,
-					"certificateIds":[]
+					"status":"verified",
+					"method":"perSolutionExactSymbolic",
+					"certificateIds":[
+						"c-1--n3--x2-3--tau0-1-2-3--c-1--1--reflection-certificate"
+					]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -24547,7 +24724,9 @@
 				"qspAlgebra":true,
 				"kMatrix":true,
 				"rMatrix":true,
-				"properties":[],
+				"properties":[
+					"reflectionEquationVerification"
+				],
 				"remoteComputation":false
 			},
 			"computation":{
@@ -25361,7 +25540,38 @@
 						"ResearchStatus":"qREFormula"
 					},
 					"properties":[],
-					"reflectionEquationCertificate":null
+					"reflectionEquationCertificate":{
+						"status":"verified",
+						"level":"exactSymbolic",
+						"method":"sparseTensorResidual",
+						"equation":"Standard",
+						"residualDimensions":[
+							36,
+							36
+						],
+						"residualNonzeroCount":0,
+						"assumptions":[
+							"identityOfRationalFunctions",
+							"genericParametersAwayFromPoles"
+						],
+						"conventions":{
+							"spectralParameters":"multiplicative",
+							"kVariable":"u",
+							"secondVariable":"v",
+							"quantumParameter":"q",
+							"tensorBasis":"lexicographic",
+							"partialTranspose":null
+						},
+						"engine":{
+							"name":"QREKMatrices",
+							"version":"0.15.0"
+						},
+						"provenance":{
+							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+							"EquationSource":"qRE\/files\/Kmatrices.tex"
+						},
+						"certificateId":"c-1--n3--x2-3--tau0-1-2-3--c-1--1--reflection-certificate"
+					}
 				},
 				"candidates":[]
 			}
@@ -25556,9 +25766,12 @@
 				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
 				"rMatrixId":"c-1--n3--vector-r",
 				"verification":{
-					"status":"notComputed",
-					"method":null,
-					"certificateIds":[]
+					"status":"verified",
+					"method":"perSolutionExactSymbolic",
+					"certificateIds":[
+						"c-1--n3--x0-1-2--tau0-1-2-3--c-1--1--reflection-certificate",
+						"c-1--n3--x0-1-2--tau0-1-2-3--c-2--2--reflection-certificate"
+					]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -25570,7 +25783,9 @@
 				"qspAlgebra":true,
 				"kMatrix":true,
 				"rMatrix":true,
-				"properties":[],
+				"properties":[
+					"reflectionEquationVerification"
+				],
 				"remoteComputation":false
 			},
 			"computation":{
@@ -26344,7 +26559,38 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
-						"reflectionEquationCertificate":null
+						"reflectionEquationCertificate":{
+							"status":"verified",
+							"level":"exactSymbolic",
+							"method":"sparseTensorResidual",
+							"equation":"Standard",
+							"residualDimensions":[
+								36,
+								36
+							],
+							"residualNonzeroCount":0,
+							"assumptions":[
+								"identityOfRationalFunctions",
+								"genericParametersAwayFromPoles"
+							],
+							"conventions":{
+								"spectralParameters":"multiplicative",
+								"kVariable":"u",
+								"secondVariable":"v",
+								"quantumParameter":"q",
+								"tensorBasis":"lexicographic",
+								"partialTranspose":null
+							},
+							"engine":{
+								"name":"QREKMatrices",
+								"version":"0.15.0"
+							},
+							"provenance":{
+								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+								"EquationSource":"qRE\/files\/Kmatrices.tex"
+							},
+							"certificateId":"c-1--n3--x0-1-2--tau0-1-2-3--c-1--1--reflection-certificate"
+						}
 					},
 					{
 						"solutionId":"c-1--n3--x0-1-2--tau0-1-2-3--c-2--2",
@@ -27041,7 +27287,38 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
-						"reflectionEquationCertificate":null
+						"reflectionEquationCertificate":{
+							"status":"verified",
+							"level":"exactSymbolic",
+							"method":"sparseTensorResidual",
+							"equation":"Standard",
+							"residualDimensions":[
+								36,
+								36
+							],
+							"residualNonzeroCount":0,
+							"assumptions":[
+								"identityOfRationalFunctions",
+								"genericParametersAwayFromPoles"
+							],
+							"conventions":{
+								"spectralParameters":"multiplicative",
+								"kVariable":"u",
+								"secondVariable":"v",
+								"quantumParameter":"q",
+								"tensorBasis":"lexicographic",
+								"partialTranspose":null
+							},
+							"engine":{
+								"name":"QREKMatrices",
+								"version":"0.15.0"
+							},
+							"provenance":{
+								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+								"EquationSource":"qRE\/files\/Kmatrices.tex"
+							},
+							"certificateId":"c-1--n3--x0-1-2--tau0-1-2-3--c-2--2--reflection-certificate"
+						}
 					}
 				]
 			}
@@ -27232,9 +27509,12 @@
 				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
 				"rMatrixId":"c-1--n3--vector-r",
 				"verification":{
-					"status":"notComputed",
-					"method":null,
-					"certificateIds":[]
+					"status":"verified",
+					"method":"perSolutionExactSymbolic",
+					"certificateIds":[
+						"c-1--n3--x0-1-3--tau0-1-2-3--c-1--1--reflection-certificate",
+						"c-1--n3--x0-1-3--tau0-1-2-3--c-2--2--reflection-certificate"
+					]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -27246,7 +27526,9 @@
 				"qspAlgebra":true,
 				"kMatrix":true,
 				"rMatrix":true,
-				"properties":[],
+				"properties":[
+					"reflectionEquationVerification"
+				],
 				"remoteComputation":false
 			},
 			"computation":{
@@ -27750,7 +28032,38 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
-						"reflectionEquationCertificate":null
+						"reflectionEquationCertificate":{
+							"status":"verified",
+							"level":"exactSymbolic",
+							"method":"sparseTensorResidual",
+							"equation":"Standard",
+							"residualDimensions":[
+								36,
+								36
+							],
+							"residualNonzeroCount":0,
+							"assumptions":[
+								"identityOfRationalFunctions",
+								"genericParametersAwayFromPoles"
+							],
+							"conventions":{
+								"spectralParameters":"multiplicative",
+								"kVariable":"u",
+								"secondVariable":"v",
+								"quantumParameter":"q",
+								"tensorBasis":"lexicographic",
+								"partialTranspose":null
+							},
+							"engine":{
+								"name":"QREKMatrices",
+								"version":"0.15.0"
+							},
+							"provenance":{
+								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+								"EquationSource":"qRE\/files\/Kmatrices.tex"
+							},
+							"certificateId":"c-1--n3--x0-1-3--tau0-1-2-3--c-1--1--reflection-certificate"
+						}
 					},
 					{
 						"solutionId":"c-1--n3--x0-1-3--tau0-1-2-3--c-2--2",
@@ -28249,7 +28562,38 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
-						"reflectionEquationCertificate":null
+						"reflectionEquationCertificate":{
+							"status":"verified",
+							"level":"exactSymbolic",
+							"method":"sparseTensorResidual",
+							"equation":"Standard",
+							"residualDimensions":[
+								36,
+								36
+							],
+							"residualNonzeroCount":0,
+							"assumptions":[
+								"identityOfRationalFunctions",
+								"genericParametersAwayFromPoles"
+							],
+							"conventions":{
+								"spectralParameters":"multiplicative",
+								"kVariable":"u",
+								"secondVariable":"v",
+								"quantumParameter":"q",
+								"tensorBasis":"lexicographic",
+								"partialTranspose":null
+							},
+							"engine":{
+								"name":"QREKMatrices",
+								"version":"0.15.0"
+							},
+							"provenance":{
+								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+								"EquationSource":"qRE\/files\/Kmatrices.tex"
+							},
+							"certificateId":"c-1--n3--x0-1-3--tau0-1-2-3--c-2--2--reflection-certificate"
+						}
 					}
 				]
 			}
@@ -28440,9 +28784,12 @@
 				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
 				"rMatrixId":"c-1--n3--vector-r",
 				"verification":{
-					"status":"notComputed",
-					"method":null,
-					"certificateIds":[]
+					"status":"verified",
+					"method":"perSolutionExactSymbolic",
+					"certificateIds":[
+						"c-1--n3--x0-2-3--tau0-1-2-3--c-1--1--reflection-certificate",
+						"c-1--n3--x0-2-3--tau0-1-2-3--c-2--2--reflection-certificate"
+					]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -28454,7 +28801,9 @@
 				"qspAlgebra":true,
 				"kMatrix":true,
 				"rMatrix":true,
-				"properties":[],
+				"properties":[
+					"reflectionEquationVerification"
+				],
 				"remoteComputation":false
 			},
 			"computation":{
@@ -28730,7 +29079,38 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
-						"reflectionEquationCertificate":null
+						"reflectionEquationCertificate":{
+							"status":"verified",
+							"level":"exactSymbolic",
+							"method":"sparseTensorResidual",
+							"equation":"Standard",
+							"residualDimensions":[
+								36,
+								36
+							],
+							"residualNonzeroCount":0,
+							"assumptions":[
+								"identityOfRationalFunctions",
+								"genericParametersAwayFromPoles"
+							],
+							"conventions":{
+								"spectralParameters":"multiplicative",
+								"kVariable":"u",
+								"secondVariable":"v",
+								"quantumParameter":"q",
+								"tensorBasis":"lexicographic",
+								"partialTranspose":null
+							},
+							"engine":{
+								"name":"QREKMatrices",
+								"version":"0.15.0"
+							},
+							"provenance":{
+								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+								"EquationSource":"qRE\/files\/Kmatrices.tex"
+							},
+							"certificateId":"c-1--n3--x0-2-3--tau0-1-2-3--c-1--1--reflection-certificate"
+						}
 					},
 					{
 						"solutionId":"c-1--n3--x0-2-3--tau0-1-2-3--c-2--2",
@@ -29001,7 +29381,38 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
-						"reflectionEquationCertificate":null
+						"reflectionEquationCertificate":{
+							"status":"verified",
+							"level":"exactSymbolic",
+							"method":"sparseTensorResidual",
+							"equation":"Standard",
+							"residualDimensions":[
+								36,
+								36
+							],
+							"residualNonzeroCount":0,
+							"assumptions":[
+								"identityOfRationalFunctions",
+								"genericParametersAwayFromPoles"
+							],
+							"conventions":{
+								"spectralParameters":"multiplicative",
+								"kVariable":"u",
+								"secondVariable":"v",
+								"quantumParameter":"q",
+								"tensorBasis":"lexicographic",
+								"partialTranspose":null
+							},
+							"engine":{
+								"name":"QREKMatrices",
+								"version":"0.15.0"
+							},
+							"provenance":{
+								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+								"EquationSource":"qRE\/files\/Kmatrices.tex"
+							},
+							"certificateId":"c-1--n3--x0-2-3--tau0-1-2-3--c-2--2--reflection-certificate"
+						}
 					}
 				]
 			}
@@ -29196,9 +29607,12 @@
 				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
 				"rMatrixId":"c-1--n3--vector-r",
 				"verification":{
-					"status":"notComputed",
-					"method":null,
-					"certificateIds":[]
+					"status":"verified",
+					"method":"perSolutionExactSymbolic",
+					"certificateIds":[
+						"c-1--n3--x1-2-3--tau0-1-2-3--c-1--1--reflection-certificate",
+						"c-1--n3--x1-2-3--tau0-1-2-3--c-2--2--reflection-certificate"
+					]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -29210,7 +29624,9 @@
 				"qspAlgebra":true,
 				"kMatrix":true,
 				"rMatrix":true,
-				"properties":[],
+				"properties":[
+					"reflectionEquationVerification"
+				],
 				"remoteComputation":false
 			},
 			"computation":{
@@ -29318,7 +29734,38 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
-						"reflectionEquationCertificate":null
+						"reflectionEquationCertificate":{
+							"status":"verified",
+							"level":"exactSymbolic",
+							"method":"sparseTensorResidual",
+							"equation":"Standard",
+							"residualDimensions":[
+								36,
+								36
+							],
+							"residualNonzeroCount":0,
+							"assumptions":[
+								"identityOfRationalFunctions",
+								"genericParametersAwayFromPoles"
+							],
+							"conventions":{
+								"spectralParameters":"multiplicative",
+								"kVariable":"u",
+								"secondVariable":"v",
+								"quantumParameter":"q",
+								"tensorBasis":"lexicographic",
+								"partialTranspose":null
+							},
+							"engine":{
+								"name":"QREKMatrices",
+								"version":"0.15.0"
+							},
+							"provenance":{
+								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+								"EquationSource":"qRE\/files\/Kmatrices.tex"
+							},
+							"certificateId":"c-1--n3--x1-2-3--tau0-1-2-3--c-1--1--reflection-certificate"
+						}
 					},
 					{
 						"solutionId":"c-1--n3--x1-2-3--tau0-1-2-3--c-2--2",
@@ -29421,7 +29868,38 @@
 							"ResearchStatus":"qREFormula"
 						},
 						"properties":[],
-						"reflectionEquationCertificate":null
+						"reflectionEquationCertificate":{
+							"status":"verified",
+							"level":"exactSymbolic",
+							"method":"sparseTensorResidual",
+							"equation":"Standard",
+							"residualDimensions":[
+								36,
+								36
+							],
+							"residualNonzeroCount":0,
+							"assumptions":[
+								"identityOfRationalFunctions",
+								"genericParametersAwayFromPoles"
+							],
+							"conventions":{
+								"spectralParameters":"multiplicative",
+								"kVariable":"u",
+								"secondVariable":"v",
+								"quantumParameter":"q",
+								"tensorBasis":"lexicographic",
+								"partialTranspose":null
+							},
+							"engine":{
+								"name":"QREKMatrices",
+								"version":"0.15.0"
+							},
+							"provenance":{
+								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+								"EquationSource":"qRE\/files\/Kmatrices.tex"
+							},
+							"certificateId":"c-1--n3--x1-2-3--tau0-1-2-3--c-2--2--reflection-certificate"
+						}
 					}
 				]
 			}
@@ -29600,9 +30078,11 @@
 				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
 				"rMatrixId":"c-1--n3--vector-r",
 				"verification":{
-					"status":"notComputed",
-					"method":null,
-					"certificateIds":[]
+					"status":"verified",
+					"method":"perSolutionExactSymbolic",
+					"certificateIds":[
+						"c-1--n3--xnone--tau3-2-1-0--c-4--1--reflection-certificate"
+					]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -29614,7 +30094,9 @@
 				"qspAlgebra":true,
 				"kMatrix":true,
 				"rMatrix":true,
-				"properties":[],
+				"properties":[
+					"reflectionEquationVerification"
+				],
 				"remoteComputation":false
 			},
 			"computation":{
@@ -31409,7 +31891,38 @@
 						"ResearchStatus":"qREFormula"
 					},
 					"properties":[],
-					"reflectionEquationCertificate":null
+					"reflectionEquationCertificate":{
+						"status":"verified",
+						"level":"exactSymbolic",
+						"method":"sparseTensorResidual",
+						"equation":"Standard",
+						"residualDimensions":[
+							36,
+							36
+						],
+						"residualNonzeroCount":0,
+						"assumptions":[
+							"identityOfRationalFunctions",
+							"genericParametersAwayFromPoles"
+						],
+						"conventions":{
+							"spectralParameters":"multiplicative",
+							"kVariable":"u",
+							"secondVariable":"v",
+							"quantumParameter":"q",
+							"tensorBasis":"lexicographic",
+							"partialTranspose":null
+						},
+						"engine":{
+							"name":"QREKMatrices",
+							"version":"0.15.0"
+						},
+						"provenance":{
+							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+							"EquationSource":"qRE\/files\/Kmatrices.tex"
+						},
+						"certificateId":"c-1--n3--xnone--tau3-2-1-0--c-4--1--reflection-certificate"
+					}
 				},
 				"candidates":[]
 			}
@@ -31593,9 +32106,11 @@
 				"latex":"R_{21}(u\/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u\/v)",
 				"rMatrixId":"c-1--n3--vector-r",
 				"verification":{
-					"status":"notComputed",
-					"method":null,
-					"certificateIds":[]
+					"status":"verified",
+					"method":"perSolutionExactSymbolic",
+					"certificateIds":[
+						"c-1--n3--x1-2--tau3-2-1-0--c-4--1--reflection-certificate"
+					]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -31607,7 +32122,9 @@
 				"qspAlgebra":true,
 				"kMatrix":true,
 				"rMatrix":true,
-				"properties":[],
+				"properties":[
+					"reflectionEquationVerification"
+				],
 				"remoteComputation":false
 			},
 			"computation":{
@@ -32040,7 +32557,38 @@
 						"ResearchStatus":"qREFormula"
 					},
 					"properties":[],
-					"reflectionEquationCertificate":null
+					"reflectionEquationCertificate":{
+						"status":"verified",
+						"level":"exactSymbolic",
+						"method":"sparseTensorResidual",
+						"equation":"Standard",
+						"residualDimensions":[
+							36,
+							36
+						],
+						"residualNonzeroCount":0,
+						"assumptions":[
+							"identityOfRationalFunctions",
+							"genericParametersAwayFromPoles"
+						],
+						"conventions":{
+							"spectralParameters":"multiplicative",
+							"kVariable":"u",
+							"secondVariable":"v",
+							"quantumParameter":"q",
+							"tensorBasis":"lexicographic",
+							"partialTranspose":null
+						},
+						"engine":{
+							"name":"QREKMatrices",
+							"version":"0.15.0"
+						},
+						"provenance":{
+							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
+							"EquationSource":"qRE\/files\/Kmatrices.tex"
+						},
+						"certificateId":"c-1--n3--x1-2--tau3-2-1-0--c-4--1--reflection-certificate"
+					}
 				},
 				"candidates":[]
 			}

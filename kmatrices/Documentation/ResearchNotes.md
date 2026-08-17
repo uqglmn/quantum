@@ -143,6 +143,13 @@ future evaluation in other finite-dimensional modules.
   compatible diagram automorphisms by a spectral representation intertwiner
   derived from the Chevalley generators. The transported formula
   `G(eta/u)^(-1) K(u) G(eta u)` is independently checked by boundary inference.
+- The ambient R-matrix and reflection-equation layer now gives exact symbolic
+  tensor certificates for every exported untwisted A/B/C/D K-matrix. All but
+  one of the 206 candidates verify. The exception is the low-rank D.2 proposal
+  on `X={0,1}`, `tau=(3 4)` in D4(1): its `(l,r)=(2,3)` lies outside the
+  source table's D.2 admissibility ranges and has a nonzero exact residual,
+  while the diagram's D.1 alternative verifies. The platform preserves this
+  as a conditional mixed-candidate audit result.
 
 ## Next extraction stages
 
@@ -157,8 +164,8 @@ future evaluation in other finite-dimensional modules.
    low-rank exceptional formulas, retaining explicit provenance and
    `conjectural for general rank` metadata where the manuscripts only establish
    low-rank computational evidence.
-4. Add R-matrix constructors and direct verification of the ordinary,
-   transposed, unitarity, regularity, and crossing relations.
+4. Reconcile the twisted R/K normalization and crossing conventions family by
+   family, then extend exact reflection certificates to the twisted catalogue.
 5. Extend beyond the current classical vector representations: exceptional
    affine cases, Kirillov--Reshetikhin modules, fusion, and eventually an
    interface to universal K-matrices.

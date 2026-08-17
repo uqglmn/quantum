@@ -287,7 +287,7 @@ function Inspector({ record, engine, ambient }: {
           <span>Exact per-solution certificates</span>
           {record.reflectionEquation.verification.certificateIds.map((id) => <code key={id}>{id}</code>)}
         </div>}
-        <p className="fine-print">The identity is bound to the displayed ambient R-record and this diagram’s equation type. A verified label means the exported sparse K-matrix has zero exact symbolic tensor residual as a rational-function identity, for generic parameters away from poles. Certification currently covers the computable untwisted type-A catalogue; other families remain explicitly not computed.</p>
+        <p className="fine-print">The identity is bound to the displayed ambient R-record and this diagram’s equation type. A verified label means the exported sparse K-matrix has zero exact symbolic tensor residual as a rational-function identity, for generic parameters away from poles. Certification covers the computable untwisted A/B/C/D catalogue. Mixed candidate outcomes are labelled conditional; twisted families remain explicitly not computed.</p>
       </>}
       {tab === "properties" && <>
         <div className="panel-heading"><div><div className="eyebrow">Symbolic analysis</div><h3>Properties and identities</h3></div><Availability available={record.capabilities.properties.length > 0}>{record.capabilities.properties.length} computed</Availability></div>
