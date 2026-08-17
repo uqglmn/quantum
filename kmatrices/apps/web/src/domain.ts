@@ -42,6 +42,28 @@ export interface Solution {
   latex: string;
   provenance: Record<string, unknown>;
   properties?: Array<Record<string, unknown>>;
+  reflectionEquationCertificate: ReflectionEquationCertificate | null;
+}
+
+export interface ReflectionEquationCertificate {
+  certificateId: string;
+  status: "verified" | "failed" | "inconclusive";
+  level: "exactSymbolic" | "exactSample" | "numericSample";
+  method: string;
+  equation: "Standard" | "Transposed";
+  residualDimensions: [number, number];
+  residualNonzeroCount: number;
+  assumptions: string[];
+  conventions: {
+    spectralParameters: "multiplicative";
+    kVariable: string;
+    secondVariable: string;
+    quantumParameter: string;
+    tensorBasis: "lexicographic";
+    partialTranspose: string | null;
+  };
+  engine: { name: "QREKMatrices"; version: string };
+  provenance: Record<string, unknown>;
 }
 
 export interface QSPPresentation {
@@ -108,6 +130,7 @@ export interface ReflectionEquationRecord {
   verification: {
     status: "notComputed" | "verified" | "failed" | "conditional";
     method: string | null;
+    certificateIds: string[];
   };
   conventions: {
     spectralParameters: "multiplicative";

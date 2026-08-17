@@ -802,7 +802,7 @@ VerificationTest[
 
 VerificationTest[
   QREKMatricesVersion[],
-  "0.13.0",
+  "0.14.0",
   TestID -> "web-engine-version"
 ]
 
@@ -826,7 +826,7 @@ VerificationTest[
       data["summary", "diagramCount"], DuplicateFreeQ[ids],
       Union[Lookup[Lookup[records, "computation"], "status"]]}
   ],
-  {"1.2.0", "0.13.0", 7, True, {"NotRequested"}},
+  {"1.3.0", "0.14.0", 7, True, {"NotRequested"}},
   TestID -> "web-catalogue-stable-records"
 ]
 
@@ -842,7 +842,7 @@ VerificationTest[
       imported["schemaVersion"],
       FileExistsQ[FileNameJoin[{directory, imported["files"][[1, "path"]]}]]}
   ],
-  {7, "1.2.0", True},
+  {7, "1.3.0", True},
   TestID -> "web-catalogue-export-manifest"
 ]
 
@@ -859,6 +859,27 @@ VerificationTest[
   ],
   {"bare", {}, "sparseMatrix", True, True},
   TestID -> "web-catalogue-includes-safe-k-matrices"
+]
+
+VerificationTest[
+  Module[{data, computations, solutions, certificates, unavailable},
+    data = WebCatalogueData["A(1)", 2,
+      "IncludeKMatrices" -> True, "QuantumParameter" -> q];
+    computations = Lookup[data["diagrams"], "computation"];
+    solutions = Flatten[
+      (Join[DeleteCases[{#["solution"]}, Null], #["candidates"]] &) /@
+        computations, 1];
+    certificates = Lookup[solutions, "reflectionEquationCertificate"];
+    unavailable = Select[data["diagrams"], #["computation", "solution"] === Null &&
+      #["computation", "candidates"] === {} &];
+    {Length[solutions], Union[Lookup[certificates, "status"]],
+      Union[Lookup[certificates, "level"]],
+      Union[Lookup[certificates, "residualNonzeroCount"]],
+      Union[Lookup[Lookup[unavailable, "reflectionEquation"],
+        "verification"][[All, "status"]]]}
+  ],
+  {9, {"verified"}, {"exactSymbolic"}, {0}, {"notComputed"}},
+  TestID -> "web-catalogue-type-a-exact-reflection-certificates"
 ]
 
 VerificationTest[

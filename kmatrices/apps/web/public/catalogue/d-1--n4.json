@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.2.0",
+	"schemaVersion":"1.3.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.13.0"
+		"version":"0.14.0"
 	},
 	"catalogue":{
 		"id":"d-1--n4",
@@ -29574,7 +29574,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -31537,7 +31538,8 @@
 						"Formula":"D.1",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -31752,7 +31754,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -31984,7 +31987,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -32215,7 +32219,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -32446,7 +32451,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -35217,7 +35223,8 @@
 						"Formula":"D.2",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -35433,7 +35440,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -38206,7 +38214,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--x1-4--tau0-1-2-3-4--d-1--2",
@@ -40154,7 +40163,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -40369,7 +40379,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -40599,7 +40610,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -42498,7 +42510,8 @@
 						"Formula":"D.2",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -42712,7 +42725,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -43881,7 +43895,8 @@
 						"Formula":"D.1",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -44095,7 +44110,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -44966,7 +44982,8 @@
 						"Formula":"D.1",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -45180,7 +45197,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -46635,7 +46653,8 @@
 						"Formula":"D.2",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -46857,7 +46876,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -47790,7 +47810,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--x0-1-2-3--tau0-1-2-3-4--d-2--2",
@@ -48802,7 +48823,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -49024,7 +49046,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -49759,7 +49782,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--x0-1-2-4--tau0-1-2-3-4--d-2--2",
@@ -50751,7 +50775,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -50965,7 +50990,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -51434,7 +51460,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--x0-1-3-4--tau0-1-2-3-4--d-2--2",
@@ -51886,7 +51913,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -52108,7 +52136,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -52447,7 +52476,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--x0-2-3-4--tau0-1-2-3-4--d-2--2",
@@ -52929,7 +52959,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -53151,7 +53182,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -53292,7 +53324,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--x1-2-3-4--tau0-1-2-3-4--d-2--2",
@@ -53416,7 +53449,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -53627,7 +53661,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -55308,7 +55343,8 @@
 						"Formula":"D.1",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -55522,7 +55558,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -56693,7 +56730,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--x0-1--tau0-1-2-4-3--d-2--2",
@@ -58111,7 +58149,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -58328,7 +58367,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -59031,7 +59071,8 @@
 						"Formula":"D.1",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -59233,7 +59274,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -59453,7 +59495,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -59677,7 +59720,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -59895,7 +59939,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -60115,7 +60160,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -60339,7 +60385,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -60566,7 +60613,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -62511,7 +62559,8 @@
 						"Formula":"D.1",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -62725,7 +62774,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -64182,7 +64232,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--x3-4--tau1-0-2-3-4--d-1--2",
@@ -65434,7 +65485,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -65651,7 +65703,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -66960,7 +67013,8 @@
 						"Formula":"D.1",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -67170,7 +67224,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -69943,7 +69998,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--xnone--tau1-0-2-4-3--d-1--2",
@@ -71891,7 +71947,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -72103,7 +72160,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -74078,7 +74136,8 @@
 						"Formula":"D.2",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -74294,7 +74353,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -75029,7 +75089,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--x0-1-2--tau1-0-2-4-3--d-2--2",
@@ -76021,7 +76082,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -76237,7 +76299,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -76378,7 +76441,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--x2-3-4--tau1-0-2-4-3--d-2--2",
@@ -76502,7 +76566,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -76704,7 +76769,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -76924,7 +76990,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -77148,7 +77215,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -77371,7 +77439,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -80253,7 +80322,8 @@
 							"Branch":"Generic",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -80462,7 +80532,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -82492,7 +82563,8 @@
 							"Branch":"SpecialTwoParameter",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -82709,7 +82781,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -83444,7 +83517,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--x0-2-3--tau3-4-2-0-1--d-2--2",
@@ -84436,7 +84510,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -84649,7 +84724,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -85227,7 +85303,8 @@
 							"Branch":"Generic",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -85429,7 +85506,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -85649,7 +85727,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -85873,7 +85952,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -86094,7 +86174,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -88974,7 +89055,8 @@
 						"Branch":"Generic",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -89182,7 +89264,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -91210,7 +91293,8 @@
 						"Branch":"SpecialTwoParameter",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -91427,7 +91511,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -92162,7 +92247,8 @@
 							"Formula":"D.1",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"d-1--n4--x0-2-4--tau4-3-2-1-0--d-2--2",
@@ -93154,7 +93240,8 @@
 							"Formula":"D.2",
 							"ResearchStatus":"qREFormula"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -93365,7 +93452,8 @@
 				"rMatrixId":"d-1--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -93941,7 +94029,8 @@
 						"Branch":"Generic",
 						"ResearchStatus":"qREFormula"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}

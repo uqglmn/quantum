@@ -5,7 +5,7 @@
   "type": "object",
   "required": ["schemaVersion", "engine", "catalogue", "ambient", "summary", "diagrams"],
   "properties": {
-    "schemaVersion": { "const": "1.2.0" },
+    "schemaVersion": { "const": "1.3.0" },
     "engine": {
       "type": "object",
       "required": ["name", "version"],
@@ -170,10 +170,15 @@
         "rMatrixId": { "type": "string" },
         "verification": {
           "type": "object",
-          "required": ["status", "method"],
+          "required": ["status", "method", "certificateIds"],
           "properties": {
             "status": { "enum": ["notComputed", "verified", "failed", "conditional"] },
-            "method": { "type": ["string", "null"] }
+            "method": { "type": ["string", "null"] },
+            "certificateIds": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "uniqueItems": true
+            }
           },
           "additionalProperties": false
         },
@@ -290,7 +295,7 @@
     },
     "solution": {
       "type": "object",
-      "required": ["solutionId", "family", "equation", "realization", "transformations", "basisLabels", "parameters", "matrix", "latex", "provenance"],
+      "required": ["solutionId", "family", "equation", "realization", "transformations", "basisLabels", "parameters", "matrix", "latex", "provenance", "reflectionEquationCertificate"],
       "properties": {
         "solutionId": { "type": "string" },
         "family": { "type": "string" },
@@ -313,7 +318,56 @@
         "matrix": { "$ref": "expression.schema.json#/$defs/sparseMatrix" },
         "latex": { "type": "string" },
         "provenance": { "$ref": "#/$defs/provenance" },
+        "reflectionEquationCertificate": {
+          "oneOf": [
+            { "$ref": "#/$defs/reflectionEquationCertificate" },
+            { "type": "null" }
+          ]
+        },
         "properties": { "type": "array", "items": { "$ref": "#/$defs/property" } }
+      },
+      "additionalProperties": false
+    },
+    "reflectionEquationCertificate": {
+      "type": "object",
+      "required": ["certificateId", "status", "level", "method", "equation", "residualDimensions", "residualNonzeroCount", "assumptions", "conventions", "engine", "provenance"],
+      "properties": {
+        "certificateId": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["verified", "failed", "inconclusive"] },
+        "level": { "enum": ["exactSymbolic", "exactSample", "numericSample"] },
+        "method": { "type": "string", "minLength": 1 },
+        "equation": { "enum": ["Standard", "Transposed"] },
+        "residualDimensions": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 1 },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "residualNonzeroCount": { "type": "integer", "minimum": 0 },
+        "assumptions": { "type": "array", "items": { "type": "string" } },
+        "conventions": {
+          "type": "object",
+          "required": ["spectralParameters", "kVariable", "secondVariable", "quantumParameter", "tensorBasis", "partialTranspose"],
+          "properties": {
+            "spectralParameters": { "const": "multiplicative" },
+            "kVariable": { "type": "string" },
+            "secondVariable": { "type": "string" },
+            "quantumParameter": { "type": "string" },
+            "tensorBasis": { "const": "lexicographic" },
+            "partialTranspose": { "type": ["string", "null"] }
+          },
+          "additionalProperties": false
+        },
+        "engine": {
+          "type": "object",
+          "required": ["name", "version"],
+          "properties": {
+            "name": { "const": "QREKMatrices" },
+            "version": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "provenance": { "$ref": "#/$defs/provenance" }
       },
       "additionalProperties": false
     },

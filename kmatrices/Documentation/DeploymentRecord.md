@@ -84,3 +84,21 @@ scripted browser walkthrough of the quadratic twisted R-matrix panel.
 Validation includes 64 Wolfram tests, exact regularity for all nine series,
 exact rational samples of unitarity and Yang--Baxter in all nine series, 23
 schema-valid catalogues, four frontend tests, and a production build.
+
+## Exact type-A reflection certificates — 2026-08-17
+
+- frontend: `0.5.0`;
+- QREKMatrices engine: `0.14.0`;
+- catalogue schema: `1.3.0`;
+- fixed spectral substitution in sparse K-matrices before forming `K_2(v)`;
+- added reusable `ReflectionEquationCertificate` records with exact residual
+  diagnostics, assumptions, conventions, engine version, and provenance;
+- certified all 55 currently computable untwisted type-A solutions in ranks
+  2--4; eight diagrams lacking sufficient classification parameters remain
+  correctly labelled `notComputed`;
+- added per-solution certificate inspection and aggregate verification status
+  to the explorer.
+
+Validation for this increment includes 65 Wolfram tests, schema validation of
+all 23 generated catalogues, four frontend unit tests, and the production
+build.

@@ -22,7 +22,7 @@ function MatrixView({ record, solution, engine, ambient }: {
   engine: Catalogue["engine"];
   ambient: Catalogue["ambient"];
 }) {
-  const [view, setView] = useState<"rendered" | "sparse" | "latex" | "provenance">("rendered");
+  const [view, setView] = useState<"rendered" | "sparse" | "latex" | "certificate" | "provenance">("rendered");
   const [copied, setCopied] = useState(false);
   useEffect(() => { setView("rendered"); setCopied(false); }, [solution.solutionId]);
 
@@ -47,6 +47,7 @@ function MatrixView({ record, solution, engine, ambient }: {
         <button className={view === "rendered" ? "is-active" : ""} onClick={() => setView("rendered")}>Matrix</button>
         <button className={view === "sparse" ? "is-active" : ""} onClick={() => setView("sparse")}>Sparse entries</button>
         <button className={view === "latex" ? "is-active" : ""} onClick={() => setView("latex")}>LaTeX</button>
+        <button className={view === "certificate" ? "is-active" : ""} onClick={() => setView("certificate")}>Certificate</button>
         <button className={view === "provenance" ? "is-active" : ""} onClick={() => setView("provenance")}>Provenance</button>
       </div>
       <div className="export-actions">
@@ -68,6 +69,26 @@ function MatrixView({ record, solution, engine, ambient }: {
       <button className="copy-button" onClick={copyLatex}>{copied ? "Copied" : "Copy LaTeX"}</button>
       <pre className="latex-source">{solution.latex}</pre>
     </div>}
+    {view === "certificate" && (solution.reflectionEquationCertificate ? <div className="certificate-pane">
+      <div className="certificate-summary">
+        <Badge tone={solution.reflectionEquationCertificate.status === "verified" ? "good" : "warn"}>{solution.reflectionEquationCertificate.status}</Badge>
+        <strong>{solution.reflectionEquationCertificate.level}</strong>
+        <span>residual {solution.reflectionEquationCertificate.residualNonzeroCount} / {solution.reflectionEquationCertificate.residualDimensions.join(" × ")}</span>
+      </div>
+      <dl>
+        <div><dt>Certificate ID</dt><dd><code>{solution.reflectionEquationCertificate.certificateId}</code></dd></div>
+        <div><dt>Method</dt><dd>{solution.reflectionEquationCertificate.method}</dd></div>
+        <div><dt>Equation</dt><dd>{solution.reflectionEquationCertificate.equation}</dd></div>
+        <div><dt>Variables</dt><dd><code>{solution.reflectionEquationCertificate.conventions.kVariable}, {solution.reflectionEquationCertificate.conventions.secondVariable}; q = {solution.reflectionEquationCertificate.conventions.quantumParameter}</code></dd></div>
+        <div><dt>Tensor convention</dt><dd>{solution.reflectionEquationCertificate.conventions.tensorBasis}; partial transpose {solution.reflectionEquationCertificate.conventions.partialTranspose ?? "none"}</dd></div>
+        <div><dt>Assumptions</dt><dd>{solution.reflectionEquationCertificate.assumptions.join("; ")}</dd></div>
+        <div><dt>Engine</dt><dd>{solution.reflectionEquationCertificate.engine.name} {solution.reflectionEquationCertificate.engine.version}</dd></div>
+      </dl>
+      <pre>{JSON.stringify(solution.reflectionEquationCertificate.provenance, null, 2)}</pre>
+    </div> : <div className="empty-state">
+      <strong>Verification not yet computed for this solution.</strong>
+      <p>The certificate pipeline is being extended family by family. Absence of a certificate is not a failed reflection equation.</p>
+    </div>)}
     {view === "provenance" && <div className="provenance-pane">
       <dl>
         <div><dt>Solution ID</dt><dd><code>{solution.solutionId}</code></dd></div>
@@ -157,6 +178,9 @@ function FormulaPanel({ record, realization, engine, ambient }: {
     </div>}
     <div className="solution-meta">
       <Badge tone="good">{selected.family}</Badge>
+      {selected.reflectionEquationCertificate && <Badge tone={selected.reflectionEquationCertificate.status === "verified" ? "good" : "warn"}>
+        {selected.reflectionEquationCertificate.status} {selected.reflectionEquationCertificate.level}
+      </Badge>}
       <span>{selected.equation} reflection equation</span>
       <span>{selected.matrix.dimensions[0]} dimensional representation</span>
     </div>
@@ -259,7 +283,11 @@ function Inspector({ record, engine, ambient }: {
           <div><span>Leg convention</span><code>{record.reflectionEquation.conventions.legNumbering}</code></div>
           <div><span>Partial transpose</span><code>{record.reflectionEquation.conventions.partialTranspose ?? "none"}</code></div>
         </div>
-        <p className="fine-print">The identity is now bound to the displayed ambient R-record and this diagram’s equation type. Exact tensor verification against each exported K-matrix is not yet computed, and is therefore not labelled verified.</p>
+        {record.reflectionEquation.verification.certificateIds.length > 0 && <div className="certificate-list">
+          <span>Exact per-solution certificates</span>
+          {record.reflectionEquation.verification.certificateIds.map((id) => <code key={id}>{id}</code>)}
+        </div>}
+        <p className="fine-print">The identity is bound to the displayed ambient R-record and this diagram’s equation type. A verified label means the exported sparse K-matrix has zero exact symbolic tensor residual as a rational-function identity, for generic parameters away from poles. Certification currently covers the computable untwisted type-A catalogue; other families remain explicitly not computed.</p>
       </>}
       {tab === "properties" && <>
         <div className="panel-heading"><div><div className="eyebrow">Symbolic analysis</div><h3>Properties and identities</h3></div><Availability available={record.capabilities.properties.length > 0}>{record.capabilities.properties.length} computed</Availability></div>

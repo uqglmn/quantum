@@ -13,6 +13,7 @@ const solution = {
   matrix: { kind: "sparseMatrix", dimensions: [2, 2], indexBase: 0, entries: [] },
   latex: "\\begin{pmatrix}1&0\\\\0&1\\end{pmatrix}",
   provenance: { Source: "fixture" },
+  reflectionEquationCertificate: null,
 } satisfies Solution;
 
 const record = {
@@ -29,7 +30,7 @@ const record = {
   },
   reflectionEquation: {
     kind: "Standard", status: "instantiatedIdentity", latex: "RE", rMatrixId: "a--r",
-    verification: { status: "notComputed", method: null },
+    verification: { status: "notComputed", method: null, certificateIds: [] },
     conventions: { spectralParameters: "multiplicative", legNumbering: "12/21", partialTranspose: null },
   },
   capabilities: { qspAlgebra: true, kMatrix: true, rMatrix: true, properties: [], remoteComputation: false },
@@ -53,7 +54,7 @@ const ambient = {
 describe("solution exports", () => {
   it("preserves engine, diagram, and solution provenance", () => {
     vi.setSystemTime(new Date("2026-08-17T12:00:00Z"));
-    const bundle = buildSolutionBundle(record, solution, { name: "QREKMatrices", version: "0.13.0" }, ambient);
+    const bundle = buildSolutionBundle(record, solution, { name: "QREKMatrices", version: "0.14.0" }, ambient);
     expect(bundle.diagram.id).toBe(record.id);
     expect(bundle.solution.provenance).toEqual({ Source: "fixture" });
     expect(bundle.diagram.qsp.qspId).toBe("a--n1--qsp");

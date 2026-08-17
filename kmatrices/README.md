@@ -379,11 +379,23 @@ residual and Boolean verifier are:
 ```wl
 residual = ReflectionEquationResidual[k, diagram, {u, v}, q];
 VerifyReflectionEquation[k, diagram, {u, v}, q]
+
+certificate = ReflectionEquationCertificate[k, diagram, {u, v}, q];
+certificate[[{"status", "level", "residualNonzeroCount"}]]
+(* <|"status" -> "verified", "level" -> "exactSymbolic",
+     "residualNonzeroCount" -> 0|> *)
 ```
 
 The equation type is selected from the diagram and can be overridden with
 `"Equation" -> "Standard"` or `"Transposed"`. The latter uses the qRE
 convention with `R(1/(u v))` partially transposed in the first tensor factor.
+`ReflectionEquationCertificate` records the equation and tensor conventions,
+method, residual dimensions, assumptions, engine version, and provenance. A
+zero symbolic residual is certified as an identity of rational functions for
+generic parameters away from poles. The generated web catalogue currently
+attaches these exact certificates to every computable untwisted type-A
+solution in ranks 2--4; uncatalogued cases and other affine types remain
+explicitly `notComputed` until their conventions are reconciled and tested.
 
 ## Tests
 

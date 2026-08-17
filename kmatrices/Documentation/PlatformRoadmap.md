@@ -50,12 +50,16 @@ control, but storage and computation must not conflate them.
   boundary generators, parameter domain, and source provenance;
 - implemented: representation registry and convention-labelled ambient
   R-matrix operator formulas for all exported twisted and untwisted types;
+- implemented: sparse ambient R-matrix materialization in the lexicographic
+  tensor basis for all nine supported affine presentations;
 - implemented: reflection-equation records bound by stable identifier to their
   ambient R-record, including partial-transpose and spectral conventions;
+- implemented first certification milestone: exact symbolic tensor-residual
+  certificates for every computable untwisted type-A solution in ranks 2--4;
 - remaining: expanded inhomogeneous QSP relations and family-specific
   admissibility constraints;
-- remaining: sparse/dense R-matrix materialization;
-- exact reflection-equation tensors and verification certificates;
+- remaining: convention reconciliation and exact certificate coverage for the
+  B/C/D and twisted catalogues;
 - implemented: explicit family selector for ambiguous diagrams, with the
   mathematical reason for the ambiguity retained in the interface;
 - implemented: self-hosted KaTeX rendering for QSP templates, reflection

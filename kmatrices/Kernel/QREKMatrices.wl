@@ -68,6 +68,8 @@ ReflectionEquationResidual::usage =
   "ReflectionEquationResidual[K, diagram, {u, v}, q] gives the tensor-matrix residual of the standard or transposed reflection equation, regarding K as an expression in u.";
 VerifyReflectionEquation::usage =
   "VerifyReflectionEquation[K, diagram, {u, v}, q] checks that the corresponding reflection-equation residual vanishes.";
+ReflectionEquationCertificate::usage =
+  "ReflectionEquationCertificate[K, diagram, {u, v}, q] returns a structured exact verification certificate with conventions, method, and residual diagnostics.";
 ReflectionEquationData::usage =
   "ReflectionEquationData[diagram, rMatrixId] gives the convention-labelled reflection equation associated to a generalized Satake diagram.";
 WebExpressionData::usage =
@@ -84,8 +86,8 @@ $twistedTypes = {
   "A2n-1(2)", "A2n-1(2)T", "A2n(2)", "A2n(2)T", "Dn+1(2)"
 };
 $canonicalTypes = Join[$untwistedTypes, $twistedTypes];
-$qreKMatricesVersion = "0.13.0";
-$webCatalogueSchemaVersion = "1.2.0";
+$qreKMatricesVersion = "0.14.0";
+$webCatalogueSchemaVersion = "1.3.0";
 
 QREKMatricesVersion[] := $qreKMatricesVersion;
 
@@ -2555,7 +2557,9 @@ ReflectionEquationResidual[k_?MatrixQ, d_?SatakeDiagramQ, {u_, v_}, q_: q,
   If[dimension =!= Length[representationBasis[type, n]], Return[$Failed]];
   identity = IdentityMatrix[dimension];
   p = ambientPermutation[representationBasis[type, n]];
-  kU = k; kV = k /. u -> v;
+  kU = SparseArray[k];
+  (* ReplaceAll does not descend reliably into SparseArray stored values. *)
+  kV = SparseArray[Normal[k] /. u -> v];
   k1 = KroneckerProduct[kU, identity];
   k2 = KroneckerProduct[identity, kV];
   rRatio = AmbientRMatrix[type, n, u/v, q,
@@ -2581,6 +2585,45 @@ VerifyReflectionEquation[k_?MatrixQ, d_?SatakeDiagramQ, spectral : {_, _},
   residual = ReflectionEquationResidual[k, d, spectral, q,
     Sequence @@ FilterRules[{opts}, Options[ReflectionEquationResidual]]];
   MatrixQ[residual] && zeroMatrixQ[residual, True]
+];
+
+Options[ReflectionEquationCertificate] = Options[ReflectionEquationResidual];
+ReflectionEquationCertificate[k_?MatrixQ, d_?SatakeDiagramQ,
+    spectral : {u_, v_}, q_: q, opts : OptionsPattern[]] := Module[
+  {equation, residual, rules, nonzero, verified, certificateID},
+  equation = Replace[OptionValue["Equation"], Automatic :> BoundaryEquationType[d]];
+  residual = ReflectionEquationResidual[k, d, spectral, q,
+    Sequence @@ FilterRules[{opts}, Options[ReflectionEquationResidual]]];
+  If[!MatrixQ[residual], Return[Failure["ResidualUnavailable", <||>]]];
+  rules = Select[ArrayRules[residual], MatchQ[First[#], {_Integer, _Integer}] &];
+  nonzero = Select[rules, !PossibleZeroQ[Last[#]] &];
+  verified = nonzero === {};
+  certificateID = webDiagramID[d] <> "--" <>
+    webSlug[equation] <> "--reflection-certificate";
+  <|
+    "certificateId" -> certificateID,
+    "status" -> If[verified, "verified", "failed"],
+    "level" -> "exactSymbolic",
+    "method" -> "sparseTensorResidual",
+    "equation" -> equation,
+    "residualDimensions" -> Dimensions[residual],
+    "residualNonzeroCount" -> Length[nonzero],
+    "assumptions" -> {"identityOfRationalFunctions", "genericParametersAwayFromPoles"},
+    "conventions" -> <|
+      "spectralParameters" -> "multiplicative",
+      "kVariable" -> webSymbolName[Unevaluated[u]],
+      "secondVariable" -> webSymbolName[Unevaluated[v]],
+      "quantumParameter" -> If[Head[Unevaluated[q]] === Symbol,
+        webSymbolName[Unevaluated[q]], ToString[Unevaluated[q], InputForm]],
+      "tensorBasis" -> "lexicographic",
+      "partialTranspose" -> If[equation === "Transposed",
+        "firstTensorFactor", Null]|>,
+    "engine" -> <|"name" -> "QREKMatrices", "version" -> $qreKMatricesVersion|>,
+    "provenance" -> <|
+      "RMatrixSource" -> If[MemberQ[$twistedTypes, d["AffineType"]],
+        "qRE_II/Rmatrices.tex", "qRE/files/Rmatrices.tex"],
+      "EquationSource" -> "qRE/files/Kmatrices.tex"|>
+  |>
 ];
 
 ambientRFormulaLatex[kind_String] := Switch[kind,
@@ -2670,7 +2713,8 @@ ReflectionEquationData[d_?SatakeDiagramQ, rMatrixId_String] := Module[
   <|
     "kind" -> equation, "status" -> "instantiatedIdentity",
     "latex" -> latex, "rMatrixId" -> rMatrixId,
-    "verification" -> <|"status" -> "notComputed", "method" -> Null|>,
+    "verification" -> <|"status" -> "notComputed", "method" -> Null,
+      "certificateIds" -> {}|>,
     "conventions" -> <|
       "spectralParameters" -> "multiplicative", "legNumbering" -> "12/21",
       "partialTranspose" -> If[equation === "Transposed", "firstTensorFactor", Null]|>
@@ -2731,6 +2775,9 @@ webJSONSafe[value_List] := webJSONSafe /@ value;
 webJSONSafe[value_?MissingQ] := Null;
 webJSONSafe[value_Rational] := N[value];
 webJSONSafe[value_Complex] := ToString[value, InputForm];
+webJSONSafe[Null] := Null;
+webJSONSafe[True] := True;
+webJSONSafe[False] := False;
 webJSONSafe[value_Symbol] := webSymbolName[Unevaluated[value]];
 webJSONSafe[value_ /; StringQ[value] || IntegerQ[value] || RealValuedNumberQ[value] ||
     TrueQ[value] || FalseQ[value] || value === Null] := value;
@@ -2757,16 +2804,27 @@ webMatrixLatex[matrix_] := Block[
   ToString[TeXForm[MatrixForm[Normal[matrix]]]]
 ];
 
-webSolutionData[result_Association, diagramID_String, ordinal_Integer : 1] /;
+webSolutionData[result_Association, diagram_?SatakeDiagramQ,
+    diagramID_String, quantumParameter_, ordinal_Integer : 1] /;
     KeyExistsQ[result, "KMatrix"] := Module[
-  {matrix = result["KMatrix"], family, equation, basis, params, provenance},
+  {matrix = result["KMatrix"], family, equation, basis, params, provenance,
+   solutionID, certificate = Null},
   family = ToString[Lookup[result, "Family", "Unspecified"]];
   equation = ToString[Lookup[result, "Equation", "Standard"]];
+  solutionID = StringRiffle[{diagramID, webSlug[family], ToString[ordinal]}, "--"];
   basis = webBasisLabel /@ Lookup[result, "BasisLabels", Range[Length[matrix]]];
   params = webExpressionAssociation[Lookup[result, "Parameters", <||>]];
   provenance = webJSONSafe[Lookup[result, "Provenance", <||>]];
+  If[diagram["AffineType"] === "A(1)" && MemberQ[{"A.1", "A.2", "A.3", "A.4"}, family],
+    certificate = Quiet[ReflectionEquationCertificate[matrix, diagram, {u, v},
+      quantumParameter, "Equation" -> equation]];
+    If[AssociationQ[certificate],
+      certificate = Append[certificate,
+        "certificateId" -> solutionID <> "--reflection-certificate"],
+      certificate = Null]
+  ];
   <|
-    "solutionId" -> StringRiffle[{diagramID, webSlug[family], ToString[ordinal]}, "--"],
+    "solutionId" -> solutionID,
     "family" -> family,
     "equation" -> equation,
     "realization" -> "bare",
@@ -2776,30 +2834,56 @@ webSolutionData[result_Association, diagramID_String, ordinal_Integer : 1] /;
     "matrix" -> webMatrixData[matrix],
     "latex" -> webMatrixLatex[matrix],
     "provenance" -> provenance,
-    "properties" -> {}
+    "properties" -> {},
+    "reflectionEquationCertificate" -> webJSONSafe[certificate]
   |>
 ];
 
-webComputationData[row_Association, diagramID_String, include_] := Module[
+webComputationData[row_Association, diagramID_String, include_, quantumParameter_] := Module[
   {result, solution = Null, candidates = {}, status},
   If[!TrueQ[include], Return[<|
     "status" -> "NotRequested", "solution" -> Null, "candidates" -> {}|>]];
   result = row["Result"];
   status = ToString[row["Status"]];
   If[AssociationQ[result] && KeyExistsQ[result, "KMatrix"],
-    solution = webSolutionData[result, diagramID]
+    solution = webSolutionData[result, row["Diagram"], diagramID, quantumParameter]
   ];
   If[AssociationQ[result] && KeyExistsQ[result, "Candidates"],
     candidates = MapIndexed[
       Function[{candidate, index},
         If[AssociationQ[candidate] && AssociationQ[Lookup[candidate, "Result", None]] &&
             KeyExistsQ[candidate["Result"], "KMatrix"],
-          webSolutionData[candidate["Result"], diagramID, First[index]], Nothing]
+          webSolutionData[candidate["Result"], row["Diagram"], diagramID,
+            quantumParameter, First[index]], Nothing]
       ],
       result["Candidates"]
     ]
   ];
   <|"status" -> status, "solution" -> solution, "candidates" -> candidates|>
+];
+
+webReflectionVerification[computation_Association] := Module[
+  {solutions, certificates},
+  solutions = DeleteCases[Join[{computation["solution"]},
+    computation["candidates"]], Null];
+  If[solutions === {}, Return[
+    <|"status" -> "notComputed", "method" -> Null, "certificateIds" -> {}|>]];
+  certificates = DeleteCases[
+    (Lookup[#, "reflectionEquationCertificate", Null] & /@ solutions), Null];
+  Which[
+    certificates === {},
+      <|"status" -> "notComputed", "method" -> Null, "certificateIds" -> {}|>,
+    Length[certificates] === Length[solutions] &&
+        AllTrue[certificates, #["status"] === "verified" &],
+      <|"status" -> "verified", "method" -> "perSolutionExactSymbolic",
+        "certificateIds" -> Lookup[certificates, "certificateId"]|>,
+    AnyTrue[certificates, #["status"] === "failed" &],
+      <|"status" -> "failed", "method" -> "perSolutionExactSymbolic",
+        "certificateIds" -> Lookup[certificates, "certificateId"]|>,
+    True,
+      <|"status" -> "conditional", "method" -> "partialSolutionCoverage",
+        "certificateIds" -> Lookup[certificates, "certificateId"]|>
+  ]
 ];
 
 webClassificationData[classification_Association] := <|
@@ -2845,7 +2929,8 @@ WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
       diagramID, computation},
       classification = row["Classification"];
       diagramID = webDiagramID[diagram];
-      computation = webComputationData[row, diagramID, include];
+      computation = webComputationData[row, diagramID, include,
+        OptionValue["QuantumParameter"]];
       <|
         "id" -> diagramID,
         "spec" -> <|
@@ -2859,13 +2944,20 @@ WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
         |>,
         "classification" -> webClassificationData[classification],
         "qsp" -> QSPPresentationData[diagram],
-        "reflectionEquation" -> ReflectionEquationData[diagram, rMatrixID],
+        "reflectionEquation" -> ReplacePart[
+          ReflectionEquationData[diagram, rMatrixID],
+          "verification" -> webReflectionVerification[computation]],
         "capabilities" -> <|
           "qspAlgebra" -> True,
           "kMatrix" -> (computation["solution"] =!= Null ||
             computation["candidates"] =!= {}),
           "rMatrix" -> True,
-          "properties" -> {},
+          "properties" -> If[
+            (computation["solution"] =!= Null &&
+              computation["solution", "reflectionEquationCertificate"] =!= Null) ||
+              AnyTrue[computation["candidates"],
+                #["reflectionEquationCertificate"] =!= Null &],
+            {"reflectionEquationVerification"}, {}],
           "remoteComputation" -> False|>,
         "computation" -> computation
       |>

@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.2.0",
+	"schemaVersion":"1.3.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.13.0"
+		"version":"0.14.0"
 	},
 	"catalogue":{
 		"id":"a2n-2--n4",
@@ -38766,7 +38766,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -42310,7 +42311,8 @@
 						"Branch":"MainCatalogue",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -42527,7 +42529,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -45421,7 +45424,8 @@
 						"Branch":"MainCatalogue",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -45638,7 +45642,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -48334,7 +48339,8 @@
 						"Branch":"MainCatalogue",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -48552,7 +48558,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -55170,7 +55177,8 @@
 						"Branch":"NonQuasistandardGeneric",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -55386,7 +55394,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -61758,7 +61767,8 @@
 						"Branch":"NonQuasistandardGeneric",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -61974,7 +61984,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -65068,7 +65079,8 @@
 						"Formula":"C**.2",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -65286,7 +65298,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -65523,7 +65536,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -67245,7 +67259,8 @@
 						"Branch":"MainCatalogue",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -67462,7 +67477,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -69736,7 +69752,8 @@
 						"Formula":"C**.2",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -69953,7 +69970,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -71429,7 +71447,8 @@
 						"Branch":"MainCatalogue",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -71644,7 +71663,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -73592,7 +73612,8 @@
 						"Formula":"C**.2",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -73809,7 +73830,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -75039,7 +75061,8 @@
 						"Branch":"MainCatalogue",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -75256,7 +75279,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -76878,7 +76902,8 @@
 						"Formula":"C**.2",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -77099,7 +77124,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -78099,7 +78125,8 @@
 						"Branch":"MainCatalogue",
 						"ResearchStatus":"NotebookChecked"
 					},
-					"properties":[]
+					"properties":[],
+					"reflectionEquationCertificate":null
 				},
 				"candidates":[]
 			}
@@ -78326,7 +78353,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -79464,7 +79492,8 @@
 							"Branch":"MainCatalogue",
 							"ResearchStatus":"NotebookChecked"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"a2n-2--n4--x0-1-2-3--tau0-1-2-3-4--cstarstar-2--2",
@@ -80583,7 +80612,8 @@
 							"Formula":"C**.2",
 							"ResearchStatus":"NotebookChecked"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -80804,7 +80834,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -81696,7 +81727,8 @@
 							"Branch":"MainCatalogue",
 							"ResearchStatus":"NotebookChecked"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"a2n-2--n4--x0-1-2-4--tau0-1-2-3-4--cstarstar-2--2",
@@ -82569,7 +82601,8 @@
 							"Formula":"C**.2",
 							"ResearchStatus":"NotebookChecked"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -82788,7 +82821,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -83434,7 +83468,8 @@
 							"Branch":"MainCatalogue",
 							"ResearchStatus":"NotebookChecked"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"a2n-2--n4--x0-1-3-4--tau0-1-2-3-4--cstarstar-2--2",
@@ -84061,7 +84096,8 @@
 							"Formula":"C**.2",
 							"ResearchStatus":"NotebookChecked"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -84282,7 +84318,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -84682,7 +84719,8 @@
 							"Branch":"MainCatalogue",
 							"ResearchStatus":"NotebookChecked"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"a2n-2--n4--x0-2-3-4--tau0-1-2-3-4--cstarstar-2--2",
@@ -85063,7 +85101,8 @@
 							"Formula":"C**.2",
 							"ResearchStatus":"NotebookChecked"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
@@ -85290,7 +85329,8 @@
 				"rMatrixId":"a2n-2--n4--vector-r",
 				"verification":{
 					"status":"notComputed",
-					"method":null
+					"method":null,
+					"certificateIds":[]
 				},
 				"conventions":{
 					"spectralParameters":"multiplicative",
@@ -85444,7 +85484,8 @@
 							"Branch":"MainCatalogue",
 							"ResearchStatus":"NotebookChecked"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					},
 					{
 						"solutionId":"a2n-2--n4--x1-2-3-4--tau0-1-2-3-4--cstarstar-2--2",
@@ -85579,7 +85620,8 @@
 							"Formula":"C**.2",
 							"ResearchStatus":"NotebookChecked"
 						},
-						"properties":[]
+						"properties":[],
+						"reflectionEquationCertificate":null
 					}
 				]
 			}
