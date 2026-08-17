@@ -368,7 +368,7 @@ export function App() {
 
   const records = useMemo(() => catalogue?.diagrams.filter((record) => recordBelongsToFamily(record, familyId)) ?? [], [catalogue, familyId]);
   const selected = catalogue?.diagrams.find((record) => record.id === diagramId && recordBelongsToFamily(record, familyId)) ?? records[0];
-  const family = familyDefinition(familyId);
+  const family = familyDefinition(familyId, catalogue?.families);
 
   useEffect(() => {
     if (!catalogue || !familyId || selected) return;

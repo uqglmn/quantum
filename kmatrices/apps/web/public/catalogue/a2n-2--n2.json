@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.3.0",
+	"schemaVersion":"1.4.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.15.0"
+		"version":"0.16.0"
 	},
 	"catalogue":{
 		"id":"a2n-2--n2",
@@ -11428,6 +11428,88 @@
 			}
 		}
 	},
+	"families":[
+		{
+			"familyId":"C**.1",
+			"title":"C**.1",
+			"affineTypes":[
+				"A2n(2)"
+			],
+			"description":"Twisted affine A quadratic plain family.",
+			"contentStatus":"computational",
+			"regimes":[],
+			"parameterOrder":[
+				"l",
+				"r"
+			],
+			"parameterDomain":{
+				"parameters":[
+					{
+						"name":"l",
+						"label":"\\ell",
+						"type":"integer"
+					},
+					{
+						"name":"r",
+						"label":"r",
+						"type":"integer"
+					}
+				],
+				"constraints":[],
+				"branches":[]
+			},
+			"generalFormula":null,
+			"properties":[],
+			"sourceAnchors":[],
+			"instanceIds":[
+				"a2n-2--n2--xnone--tau0-1-2",
+				"a2n-2--n2--x0--tau0-1-2",
+				"a2n-2--n2--x2--tau0-1-2",
+				"a2n-2--n2--x0-1--tau0-1-2",
+				"a2n-2--n2--x0-2--tau0-1-2",
+				"a2n-2--n2--x1-2--tau0-1-2"
+			]
+		},
+		{
+			"familyId":"C**.2",
+			"title":"C**.2",
+			"affineTypes":[
+				"A2n(2)"
+			],
+			"description":"Twisted affine A quadratic alternating family.",
+			"contentStatus":"computational",
+			"regimes":[],
+			"parameterOrder":[
+				"l",
+				"r"
+			],
+			"parameterDomain":{
+				"parameters":[
+					{
+						"name":"l",
+						"label":"\\ell",
+						"type":"integer"
+					},
+					{
+						"name":"r",
+						"label":"r",
+						"type":"integer"
+					}
+				],
+				"constraints":[],
+				"branches":[]
+			},
+			"generalFormula":null,
+			"properties":[],
+			"sourceAnchors":[],
+			"instanceIds":[
+				"a2n-2--n2--x1--tau0-1-2",
+				"a2n-2--n2--x0-1--tau0-1-2",
+				"a2n-2--n2--x0-2--tau0-1-2",
+				"a2n-2--n2--x1-2--tau0-1-2"
+			]
+		}
+	],
 	"summary":{
 		"diagramCount":7,
 		"statuses":{
@@ -11513,6 +11595,29 @@
 					2
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C**.1",
+					"membershipStatus":"classified",
+					"regime":"NonQuasistandard",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"a2n-2--n2--xnone--tau0-1-2--qsp",
 				"status":"instantiatedPresentation",
@@ -11698,6 +11803,29 @@
 					2
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C**.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"a2n-2--n2--x0--tau0-1-2--qsp",
 				"status":"instantiatedPresentation",
@@ -13055,6 +13183,29 @@
 					2
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C**.2",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"a2n-2--n2--x1--tau0-1-2--qsp",
 				"status":"instantiatedPresentation",
@@ -14804,6 +14955,29 @@
 					2
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C**.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"1"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"a2n-2--n2--x2--tau0-1-2--qsp",
 				"status":"instantiatedPresentation",
@@ -15933,6 +16107,50 @@
 					2
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C**.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2
+					]
+				},
+				{
+					"familyId":"C**.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"a2n-2--n2--x0-1--tau0-1-2--qsp",
 				"status":"instantiatedPresentation",
@@ -17292,6 +17510,50 @@
 					2
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C**.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"1"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2
+					]
+				},
+				{
+					"familyId":"C**.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"1"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"a2n-2--n2--x0-2--tau0-1-2--qsp",
 				"status":"instantiatedPresentation",
@@ -18157,6 +18419,50 @@
 					2
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C**.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"0"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2
+					]
+				},
+				{
+					"familyId":"C**.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"0"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"a2n-2--n2--x1-2--tau0-1-2--qsp",
 				"status":"instantiatedPresentation",

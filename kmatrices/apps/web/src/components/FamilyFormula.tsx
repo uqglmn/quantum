@@ -24,5 +24,12 @@ export function FamilyFormula({ family, regime }: { family: FamilyDefinition; re
       </details>)}
     </div>}
     <div className="formula-assumptions"><span>Parameter domain</span><MathFormula latex={family.formula.assumptions} display={false} /></div>
+    {family.parameterDomain && family.parameterDomain.branches.length > 0 && <div className="family-branches">
+      <span>Classification branches</span>
+      <div>{family.parameterDomain.branches.map((branch) => <article key={branch.branchId}>
+        <strong>{branch.label}</strong><small>{branch.regime}</small>
+        {branch.constraintsLatex.map((constraint) => <MathFormula key={constraint} latex={constraint} display={false} />)}
+      </article>)}</div>
+    </div>}
   </section>;
 }

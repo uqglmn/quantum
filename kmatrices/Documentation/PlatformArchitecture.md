@@ -12,6 +12,8 @@ The first slice supports:
   pairs;
 - diagram rendering and selection;
 - full classification, candidate-family, regime, and equation metadata;
+- first-class family records with parameter domains, branch constraints,
+  general formulas, provenance anchors, properties, and stable instance links;
 - optional exported catalogue K-matrices in sparse and LaTeX forms;
 - instantiated QSP generator presentations and longest-parabolic words;
 - one shared, convention-labelled ambient R-matrix formula record per
@@ -28,6 +30,7 @@ R-matrices and certificates without changing diagram or solution identity.
 
 ```text
 QREKMatrices paclet
+  -> family registry and diagram-to-family memberships
   -> deterministic catalogue exporter
   -> JSON Schema validated artifacts
   -> CatalogueProvider
@@ -40,8 +43,12 @@ Optional ComputeProvider
   -> licensed/self-hosted or open backend later
 ```
 
-The UI never imports Wolfram Language source and never infers mathematical
-meaning from display LaTeX. It consumes the semantic expression tree.
+The package-owned family registry is authoritative. The UI retains a small
+compatibility registry only so older catalogue schemas remain readable; when a
+catalogue supplies a family record, its description, parameter domain, formula,
+and provenance always win. The UI never imports Wolfram Language source and
+never infers mathematical meaning from display LaTeX. It consumes the semantic
+expression tree.
 
 ## Versions
 
@@ -59,7 +66,10 @@ A schema major-version change requires a new catalogue path such as
 Diagram identifiers are canonical functions of affine type, rank, `X`, and
 `tau`; they never depend on enumeration order or visual layout. Solution
 identifiers add family/regime information. A displayed matrix references its
-base solution and an ordered transformation chain.
+base solution and an ordered transformation chain. Family records have stable
+manuscript identifiers such as `A.3` and `C.1`; each diagram carries explicit
+classified or candidate memberships, including its family parameters and any
+transport permutation.
 
 ## Extension rules
 

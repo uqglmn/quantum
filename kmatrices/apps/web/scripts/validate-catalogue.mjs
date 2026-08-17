@@ -4,7 +4,9 @@ import Ajv2020 from "ajv/dist/2020.js";
 
 const appRoot = resolve(import.meta.dirname, "..");
 const projectRoot = resolve(appRoot, "../..");
-const catalogueDirectory = resolve(appRoot, "public/catalogue");
+const catalogueDirectory = process.argv[2]
+  ? resolve(process.argv[2])
+  : resolve(appRoot, "public/catalogue");
 const readJson = async (path) => JSON.parse(await readFile(path, "utf8"));
 
 const [expressionSchema, catalogueSchema, manifestSchema] = await Promise.all([

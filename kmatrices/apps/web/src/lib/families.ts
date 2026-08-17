@@ -1,4 +1,4 @@
-import type { DiagramRecord } from "../domain";
+import type { DiagramRecord, FamilyRecord } from "../domain";
 import { formatExpression } from "./expression";
 
 export type FamilyStatus = "published" | "computational";
@@ -17,6 +17,7 @@ export interface FamilyDefinition {
   description: string;
   status: FamilyStatus;
   parameterOrder: string[];
+  parameterDomain?: FamilyRecord["parameterDomain"];
   formula?: FamilyFormulaDefinition;
 }
 
@@ -71,8 +72,28 @@ const definitions: FamilyDefinition[] = [
 
 export const familyDefinitions = definitions;
 
-export function familyDefinition(id: string | null | undefined): FamilyDefinition | undefined {
-  return definitions.find((definition) => definition.id === id);
+function exportedFamilyDefinition(record: FamilyRecord): FamilyDefinition {
+  const firstSource = record.generalFormula?.sourceAnchors[0] ?? record.sourceAnchors[0];
+  return {
+    id: record.familyId,
+    affineTypes: record.affineTypes,
+    title: record.title,
+    description: record.description,
+    status: record.contentStatus === "published" ? "published" : "computational",
+    parameterOrder: record.parameterOrder,
+    parameterDomain: record.parameterDomain,
+    formula: record.generalFormula ? {
+      latex: record.generalFormula.latex,
+      definitions: record.generalFormula.definitions.map(({ label, latex }) => ({ label, latex })),
+      assumptions: record.generalFormula.assumptionsLatex,
+      source: firstSource ? `${firstSource.source}${firstSource.anchor ? `, ${firstSource.anchor}` : ""}` : "Exported family record",
+    } : undefined,
+  };
+}
+
+export function familyDefinition(id: string | null | undefined, exported: FamilyRecord[] = []): FamilyDefinition | undefined {
+  const record = exported.find((candidate) => candidate.familyId === id);
+  return record ? exportedFamilyDefinition(record) : definitions.find((definition) => definition.id === id);
 }
 
 export function familiesForAffineType(affineType: string): FamilyDefinition[] {
@@ -80,7 +101,8 @@ export function familiesForAffineType(affineType: string): FamilyDefinition[] {
 }
 
 export function recordBelongsToFamily(record: DiagramRecord, familyId: string): boolean {
-  return record.classification.family === familyId || record.classification.candidateFamilies.includes(familyId);
+  return record.familyMemberships?.some((membership) => membership.familyId === familyId)
+    ?? (record.classification.family === familyId || record.classification.candidateFamilies.includes(familyId));
 }
 
 export function parameterValue(record: DiagramRecord, key: string): string | null {

@@ -21,6 +21,7 @@ const record = {
   spec: { affineType: "A(1)", rank: 1, nodes: [0, 1], X: [], tau: [0, 1] },
   data: { cartanMatrix: [[2, -2], [-2, 2]], symmetrizers: [] },
   classification: { status: "Classified", family: "A.1", candidateFamilies: ["A.1"], regime: "MainCatalogue", equation: "Standard", parameters: {} },
+  familyMemberships: [{ familyId: "A.1", membershipStatus: "classified", regime: "MainCatalogue", parameters: {}, representative: true, transportPermutation: [0, 1] }],
   qsp: {
     qspId: "a--n1--qsp", status: "instantiatedPresentation", nameLatex: "B", ambientAlgebraLatex: "U_q(g)",
     indexSets: { nodes: [0, 1], levi: [], boundary: [0, 1], torusOrbitRepresentatives: [0, 1] },
@@ -54,10 +55,11 @@ const ambient = {
 describe("solution exports", () => {
   it("preserves engine, diagram, and solution provenance", () => {
     vi.setSystemTime(new Date("2026-08-17T12:00:00Z"));
-    const bundle = buildSolutionBundle(record, solution, { name: "QREKMatrices", version: "0.15.0" }, ambient);
+    const bundle = buildSolutionBundle(record, solution, { name: "QREKMatrices", version: "0.16.0" }, ambient);
     expect(bundle.diagram.id).toBe(record.id);
     expect(bundle.solution.provenance).toEqual({ Source: "fixture" });
     expect(bundle.diagram.qsp.qspId).toBe("a--n1--qsp");
+    expect(bundle.diagram.familyMemberships[0].familyId).toBe("A.1");
     expect(bundle.ambient.rMatrix.rMatrixId).toBe("a--r");
     expect(bundle.exportedAt).toBe("2026-08-17T12:00:00.000Z");
     vi.useRealTimers();

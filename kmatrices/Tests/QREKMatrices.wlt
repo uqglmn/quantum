@@ -802,8 +802,23 @@ VerificationTest[
 
 VerificationTest[
   QREKMatricesVersion[],
-  "0.15.0",
+  "0.16.0",
   TestID -> "web-engine-version"
+]
+
+VerificationTest[
+  Module[{aFamilies, c1},
+    aFamilies = KMatrixFamilies["A(1)"];
+    c1 = KMatrixFamilyData["C.1"];
+    {aFamilies, c1["ContentStatus"], c1["ParameterOrder"],
+      c1["GeneralFormula", "Kind"],
+      c1["GeneralFormula", "Expression", "kind"],
+      Lookup[c1["Properties"], "Kind"]}
+  ],
+  {{"A.1", "A.2", "A.3", "A.4"}, "published", {"l", "r"},
+    "masterFormula", "call",
+    {"eigendecomposition", "barSymmetry", "factorisation"}},
+  TestID -> "family-record-C1-structured-content"
 ]
 
 VerificationTest[
@@ -824,9 +839,12 @@ VerificationTest[
     ids = Lookup[records, "id"];
     {data["schemaVersion"], data["engine", "version"],
       data["summary", "diagramCount"], DuplicateFreeQ[ids],
-      Union[Lookup[Lookup[records, "computation"], "status"]]}
+      Union[Lookup[Lookup[records, "computation"], "status"]],
+      Lookup[data["families"], "familyId"],
+      Union[Length /@ Lookup[records, "familyMemberships"]]}
   ],
-  {"1.3.0", "0.15.0", 7, True, {"NotRequested"}},
+  {"1.4.0", "0.16.0", 7, True, {"NotRequested"},
+    {"C**.1", "C**.2"}, {1, 2}},
   TestID -> "web-catalogue-stable-records"
 ]
 
@@ -840,9 +858,10 @@ VerificationTest[
     imported = Import[FileNameJoin[{directory, "manifest.json"}], "RawJSON"];
     {manifest["files"][[1, "diagramCount"]],
       imported["schemaVersion"],
+      imported["files"][[1, "families"]],
       FileExistsQ[FileNameJoin[{directory, imported["files"][[1, "path"]]}]]}
   ],
-  {7, "1.3.0", True},
+  {7, "1.4.0", {"C**.1", "C**.2"}, True},
   TestID -> "web-catalogue-export-manifest"
 ]
 

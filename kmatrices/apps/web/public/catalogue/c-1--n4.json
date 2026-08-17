@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.3.0",
+	"schemaVersion":"1.4.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.15.0"
+		"version":"0.16.0"
 	},
 	"catalogue":{
 		"id":"c-1--n4",
@@ -29339,6 +29339,435 @@
 			}
 		}
 	},
+	"families":[
+		{
+			"familyId":"C.1",
+			"title":"C.1",
+			"affineTypes":[
+				"C(1)"
+			],
+			"description":"Identity-involution family parametrised by the distinguished nodes ell and r.",
+			"contentStatus":"published",
+			"regimes":[
+				"MainCatalogue",
+				"NonQuasistandard"
+			],
+			"parameterOrder":[
+				"l",
+				"r"
+			],
+			"parameterDomain":{
+				"parameters":[
+					{
+						"name":"l",
+						"label":"\\ell",
+						"type":"integer"
+					},
+					{
+						"name":"r",
+						"label":"r",
+						"type":"integer"
+					}
+				],
+				"constraints":[
+					{
+						"constraintId":"c1-order",
+						"kind":"inequality",
+						"latex":"0\\leq\\ell\\leq r\\leq n"
+					}
+				],
+				"branches":[
+					{
+						"branchId":"representative",
+						"label":"Representative",
+						"regime":"MainCatalogue",
+						"constraintsLatex":[
+							"\\ell+r\\leq n"
+						]
+					},
+					{
+						"branchId":"transported",
+						"label":"Rotated non-representative",
+						"regime":"MainCatalogue",
+						"constraintsLatex":[
+							"\\ell+r>n"
+						]
+					},
+					{
+						"branchId":"nonquasistandard",
+						"label":"Non-quasistandard",
+						"regime":"NonQuasistandard",
+						"constraintsLatex":[
+							"1\\leq\\ell\\leq n-3",
+							"r=\\ell+2"
+						]
+					}
+				]
+			},
+			"generalFormula":{
+				"kind":"masterFormula",
+				"status":"published",
+				"latex":"K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
+				"expression":{
+					"kind":"call",
+					"head":"Equal",
+					"arguments":[
+						{
+							"kind":"call",
+							"head":"K",
+							"arguments":[
+								{
+									"kind":"symbol",
+									"name":"u"
+								}
+							]
+						},
+						{
+							"kind":"call",
+							"head":"Plus",
+							"arguments":[
+								{
+									"kind":"symbol",
+									"name":"Id"
+								},
+								{
+									"kind":"call",
+									"head":"Times",
+									"arguments":[
+										{
+											"kind":"call",
+											"head":"Times",
+											"arguments":[
+												{
+													"kind":"call",
+													"head":"Plus",
+													"arguments":[
+														{
+															"kind":"symbol",
+															"name":"u"
+														},
+														{
+															"kind":"call",
+															"head":"Times",
+															"arguments":[
+																{
+																	"kind":"integer",
+																	"value":"-1"
+																},
+																{
+																	"kind":"call",
+																	"head":"Power",
+																	"arguments":[
+																		{
+																			"kind":"symbol",
+																			"name":"u"
+																		},
+																		{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
+																	]
+																}
+															]
+														}
+													]
+												},
+												{
+													"kind":"call",
+													"head":"Power",
+													"arguments":[
+														{
+															"kind":"call",
+															"head":"k1",
+															"arguments":[
+																{
+																	"kind":"symbol",
+																	"name":"u"
+																}
+															]
+														},
+														{
+															"kind":"integer",
+															"value":"-1"
+														}
+													]
+												}
+											]
+										},
+										{
+											"kind":"call",
+											"head":"Plus",
+											"arguments":[
+												{
+													"kind":"call",
+													"head":"M1",
+													"arguments":[
+														{
+															"kind":"symbol",
+															"name":"u"
+														}
+													]
+												},
+												{
+													"kind":"call",
+													"head":"Times",
+													"arguments":[
+														{
+															"kind":"call",
+															"head":"M2",
+															"arguments":[
+																{
+																	"kind":"symbol",
+																	"name":"u"
+																}
+															]
+														},
+														{
+															"kind":"call",
+															"head":"Power",
+															"arguments":[
+																{
+																	"kind":"call",
+																	"head":"k2",
+																	"arguments":[
+																		{
+																			"kind":"symbol",
+																			"name":"u"
+																		}
+																	]
+																},
+																{
+																	"kind":"integer",
+																	"value":"-1"
+																}
+															]
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				"definitions":[
+					{
+						"definitionId":"c1-denominators",
+						"label":"Denominators",
+						"latex":"k_1(u)=\\lambda\\mu-u,\\qquad k_2(u)=\\lambda^{-1}-(\\mu u)^{-1}",
+						"expression":{
+							"kind":"call",
+							"head":"Definitions",
+							"arguments":[
+								{
+									"kind":"symbol",
+									"name":"k1"
+								},
+								{
+									"kind":"symbol",
+									"name":"k2"
+								}
+							]
+						}
+					},
+					{
+						"definitionId":"c1-m1",
+						"label":"Diagonal term",
+						"latex":"M_1(u)=\\sum_{\\bar\\ell\\leq i\\leq n}(\\lambda\\mu uE_{-i,-i}+E_{ii})",
+						"expression":{
+							"kind":"call",
+							"head":"IndexedMatrixSum",
+							"arguments":[
+								{
+									"kind":"symbol",
+									"name":"M1"
+								},
+								{
+									"kind":"symbol",
+									"name":"bar(l)<=i<=n"
+								}
+							]
+						}
+					},
+					{
+						"definitionId":"c1-m2",
+						"label":"Off-diagonal term",
+						"latex":"M_2(u)=\\sum_{\\bar r\\leq i<\\bar\\ell}(-\\lambda E_{-i,-i}+\\lambda^{-1}E_{ii}+E_{-i,i}-E_{i,-i})",
+						"expression":{
+							"kind":"call",
+							"head":"IndexedMatrixSum",
+							"arguments":[
+								{
+									"kind":"symbol",
+									"name":"M2"
+								},
+								{
+									"kind":"symbol",
+									"name":"bar(r)<=i<bar(l)"
+								}
+							]
+						}
+					},
+					{
+						"definitionId":"c1-parameters",
+						"label":"Parameters",
+						"latex":"\\lambda=q^{\\bar r},\\quad\\mu=q^{-\\ell-1};\\qquad\\mu\\in\\mathbb K^\\times\\ (\\ell=0),\\quad\\lambda\\in\\mathbb K^\\times\\ (r=n)",
+						"expression":{
+							"kind":"call",
+							"head":"ParameterSpecialization",
+							"arguments":[
+								{
+									"kind":"symbol",
+									"name":"lambda"
+								},
+								{
+									"kind":"symbol",
+									"name":"mu"
+								}
+							]
+						}
+					}
+				],
+				"assumptionsLatex":"0\\leq\\ell\\leq r\\leq n",
+				"sourceAnchors":[
+					{
+						"source":"qRE\/files\/results.tex",
+						"anchor":"T:all-K",
+						"role":"formula"
+					},
+					{
+						"source":"qRE\/files\/resultsC1BD2.tex",
+						"anchor":"Res:C1",
+						"role":"specialization"
+					}
+				]
+			},
+			"properties":[
+				{
+					"kind":"eigendecomposition",
+					"status":"sourceIdentity",
+					"latex":"K(u)=V D(u)V^{-1}"
+				},
+				{
+					"kind":"barSymmetry",
+					"status":"sourceIdentity",
+					"latex":"K(u)^{-1}=J K(u)|_{\\lambda\\mapsto\\lambda^{-1},\\mu\\mapsto\\mu^{-1}}J"
+				},
+				{
+					"kind":"factorisation",
+					"status":"sourceIdentity",
+					"latex":"K(u)=V D(u)V^{-1}"
+				}
+			],
+			"sourceAnchors":[
+				{
+					"source":"qRE\/files\/results.tex",
+					"anchor":"T:all-K",
+					"role":"formula"
+				},
+				{
+					"source":"qRE\/files\/resultsC1BD2.tex",
+					"anchor":"Res:C1",
+					"role":"specialization"
+				}
+			],
+			"instanceIds":[
+				"c-1--n4--xnone--tau0-1-2-3-4",
+				"c-1--n4--x0--tau0-1-2-3-4",
+				"c-1--n4--x4--tau0-1-2-3-4",
+				"c-1--n4--x0-1--tau0-1-2-3-4",
+				"c-1--n4--x0-4--tau0-1-2-3-4",
+				"c-1--n4--x3-4--tau0-1-2-3-4",
+				"c-1--n4--x0-1-2--tau0-1-2-3-4",
+				"c-1--n4--x0-1-4--tau0-1-2-3-4",
+				"c-1--n4--x0-3-4--tau0-1-2-3-4",
+				"c-1--n4--x2-3-4--tau0-1-2-3-4",
+				"c-1--n4--x0-1-2-3--tau0-1-2-3-4",
+				"c-1--n4--x0-1-2-4--tau0-1-2-3-4",
+				"c-1--n4--x0-1-3-4--tau0-1-2-3-4",
+				"c-1--n4--x0-2-3-4--tau0-1-2-3-4",
+				"c-1--n4--x1-2-3-4--tau0-1-2-3-4"
+			]
+		},
+		{
+			"familyId":"C.2",
+			"title":"C.2",
+			"affineTypes":[
+				"C(1)"
+			],
+			"description":"Alternating untwisted C family.",
+			"contentStatus":"formulaPendingMigration",
+			"regimes":[],
+			"parameterOrder":[
+				"l",
+				"r"
+			],
+			"parameterDomain":{
+				"parameters":[
+					{
+						"name":"l",
+						"label":"\\ell",
+						"type":"integer"
+					},
+					{
+						"name":"r",
+						"label":"r",
+						"type":"integer"
+					}
+				],
+				"constraints":[],
+				"branches":[]
+			},
+			"generalFormula":null,
+			"properties":[],
+			"sourceAnchors":[],
+			"instanceIds":[
+				"c-1--n4--x1-3--tau0-1-2-3-4",
+				"c-1--n4--x0-1-3--tau0-1-2-3-4",
+				"c-1--n4--x0-2-4--tau0-1-2-3-4",
+				"c-1--n4--x1-3-4--tau0-1-2-3-4",
+				"c-1--n4--x0-1-2-3--tau0-1-2-3-4",
+				"c-1--n4--x0-1-2-4--tau0-1-2-3-4",
+				"c-1--n4--x0-1-3-4--tau0-1-2-3-4",
+				"c-1--n4--x0-2-3-4--tau0-1-2-3-4",
+				"c-1--n4--x1-2-3-4--tau0-1-2-3-4"
+			]
+		},
+		{
+			"familyId":"C.4",
+			"title":"C.4",
+			"affineTypes":[
+				"C(1)"
+			],
+			"description":"Involutive untwisted C family.",
+			"contentStatus":"formulaPendingMigration",
+			"regimes":[],
+			"parameterOrder":[
+				"l"
+			],
+			"parameterDomain":{
+				"parameters":[
+					{
+						"name":"l",
+						"label":"\\ell",
+						"type":"integer"
+					}
+				],
+				"constraints":[],
+				"branches":[]
+			},
+			"generalFormula":null,
+			"properties":[],
+			"sourceAnchors":[],
+			"instanceIds":[
+				"c-1--n4--xnone--tau4-3-2-1-0",
+				"c-1--n4--x2--tau4-3-2-1-0",
+				"c-1--n4--x1-2-3--tau4-3-2-1-0"
+			]
+		}
+	],
 	"summary":{
 		"diagramCount":22,
 		"statuses":{
@@ -29457,6 +29886,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--xnone--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -32357,7 +32811,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -32480,6 +32934,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x0--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -35065,7 +35544,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -35188,6 +35667,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"3"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -37581,7 +38085,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -37705,6 +38209,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"classified",
+					"regime":"NonQuasistandard",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x0-1--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -37939,6 +38468,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"classified",
+					"regime":"NonQuasistandard",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"3"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x0-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -38171,6 +38725,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.2",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x1-3--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -40278,7 +40857,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -40402,6 +40981,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"classified",
+					"regime":"NonQuasistandard",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -40637,6 +41241,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"3"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x0-1-2--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -42272,7 +42901,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -42397,6 +43026,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.2",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x0-1-3--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -44220,7 +44874,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -44345,6 +44999,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"3"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x0-1-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -45676,7 +46355,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -45801,6 +46480,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.2",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"3"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x0-2-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -47346,7 +48050,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -47471,6 +48175,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x0-3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -48534,7 +49263,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -48659,6 +49388,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.2",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x1-3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -50062,7 +50816,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -50187,6 +50941,31 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"1"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x2-3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -51166,7 +51945,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -51293,6 +52072,54 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"4"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"familyId":"C.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"4"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"4"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x0-1-2-3--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -52459,7 +53286,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.15.0"
+								"version":"0.16.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -53407,7 +54234,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.15.0"
+								"version":"0.16.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -53534,6 +54361,54 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"3"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"3"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"familyId":"C.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"3"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"3"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x0-1-2-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -54400,7 +55275,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.15.0"
+								"version":"0.16.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -55150,7 +56025,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.15.0"
+								"version":"0.16.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -55277,6 +56152,54 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"familyId":"C.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x0-1-3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -55875,7 +56798,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.15.0"
+								"version":"0.16.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -56359,7 +57282,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.15.0"
+								"version":"0.16.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -56486,6 +57409,54 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"1"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"familyId":"C.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"1"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x0-2-3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -56956,7 +57927,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.15.0"
+								"version":"0.16.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -57310,7 +58281,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.15.0"
+								"version":"0.16.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -57437,6 +58408,54 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.1",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"0"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"familyId":"C.2",
+					"membershipStatus":"candidate",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						},
+						"r":{
+							"kind":"integer",
+							"value":"0"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x1-2-3-4--tau0-1-2-3-4--qsp",
 				"status":"instantiatedPresentation",
@@ -57715,7 +58734,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.15.0"
+								"version":"0.16.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -57871,7 +58890,7 @@
 							},
 							"engine":{
 								"name":"QREKMatrices",
-								"version":"0.15.0"
+								"version":"0.16.0"
 							},
 							"provenance":{
 								"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -57988,6 +59007,27 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.4",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"2"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--xnone--tau4-3-2-1-0--qsp",
 				"status":"instantiatedPresentation",
@@ -60993,7 +62033,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -61112,6 +62152,27 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.4",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"1"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x2--tau4-3-2-1-0--qsp",
 				"status":"instantiatedPresentation",
@@ -63266,7 +64327,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",
@@ -63387,6 +64448,27 @@
 					4
 				]
 			},
+			"familyMemberships":[
+				{
+					"familyId":"C.4",
+					"membershipStatus":"classified",
+					"regime":"MainCatalogue",
+					"parameters":{
+						"l":{
+							"kind":"integer",
+							"value":"0"
+						}
+					},
+					"representative":true,
+					"transportPermutation":[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
 			"qsp":{
 				"qspId":"c-1--n4--x1-2-3--tau4-3-2-1-0--qsp",
 				"status":"instantiatedPresentation",
@@ -64090,7 +65172,7 @@
 						},
 						"engine":{
 							"name":"QREKMatrices",
-							"version":"0.15.0"
+							"version":"0.16.0"
 						},
 						"provenance":{
 							"RMatrixSource":"qRE\/files\/Rmatrices.tex",

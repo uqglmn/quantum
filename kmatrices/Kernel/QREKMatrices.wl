@@ -40,6 +40,10 @@ KMatrixTable::usage =
   "KMatrixTable[type, n, u] enumerates every generalized Satake diagram of the given affine type and returns its classification, computation status, and K-matrix result.";
 KMatrixCatalogue::usage =
   "KMatrixCatalogue[] reports the implementation and research status of qRE and qRE_II families.";
+KMatrixFamilies::usage =
+  "KMatrixFamilies[type] gives the registered K-matrix family identifiers for a supported affine presentation.";
+KMatrixFamilyData::usage =
+  "KMatrixFamilyData[family] gives structured family metadata, parameter domains, general formula data, properties, and source anchors.";
 VectorRepresentation::usage =
   "VectorRepresentation[type, n, z, q] gives the vector evaluation representation as an Association containing E, F, K, KInverse, basis labels, and Cartan data.";
 DualVectorRepresentation::usage =
@@ -86,8 +90,8 @@ $twistedTypes = {
   "A2n-1(2)", "A2n-1(2)T", "A2n(2)", "A2n(2)T", "Dn+1(2)"
 };
 $canonicalTypes = Join[$untwistedTypes, $twistedTypes];
-$qreKMatricesVersion = "0.15.0";
-$webCatalogueSchemaVersion = "1.3.0";
+$qreKMatricesVersion = "0.16.0";
+$webCatalogueSchemaVersion = "1.4.0";
 
 QREKMatricesVersion[] := $qreKMatricesVersion;
 
@@ -113,6 +117,243 @@ canonicalType[type_] := Missing["UnknownType", type];
 
 TwistedAffineTypes[] := $twistedTypes;
 AffineTypes[] := $canonicalTypes;
+
+(* Structured K-matrix family content ------------------------------------- *)
+
+familyASTInteger[value_Integer] := <|"kind" -> "integer",
+  "value" -> ToString[value, InputForm]|>;
+familyASTRational[numerator_Integer, denominator_Integer] := <|
+  "kind" -> "rational", "numerator" -> ToString[numerator, InputForm],
+  "denominator" -> ToString[denominator, InputForm]|>;
+familyASTSymbol[name_String] := <|"kind" -> "symbol", "name" -> name|>;
+familyASTCall[head_String, arguments_List] := <|"kind" -> "call",
+  "head" -> head, "arguments" -> arguments|>;
+familyASTFunction[name_String, arguments___] :=
+  familyASTCall[name, {arguments}];
+familyASTTimes[arguments___] := familyASTCall["Times", {arguments}];
+familyASTPlus[arguments___] := familyASTCall["Plus", {arguments}];
+familyASTPower[base_, exponent_Integer] := familyASTCall["Power",
+  {base, familyASTInteger[exponent]}];
+familyASTDivide[numerator_, denominator_] := familyASTTimes[numerator,
+  familyASTPower[denominator, -1]];
+familyASTEqual[left_, right_] := familyASTCall["Equal", {left, right}];
+
+familySource[source_String, anchor_String, role_String : "formula"] := <|
+  "Source" -> source, "Anchor" -> anchor, "Role" -> role|>;
+familyConstraint[id_String, kind_String, latex_String] := <|
+  "ConstraintID" -> id, "Kind" -> kind, "LaTeX" -> latex|>;
+familyParameter[name_String, label_String] := <|
+  "Name" -> name, "Label" -> label, "Type" -> "integer"|>;
+
+$familyMasterFormulaAST := With[
+  {u = familyASTSymbol["u"], k = familyASTFunction["K", familyASTSymbol["u"]],
+   identity = familyASTSymbol["Id"]},
+  familyASTEqual[k, familyASTPlus[identity,
+    familyASTTimes[
+      familyASTDivide[
+        familyASTPlus[u, familyASTTimes[familyASTInteger[-1],
+          familyASTPower[u, -1]]],
+        familyASTFunction["k1", u]],
+      familyASTPlus[familyASTFunction["M1", u],
+        familyASTDivide[familyASTFunction["M2", u],
+          familyASTFunction["k2", u]]]]]]
+];
+
+familyFormula[kind_String, latex_String, expression_Association,
+    definitions_List, assumptions_String, sources_List] := <|
+  "Kind" -> kind, "Status" -> "published", "LaTeX" -> latex,
+  "Expression" -> expression, "Definitions" -> definitions,
+  "AssumptionsLaTeX" -> assumptions, "SourceAnchors" -> sources|>;
+familyDefinition[id_String, label_String, latex_String,
+    expression_Association] := <|"DefinitionID" -> id,
+  "Label" -> label, "LaTeX" -> latex, "Expression" -> expression|>;
+
+$a1Formula = familyFormula["identity",
+  "K(u)=\\operatorname{Id}",
+  familyASTEqual[familyASTFunction["K", familyASTSymbol["u"]],
+    familyASTSymbol["Id"]], {}, "N>2",
+  {familySource["qRE/files/results.tex", "T:all-K"],
+   familySource["qRE/files/resultsA124.tex", "sec:K:tw", "derivation"]}];
+
+$a2Formula = familyFormula["constantBlockSum",
+  "K(u)=\\sum_{1\\leq i\\leq N/2}\\left(q^{1/2}E_{2i-1,2i}-q^{-1/2}E_{2i,2i-1}\\right)",
+  familyASTEqual[familyASTFunction["K", familyASTSymbol["u"]],
+    familyASTFunction["Sum",
+      familyASTPlus[
+        familyASTTimes[familyASTCall["Power", {familyASTSymbol["q"],
+            familyASTRational[1, 2]}],
+          familyASTFunction["MatrixUnit", familyASTSymbol["2i-1"],
+            familyASTSymbol["2i"]]],
+        familyASTTimes[familyASTInteger[-1],
+          familyASTCall["Power", {familyASTSymbol["q"],
+            familyASTRational[-1, 2]}],
+          familyASTFunction["MatrixUnit", familyASTSymbol["2i"],
+            familyASTSymbol["2i-1"]]]],
+      familyASTSymbol["i=1..N/2"]]], {}, "N>2\\text{ even}",
+  {familySource["qRE/files/results.tex", "T:all-K"],
+   familySource["qRE/files/resultsA124.tex", "sec:K:tw", "derivation"]}];
+
+$a3Formula = familyFormula["masterFormula",
+  "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
+  $familyMasterFormulaAST,
+  {familyDefinition["a3-k1", "First denominator",
+     "k_1(u)=\\lambda\\mu-u",
+     familyASTEqual[familyASTFunction["k1", familyASTSymbol["u"]],
+       familyASTPlus[familyASTTimes[familyASTSymbol["lambda"],
+         familyASTSymbol["mu"]], familyASTTimes[familyASTInteger[-1],
+         familyASTSymbol["u"]]]]],
+   familyDefinition["a3-terms", "Family terms",
+     "M_1(u),\\ M_2(u)\\text{ are determined by }(N,\\ell,r,t)",
+     familyASTFunction["FamilyTerms", familyASTSymbol["N"],
+       familyASTSymbol["l"], familyASTSymbol["r"],
+       familyASTSymbol["t"]]]},
+  "0\\leq\\ell\\leq r\\leq\\lfloor t/2\\rfloor",
+  {familySource["qRE/files/results.tex", "T:all-K"],
+   familySource["qRE/files/resultsA3.tex", "Res:A3", "specialization"]}];
+
+$a4Formula = familyFormula["halfPeriodExchange",
+  "K(u)=\\sum_{1\\leq i\\leq N/2}\\left(uE_{i+N/2,i}+E_{i,i+N/2}\\right)",
+  familyASTEqual[familyASTFunction["K", familyASTSymbol["u"]],
+    familyASTFunction["Sum",
+      familyASTPlus[
+        familyASTTimes[familyASTSymbol["u"],
+          familyASTFunction["MatrixUnit", familyASTSymbol["i+N/2"],
+            familyASTSymbol["i"]]],
+        familyASTFunction["MatrixUnit", familyASTSymbol["i"],
+          familyASTSymbol["i+N/2"]]],
+      familyASTSymbol["i=1..N/2"]]], {}, "N>2\\text{ even}",
+  {familySource["qRE/files/results.tex", "T:all-K"],
+   familySource["qRE/files/resultsA124.tex", "sec:K:tw", "derivation"]}];
+
+$c1Formula = familyFormula["masterFormula",
+  "K(u)=\\operatorname{Id}+\\frac{u-u^{-1}}{k_1(u)}\\left(M_1(u)+\\frac{M_2(u)}{k_2(u)}\\right)",
+  $familyMasterFormulaAST,
+  {familyDefinition["c1-denominators", "Denominators",
+     "k_1(u)=\\lambda\\mu-u,\\qquad k_2(u)=\\lambda^{-1}-(\\mu u)^{-1}",
+     familyASTFunction["Definitions", familyASTSymbol["k1"],
+       familyASTSymbol["k2"]]],
+   familyDefinition["c1-m1", "Diagonal term",
+     "M_1(u)=\\sum_{\\bar\\ell\\leq i\\leq n}(\\lambda\\mu uE_{-i,-i}+E_{ii})",
+     familyASTFunction["IndexedMatrixSum", familyASTSymbol["M1"],
+       familyASTSymbol["bar(l)<=i<=n"]]],
+   familyDefinition["c1-m2", "Off-diagonal term",
+     "M_2(u)=\\sum_{\\bar r\\leq i<\\bar\\ell}(-\\lambda E_{-i,-i}+\\lambda^{-1}E_{ii}+E_{-i,i}-E_{i,-i})",
+     familyASTFunction["IndexedMatrixSum", familyASTSymbol["M2"],
+       familyASTSymbol["bar(r)<=i<bar(l)"]]],
+   familyDefinition["c1-parameters", "Parameters",
+     "\\lambda=q^{\\bar r},\\quad\\mu=q^{-\\ell-1};\\qquad\\mu\\in\\mathbb K^\\times\\ (\\ell=0),\\quad\\lambda\\in\\mathbb K^\\times\\ (r=n)",
+     familyASTFunction["ParameterSpecialization", familyASTSymbol["lambda"],
+       familyASTSymbol["mu"]]]},
+  "0\\leq\\ell\\leq r\\leq n",
+  {familySource["qRE/files/results.tex", "T:all-K"],
+   familySource["qRE/files/resultsC1BD2.tex", "Res:C1", "specialization"]}];
+
+$familyRegistry = <|
+  "A.1" -> <|"AffineTypes" -> {"A(1)"}, "Description" ->
+    "Identity family for untwisted affine type A.", "ContentStatus" -> "published",
+    "Regimes" -> {"MainCatalogue"}, "ParameterOrder" -> {},
+    "ParameterDomain" -> <|"Parameters" -> {}, "Constraints" -> {
+      familyConstraint["a1-rank", "rank", "N>2"]}, "Branches" -> {}|>,
+    "GeneralFormula" -> $a1Formula,
+    "Properties" -> {<|"Kind" -> "characteristicIdentity",
+      "Status" -> "sourceIdentity", "LaTeX" -> "K(u)-\\operatorname{Id}=0"|>},
+    "SourceAnchors" -> $a1Formula["SourceAnchors"]|>,
+  "A.2" -> <|"AffineTypes" -> {"A(1)"}, "Description" ->
+    "Constant symplectic block family in even dimension.", "ContentStatus" -> "published",
+    "Regimes" -> {"MainCatalogue"}, "ParameterOrder" -> {},
+    "ParameterDomain" -> <|"Parameters" -> {}, "Constraints" -> {
+      familyConstraint["a2-rank", "rankParity", "N>2\\text{ even}"]}, "Branches" -> {}|>,
+    "GeneralFormula" -> $a2Formula, "Properties" -> {},
+    "SourceAnchors" -> $a2Formula["SourceAnchors"]|>,
+  "A.3" -> <|"AffineTypes" -> {"A(1)"}, "Description" ->
+    "Parametric cyclic family including the affine-node position t.",
+    "ContentStatus" -> "published", "Regimes" -> {"MainCatalogue"},
+    "ParameterOrder" -> {"l", "r", "t"},
+    "ParameterDomain" -> <|"Parameters" -> {
+      familyParameter["l", "\\ell"], familyParameter["r", "r"],
+      familyParameter["t", "t"]}, "Constraints" -> {
+      familyConstraint["a3-order", "inequality",
+        "0\\leq\\ell\\leq r\\leq\\lfloor t/2\\rfloor"]},
+      "Branches" -> {<|"BranchID" -> "representative",
+        "Label" -> "Representative orbit", "Regime" -> "MainCatalogue",
+        "ConstraintsLaTeX" -> {"t\\in\\{N-1,N\\}"}|>}|>,
+    "GeneralFormula" -> $a3Formula, "Properties" -> {},
+    "SourceAnchors" -> $a3Formula["SourceAnchors"]|>,
+  "A.4" -> <|"AffineTypes" -> {"A(1)"}, "Description" ->
+    "Half-period exchange family in even dimension.", "ContentStatus" -> "published",
+    "Regimes" -> {"MainCatalogue"}, "ParameterOrder" -> {},
+    "ParameterDomain" -> <|"Parameters" -> {}, "Constraints" -> {
+      familyConstraint["a4-rank", "rankParity", "N>2\\text{ even}"]}, "Branches" -> {}|>,
+    "GeneralFormula" -> $a4Formula, "Properties" -> {},
+    "SourceAnchors" -> $a4Formula["SourceAnchors"]|>,
+  "C.1" -> <|"AffineTypes" -> {"C(1)"}, "Description" ->
+    "Identity-involution family parametrised by the distinguished nodes ell and r.",
+    "ContentStatus" -> "published", "Regimes" -> {"MainCatalogue", "NonQuasistandard"},
+    "ParameterOrder" -> {"l", "r"},
+    "ParameterDomain" -> <|"Parameters" -> {
+      familyParameter["l", "\\ell"], familyParameter["r", "r"]},
+      "Constraints" -> {familyConstraint["c1-order", "inequality",
+        "0\\leq\\ell\\leq r\\leq n"]},
+      "Branches" -> {
+        <|"BranchID" -> "representative", "Label" -> "Representative",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {"\\ell+r\\leq n"}|>,
+        <|"BranchID" -> "transported", "Label" -> "Rotated non-representative",
+          "Regime" -> "MainCatalogue", "ConstraintsLaTeX" -> {"\\ell+r>n"}|>,
+        <|"BranchID" -> "nonquasistandard", "Label" -> "Non-quasistandard",
+          "Regime" -> "NonQuasistandard",
+          "ConstraintsLaTeX" -> {"1\\leq\\ell\\leq n-3", "r=\\ell+2"}|>}|>,
+    "GeneralFormula" -> $c1Formula,
+    "Properties" -> {
+      <|"Kind" -> "eigendecomposition", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)=V D(u)V^{-1}"|>,
+      <|"Kind" -> "barSymmetry", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)^{-1}=J K(u)|_{\\lambda\\mapsto\\lambda^{-1},\\mu\\mapsto\\mu^{-1}}J"|>,
+      <|"Kind" -> "factorisation", "Status" -> "sourceIdentity",
+        "LaTeX" -> "K(u)=V D(u)V^{-1}"|>},
+    "SourceAnchors" -> $c1Formula["SourceAnchors"]|>
+|>;
+
+$familyStubs = <|
+  "B.1" -> {{"B(1)"}, "Untwisted B member of the BD.1 master family.", {"l", "r"}},
+  "B.2" -> {{"B(1)"}, "Untwisted B member of the BD.2 alternating family.", {"l", "r"}},
+  "C.2" -> {{"C(1)"}, "Alternating untwisted C family.", {"l", "r"}},
+  "C.4" -> {{"C(1)"}, "Involutive untwisted C family.", {"l"}},
+  "D.1" -> {{"D(1)"}, "Untwisted D member of the BD.1 master family.", {"l", "r"}},
+  "D.2" -> {{"D(1)"}, "Untwisted D member of the BD.2 alternating family.", {"l", "r"}},
+  "D.3" -> {{"D(1)"}, "Exceptional rank-four family with no nonzero vector K-matrix.", {}},
+  "D.4" -> {{"D(1)"}, "Fork-sensitive CD.4 family.", {"l"}},
+  "B*.1" -> {{"A2n-1(2)"}, "Twisted affine A plain family.", {"l", "r"}},
+  "B*.2" -> {{"A2n-1(2)"}, "Twisted affine A alternating family.", {"l", "r"}},
+  "tB*.1" -> {{"A2n-1(2)T"}, "Transposed presentation of B*.1.", {"l", "r"}},
+  "tB*.2" -> {{"A2n-1(2)T"}, "Transposed presentation of B*.2.", {"l", "r"}},
+  "C**.1" -> {{"A2n(2)"}, "Twisted affine A quadratic plain family.", {"l", "r"}},
+  "C**.2" -> {{"A2n(2)"}, "Twisted affine A quadratic alternating family.", {"l", "r"}},
+  "tC**.1" -> {{"A2n(2)T"}, "Transposed presentation of C**.1.", {"l", "r"}},
+  "tC**.2" -> {{"A2n(2)T"}, "Transposed presentation of C**.2.", {"l", "r"}},
+  "C*.1" -> {{"Dn+1(2)"}, "Twisted affine D plain family.", {"l", "r"}},
+  "C*.2" -> {{"Dn+1(2)"}, "Twisted affine D alternating family.", {"l", "r"}},
+  "C*.4" -> {{"Dn+1(2)"}, "Twisted affine D involutive family.", {"l"}}
+|>;
+
+KeyValueMap[(If[!KeyExistsQ[$familyRegistry, #1],
+  AssociateTo[$familyRegistry, #1 -> <|"AffineTypes" -> #2[[1]],
+    "Description" -> #2[[2]], "ContentStatus" ->
+      If[MemberQ[$untwistedTypes, First[#2[[1]]]], "formulaPendingMigration", "computational"],
+    "Regimes" -> {}, "ParameterOrder" -> #2[[3]],
+    "ParameterDomain" -> <|"Parameters" -> (familyParameter[#, If[# === "l", "\\ell", #]] & /@ #2[[3]]),
+      "Constraints" -> {}, "Branches" -> {}|>,
+    "GeneralFormula" -> Missing["PendingMigration"], "Properties" -> {},
+    "SourceAnchors" -> {}|>]]) &, $familyStubs];
+
+KMatrixFamilies[type_String] := Module[{canonical = canonicalType[type]},
+  If[MissingQ[canonical], Return[$Failed]];
+  Keys@Select[$familyRegistry, MemberQ[Lookup[#, "AffineTypes", {}], canonical] &]
+];
+KMatrixFamilyData[family_String] := Module[{record = Lookup[$familyRegistry,
+    family, Missing["UnknownFamily", family]]},
+  If[MissingQ[record], Return[record]];
+  Join[<|"FamilyID" -> family, "Title" -> family|>, record]
+];
 
 zeroCartan[n_Integer] := 2 IdentityMatrix[n + 1];
 setEdge[a_, i_Integer, j_Integer, aij_Integer, aji_Integer] := Module[{b = a},
@@ -2938,13 +3179,86 @@ webClassificationData[classification_Association] := <|
     Lookup[classification, "RepresentativePermutation", Missing[]]]
 |>;
 
+webSourceAnchorData[source_Association] := <|
+  "source" -> ToString[Lookup[source, "Source", ""]],
+  "anchor" -> ToString[Lookup[source, "Anchor", ""]],
+  "role" -> ToString[Lookup[source, "Role", "formula"]]|>;
+
+webFamilyFormulaData[formula_Association] := <|
+  "kind" -> ToString[formula["Kind"]],
+  "status" -> ToString[formula["Status"]],
+  "latex" -> ToString[formula["LaTeX"]],
+  "expression" -> formula["Expression"],
+  "definitions" -> Map[Function[definition, <|
+    "definitionId" -> ToString[definition["DefinitionID"]],
+    "label" -> ToString[definition["Label"]],
+    "latex" -> ToString[definition["LaTeX"]],
+    "expression" -> definition["Expression"]|>], formula["Definitions"]],
+  "assumptionsLatex" -> ToString[formula["AssumptionsLaTeX"]],
+  "sourceAnchors" -> (webSourceAnchorData /@ formula["SourceAnchors"])
+|>;
+webFamilyFormulaData[_] := Null;
+
+webFamilyParameterDomainData[domain_Association] := <|
+  "parameters" -> Map[Function[parameter, <|
+    "name" -> ToString[parameter["Name"]],
+    "label" -> ToString[parameter["Label"]],
+    "type" -> ToString[parameter["Type"]]|>], Lookup[domain, "Parameters", {}]],
+  "constraints" -> Map[Function[constraint, <|
+    "constraintId" -> ToString[constraint["ConstraintID"]],
+    "kind" -> ToString[constraint["Kind"]],
+    "latex" -> ToString[constraint["LaTeX"]]|>], Lookup[domain, "Constraints", {}]],
+  "branches" -> Map[Function[branch, <|
+    "branchId" -> ToString[branch["BranchID"]],
+    "label" -> ToString[branch["Label"]],
+    "regime" -> ToString[branch["Regime"]],
+    "constraintsLatex" -> (ToString /@ Lookup[branch, "ConstraintsLaTeX", {}])|>],
+    Lookup[domain, "Branches", {}]]
+|>;
+
+webFamilyRecordData[record_Association, instanceIDs_List] := <|
+  "familyId" -> ToString[record["FamilyID"]],
+  "title" -> ToString[record["Title"]],
+  "affineTypes" -> (ToString /@ record["AffineTypes"]),
+  "description" -> ToString[record["Description"]],
+  "contentStatus" -> ToString[record["ContentStatus"]],
+  "regimes" -> (ToString /@ record["Regimes"]),
+  "parameterOrder" -> (ToString /@ record["ParameterOrder"]),
+  "parameterDomain" -> webFamilyParameterDomainData[record["ParameterDomain"]],
+  "generalFormula" -> webFamilyFormulaData[record["GeneralFormula"]],
+  "properties" -> Map[Function[property, <|
+    "kind" -> ToString[property["Kind"]],
+    "status" -> ToString[property["Status"]],
+    "latex" -> ToString[property["LaTeX"]]|>], record["Properties"]],
+  "sourceAnchors" -> (webSourceAnchorData /@ record["SourceAnchors"]),
+  "instanceIds" -> instanceIDs
+|>;
+
+webFamilyMembershipData[classification_Association, n_Integer] := Module[
+  {families, selected, regime, parameters, permutation, representative},
+  families = ToString /@ Lookup[classification, "CandidateFamilies", {}];
+  selected = Lookup[classification, "Family", Missing[]];
+  regime = ToString[Lookup[classification, "Regime", "MainCatalogue"]];
+  parameters = webExpressionAssociation[Lookup[classification, "Parameters", <||>]];
+  permutation = Lookup[classification, "RepresentativePermutation", Missing[]];
+  representative = ListQ[permutation] && permutation === Range[0, n];
+  Map[Function[family, <|
+    "familyId" -> family,
+    "membershipStatus" -> If[StringQ[selected] && selected === family,
+      "classified", "candidate"],
+    "regime" -> regime,
+    "parameters" -> parameters,
+    "representative" -> representative,
+    "transportPermutation" -> webNullable[permutation]|>], families]
+];
+
 Options[WebCatalogueData] = {
   "IncludeKMatrices" -> False,
   "QuantumParameter" -> q
 };
 WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
   {canonical = canonicalType[type], diagrams, rows, include,
-   records, statuses, catalogueID, ambient, rMatrixID},
+   records, statuses, catalogueID, ambient, rMatrixID, familyIDs, familyRecords},
   If[MissingQ[canonical], Return[$Failed]];
   If[Quiet[CartanMatrixOf[canonical, n]] === $Failed, Return[$Failed]];
   include = TrueQ[OptionValue["IncludeKMatrices"]];
@@ -2983,6 +3297,8 @@ WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
             SymmetrizersOf[diagram["AffineType"], diagram["Rank"]])
         |>,
         "classification" -> webClassificationData[classification],
+        "familyMemberships" -> webFamilyMembershipData[classification,
+          diagram["Rank"]],
         "qsp" -> QSPPresentationData[diagram],
         "reflectionEquation" -> ReplacePart[
           ReflectionEquationData[diagram, rMatrixID],
@@ -3006,12 +3322,20 @@ WebCatalogueData[type_String, n_Integer, OptionsPattern[]] := Module[
   ];
   statuses = If[records === {}, <||>,
     Counts[Lookup[Lookup[records, "computation"], "status"]]];
+  familyIDs = DeleteDuplicates[Flatten[
+    (Lookup[#, "familyId", {}] &) /@ Lookup[records, "familyMemberships"]]];
+  familyRecords = Map[Function[familyID,
+    webFamilyRecordData[KMatrixFamilyData[familyID],
+      Lookup[Select[records, Function[record,
+        AnyTrue[record["familyMemberships"], Function[membership,
+          membership["familyId"] === familyID]]]], "id"]]], familyIDs];
   <|
     "schemaVersion" -> $webCatalogueSchemaVersion,
     "engine" -> <|"name" -> "QREKMatrices", "version" -> $qreKMatricesVersion|>,
     "catalogue" -> <|"id" -> catalogueID, "affineType" -> canonical,
       "rank" -> n|>,
     "ambient" -> ambient,
+    "families" -> familyRecords,
     "summary" -> <|"diagramCount" -> Length[records],
       "statuses" -> statuses|>,
     "diagrams" -> records
@@ -3044,7 +3368,8 @@ ExportWebCatalogue[path_String, OptionsPattern[]] := Module[
         "affineType" -> data["catalogue", "affineType"],
         "rank" -> data["catalogue", "rank"],
         "path" -> filename,
-        "diagramCount" -> data["summary", "diagramCount"]|>]
+        "diagramCount" -> data["summary", "diagramCount"],
+        "families" -> Lookup[data["families"], "familyId"]|>]
     ],
     {type, types}, {rank, ranks}
   ];

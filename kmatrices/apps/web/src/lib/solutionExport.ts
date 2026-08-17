@@ -7,13 +7,14 @@ export function buildSolutionBundle(
   ambient: Catalogue["ambient"],
 ) {
   return {
-    schemaVersion: "1.3.0",
+    schemaVersion: "1.4.0",
     engine,
     exportedAt: new Date().toISOString(),
     diagram: {
       id: record.id,
       spec: record.spec,
       classification: record.classification,
+      familyMemberships: record.familyMemberships,
       cartanMatrix: record.data.cartanMatrix,
       symmetrizers: record.data.symmetrizers,
       qsp: record.qsp,

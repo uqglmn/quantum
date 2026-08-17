@@ -139,3 +139,22 @@ tests, and the production build.
 Validation for this increment includes eight frontend unit tests, schema
 validation of all 23 generated catalogues, a production build, and a headless
 browser visual check at desktop width.
+
+## Engine-owned family content — 2026-08-17
+
+- frontend: `0.8.0`;
+- QREKMatrices engine: `0.16.0`;
+- catalogue schema: `1.4.0`;
+- added reusable `KMatrixFamilies` and `KMatrixFamilyData` package APIs;
+- made family records and diagram-to-family memberships first-class catalogue
+  data instead of frontend-only knowledge;
+- transcribed structured general formulas, assumptions, parameter domains,
+  branch constraints, and manuscript anchors for A.1--A.4 and C.1;
+- created extensible, provenance-bearing records for every remaining twisted
+  and untwisted family;
+- made exported engine content authoritative in the family workbench while
+  retaining the former registry as a backwards-compatibility fallback.
+
+Validation for this increment includes 69 Wolfram tests, nine frontend unit
+tests, schema validation of all 23 generated catalogues, and a production
+build.

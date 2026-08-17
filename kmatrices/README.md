@@ -439,7 +439,12 @@ sparse K-matrices where computed, explicit candidate-family selection,
 self-hosted mathematical rendering, provenance, and JSON/LaTeX downloads. It
 also exports instantiated QSP generator presentations, shared representation
 records, sparse ambient R-matrices, and convention-bound reflection equations.
-The R panel supports formula, sparse-entry, provenance, and JSON views. Exact
+Family content is package-owned and exported as first-class records: A.1--A.4
+and C.1 currently include their general formulas, semantic expression trees,
+parameter domains, branch constraints, and manuscript anchors; all other
+twisted and untwisted families have stable extensible records ready for content
+transcription. The R panel supports formula, sparse-entry, provenance, and JSON
+views. Exact
 expanded QSP relations, catalogue-wide reflection-equation certificates,
 dressing, eigenvalues, characteristic identities, and factorisation remain
 extension boundaries. See `Documentation/PlatformArchitecture.md`,

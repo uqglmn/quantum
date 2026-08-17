@@ -24,7 +24,62 @@ export interface CatalogueManifest {
     rank: number;
     path: string;
     diagramCount: number;
+    families: string[];
   }>;
+}
+
+export interface FamilySourceAnchor {
+  source: string;
+  anchor: string;
+  role: string;
+}
+
+export interface FamilyFormulaRecord {
+  kind: string;
+  status: "published" | "computational" | "pending";
+  latex: string;
+  expression: Expression;
+  definitions: Array<{
+    definitionId: string;
+    label: string;
+    latex: string;
+    expression: Expression;
+  }>;
+  assumptionsLatex: string;
+  sourceAnchors: FamilySourceAnchor[];
+}
+
+export interface FamilyRecord {
+  familyId: string;
+  title: string;
+  affineTypes: string[];
+  description: string;
+  contentStatus: string;
+  regimes: string[];
+  parameterOrder: string[];
+  parameterDomain: {
+    parameters: Array<{ name: string; label: string; type: "integer" }>;
+    constraints: Array<{ constraintId: string; kind: string; latex: string }>;
+    branches: Array<{
+      branchId: string;
+      label: string;
+      regime: string;
+      constraintsLatex: string[];
+    }>;
+  };
+  generalFormula: FamilyFormulaRecord | null;
+  properties: Array<{ kind: string; status: string; latex: string }>;
+  sourceAnchors: FamilySourceAnchor[];
+  instanceIds: string[];
+}
+
+export interface FamilyMembership {
+  familyId: string;
+  membershipStatus: "classified" | "candidate";
+  regime: string;
+  parameters: Record<string, Expression>;
+  representative: boolean;
+  transportPermutation: number[] | null;
 }
 
 export interface Solution {
@@ -162,6 +217,7 @@ export interface DiagramRecord {
     representativeFamily?: string | null;
     representativePermutation?: number[] | null;
   };
+  familyMemberships: FamilyMembership[];
   qsp: QSPPresentation;
   reflectionEquation: ReflectionEquationRecord;
   capabilities: {
@@ -183,6 +239,7 @@ export interface Catalogue {
   engine: { name: "QREKMatrices"; version: string };
   catalogue: { id: string; affineType: string; rank: number };
   ambient: { representation: RepresentationRecord; rMatrix: RMatrixRecord };
+  families: FamilyRecord[];
   summary: { diagramCount: number; statuses: Record<string, number> };
   diagrams: DiagramRecord[];
 }
