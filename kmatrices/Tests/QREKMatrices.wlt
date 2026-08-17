@@ -802,7 +802,7 @@ VerificationTest[
 
 VerificationTest[
   QREKMatricesVersion[],
-  "0.12.0",
+  "0.13.0",
   TestID -> "web-engine-version"
 ]
 
@@ -826,7 +826,7 @@ VerificationTest[
       data["summary", "diagramCount"], DuplicateFreeQ[ids],
       Union[Lookup[Lookup[records, "computation"], "status"]]}
   ],
-  {"1.1.0", "0.12.0", 7, True, {"NotRequested"}},
+  {"1.2.0", "0.13.0", 7, True, {"NotRequested"}},
   TestID -> "web-catalogue-stable-records"
 ]
 
@@ -842,7 +842,7 @@ VerificationTest[
       imported["schemaVersion"],
       FileExistsQ[FileNameJoin[{directory, imported["files"][[1, "path"]]}]]}
   ],
-  {7, "1.1.0", True},
+  {7, "1.2.0", True},
   TestID -> "web-catalogue-export-manifest"
 ]
 
@@ -887,6 +887,79 @@ VerificationTest[
   ],
   {5, "twistedLinear", 6, "twistedQuadratic", True},
   TestID -> "ambient-r-matrix-registry-covers-twisted-formulas"
+]
+
+VerificationTest[
+  Module[{specs, matrix, permutation, labels},
+    specs = {{"A(1)", 2}, {"B(1)", 2}, {"C(1)", 2}, {"D(1)", 4},
+      {"A2n-1(2)", 3}, {"A2n-1(2)T", 2}, {"A2n(2)", 2},
+      {"A2n(2)T", 2}, {"Dn+1(2)", 2}};
+    And @@ Table[
+      labels = QREKMatrices`Private`representationBasis[spec[[1]], spec[[2]]];
+      matrix = AmbientRMatrix[spec[[1]], spec[[2]], 1, 4];
+      permutation = QREKMatrices`Private`ambientPermutation[labels];
+      SparseArrayQ[matrix] && Normal[matrix - permutation] ===
+        ConstantArray[0, Dimensions[matrix]],
+      {spec, specs}]
+  ],
+  True,
+  TestID -> "ambient-r-matrices-materialize-and-are-regular"
+]
+
+VerificationTest[
+  Module[{specs, forward, backward, permutation, labels, identity},
+    specs = {{"A(1)", 2}, {"B(1)", 2}, {"C(1)", 2}, {"D(1)", 4},
+      {"A2n-1(2)", 3}, {"A2n-1(2)T", 2}, {"A2n(2)", 2},
+      {"A2n(2)T", 2}, {"Dn+1(2)", 2}};
+    And @@ Table[
+      labels = QREKMatrices`Private`representationBasis[spec[[1]], spec[[2]]];
+      permutation = QREKMatrices`Private`ambientPermutation[labels];
+      forward = AmbientRMatrix[spec[[1]], spec[[2]], 2, 4];
+      backward = AmbientRMatrix[spec[[1]], spec[[2]], 1/2, 4];
+      identity = IdentityMatrix[Length[forward]];
+      Normal[Map[Together, forward.permutation.backward.permutation - identity,
+        {2}]] === ConstantArray[0, Dimensions[forward]],
+      {spec, specs}]
+  ],
+  True,
+  TestID -> "ambient-r-matrices-exact-unitarity-sample"
+]
+
+VerificationTest[
+  Module[{specs, labels, dimension, permutation, swap23, r12, r23, r13,
+    residual},
+    specs = {{"A(1)", 2}, {"B(1)", 2}, {"C(1)", 2}, {"D(1)", 4},
+      {"A2n-1(2)", 3}, {"A2n-1(2)T", 2}, {"A2n(2)", 2},
+      {"A2n(2)T", 2}, {"Dn+1(2)", 2}};
+    And @@ Table[
+      labels = QREKMatrices`Private`representationBasis[spec[[1]], spec[[2]]];
+      dimension = Length[labels];
+      permutation = QREKMatrices`Private`ambientPermutation[labels];
+      swap23 = KroneckerProduct[IdentityMatrix[dimension], permutation];
+      r12[x_] := KroneckerProduct[
+        AmbientRMatrix[spec[[1]], spec[[2]], x, 4], IdentityMatrix[dimension]];
+      r23[x_] := KroneckerProduct[IdentityMatrix[dimension],
+        AmbientRMatrix[spec[[1]], spec[[2]], x, 4]];
+      r13[x_] := swap23.r12[x].swap23;
+      residual = r12[2/3].r13[2/5].r23[3/5] -
+        r23[3/5].r13[2/5].r12[2/3];
+      And @@ (PossibleZeroQ /@ Last /@ Most[ArrayRules[residual]]),
+      {spec, specs}]
+  ],
+  True,
+  TestID -> "ambient-r-matrices-exact-yang-baxter-sample"
+]
+
+VerificationTest[
+  Module[{diagram, result},
+    diagram = CreateSatakeDiagram["A(1)", 1, {}];
+    result = KMatrix[diagram, u,
+      "QuantumParameter" -> 4,
+      "CParameters" -> <|0 -> 1/4, 1 -> 1/4|>];
+    VerifyReflectionEquation[result["KMatrix"], diagram, {u, v}, 4]
+  ],
+  True,
+  TestID -> "reflection-equation-exact-certificate-A1"
 ]
 
 VerificationTest[

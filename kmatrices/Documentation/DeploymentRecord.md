@@ -66,3 +66,21 @@ interaction that selects the `B.2` candidate of an ambiguous `B.1/B.2` record.
 Validation includes 60 Wolfram tests, 23 schema-valid catalogues, four
 frontend tests, a production build, cross-catalogue identifier checks, and a
 scripted browser walkthrough of the quadratic twisted R-matrix panel.
+
+## Sparse tensor and R-matrix increment — 2026-08-17
+
+- frontend: `0.4.0`;
+- QREKMatrices engine: `0.13.0`;
+- catalogue schema: `1.2.0`;
+- added sparse `AmbientRMatrix` materialization for every supported untwisted
+  and twisted affine presentation;
+- added explicit squared-crossing-parameter conventions, including both
+  quadratic twisted families;
+- added `ReflectionEquationResidual` and `VerifyReflectionEquation` APIs;
+- corrected the displayed transposed equation to the source convention with
+  `R(1/(uv))^(t_1)`;
+- added formula/sparse/provenance views and JSON export for ambient R-matrices.
+
+Validation includes 64 Wolfram tests, exact regularity for all nine series,
+exact rational samples of unitarity and Yang--Baxter in all nine series, 23
+schema-valid catalogues, four frontend tests, and a production build.

@@ -62,6 +62,12 @@ QSPPresentationData::usage =
   "QSPPresentationData[diagram] gives a structured, convention-labelled presentation of the quantum symmetric pair algebra attached to a generalized Satake diagram.";
 AmbientRMatrixData::usage =
   "AmbientRMatrixData[type, n] gives the registered vector representation and explicit operator formula for its normalized ambient trigonometric R-matrix.";
+AmbientRMatrix::usage =
+  "AmbientRMatrix[type, n, u, q] materializes the normalized ambient trigonometric R-matrix as a sparse matrix in the lexicographic tensor-product basis.";
+ReflectionEquationResidual::usage =
+  "ReflectionEquationResidual[K, diagram, {u, v}, q] gives the tensor-matrix residual of the standard or transposed reflection equation, regarding K as an expression in u.";
+VerifyReflectionEquation::usage =
+  "VerifyReflectionEquation[K, diagram, {u, v}, q] checks that the corresponding reflection-equation residual vanishes.";
 ReflectionEquationData::usage =
   "ReflectionEquationData[diagram, rMatrixId] gives the convention-labelled reflection equation associated to a generalized Satake diagram.";
 WebExpressionData::usage =
@@ -78,8 +84,8 @@ $twistedTypes = {
   "A2n-1(2)", "A2n-1(2)T", "A2n(2)", "A2n(2)T", "Dn+1(2)"
 };
 $canonicalTypes = Join[$untwistedTypes, $twistedTypes];
-$qreKMatricesVersion = "0.12.0";
-$webCatalogueSchemaVersion = "1.1.0";
+$qreKMatricesVersion = "0.13.0";
+$webCatalogueSchemaVersion = "1.2.0";
 
 QREKMatricesVersion[] := $qreKMatricesVersion;
 
@@ -2422,6 +2428,161 @@ ambientRFormulaKind[type_String] := Switch[canonicalType[type],
   "A2n(2)T" | "Dn+1(2)", "twistedQuadratic"
 ];
 
+tensorMatrixUnit[labels_List, i_, j_, k_, l_] :=
+  KroneckerProduct[matrixUnit[labels, i, j], matrixUnit[labels, k, l]];
+
+orderedPairs[labels_List] := Flatten[
+  Table[{labels[[i]], labels[[j]]}, {i, Length[labels]},
+    {j, i + 1, Length[labels]}], 1];
+
+ambientRConvention[type_String, n_Integer, q_, crossingSquared_] := Module[
+  {canonical = canonicalType[type], labels, primary, dimension, theta,
+   thetaI, nu, qTildeSquared},
+  labels = representationBasis[canonical, n];
+  dimension = Length[labels];
+  primary = DeleteCases[labels, "0p"];
+  theta = If[MemberQ[{"C(1)", "A2n-1(2)", "A2n(2)T"}, canonical], -1, 1];
+  thetaI = If[theta === -1, Sign, Function[i, 1]];
+  nu = If[theta === -1, Function[i, i],
+    Function[i, i - Sign[i] (n - Length[primary]/2 + 1)]];
+  qTildeSquared = Replace[crossingSquared, Automatic :> Switch[canonical,
+    "B(1)" | "C(1)" | "D(1)", q^(dimension - 2 theta),
+    "A2n-1(2)" | "A2n-1(2)T" | "A2n(2)", -q^dimension,
+    "A2n(2)T", -I q^(dimension/2),
+    "Dn+1(2)", q^n,
+    _, Missing["NotApplicable"]
+  ]];
+  <|"Type" -> canonical, "Labels" -> labels, "PrimaryLabels" -> primary,
+    "Dimension" -> dimension, "Theta" -> theta, "ThetaI" -> thetaI,
+    "Nu" -> nu, "CrossingParameterSquared" -> qTildeSquared|>
+];
+
+ambientPermutation[labels_List] := SparseArray@Total[
+  Flatten[Table[tensorMatrixUnit[labels, i, j, j, i], {i, labels},
+    {j, labels}], 1]];
+
+ambientQOperator[labels_List, primary_List, thetaI_, nu_, q_] :=
+  SparseArray@Total[Flatten[Table[
+    thetaI[i] thetaI[j] q^(nu[i] - nu[j])
+      tensorMatrixUnit[labels, i, j, negateLabel[i], negateLabel[j]],
+    {i, primary}, {j, primary}], 1]];
+
+ambientConstantR["A(1)", labels_List, primary_List, thetaI_, nu_, q_] :=
+  SparseArray[Total[Flatten[Table[
+      q^Boole[i === j] tensorMatrixUnit[labels, i, i, j, j],
+      {i, labels}, {j, labels}], 1]] +
+    (q - q^-1) Total[tensorMatrixUnit[labels, #[[1]], #[[2]],
+        #[[2]], #[[1]]] & /@ orderedPairs[labels]]];
+ambientConstantR[type_String, labels_List, primary_List, thetaI_, nu_, q_] :=
+  SparseArray[Total[Flatten[Table[
+      q^(Boole[i === j] - Boole[i === negateLabel[j]])
+        tensorMatrixUnit[labels, i, i, j, j],
+      {i, labels}, {j, labels}], 1]] +
+    (q - q^-1) Total[(tensorMatrixUnit[labels, #[[1]], #[[2]],
+          #[[2]], #[[1]]] -
+        thetaI[#[[1]]] thetaI[#[[2]]] q^(nu[#[[1]]] - nu[#[[2]]])
+          tensorMatrixUnit[labels, #[[1]], #[[2]], negateLabel[#[[1]]],
+            negateLabel[#[[2]]]]) & /@ orderedPairs[primary]]];
+
+ambientQuadraticOperators[labels_List, primary_List, theta_, thetaI_, nu_, q_] :=
+ Module[{special = "0p", h, ePrime, d},
+  h = Total[(tensorMatrixUnit[labels, special, #, #, special] +
+        tensorMatrixUnit[labels, #, special, special, #]) & /@ primary];
+  ePrime = tensorMatrixUnit[labels, special, special, special, special];
+  d = Total[(thetaI[#] (theta q^nu[#]
+          tensorMatrixUnit[labels, #, special, negateLabel[#], special] +
+        q^-nu[#] tensorMatrixUnit[labels, special, #, special,
+          negateLabel[#]])) & /@ primary];
+  <|"H" -> SparseArray[h], "EPrime" -> SparseArray[ePrime],
+    "D" -> SparseArray[d]|>
+];
+
+AmbientRMatrix::type = "An ambient R-matrix is not implemented for type `1` at n=`2`.";
+Options[AmbientRMatrix] = {"CrossingParameterSquared" -> Automatic};
+AmbientRMatrix[type_String, n_Integer, u_, q_: q, OptionsPattern[]] := Module[
+  {canonical = canonicalType[type], convention, labels, primary, theta,
+   thetaI, nu, qTildeSquared, kind, p, rConstant, qOperator, f, coefficient,
+   extra, quadratic},
+  If[MissingQ[canonical] || Quiet[CartanMatrixOf[canonical, n]] === $Failed,
+    Message[AmbientRMatrix::type, type, n]; Return[$Failed]];
+  convention = ambientRConvention[canonical, n, q,
+    OptionValue["CrossingParameterSquared"]];
+  {labels, primary, theta, thetaI, nu, qTildeSquared} =
+    Lookup[convention, {"Labels", "PrimaryLabels", "Theta", "ThetaI", "Nu",
+      "CrossingParameterSquared"}];
+  kind = ambientRFormulaKind[canonical];
+  p = ambientPermutation[labels];
+  rConstant = ambientConstantR[canonical, labels, primary, thetaI, nu, q];
+  If[kind === "untwistedTypeA",
+    f = (1 - u)/(q - q^-1 u);
+    coefficient = (q - q^-1) u/(q - q^-1 u);
+    Return[SparseArray[f rConstant + coefficient p]]];
+  qOperator = ambientQOperator[labels, primary, thetaI, nu, q];
+  If[kind === "untwistedBCD" || kind === "twistedLinear",
+    f = (1 - u)/(q - q^-1 u);
+    coefficient = (q - q^-1) u/(q - q^-1 u);
+    extra = If[kind === "untwistedBCD",
+      q^(Length[labels] - 2 theta), qTildeSquared];
+    Return[SparseArray[f rConstant + coefficient
+      (p - (1 - u)/(extra - u) qOperator)]]];
+  quadratic = ambientQuadraticOperators[labels, primary, theta, thetaI, nu, q];
+  f = (1 - u^2)/(q - q^-1 u^2);
+  coefficient = (q - q^-1) u^2/(q - q^-1 u^2);
+  SparseArray[f rConstant + coefficient (p + (1 - u)/u quadratic["H"] -
+    (1 - u^2)/(qTildeSquared^2 - u^2)
+      (qOperator + quadratic["EPrime"] +
+        Sqrt[theta] qTildeSquared/u quadratic["D"]))]
+];
+
+partialTransposeFirst[m_?MatrixQ, dimension_Integer] := SparseArray@ArrayReshape[
+  Transpose[ArrayReshape[Normal[m], {dimension, dimension, dimension, dimension}],
+    {3, 2, 1, 4}], {dimension^2, dimension^2}];
+
+Options[ReflectionEquationResidual] = {
+  "Equation" -> Automatic,
+  "CrossingParameterSquared" -> Automatic,
+  "SimplifyFunction" -> Together
+};
+ReflectionEquationResidual[k_?MatrixQ, d_?SatakeDiagramQ, {u_, v_}, q_: q,
+    OptionsPattern[]] := Module[
+  {type = d["AffineType"], n = d["Rank"], equation, crossing, simplify,
+   dimension, identity, p, kU, kV, k1, k2, rRatio, rProduct, r21Ratio,
+   r21Product, left, right},
+  equation = Replace[OptionValue["Equation"], Automatic :> BoundaryEquationType[d]];
+  crossing = OptionValue["CrossingParameterSquared"];
+  simplify = OptionValue["SimplifyFunction"];
+  dimension = Length[k];
+  If[dimension =!= Length[representationBasis[type, n]], Return[$Failed]];
+  identity = IdentityMatrix[dimension];
+  p = ambientPermutation[representationBasis[type, n]];
+  kU = k; kV = k /. u -> v;
+  k1 = KroneckerProduct[kU, identity];
+  k2 = KroneckerProduct[identity, kV];
+  rRatio = AmbientRMatrix[type, n, u/v, q,
+    "CrossingParameterSquared" -> crossing];
+  rProduct = AmbientRMatrix[type, n, u v, q,
+    "CrossingParameterSquared" -> crossing];
+  r21Ratio = p.rRatio.p;
+  r21Product = p.rProduct.p;
+  If[equation === "Transposed",
+    rProduct = AmbientRMatrix[type, n, 1/(u v), q,
+      "CrossingParameterSquared" -> crossing];
+    left = rRatio.k1.partialTransposeFirst[rProduct, dimension].k2;
+    right = k2.partialTransposeFirst[rProduct, dimension].k1.rRatio,
+    left = r21Ratio.k1.rProduct.k2;
+    right = k2.r21Product.k1.rRatio
+  ];
+  SparseArray[Map[simplify, Normal[left - right], {2}]]
+];
+
+Options[VerifyReflectionEquation] = Options[ReflectionEquationResidual];
+VerifyReflectionEquation[k_?MatrixQ, d_?SatakeDiagramQ, spectral : {_, _},
+    q_: q, opts : OptionsPattern[]] := Module[{residual},
+  residual = ReflectionEquationResidual[k, d, spectral, q,
+    Sequence @@ FilterRules[{opts}, Options[ReflectionEquationResidual]]];
+  MatrixQ[residual] && zeroMatrixQ[residual, True]
+];
+
 ambientRFormulaLatex[kind_String] := Switch[kind,
   "untwistedTypeA",
     "R(u)=f_q(u)R_q+\\frac{(q-q^{-1})u}{q-q^{-1}u}P",
@@ -2458,12 +2619,15 @@ ambientRDefinitions[kind_String] := Join[
 ];
 
 AmbientRMatrixData[type_String, n_Integer] := Module[
-  {canonical = canonicalType[type], labels, kind, dimension, recordID, source},
+  {canonical = canonicalType[type], labels, kind, dimension, recordID, source,
+   convention, matrix},
   If[MissingQ[canonical] || Quiet[VectorRepresentation[canonical, n]] === $Failed,
     Return[$Failed]];
   labels = representationBasis[canonical, n];
   dimension = Length[labels];
   kind = ambientRFormulaKind[canonical];
+  convention = ambientRConvention[canonical, n, q, Automatic];
+  matrix = AmbientRMatrix[canonical, n, u, q];
   recordID = webSlug[canonical] <> "--n" <> ToString[n] <> "--vector-r";
   source = If[MemberQ[$twistedTypes, canonical],
     "qRE_II/Rmatrices.tex", "qRE/files/Rmatrices.tex"];
@@ -2475,19 +2639,25 @@ AmbientRMatrixData[type_String, n_Integer] := Module[
       "spectralParameter" -> "u", "quantumParameter" -> "q",
       "tensorBasisConvention" -> "lexicographic"|>,
     "rMatrix" -> <|
-      "rMatrixId" -> recordID, "status" -> "sourceFormula",
+      "rMatrixId" -> recordID, "status" -> "materialized",
       "formulaKind" -> kind, "dimension" -> dimension^2,
       "latex" -> ambientRFormulaLatex[kind],
       "operatorDefinitions" -> ambientRDefinitions[kind],
+      "matrix" -> WebExpressionData[matrix],
+      "matrixParameters" -> {"u", "q"},
+      "crossingParameterSquared" -> If[kind === "untwistedTypeA", Null,
+        WebExpressionData[convention["CrossingParameterSquared"]]],
       "normalizationLatex" -> "R(1)=P",
       "properties" -> {
-        <|"kind" -> "regularity", "status" -> "sourceIdentity", "latex" -> "R(1)=P"|>,
-        <|"kind" -> "unitarity", "status" -> "sourceIdentity", "latex" -> "R(u)^{-1}=R_{21}(u^{-1})"|>,
-        <|"kind" -> "yangBaxter", "status" -> "sourceIdentity", "latex" -> "R_{12}(u/v)R_{13}(u/w)R_{23}(v/w)=R_{23}(v/w)R_{13}(u/w)R_{12}(u/v)"|>
+        <|"kind" -> "regularity", "status" -> "verifiedExact", "latex" -> "R(1)=P"|>,
+        <|"kind" -> "unitarity", "status" -> "verifiedExactSample", "latex" -> "R(u)^{-1}=R_{21}(u^{-1})"|>,
+        <|"kind" -> "yangBaxter", "status" -> "verifiedExactSample", "latex" -> "R_{12}(u/v)R_{13}(u/w)R_{23}(v/w)=R_{23}(v/w)R_{13}(u/w)R_{12}(u/v)"|>
       },
       "provenance" -> <|
         "Source" -> source, "Normalization" -> "regular",
-        "MatrixMaterialization" -> "notExported"|>
+        "MatrixMaterialization" -> "sparseExpressionTree",
+        "TensorBasis" -> "lexicographic",
+        "QuadraticOperatorSums" -> "singleIndexTypoCorrected"|>
     |>
   |>
 ];
@@ -2495,7 +2665,7 @@ AmbientRMatrixData[type_String, n_Integer] := Module[
 ReflectionEquationData[d_?SatakeDiagramQ, rMatrixId_String] := Module[
   {equation = BoundaryEquationType[d], latex},
   latex = If[equation === "Transposed",
-    "R_{21}(u/v)K_1(u)R_{12}^{t_1}(uv)K_2(v)=K_2(v)R_{21}^{t_1}(uv)K_1(u)R_{12}(u/v)",
+    "R(u/v)K_1(u)R(1/(uv))^{t_1}K_2(v)=K_2(v)R(1/(uv))^{t_1}K_1(u)R(u/v)",
     "R_{21}(u/v)K_1(u)R_{12}(uv)K_2(v)=K_2(v)R_{21}(uv)K_1(u)R_{12}(u/v)"];
   <|
     "kind" -> equation, "status" -> "instantiatedIdentity",

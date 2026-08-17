@@ -42,15 +42,18 @@ const ambient = {
     basisLabels: [1, 2], spectralParameter: "u", quantumParameter: "q", tensorBasisConvention: "lexicographic",
   },
   rMatrix: {
-    rMatrixId: "a--r", status: "sourceFormula", formulaKind: "untwistedTypeA", dimension: 4,
-    latex: "R(u)=P", operatorDefinitions: [], normalizationLatex: "R(1)=P", properties: [], provenance: { Source: "fixture" },
+    rMatrixId: "a--r", status: "materialized", formulaKind: "untwistedTypeA", dimension: 4,
+    latex: "R(u)=P", operatorDefinitions: [],
+    matrix: { kind: "sparseMatrix", dimensions: [4, 4], indexBase: 0, entries: [] },
+    matrixParameters: ["u", "q"], crossingParameterSquared: null,
+    normalizationLatex: "R(1)=P", properties: [], provenance: { Source: "fixture" },
   },
 } satisfies Catalogue["ambient"];
 
 describe("solution exports", () => {
   it("preserves engine, diagram, and solution provenance", () => {
     vi.setSystemTime(new Date("2026-08-17T12:00:00Z"));
-    const bundle = buildSolutionBundle(record, solution, { name: "QREKMatrices", version: "0.12.0" }, ambient);
+    const bundle = buildSolutionBundle(record, solution, { name: "QREKMatrices", version: "0.13.0" }, ambient);
     expect(bundle.diagram.id).toBe(record.id);
     expect(bundle.solution.provenance).toEqual({ Source: "fixture" });
     expect(bundle.diagram.qsp.qspId).toBe("a--n1--qsp");

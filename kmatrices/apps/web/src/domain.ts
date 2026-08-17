@@ -83,15 +83,18 @@ export interface RepresentationRecord {
 
 export interface RMatrixRecord {
   rMatrixId: string;
-  status: "sourceFormula";
+  status: "materialized";
   formulaKind: "untwistedTypeA" | "untwistedBCD" | "twistedLinear" | "twistedQuadratic";
   dimension: number;
   latex: string;
   operatorDefinitions: Array<{ symbol: string; latex: string }>;
+  matrix: SparseMatrix;
+  matrixParameters: string[];
+  crossingParameterSquared: Expression | null;
   normalizationLatex: string;
   properties: Array<{
     kind: "regularity" | "unitarity" | "yangBaxter";
-    status: "sourceIdentity";
+    status: "sourceIdentity" | "verifiedExact" | "verifiedExactSample";
     latex: string;
   }>;
   provenance: Record<string, unknown>;

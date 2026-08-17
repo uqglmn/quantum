@@ -80,6 +80,50 @@ function MatrixView({ record, solution, engine, ambient }: {
   </div>;
 }
 
+function RMatrixView({ ambient }: { ambient: Catalogue["ambient"] }) {
+  const [view, setView] = useState<"formula" | "sparse" | "provenance">("formula");
+  const matrix = ambient.rMatrix.matrix;
+  const downloadMatrix = () => downloadText(
+    `${safeFilename(ambient.rMatrix.rMatrixId)}.json`,
+    JSON.stringify({
+      rMatrixId: ambient.rMatrix.rMatrixId,
+      representation: ambient.representation,
+      parameters: ambient.rMatrix.matrixParameters,
+      matrix,
+      provenance: ambient.rMatrix.provenance,
+    }, null, 2),
+    "application/json",
+  );
+  return <div className="matrix-view">
+    <div className="matrix-toolbar">
+      <div className="subtabs">
+        <button className={view === "formula" ? "is-active" : ""} onClick={() => setView("formula")}>Formula</button>
+        <button className={view === "sparse" ? "is-active" : ""} onClick={() => setView("sparse")}>Sparse entries</button>
+        <button className={view === "provenance" ? "is-active" : ""} onClick={() => setView("provenance")}>Provenance</button>
+      </div>
+      <div className="export-actions"><button onClick={downloadMatrix}>JSON ↓</button></div>
+    </div>
+    {view === "formula" && <div className="rendered-matrix">
+      <MathFormula latex={ambient.rMatrix.latex} label="ambient R-matrix formula" />
+    </div>}
+    {view === "sparse" && <div className="sparse-table" role="table">
+      <div className="sparse-heading">{matrix.dimensions.join(" × ")} · {matrix.entries.length} nonzero symbolic entries · parameters [{ambient.rMatrix.matrixParameters.join(", ")}]</div>
+      {matrix.entries.map((entry) => <div className="sparse-row" key={entry.index.join("-")}>
+        <code>R<sub>{entry.index[0] + 1},{entry.index[1] + 1}</sub></code>
+        <MathFormula latex={expressionToLatex(entry.value)} display={false} label={formatExpression(entry.value)} />
+      </div>)}
+    </div>}
+    {view === "provenance" && <div className="provenance-pane">
+      <dl>
+        <div><dt>R-matrix ID</dt><dd><code>{ambient.rMatrix.rMatrixId}</code></dd></div>
+        <div><dt>Materialization</dt><dd>{String(ambient.rMatrix.provenance.MatrixMaterialization)}</dd></div>
+        <div><dt>Tensor basis</dt><dd>{ambient.representation.tensorBasisConvention}</dd></div>
+      </dl>
+      <pre>{JSON.stringify(ambient.rMatrix.provenance, null, 2)}</pre>
+    </div>}
+  </div>;
+}
+
 function FormulaPanel({ record, realization, engine, ambient }: {
   record: DiagramRecord;
   realization: Realization;
@@ -186,14 +230,15 @@ function Inspector({ record, engine, ambient }: {
         <FormulaPanel record={record} realization={realization} engine={engine} ambient={ambient} />
       </>}
       {tab === "r" && <>
-        <div className="panel-heading"><div><div className="eyebrow">Representation data</div><h3>Ambient R-matrix</h3></div><Availability available={record.capabilities.rMatrix}>source formula</Availability></div>
+        <div className="panel-heading"><div><div className="eyebrow">Representation data</div><h3>Ambient R-matrix</h3></div><Availability available={record.capabilities.rMatrix}>sparse matrix</Availability></div>
         <div className="scientific-metadata">
           <div><span>Representation</span><code>{ambient.representation.representationId}</code></div>
           <div><span>Dimension</span><code>{ambient.representation.dimension} on V · {ambient.rMatrix.dimension} on V⊗V</code></div>
           <div><span>Basis</span><code>[{ambient.representation.basisLabels.join(", ")}]</code></div>
           <div><span>Convention</span><code>{ambient.representation.tensorBasisConvention} tensor basis</code></div>
+          <div><span>Crossing parameter squared</span><code>{ambient.rMatrix.crossingParameterSquared ? formatExpression(ambient.rMatrix.crossingParameterSquared) : "not applicable"}</code></div>
         </div>
-        <div className="formula-block formula-block--large"><MathFormula latex={ambient.rMatrix.latex} label="ambient R-matrix formula" /></div>
+        <RMatrixView ambient={ambient} />
         <div className="definition-list">
           {ambient.rMatrix.operatorDefinitions.map((definition) => <details key={definition.symbol} open={definition.symbol === "f_q"}>
             <summary>{definition.symbol}</summary>
@@ -201,9 +246,9 @@ function Inspector({ record, engine, ambient }: {
           </details>)}
         </div>
         <div className="identity-row">
-          {ambient.rMatrix.properties.map((property) => <div key={property.kind}><Badge tone="good">source identity</Badge><span>{property.kind}</span><MathFormula latex={property.latex} /></div>)}
+          {ambient.rMatrix.properties.map((property) => <div key={property.kind}><Badge tone="good">{property.status === "verifiedExact" ? "exact check" : property.status === "verifiedExactSample" ? "exact sample" : "source identity"}</Badge><span>{property.kind}</span><MathFormula latex={property.latex} /></div>)}
         </div>
-        <p className="fine-print">Formula record <code>{ambient.rMatrix.rMatrixId}</code>, with regular normalization and provenance <code>{String(ambient.rMatrix.provenance.Source)}</code>. A dense or sparse {ambient.rMatrix.dimension} × {ambient.rMatrix.dimension} materialization is intentionally deferred; the operator-basis formula is the canonical static artifact.</p>
+        <p className="fine-print">Formula record <code>{ambient.rMatrix.rMatrixId}</code>, with regular normalization and provenance <code>{String(ambient.rMatrix.provenance.Source)}</code>. The {ambient.rMatrix.dimension} × {ambient.rMatrix.dimension} sparse expression tree uses the displayed tensor basis and can be inspected or downloaded.</p>
       </>}
       {tab === "equation" && <>
         <div className="panel-heading"><div><div className="eyebrow">Boundary identity</div><h3>{record.reflectionEquation.kind} reflection equation</h3></div><Badge tone={record.reflectionEquation.verification.status === "verified" ? "good" : "warn"}>{record.reflectionEquation.verification.status}</Badge></div>

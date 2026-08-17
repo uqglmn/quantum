@@ -5,7 +5,7 @@
   "type": "object",
   "required": ["schemaVersion", "engine", "catalogue", "ambient", "summary", "diagrams"],
   "properties": {
-    "schemaVersion": { "const": "1.1.0" },
+    "schemaVersion": { "const": "1.2.0" },
     "engine": {
       "type": "object",
       "required": ["name", "version"],
@@ -215,10 +215,10 @@
     },
     "rMatrix": {
       "type": "object",
-      "required": ["rMatrixId", "status", "formulaKind", "dimension", "latex", "operatorDefinitions", "normalizationLatex", "properties", "provenance"],
+      "required": ["rMatrixId", "status", "formulaKind", "dimension", "latex", "operatorDefinitions", "matrix", "matrixParameters", "crossingParameterSquared", "normalizationLatex", "properties", "provenance"],
       "properties": {
         "rMatrixId": { "type": "string" },
-        "status": { "const": "sourceFormula" },
+        "status": { "const": "materialized" },
         "formulaKind": { "enum": ["untwistedTypeA", "untwistedBCD", "twistedLinear", "twistedQuadratic"] },
         "dimension": { "type": "integer", "minimum": 1 },
         "latex": { "type": "string" },
@@ -231,6 +231,19 @@
             "additionalProperties": false
           }
         },
+        "matrix": { "$ref": "expression.schema.json#/$defs/sparseMatrix" },
+        "matrixParameters": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 2,
+          "uniqueItems": true
+        },
+        "crossingParameterSquared": {
+          "oneOf": [
+            { "$ref": "expression.schema.json#/$defs/expression" },
+            { "type": "null" }
+          ]
+        },
         "normalizationLatex": { "type": "string" },
         "properties": {
           "type": "array",
@@ -239,7 +252,7 @@
             "required": ["kind", "status", "latex"],
             "properties": {
               "kind": { "enum": ["regularity", "unitarity", "yangBaxter"] },
-              "status": { "const": "sourceIdentity" },
+              "status": { "enum": ["sourceIdentity", "verifiedExact", "verifiedExactSample"] },
               "latex": { "type": "string" }
             },
             "additionalProperties": false

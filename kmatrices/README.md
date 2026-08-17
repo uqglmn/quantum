@@ -355,6 +355,36 @@ intended.
 Entries marked `IntertwinerOnly` or `NoVectorKMatrix` are deliberately not
 returned as closed formulas.
 
+## Ambient R-matrices and reflection equations
+
+The normalized trigonometric R-matrix is materialized directly as a sparse
+matrix in the lexicographic tensor basis for every supported presentation:
+
+```wl
+r = AmbientRMatrix["A2n(2)T", 2, u, q];
+Dimensions[r]
+(* {25, 25} *)
+
+AmbientRMatrixData["A2n(2)T", 2]["rMatrix", "matrix"]
+```
+
+The implementation covers the type-A, B/C/D, twisted-linear, and
+twisted-quadratic formulas. `"CrossingParameterSquared"` can be supplied to
+audit or compare a different source convention without choosing a branch for
+the crossing parameter itself.
+
+For a matrix-valued expression `k` in the symbol `u`, the exact tensor
+residual and Boolean verifier are:
+
+```wl
+residual = ReflectionEquationResidual[k, diagram, {u, v}, q];
+VerifyReflectionEquation[k, diagram, {u, v}, q]
+```
+
+The equation type is selected from the diagram and can be overridden with
+`"Equation" -> "Standard"` or `"Transposed"`. The latter uses the qRE
+convention with `R(1/(u v))` partially transposed in the first tensor factor.
+
 ## Tests
 
 ```bash
@@ -368,7 +398,10 @@ catalogued families, including end-to-end verification using
 source-assigned type-A and boundary-inferred coideal parameters. The latter
 includes representatives of all eleven twisted catalogue families, transported
 fork representatives, every generic non-quasistandard family, and all four
-manuscript-complete exceptional endpoint formulas.
+manuscript-complete exceptional endpoint formulas. It also checks sparse
+R-matrix materialization and regularity in all nine series, plus exact rational
+samples of unitarity and the Yang--Baxter equation and an exact reflection-
+equation certificate.
 
 ## Web explorer
 
@@ -389,8 +422,9 @@ catalogues, interactive diagram selection, classification and regime data,
 sparse K-matrices where computed, explicit candidate-family selection,
 self-hosted mathematical rendering, provenance, and JSON/LaTeX downloads. It
 also exports instantiated QSP generator presentations, shared representation
-and ambient R-matrix formula records, and convention-bound reflection
-equations. Exact expanded QSP relations, reflection-equation verification,
+records, sparse ambient R-matrices, and convention-bound reflection equations.
+The R panel supports formula, sparse-entry, provenance, and JSON views. Exact
+expanded QSP relations, catalogue-wide reflection-equation certificates,
 dressing, eigenvalues, characteristic identities, and factorisation remain
 extension boundaries. See `Documentation/PlatformArchitecture.md`,
 `Documentation/PlatformRoadmap.md`, and `Documentation/PlatformDeployment.md`.
