@@ -2,8 +2,15 @@
 
 `QREKMatrices` is a Wolfram Language package for computing vector-representation
 K-matrices from generalized Satake diagrams. It follows the conventions of the
-qRE preprint (arXiv:1602.08471) and the unfinished qRE_II computations in this
-repository.
+qRE preprint (arXiv:1602.08471) and the unfinished qRE_II computations.
+
+The generated atlas is published at
+<https://uqglmn.github.io/quantum/kmatrices/>. It is browsed family-first: the
+24 families across the nine affine presentation blocks are the primary objects,
+and each carries its arbitrary-rank generalized Satake diagram beside its
+`K(u)`. Publication goes to the `kmatrices/` subdirectory of the public
+monorepo <https://github.com/uqglmn/quantum>; the archives under `notes/` and
+the reference sources under `refs/` are deliberately never published.
 
 The computational route is
 
@@ -395,13 +402,19 @@ convention with `R(1/(u v))` partially transposed in the first tensor factor.
 method, residual dimensions, assumptions, engine version, and provenance. A
 zero symbolic residual is certified as an identity of rational functions for
 generic parameters away from poles. The generated web catalogue attaches
-exact certificates to all computable untwisted A/B/C/D solutions in the
-exported ranks. Of 206 certified solutions, 205 verify. The remaining
-low-rank D.2 candidate is retained as a failed audit record because its
-structurally inferred parameters lie outside the source table's D.2
-admissibility ranges; the same diagram's D.1 alternative verifies. Twisted
-affine types remain explicitly `notComputed` until their conventions are
-reconciled and tested.
+exact certificates to computable untwisted A/B/C/D solutions within the
+configured bulk certification rank, currently three. In the present build 93
+exported solutions carry an exact certificate and all 93 verify; solutions
+above that rank carry source-identity evidence instead. Twisted affine types
+remain explicitly `notComputed` until their conventions are reconciled and
+tested.
+
+An independent rank-four audit found one exception, a low-rank D.2 proposal on
+`X={0,1}`, `tau=(3 4)` in D4(1), whose `(l,r)=(2,3)` lies outside the source
+table's D.2 admissibility ranges and has a nonzero exact residual; the same
+diagram's D.1 alternative verifies. That audit is recorded in
+`Documentation/ResearchNotes.md` and is above the exported certification rank,
+so it is not represented as a failed certificate in the catalogue.
 
 ## Tests
 
@@ -507,7 +520,8 @@ parameters are supplied. It also exposes the main closed-form
 catalogue and structurally classifies the B/C/D and twisted families. It does
 not yet resolve genuinely overlapping regimes from coideal parameter data,
 encode all canonical coideal assignments, handle representation-changing
-exceptional automorphisms, or invent formulas for the 31 endpoint diagrams
-whose source branches are absent or explicitly unfinished. Those are the next
+exceptional automorphisms, or invent formulas for the endpoint diagrams whose
+source branches are absent or explicitly unfinished. The current rank-six
+catalogue leaves 27 diagrams at `NonQuasistandardFormulaRequired`. Those are the next
 extraction layers; see
 `Documentation/ResearchNotes.md`.
