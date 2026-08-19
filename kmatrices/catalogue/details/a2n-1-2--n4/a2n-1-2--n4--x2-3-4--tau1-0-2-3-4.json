@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.7.0",
+	"schemaVersion":"1.8.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.20.0"
+		"version":"0.21.0"
 	},
 	"catalogue":{
 		"id":"a2n-1-2--n4",
@@ -422,8 +422,9 @@
 					"latex":"\\left(\n\\begin{array}{cccccccc}\n 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE_II\/alt_temp.tex",
+						"ProofSource":"qRE_v2 Theorem 9.1",
 						"Formula":"B*.2",
-						"ResearchStatus":"NotebookChecked"
+						"ResearchStatus":"TwistedAlternatingMasterBoundaryIntertwinerProved"
 					},
 					"properties":[
 						{
@@ -451,7 +452,7 @@
 								"status":"sourceIdentity",
 								"method":"sourceEigendecomposition",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -466,6 +467,7 @@
 										"kind":"integer",
 										"value":"1"
 									},
+									"definingPolynomial":null,
 									"latex":"1",
 									"multiplicity":8
 								}
@@ -510,7 +512,7 @@
 								"status":"sourceIdentity",
 								"method":"sourceEigendecomposition",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -551,7 +553,7 @@
 								"status":"conditional",
 								"method":"sourceEigendecomposition",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -581,7 +583,7 @@
 								"status":"computed",
 								"method":"productOfSourceEigenvalues",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -608,7 +610,7 @@
 								"status":"sourceIdentity",
 								"method":"qREIISpectralFactorization",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -638,7 +640,7 @@
 								"status":"conditional",
 								"method":"determinantCriterionAwayFromPoles",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -665,7 +667,7 @@
 								"status":"sourceIdentity",
 								"method":"qREIIRegularityClassification",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -692,7 +694,7 @@
 								"status":"sourceIdentity",
 								"method":"qREIIUnitarityIdentity",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -852,7 +854,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -867,6 +869,7 @@
 												"kind":"integer",
 												"value":"1"
 											},
+											"definingPolynomial":null,
 											"latex":"1",
 											"multiplicity":8
 										}
@@ -911,7 +914,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -952,7 +955,7 @@
 										"status":"conditional",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -982,7 +985,7 @@
 										"status":"computed",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1009,7 +1012,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1039,7 +1042,7 @@
 										"status":"conditional",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1066,7 +1069,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1093,7 +1096,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1107,8 +1110,9 @@
 							],
 							"provenance":{
 								"Source":"qRE_II\/alt_temp.tex",
+								"ProofSource":"qRE_v2 Theorem 9.1",
 								"Formula":"B*.2",
-								"ResearchStatus":"NotebookChecked",
+								"ResearchStatus":"TwistedAlternatingMasterBoundaryIntertwinerProved",
 								"Realization":"dressed"
 							}
 						}
@@ -1236,7 +1240,7 @@
 						"Source":"qRE_II\/Mathematica\/qRE-II.nb",
 						"NotebookSymbol":"KDC1",
 						"Branch":"MainCatalogue",
-						"ResearchStatus":"NotebookChecked"
+						"ResearchStatus":"TwistedPlainMasterBoundaryIntertwinerProved"
 					},
 					"properties":[
 						{
@@ -1264,7 +1268,7 @@
 								"status":"sourceIdentity",
 								"method":"sourceEigendecomposition",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -1279,6 +1283,7 @@
 										"kind":"integer",
 										"value":"1"
 									},
+									"definingPolynomial":null,
 									"latex":"1",
 									"multiplicity":8
 								}
@@ -1323,7 +1328,7 @@
 								"status":"sourceIdentity",
 								"method":"sourceEigendecomposition",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -1364,7 +1369,7 @@
 								"status":"conditional",
 								"method":"sourceEigendecomposition",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -1394,7 +1399,7 @@
 								"status":"computed",
 								"method":"productOfSourceEigenvalues",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -1421,7 +1426,7 @@
 								"status":"sourceIdentity",
 								"method":"qREIISpectralFactorization",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -1451,7 +1456,7 @@
 								"status":"conditional",
 								"method":"determinantCriterionAwayFromPoles",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -1478,7 +1483,7 @@
 								"status":"sourceIdentity",
 								"method":"qREIIRegularityClassification",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -1505,7 +1510,7 @@
 								"status":"sourceIdentity",
 								"method":"qREIIUnitarityIdentity",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -1665,7 +1670,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1680,6 +1685,7 @@
 												"kind":"integer",
 												"value":"1"
 											},
+											"definingPolynomial":null,
 											"latex":"1",
 											"multiplicity":8
 										}
@@ -1724,7 +1730,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1765,7 +1771,7 @@
 										"status":"conditional",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1795,7 +1801,7 @@
 										"status":"computed",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1822,7 +1828,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1852,7 +1858,7 @@
 										"status":"conditional",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1879,7 +1885,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1906,7 +1912,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -1922,7 +1928,7 @@
 								"Source":"qRE_II\/Mathematica\/qRE-II.nb",
 								"NotebookSymbol":"KDC1",
 								"Branch":"MainCatalogue",
-								"ResearchStatus":"NotebookChecked",
+								"ResearchStatus":"TwistedPlainMasterBoundaryIntertwinerProved",
 								"Realization":"dressed"
 							}
 						}

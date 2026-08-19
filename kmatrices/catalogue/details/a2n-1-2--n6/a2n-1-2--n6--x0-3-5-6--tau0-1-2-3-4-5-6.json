@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.7.0",
+	"schemaVersion":"1.8.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.20.0"
+		"version":"0.21.0"
 	},
 	"catalogue":{
 		"id":"a2n-1-2--n6",
@@ -4188,8 +4188,9 @@
 				"latex":"\\left(\n\\begin{array}{cccccccccccc}\n -\\frac{-\\mu +\\mu  q^4+i \\mu ^2 q^2 u+i q^2 u}{\\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & \\frac{i \\mu  q^2 \\left(u^2-1\\right)}{u \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\\n -\\frac{i \\mu  q^2 \\left(u^2-1\\right)}{u \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & \\frac{\\mu  q^4 (-u)-i \\mu ^2 q^2-i q^2+\\mu  u}{u \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & \\frac{\\mu  q^4 (-u)-i \\mu ^2 q^2-i q^2+\\mu  u}{u \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & 0 & 0 & 0 & 0 & 0 & -\\frac{i \\mu  q^2 \\left(u^2-1\\right)}{u^2 \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\mu  q^4 (-u)-i \\mu ^2 q^2-i q^2+\\mu  u}{u \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & 0 & 0 & 0 & 0 & 0 & \\frac{i \\mu  q^2 \\left(u^2-1\\right)}{u^2 \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & \\frac{1}{u^2} & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & \\frac{1}{u^2} & 0 & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & 0 & \\frac{1}{u^2} & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & 0 & 0 & \\frac{1}{u^2} & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & \\frac{i \\mu  q^2 \\left(u^2-1\\right)}{u^2 \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & 0 & 0 & 0 & 0 & 0 & \\frac{\\mu -\\mu  q^4-i \\mu ^2 q^2 u-i q^2 u}{u^2 \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & -\\frac{i \\mu  q^2 \\left(u^2-1\\right)}{u^2 \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & 0 & 0 & 0 & 0 & 0 & \\frac{\\mu -\\mu  q^4-i \\mu ^2 q^2 u-i q^2 u}{u^2 \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \\frac{\\mu -\\mu  q^4-i \\mu ^2 q^2 u-i q^2 u}{u^2 \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & -\\frac{i \\mu  q^2 \\left(u^2-1\\right)}{u^3 \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} \\\\\n 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \\frac{i \\mu  q^2 \\left(u^2-1\\right)}{u^3 \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} & \\frac{\\mu  q^4 (-u)-i \\mu ^2 q^2-i q^2+\\mu  u}{u^3 \\left(u-i \\mu  q^2\\right) \\left(\\mu  u-i q^2\\right)} \\\\\n\\end{array}\n\\right)",
 				"provenance":{
 					"Source":"qRE_II\/alt_temp.tex",
+					"ProofSource":"qRE_v2 Theorem 9.1",
 					"Formula":"B*.2",
-					"ResearchStatus":"NotebookChecked",
+					"ResearchStatus":"TwistedAlternatingMasterBoundaryIntertwinerProved",
 					"Transport":"RepresentationDiagramAutomorphismIntertwiner",
 					"TransportPermutation":[
 						1,
@@ -4449,7 +4450,7 @@
 							"status":"sourceIdentity",
 							"method":"sourceEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -4464,6 +4465,7 @@
 									"kind":"integer",
 									"value":"1"
 								},
+								"definingPolynomial":null,
 								"latex":"1",
 								"multiplicity":8
 							},
@@ -4690,6 +4692,7 @@
 										}
 									]
 								},
+								"definingPolynomial":null,
 								"latex":"h_1(u)h_2(u)",
 								"multiplicity":4
 							}
@@ -4978,7 +4981,7 @@
 							"status":"sourceIdentity",
 							"method":"sourceEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -5253,7 +5256,7 @@
 							"status":"conditional",
 							"method":"sourceEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -5517,7 +5520,7 @@
 							"status":"computed",
 							"method":"productOfSourceEigenvalues",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -5544,7 +5547,7 @@
 							"status":"sourceIdentity",
 							"method":"qREIISpectralFactorization",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -5808,7 +5811,7 @@
 							"status":"conditional",
 							"method":"determinantCriterionAwayFromPoles",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -5835,7 +5838,7 @@
 							"status":"sourceIdentity",
 							"method":"qREIIRegularityClassification",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -5862,7 +5865,7 @@
 							"status":"sourceIdentity",
 							"method":"qREIIUnitarityIdentity",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -10129,7 +10132,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -10144,6 +10147,7 @@
 											"kind":"integer",
 											"value":"1"
 										},
+										"definingPolynomial":null,
 										"latex":"1",
 										"multiplicity":8
 									},
@@ -10370,6 +10374,7 @@
 												}
 											]
 										},
+										"definingPolynomial":null,
 										"latex":"h_1(u)h_2(u)",
 										"multiplicity":4
 									}
@@ -10658,7 +10663,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -10933,7 +10938,7 @@
 									"status":"conditional",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -11197,7 +11202,7 @@
 									"status":"computed",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -11224,7 +11229,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -11488,7 +11493,7 @@
 									"status":"conditional",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -11515,7 +11520,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -11542,7 +11547,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -11556,8 +11561,9 @@
 						],
 						"provenance":{
 							"Source":"qRE_II\/alt_temp.tex",
+							"ProofSource":"qRE_v2 Theorem 9.1",
 							"Formula":"B*.2",
-							"ResearchStatus":"NotebookChecked",
+							"ResearchStatus":"TwistedAlternatingMasterBoundaryIntertwinerProved",
 							"Transport":"RepresentationDiagramAutomorphismIntertwiner",
 							"TransportPermutation":[
 								1,

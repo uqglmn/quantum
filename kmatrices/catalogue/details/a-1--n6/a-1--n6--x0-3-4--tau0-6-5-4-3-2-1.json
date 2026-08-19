@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.7.0",
+	"schemaVersion":"1.8.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.20.0"
+		"version":"0.21.0"
 	},
 	"catalogue":{
 		"id":"a-1--n6",
@@ -1608,7 +1608,7 @@
 							"status":"sourceIdentity",
 							"method":"manuscriptSpectrum",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -1704,6 +1704,7 @@
 										}
 									]
 								},
+								"definingPolynomial":null,
 								"latex":"u^2h_1(u)",
 								"multiplicity":1
 							},
@@ -1712,6 +1713,7 @@
 									"kind":"integer",
 									"value":"1"
 								},
+								"definingPolynomial":null,
 								"latex":"1",
 								"multiplicity":4
 							},
@@ -1852,6 +1854,7 @@
 										}
 									]
 								},
+								"definingPolynomial":null,
 								"latex":"h_1(u)h_2(u)",
 								"multiplicity":1
 							},
@@ -1946,6 +1949,7 @@
 										}
 									]
 								},
+								"definingPolynomial":null,
 								"latex":"h_1(u)",
 								"multiplicity":1
 							}
@@ -2336,7 +2340,7 @@
 							"status":"sourceIdentity",
 							"method":"manuscriptSpectrum",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -2727,7 +2731,7 @@
 							"status":"sourceIdentity",
 							"method":"manuscriptSpectrum",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -2904,7 +2908,7 @@
 							"status":"computed",
 							"method":"productOfVerifiedEigenvalues",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -2936,7 +2940,7 @@
 							"status":"sourceIdentity",
 							"method":"manuscriptBlockOrSpectralFactorization",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -3113,7 +3117,7 @@
 							"status":"conditional",
 							"method":"determinantCriterionAwayFromPoles",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -3145,7 +3149,7 @@
 							"status":"sourceIdentity",
 							"method":"manuscriptIdentity",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -3177,7 +3181,7 @@
 							"status":"verified",
 							"method":"exactMatrixResidual",
 							"residualNonzeroCount":0,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -4512,7 +4516,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -4608,6 +4612,7 @@
 												}
 											]
 										},
+										"definingPolynomial":null,
 										"latex":"u^2h_1(u)",
 										"multiplicity":1
 									},
@@ -4616,6 +4621,7 @@
 											"kind":"integer",
 											"value":"1"
 										},
+										"definingPolynomial":null,
 										"latex":"1",
 										"multiplicity":4
 									},
@@ -4756,6 +4762,7 @@
 												}
 											]
 										},
+										"definingPolynomial":null,
 										"latex":"h_1(u)h_2(u)",
 										"multiplicity":1
 									},
@@ -4850,6 +4857,7 @@
 												}
 											]
 										},
+										"definingPolynomial":null,
 										"latex":"h_1(u)",
 										"multiplicity":1
 									}
@@ -5240,7 +5248,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -5631,7 +5639,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -5808,7 +5816,7 @@
 									"status":"computed",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -5840,7 +5848,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -6017,7 +6025,7 @@
 									"status":"conditional",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -6049,7 +6057,7 @@
 									"status":"conditional",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -6081,7 +6089,7 @@
 									"status":"verified",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":0,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{

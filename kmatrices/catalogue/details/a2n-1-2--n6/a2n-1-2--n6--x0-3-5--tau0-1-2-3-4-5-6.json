@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.7.0",
+	"schemaVersion":"1.8.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.20.0"
+		"version":"0.21.0"
 	},
 	"catalogue":{
 		"id":"a2n-1-2--n6",
@@ -3891,8 +3891,9 @@
 				"latex":"\\left(\n\\begin{array}{cccccccccccc}\n -\\frac{i \\left(\\mu ^2 u+u\\right)}{(u-i \\mu ) (\\mu  u-i)} & \\frac{i \\mu  \\left(u^2-1\\right)}{u (u-i \\mu ) (\\mu  u-i)} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\\n -\\frac{i \\mu  \\left(u^2-1\\right)}{u (u-i \\mu ) (\\mu  u-i)} & -\\frac{i \\left(\\mu ^2+1\\right)}{u (u-i \\mu ) (\\mu  u-i)} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & -\\frac{i \\left(\\mu ^2+1\\right)}{u (u-i \\mu ) (\\mu  u-i)} & 0 & 0 & 0 & 0 & 0 & -\\frac{i \\mu  \\left(u^2-1\\right)}{u^2 (u-i \\mu ) (\\mu  u-i)} & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & -\\frac{i \\left(\\mu ^2+1\\right)}{u (u-i \\mu ) (\\mu  u-i)} & 0 & 0 & 0 & 0 & 0 & \\frac{i \\mu  \\left(u^2-1\\right)}{u^2 (u-i \\mu ) (\\mu  u-i)} & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & -\\frac{i \\left(\\mu ^2+1\\right)}{u (u-i \\mu ) (\\mu  u-i)} & 0 & -\\frac{i \\mu  \\left(u^2-1\\right)}{u^2 (u-i \\mu ) (\\mu  u-i)} & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & -\\frac{i \\left(\\mu ^2+1\\right)}{u (u-i \\mu ) (\\mu  u-i)} & 0 & \\frac{i \\mu  \\left(u^2-1\\right)}{u^2 (u-i \\mu ) (\\mu  u-i)} & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & \\frac{i \\mu  \\left(u^2-1\\right)}{u^2 (u-i \\mu ) (\\mu  u-i)} & 0 & -\\frac{i \\left(\\mu ^2+1\\right)}{u (u-i \\mu ) (\\mu  u-i)} & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & -\\frac{i \\mu  \\left(u^2-1\\right)}{u^2 (u-i \\mu ) (\\mu  u-i)} & 0 & -\\frac{i \\left(\\mu ^2+1\\right)}{u (u-i \\mu ) (\\mu  u-i)} & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & \\frac{i \\mu  \\left(u^2-1\\right)}{u^2 (u-i \\mu ) (\\mu  u-i)} & 0 & 0 & 0 & 0 & 0 & -\\frac{i \\left(\\mu ^2+1\\right)}{u (u-i \\mu ) (\\mu  u-i)} & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & -\\frac{i \\mu  \\left(u^2-1\\right)}{u^2 (u-i \\mu ) (\\mu  u-i)} & 0 & 0 & 0 & 0 & 0 & -\\frac{i \\left(\\mu ^2+1\\right)}{u (u-i \\mu ) (\\mu  u-i)} & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -\\frac{i \\left(\\mu ^2+1\\right)}{u (u-i \\mu ) (\\mu  u-i)} & -\\frac{i \\mu  \\left(u^2-1\\right)}{u^3 (u-i \\mu ) (\\mu  u-i)} \\\\\n 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \\frac{i \\mu  \\left(u^2-1\\right)}{u^3 (u-i \\mu ) (\\mu  u-i)} & -\\frac{i \\left(\\mu ^2+1\\right)}{u^3 (u-i \\mu ) (\\mu  u-i)} \\\\\n\\end{array}\n\\right)",
 				"provenance":{
 					"Source":"qRE_II\/alt_temp.tex",
+					"ProofSource":"qRE_v2 Theorem 9.1",
 					"Formula":"B*.2",
-					"ResearchStatus":"NotebookChecked",
+					"ResearchStatus":"TwistedAlternatingMasterBoundaryIntertwinerProved",
 					"Transport":"RepresentationDiagramAutomorphismIntertwiner",
 					"TransportPermutation":[
 						1,
@@ -4084,7 +4085,7 @@
 							"status":"sourceIdentity",
 							"method":"sourceEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -4099,6 +4100,7 @@
 									"kind":"integer",
 									"value":"1"
 								},
+								"definingPolynomial":null,
 								"latex":"1",
 								"multiplicity":6
 							},
@@ -4257,6 +4259,7 @@
 										}
 									]
 								},
+								"definingPolynomial":null,
 								"latex":"h_1(u)h_2(u)",
 								"multiplicity":6
 							}
@@ -4477,7 +4480,7 @@
 							"status":"sourceIdentity",
 							"method":"sourceEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -4684,7 +4687,7 @@
 							"status":"conditional",
 							"method":"sourceEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -4880,7 +4883,7 @@
 							"status":"computed",
 							"method":"productOfSourceEigenvalues",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -4907,7 +4910,7 @@
 							"status":"sourceIdentity",
 							"method":"qREIISpectralFactorization",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -5103,7 +5106,7 @@
 							"status":"conditional",
 							"method":"determinantCriterionAwayFromPoles",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -5130,7 +5133,7 @@
 							"status":"sourceIdentity",
 							"method":"qREIIRegularityClassification",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -5157,7 +5160,7 @@
 							"status":"sourceIdentity",
 							"method":"qREIIUnitarityIdentity",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -9132,7 +9135,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -9147,6 +9150,7 @@
 											"kind":"integer",
 											"value":"1"
 										},
+										"definingPolynomial":null,
 										"latex":"1",
 										"multiplicity":6
 									},
@@ -9305,6 +9309,7 @@
 												}
 											]
 										},
+										"definingPolynomial":null,
 										"latex":"h_1(u)h_2(u)",
 										"multiplicity":6
 									}
@@ -9525,7 +9530,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -9732,7 +9737,7 @@
 									"status":"conditional",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -9928,7 +9933,7 @@
 									"status":"computed",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -9955,7 +9960,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -10151,7 +10156,7 @@
 									"status":"conditional",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -10178,7 +10183,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -10205,7 +10210,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -10219,8 +10224,9 @@
 						],
 						"provenance":{
 							"Source":"qRE_II\/alt_temp.tex",
+							"ProofSource":"qRE_v2 Theorem 9.1",
 							"Formula":"B*.2",
-							"ResearchStatus":"NotebookChecked",
+							"ResearchStatus":"TwistedAlternatingMasterBoundaryIntertwinerProved",
 							"Transport":"RepresentationDiagramAutomorphismIntertwiner",
 							"TransportPermutation":[
 								1,
