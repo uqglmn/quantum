@@ -103,6 +103,47 @@ for (const entry of manifest.files) {
   }
 }
 
+
+// --- arbitrary-rank diagram schematics -------------------------------------
+const nodesOf = (tokens = []) => tokens.filter((token) => token.kind === "node");
+let schematicVariantCount = 0;
+const layoutCounts = new Map();
+for (const family of manifest.families ?? []) {
+  for (const variant of family.schematic ?? []) {
+    schematicVariantCount += 1;
+    increment(layoutCounts, variant.layout);
+    const primary = variant.layout === "folded" ? variant.top
+      : variant.layout === "cycle" ? variant.ring : variant.row;
+    if (!primary?.length) {
+      throw new Error(`Empty schematic row for ${family.familyId}/${variant.variantId}`);
+    }
+    const nodeCount = nodesOf(primary).length;
+    if (variant.layout === "folded") {
+      if (nodesOf(variant.top).length !== nodesOf(variant.bottom).length) {
+        throw new Error(`Folded schematic rows differ in length for ${family.familyId}/${variant.variantId}`);
+      }
+    }
+    if (variant.layout === "cycle") {
+      // a ring must close: one link per node
+      const linkCount = primary.filter((token) => token.kind === "link").length;
+      if (linkCount !== nodeCount) {
+        throw new Error(`Cyclic schematic ${family.familyId}/${variant.variantId} does not close`);
+      }
+    }
+    for (const brace of variant.braces ?? []) {
+      for (const anchor of [brace.from, brace.to]) {
+        if (typeof anchor === "number") {
+          if (anchor < 0 || anchor >= nodeCount) {
+            throw new Error(`Brace anchor ${anchor} out of range in ${family.familyId}/${variant.variantId}`);
+          }
+        } else if (!["cap", "capL", "capR"].includes(anchor)) {
+          throw new Error(`Unknown brace anchor "${anchor}" in ${family.familyId}/${variant.variantId}`);
+        }
+      }
+    }
+  }
+}
+
 const actualDetailPaths = (await walkJson(resolve(catalogueDirectory, "details")))
   .map((path) => relative(catalogueDirectory, path));
 const orphanDetails = actualDetailPaths.filter((path) => !expectedDetailPaths.has(path));
@@ -114,5 +155,6 @@ if (!process.exitCode) {
   const details = manifest.files.reduce((sum, entry) => sum + entry.detailCount, 0);
   console.log(`Validated ${manifest.files.length} catalogue indexes and ${details} diagram details against schema ${manifest.schemaVersion}.`);
   console.log(`Computation statuses: ${JSON.stringify(Object.fromEntries([...statusCounts].sort()))}`);
+  console.log(`Family index: ${(manifest.families ?? []).length} families, ${schematicVariantCount} diagram schematics ${JSON.stringify(Object.fromEntries([...layoutCounts].sort()))}.`);
   console.log(`Complete solution dossiers: ${solutionCount}; reflection evidence: ${JSON.stringify(Object.fromEntries([...certificateCounts].sort()))}.`);
 }

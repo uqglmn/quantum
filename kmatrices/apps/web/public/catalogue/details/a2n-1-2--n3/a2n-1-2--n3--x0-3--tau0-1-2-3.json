@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.7.0",
+	"schemaVersion":"1.8.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.20.0"
+		"version":"0.21.0"
 	},
 	"catalogue":{
 		"id":"a2n-1-2--n3",
@@ -1918,8 +1918,9 @@
 				"latex":"\\left(\n\\begin{array}{cccccc}\n -\\frac{-\\mu +\\mu  q^2+i \\mu ^2 q u+i q u}{(u-i \\mu  q) (\\mu  u-i q)} & \\frac{i \\mu  q \\left(u^2-1\\right)}{u (u-i \\mu  q) (\\mu  u-i q)} & 0 & 0 & 0 & 0 \\\\\n -\\frac{i \\mu  q \\left(u^2-1\\right)}{u (u-i \\mu  q) (\\mu  u-i q)} & \\frac{\\mu  q^2 (-u)-i \\mu ^2 q-i q+\\mu  u}{u (u-i \\mu  q) (\\mu  u-i q)} & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & \\frac{1}{u^2} & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & \\frac{1}{u^2} & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & \\frac{\\mu -\\mu  q^2-i \\mu ^2 q u-i q u}{u^2 (u-i \\mu  q) (\\mu  u-i q)} & -\\frac{i \\mu  q \\left(u^2-1\\right)}{u^3 (u-i \\mu  q) (\\mu  u-i q)} \\\\\n 0 & 0 & 0 & 0 & \\frac{i \\mu  q \\left(u^2-1\\right)}{u^3 (u-i \\mu  q) (\\mu  u-i q)} & \\frac{\\mu  q^2 (-u)-i \\mu ^2 q-i q+\\mu  u}{u^3 (u-i \\mu  q) (\\mu  u-i q)} \\\\\n\\end{array}\n\\right)",
 				"provenance":{
 					"Source":"qRE_II\/alt_temp.tex",
+					"ProofSource":"qRE_v2 Theorem 9.1",
 					"Formula":"B*.2",
-					"ResearchStatus":"NotebookChecked",
+					"ResearchStatus":"TwistedAlternatingMasterBoundaryIntertwinerProved",
 					"Transport":"RepresentationDiagramAutomorphismIntertwiner",
 					"TransportPermutation":[
 						1,
@@ -2136,7 +2137,7 @@
 							"status":"sourceIdentity",
 							"method":"sourceEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -2151,6 +2152,7 @@
 									"kind":"integer",
 									"value":"1"
 								},
+								"definingPolynomial":null,
 								"latex":"1",
 								"multiplicity":4
 							},
@@ -2337,6 +2339,7 @@
 										}
 									]
 								},
+								"definingPolynomial":null,
 								"latex":"h_1(u)h_2(u)",
 								"multiplicity":2
 							}
@@ -2585,7 +2588,7 @@
 							"status":"sourceIdentity",
 							"method":"sourceEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -2820,7 +2823,7 @@
 							"status":"conditional",
 							"method":"sourceEigendecomposition",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -3044,7 +3047,7 @@
 							"status":"computed",
 							"method":"productOfSourceEigenvalues",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -3071,7 +3074,7 @@
 							"status":"sourceIdentity",
 							"method":"qREIISpectralFactorization",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -3295,7 +3298,7 @@
 							"status":"conditional",
 							"method":"determinantCriterionAwayFromPoles",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -3322,7 +3325,7 @@
 							"status":"sourceIdentity",
 							"method":"qREIIRegularityClassification",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -3349,7 +3352,7 @@
 							"status":"verified",
 							"method":"exactSpectralIdentity",
 							"residualNonzeroCount":0,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -5312,7 +5315,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -5327,6 +5330,7 @@
 											"kind":"integer",
 											"value":"1"
 										},
+										"definingPolynomial":null,
 										"latex":"1",
 										"multiplicity":4
 									},
@@ -5513,6 +5517,7 @@
 												}
 											]
 										},
+										"definingPolynomial":null,
 										"latex":"h_1(u)h_2(u)",
 										"multiplicity":2
 									}
@@ -5761,7 +5766,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -5996,7 +6001,7 @@
 									"status":"conditional",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -6220,7 +6225,7 @@
 									"status":"computed",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -6247,7 +6252,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -6471,7 +6476,7 @@
 									"status":"conditional",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -6498,7 +6503,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -6525,7 +6530,7 @@
 									"status":"verified",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":0,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -6539,8 +6544,9 @@
 						],
 						"provenance":{
 							"Source":"qRE_II\/alt_temp.tex",
+							"ProofSource":"qRE_v2 Theorem 9.1",
 							"Formula":"B*.2",
-							"ResearchStatus":"NotebookChecked",
+							"ResearchStatus":"TwistedAlternatingMasterBoundaryIntertwinerProved",
 							"Transport":"RepresentationDiagramAutomorphismIntertwiner",
 							"TransportPermutation":[
 								1,

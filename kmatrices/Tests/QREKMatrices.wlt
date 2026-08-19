@@ -218,6 +218,67 @@ VerificationTest[
 ]
 
 VerificationTest[
+  Module[{records},
+    records = Flatten[Table[
+      Map[Function[diagram, With[{classification =
+          ClassifySatakeDiagram[diagram]},
+        {diagram["AffineType"], diagram["X"],
+          classification["Family"],
+          classification["ClassificationStatus"],
+          classification["CandidateFamilies"],
+          classification["CoincidentFamilies"]}]],
+        GeneralizedSatakeDiagrams[type, 1]],
+      {type, {"A2n(2)", "A2n(2)T"}}], 1];
+    records
+  ],
+  {
+    {"A2n(2)", {}, "C**.1", "Classified", {"C**.1"}, {}},
+    {"A2n(2)", {0}, "C**.1", "ClassifiedLowRankCoincidence",
+      {"C**.1", "C**.2"}, {"C**.1", "C**.2"}},
+    {"A2n(2)", {1}, "C**.1", "ClassifiedLowRankCoincidence",
+      {"C**.1", "C**.2"}, {"C**.1", "C**.2"}},
+    {"A2n(2)T", {}, "tC**.1", "Classified", {"tC**.1"}, {}},
+    {"A2n(2)T", {0}, "tC**.1", "ClassifiedLowRankCoincidence",
+      {"tC**.1", "tC**.2"}, {"tC**.1", "tC**.2"}},
+    {"A2n(2)T", {1}, "tC**.1", "ClassifiedLowRankCoincidence",
+      {"tC**.1", "tC**.2"}, {"tC**.1", "tC**.2"}}
+  },
+  TestID -> "A2twisted-rank-one-complete-diagram-census"
+]
+
+VerificationTest[
+  Module[{tables},
+    tables = KMatrixTable[#, 1, u, "QuantumParameter" -> 4] & /@
+      {"A2n(2)", "A2n(2)T"};
+    {Length /@ tables, Lookup[#, "Status"] & /@ tables,
+      Lookup[#, "Family"] & /@ tables}
+  ],
+  {{3, 3}, {ConstantArray["Computed", 3], ConstantArray["Computed", 3]},
+    {ConstantArray["C**.1", 3], ConstantArray["tC**.1", 3]}},
+  TestID -> "A2twisted-rank-one-canonical-K-matrix-table"
+]
+
+VerificationTest[
+  Module[{cases, diagram, result, boundary, properties},
+    cases = Flatten[Table[{type, x},
+      {type, {"A2n(2)", "A2n(2)T"}}, {x, {{}, {0}, {1}}}], 1];
+    And @@ Map[Function[case,
+      diagram = CreateSatakeDiagram[case[[1]], 1, case[[2]]];
+      result = KMatrix[diagram, u, "QuantumParameter" -> 4];
+      boundary = CanonicalCoidealParameters[diagram, 4];
+      properties = KMatrixPropertyData[result, u, 4];
+      AssociationQ[result] && AssociationQ[boundary] &&
+        VerifyKMatrix[result["KMatrix"], diagram, u, 4,
+          boundary["CParameters"], boundary["SParameters"]] &&
+        Length[properties] === 8 &&
+        Total[Lookup[properties[[1, "Spectrum"]], "Multiplicity"]] === 3
+    ], cases]
+  ],
+  True,
+  TestID -> "A2twisted-rank-one-QSP-boundary-and-properties"
+]
+
+VerificationTest[
   Module[{d, result},
     d = CreateSatakeDiagram["A(1)", 4, {}, {0, 4, 3, 2, 1}];
     result = KMatrix[d, u];
@@ -651,6 +712,87 @@ VerificationTest[
 ]
 
 VerificationTest[
+  Module[{fixedDiagram, cornerDiagram, fixed, corner, fixedBoundary,
+    cornerBoundary, rejected},
+    fixedDiagram = CreateSatakeDiagram["A2n-1(2)T", 4, {0}];
+    cornerDiagram = CreateSatakeDiagram["A2n-1(2)T", 4, {0, 1, 2}];
+    fixed = KMatrix[fixedDiagram, u, "QuantumParameter" -> 2];
+    corner = KMatrix[cornerDiagram, u, "QuantumParameter" -> 2];
+    fixedBoundary = CanonicalCoidealParameters[fixedDiagram, 2];
+    cornerBoundary = CanonicalCoidealParameters[cornerDiagram, 2];
+    rejected = Quiet[KMatrix[<|"Rank" -> 4, "Family" -> "tB*.1",
+      "Parameters" -> <|"l" -> 1, "r" -> 4, "Lambda" -> 3|>|>, u,
+      "QuantumParameter" -> 2]];
+    {
+      Lookup[fixed["Provenance"], "Branch"],
+      VerifyKMatrix[fixed["KMatrix"], fixedDiagram, u, 2,
+        fixedBoundary["CParameters"], fixedBoundary["SParameters"]],
+      VerifyKMatrix[corner["KMatrix"], cornerDiagram, u, 2,
+        cornerBoundary["CParameters"], cornerBoundary["SParameters"]],
+      And @@ (PossibleZeroQ /@ Values[fixedBoundary["SParameters"]]),
+      And @@ (PossibleZeroQ /@ Values[cornerBoundary["SParameters"]]),
+      rejected === $Failed
+    }
+  ],
+  {"CorrectedTerminalRN", True, True, True, True, True},
+  TestID -> "catalogue-tB-corrected-terminal-rn"
+]
+
+VerificationTest[
+  Module[{families, results},
+    families = {"B*.1", "tB*.1", "C**.1", "tC**.1", "C*.1"};
+    results = Flatten@Table[
+      KMatrix[<|"Rank" -> 4, "Family" -> family,
+        "Parameters" -> <|"l" -> ell, "r" -> ell|>|>, u,
+        "QuantumParameter" -> 2],
+      {family, families}, {ell, {0, 4}}
+    ];
+    And @@ Map[
+      AssociationQ[#] && MatrixQ[#["KMatrix"]] &&
+        MemberQ[{
+          "TwistedPlainMasterBoundaryIntertwinerProved",
+          "TwistedPlainMasterBoundaryIntertwinerProvedWithCorrectedRN"
+        }, Lookup[Lookup[#, "Provenance", <||>], "ResearchStatus",
+          Missing["NotAvailable"]]] &,
+      results
+    ]
+  ],
+  True,
+  TestID -> "catalogue-twisted-plain-degenerate-endpoints-proved"
+]
+
+VerificationTest[
+  Module[{families, results, catalogue},
+    families = {"B*.2", "tB*.2", "C**.2", "tC**.2", "C*.2"};
+    results = KMatrix[
+        <|"Rank" -> 4, "Family" -> #,
+          "Parameters" -> <|"l" -> 0, "r" -> 2,
+            "Mu" -> 3|>|>, u, "QuantumParameter" -> 2] & /@ families;
+    catalogue = KMatrixCatalogue[];
+    {
+      Lookup[Lookup[results, "Provenance"], "ResearchStatus",
+        Missing["NotAvailable"]],
+      Lookup[Lookup[catalogue, families], "ResearchStatus"]
+    }
+  ],
+  {ConstantArray["TwistedAlternatingMasterBoundaryIntertwinerProved", 5],
+    ConstantArray["TwistedAlternatingMasterBoundaryIntertwinerProved", 5]},
+  TestID -> "catalogue-twisted-alternating-master-provenance-proved"
+]
+
+VerificationTest[
+  Module[{families, records},
+    families = {"B*.1", "tB*.1", "C**.1", "tC**.1", "C*.1",
+      "B*.2", "tB*.2", "C**.2", "tC**.2", "C*.2", "C*.4"};
+    records = Lookup[KMatrixCatalogue[], families];
+    {Union[Lookup[records, "Equation"]],
+      Union[Lookup[records, "ReflectionEquationResearchStatus"]]}
+  ],
+  {{"Standard"}, {"ArbitraryRankProvedByGenericAffineTensorRestriction"}},
+  TestID -> "catalogue-twisted-reflection-equation-arbitrary-rank-status"
+]
+
+VerificationTest[
   Module[{b, tb, c},
     b = KMatrix[<|"Rank" -> 3, "Family" -> "B*.2",
       "Parameters" -> <|"l" -> 0, "r" -> 2, "Mu" -> 3|>|>, u,
@@ -802,7 +944,7 @@ VerificationTest[
 
 VerificationTest[
   QREKMatricesVersion[],
-  "0.20.0",
+  "0.21.0",
   TestID -> "web-engine-version"
 ]
 
@@ -1151,9 +1293,11 @@ VerificationTest[
       Lookup[properties[[{7, 8}, "Verification"]],
         {"status", "residualNonzeroCount"}]}
   ],
-  {{14, 14}, 8, ConstantArray["unavailable", 5],
+  {{14, 14}, 8,
+    {"verifiedExact", "verifiedExact", "verifiedExact", "computedExact",
+      "computedExact"},
     {{"verified", 0}, {"verified", 0}}},
-  TestID -> "Cstar4-source-gap-is-explicit-with-exact-regularity-and-unitarity"
+  TestID -> "Cstar4-exact-block-spectrum-characteristic-and-unitarity"
 ]
 
 VerificationTest[
@@ -1197,7 +1341,7 @@ VerificationTest[
       Lookup[data["families"], "familyId"],
       Union[Length /@ Lookup[records, "familyMemberships"]]}
   ],
-  {"1.7.0", "0.20.0", 7, True, {"NotRequested"},
+  {"1.8.0", "0.21.0", 7, True, {"NotRequested"},
     {"C**.1", "C**.2"}, {1, 2}},
   TestID -> "web-catalogue-stable-records"
 ]
@@ -1221,7 +1365,7 @@ VerificationTest[
       index["summary", "detailCount"],
       detail["diagram", "id"] === index["diagrams"][[1, "id"]]}
   ],
-  {7, "1.7.0", {"C**.1", "C**.2"}, "lazy-v1", 7, True},
+  {7, "1.8.0", {"C**.1", "C**.2"}, "lazy-v1", 7, True},
   TestID -> "web-catalogue-export-manifest"
 ]
 
@@ -1240,6 +1384,38 @@ VerificationTest[
     {"corner", "interior", "left-boundary", "right-boundary"},
     "exactSample"},
   TestID -> "web-A3-formula-branch-atlas"
+]
+
+VerificationTest[
+  Module[{data, family, branches},
+    data = WebCatalogueData["A2n(2)", 2, "IncludeKMatrices" -> False];
+    family = SelectFirst[data["families"], #1["familyId"] === "C**.1" &];
+    branches = family["parameterDomain", "branches"];
+    {Lookup[branches, "formulaStatus"], Lookup[branches, "propertyStatus"],
+      Lookup[branches, "boundaryStatus"]}
+  ],
+  {{"implementedClosedForm", "implementedClosedForm",
+    "implementedMasterSpecialization", "implementedProjectiveCoincidence"},
+   {"exactActiveBlockCertificate", "exactActiveCubicCertificate",
+    "exactRankOneCertificate", "exactRankOneCertificate"},
+   {"arbitraryRankProved", "arbitraryRankProved",
+    "exactRankOneProved", "exactRankOneProved"}},
+  TestID -> "web-twisted-nonquasistandard-branch-statuses"
+]
+
+VerificationTest[
+  Module[{data, family, branch},
+    data = WebCatalogueData["A2n-1(2)T", 3,
+      "IncludeKMatrices" -> False];
+    family = SelectFirst[data["families"], #1["familyId"] === "tB*.1" &];
+    branch = SelectFirst[family["parameterDomain", "branches"],
+      #1["branchId"] === "nqs-endpoint-n" &];
+    {branch["formulaStatus"], branch["propertyStatus"],
+      branch["boundaryStatus"], branch["deformationStatus"]}
+  ],
+  {"implementedClosedForm", "exactCharacteristicCertificate",
+    "arbitraryRankProved", "implementedTwoParameter"},
+  TestID -> "web-tBstar1-endpoint-two-parameter-status"
 ]
 
 VerificationTest[
@@ -1441,4 +1617,245 @@ VerificationTest[
   ],
   {"Standard", "b-r", "Transposed", "firstTensorFactor"},
   TestID -> "reflection-equation-record-binds-conventions"
+]
+
+VerificationTest[
+  Module[{specifications, summaries},
+    specifications = {
+      {"C**.1", <|"l" -> 2, "r" -> 3, "Nu" -> 3,
+        "Regime" -> "NonQuasistandard"|>},
+      {"tC**.1", <|"l" -> 0, "r" -> 1, "Nu" -> 3,
+        "Regime" -> "NonQuasistandard"|>},
+      {"C*.1", <|"l" -> 0, "r" -> 1, "Nu" -> 3,
+        "Regime" -> "NonQuasistandard"|>}};
+    summaries = Map[Function[specification, Module[{result, properties},
+      result = KMatrix[<|"Rank" -> 3, "Family" -> specification[[1]],
+        "Parameters" -> specification[[2]]|>, u, "QuantumParameter" -> 4];
+      properties = KMatrixPropertyData[result, u, 4];
+      {result["Family"], Length[properties],
+        Lookup[properties[[{2, 3, 7, 8}]], "Status"],
+        Total[Lookup[properties[[1, "Spectrum"]], "Multiplicity"]],
+        Length[result["KMatrix"]]}
+    ]], specifications];
+    summaries
+  ],
+  {{"C**.1", 8, ConstantArray["verifiedExact", 4], 7, 7},
+   {"tC**.1", 8, ConstantArray["verifiedExact", 4], 7, 7},
+   {"C*.1", 8, ConstantArray["verifiedExact", 4], 8, 8}},
+  TestID -> "twisted-nonquasistandard-exceptional-endpoint-properties"
+]
+
+VerificationTest[
+  Module[{result, groups, eigenvalues, identity, residual},
+    result = KMatrix[<|"Rank" -> 4, "Family" -> "C**.1",
+      "Parameters" -> <|"l" -> 1, "r" -> 3, "Nu" -> 3,
+        "Regime" -> "NonQuasistandard"|>|>, u,
+      "QuantumParameter" -> 4];
+    groups = QREKMatrices`Private`twistedSpectralGroups[result, u, 4];
+    eigenvalues = DeleteDuplicates[Lookup[groups, "Value"]];
+    identity = IdentityMatrix[Length[result["KMatrix"]], SparseArray];
+    residual = Fold[Dot, identity,
+      (result["KMatrix"] - # identity) & /@ eigenvalues];
+    {Total[Lookup[groups, "Multiplicity"]],
+      QREKMatrices`Private`zeroMatrixQ[Map[Together, residual, {2}], True]}
+  ],
+  {9, True},
+  TestID -> "Cdouble1-nonquasistandard-corrected-spectral-sign"
+]
+
+VerificationTest[
+  Module[{families, branches},
+    families = {"B*.1", "tB*.1", "C**.1", "tC**.1", "C*.1"};
+    branches = KMatrixFamilyData[#]["ParameterDomain", "Branches"] & /@
+      families;
+    {Length /@ branches,
+      Lookup[SelectFirst[branches[[2]],
+        #["BranchID"] === "nqs-endpoint-n" &], "FormulaStatus"],
+      Lookup[SelectFirst[branches[[5]],
+        #["BranchID"] === "nqs-internal" &], "RepresentativeConstraintsLaTeX"]}
+  ],
+  {{2, 2, 4, 4, 2}, "implementedClosedForm", {"2\\ell<n-1"}},
+  TestID -> "twisted-nonquasistandard-domain-atlas-metadata"
+]
+
+VerificationTest[
+  Module[{diagram, parameters, result, boundary, branch},
+    diagram = CreateSatakeDiagram["A2n-1(2)T", 3, {0}];
+    parameters = <|"NuNMinus1" -> 3, "NuN" -> 5|>;
+    result = KMatrix[diagram, u, "QuantumParameter" -> 2,
+      "Parameters" -> parameters];
+    boundary = CanonicalCoidealParameters[diagram, 2,
+      "Parameters" -> parameters];
+    branch = SelectFirst[
+      KMatrixFamilyData["tB*.1"]["ParameterDomain", "Branches"],
+      #1["BranchID"] === "nqs-endpoint-n" &];
+    {Lookup[result["Provenance"], "Branch"],
+      Lookup[result["Provenance"], "ResearchStatus"],
+      VerifyKMatrix[result["KMatrix"], diagram, u, 2,
+        boundary["CParameters"], boundary["SParameters"]],
+      Keys[boundary["SParameters"]],
+      Lookup[branch, "FormulaStatus"],
+      Lookup[branch, "DeformationStatus"]}
+  ],
+  {"NonQuasistandardEndpointN",
+   "TwistedNonQuasistandardEndpointBoundaryIntertwinerProved", True,
+   {1, 2, 3}, "implementedClosedForm", "implementedTwoParameter"},
+  TestID -> "tBstar1-nonquasistandard-endpoint-two-parameter"
+]
+
+VerificationTest[
+  Module[{result, properties, spectrum},
+    result = KMatrix[<|"Rank" -> 3, "Family" -> "tB*.1",
+      "Parameters" -> <|"l" -> 1, "r" -> 3,
+        "NuNMinus1" -> 3, "NuN" -> 5,
+        "Regime" -> "NonQuasistandard"|>|>, u,
+      "QuantumParameter" -> 2];
+    properties = KMatrixPropertyData[result, u, 2];
+    spectrum = properties[[1, "Spectrum"]];
+    {Length[properties], Lookup[properties, "Kind"],
+      Lookup[properties[[{1, 2, 3, 8}]], "Status"],
+      Total[Lookup[spectrum, "Multiplicity"]],
+      Count[spectrum, KeyValuePattern["SpectralParameter" -> _]]}
+  ],
+  {8, {"eigenvalues", "characteristicIdentity", "minimalIdentity",
+      "determinant", "factorization", "rankLoci", "regularity",
+      "unitarity"},
+    ConstantArray["verifiedExact", 4], 6, 4},
+  TestID -> "tBstar1-nonquasistandard-endpoint-properties"
+]
+
+VerificationTest[
+  Module[{families, parameters, results, internalBranches},
+    families = {"B*.1", "tB*.1", "C**.1", "tC**.1", "C*.1"};
+    parameters = <|"l" -> 1, "r" -> 3, "Nu" -> 3,
+      "Regime" -> "NonQuasistandard"|>;
+    results = KMatrix[
+        <|"Rank" -> 4, "Family" -> #, "Parameters" -> parameters|>,
+        u, "QuantumParameter" -> 4] & /@ families;
+    internalBranches = SelectFirst[
+        KMatrixFamilyData[#]["ParameterDomain", "Branches"],
+        Function[branch, branch["BranchID"] === "nqs-internal"]] & /@
+      families;
+    {Lookup[Lookup[results, "Provenance"], "ResearchStatus"],
+      Lookup[internalBranches, "BoundaryStatus"]}
+  ],
+  {ConstantArray[
+     "TwistedNonQuasistandardInternalBoundaryIntertwinerProved", 5],
+   ConstantArray["arbitraryRankProved", 5]},
+  TestID -> "twisted-nonquasistandard-internal-boundary-provenance"
+]
+
+VerificationTest[
+  Module[{specifications, results, endpointBranches},
+    specifications = {
+      {"B*.1", 3, <|"l" -> 0, "r" -> 2, "Nu0" -> 3, "Nu1" -> 5,
+        "Regime" -> "NonQuasistandard"|>},
+      {"C**.1", 3, <|"l" -> 2, "r" -> 3, "Nu" -> 3,
+        "Regime" -> "NonQuasistandard"|>},
+      {"tC**.1", 3, <|"l" -> 0, "r" -> 1, "Nu" -> 3,
+        "Regime" -> "NonQuasistandard"|>},
+      {"C*.1", 3, <|"l" -> 0, "r" -> 1, "Nu" -> 3,
+        "Regime" -> "NonQuasistandard"|>}
+    };
+    results = KMatrix[
+        <|"Rank" -> #[[2]], "Family" -> #[[1]],
+          "Parameters" -> #[[3]]|>, u, "QuantumParameter" -> 4] & /@
+      specifications;
+    endpointBranches = SelectFirst[
+        KMatrixFamilyData[#]["ParameterDomain", "Branches"],
+        Function[branch, branch["Kind"] === "endpoint"]] & /@
+      specifications[[All, 1]];
+    {Lookup[Lookup[results, "Provenance"], "ResearchStatus"],
+      Lookup[endpointBranches, "BoundaryStatus"],
+      endpointBranches[[1, "ConstraintsLaTeX"]]}
+  ],
+  {ConstantArray[
+     "TwistedNonQuasistandardEndpointBoundaryIntertwinerProved", 4],
+   ConstantArray["arbitraryRankProved", 4],
+   {"n\\geq3", "(\\ell,r)=(0,2)"}},
+  TestID -> "twisted-nonquasistandard-endpoint-boundary-provenance"
+]
+
+(* ------------------------------------------------------------------
+   Arbitrary-rank diagram schematics
+   ------------------------------------------------------------------ *)
+
+VerificationTest[
+  Module[{families, layouts},
+    families = Sort[Keys[QREKMatrices`Private`$familySchematics]];
+    layouts = DeleteDuplicates[Sort[Flatten[
+      Map[Function[family, Lookup[KMatrixFamilySchematic[family], "Layout"]],
+        families]]]];
+    {Length[families], layouts,
+      MissingQ[KMatrixFamilySchematic["D.3"]],
+      MemberQ[families, "C.1"] && MemberQ[families, "tC**.2"]}
+  ],
+  {23, {"cycle", "folded", "linear"}, True, True},
+  TestID -> "family-schematic-registry-coverage"
+]
+
+VerificationTest[
+  Module[{variant, tokens, nodes, braces},
+    variant = First[KMatrixFamilySchematic["C.1"]];
+    tokens = variant["Row"];
+    nodes = Select[tokens, #["Kind"] === "node" &];
+    braces = variant["Braces"];
+    {variant["Layout"], Length[nodes],
+      Lookup[nodes, "Fill"],
+      Lookup[nodes[[4]], "Label"],
+      Lookup[braces, "From"], Lookup[braces, "To"]}
+  ],
+  {"linear", 8,
+    {"black", "black", "black", "white", "white", "black", "black", "black"},
+    "\\ell", {0, 5}, {2, 7}},
+  TestID -> "family-schematic-c1-token-stream"
+]
+
+VerificationTest[
+  Module[{b1a, b1b, forkLeft},
+    {b1a, b1b} = KMatrixFamilySchematic["B.1"];
+    forkLeft = #["CapLeft"] &;
+    {b1a["VariantID"], b1b["VariantID"],
+      forkLeft[b1a]["Kind"], TrueQ[forkLeft[b1a]["Tau"]],
+      TrueQ[forkLeft[b1b]["Tau"]]}
+  ],
+  {"B.1a", "B.1b", "fork", False, True},
+  TestID -> "family-schematic-fork-tau-representatives"
+]
+
+VerificationTest[
+  Module[{data, family, schematic},
+    data = WebCatalogueData["C(1)", 3, "IncludeKMatrices" -> False];
+    family = SelectFirst[data["families"], #["familyId"] === "C.1" &];
+    schematic = family["schematic"];
+    {data["schemaVersion"], Length[schematic],
+      schematic[[1, "layout"]],
+      schematic[[1, "row", 1]],
+      schematic[[1, "braces", 1]]}
+  ],
+  {"1.8.0", 1, "linear",
+    <|"kind" -> "node", "fill" -> "black", "label" -> "0",
+      "position" -> "left"|>,
+    <|"from" -> 0, "to" -> 2, "side" -> "below", "label" -> "p_1"|>},
+  TestID -> "web-family-record-carries-schematic"
+]
+
+VerificationTest[
+  Module[{directory, manifest, imported, families, cstar},
+    directory = FileNameJoin[{$TemporaryDirectory,
+      "qre-web-family-index-" <> IntegerString[Hash[$SessionID]]}];
+    manifest = ExportWebCatalogue[directory,
+      "Types" -> {"A2n(2)"}, "Ranks" -> {2},
+      "IncludeKMatrices" -> False];
+    imported = Import[FileNameJoin[{directory, "manifest.json"}], "RawJSON"];
+    families = imported["families"];
+    cstar = SelectFirst[families, #["familyId"] === "C**.1" &];
+    {Sort[Lookup[families, "familyId"]],
+      KeyExistsQ[cstar, "schematic"],
+      KeyExistsQ[cstar, "instanceIds"],
+      cstar["schematic"][[1, "layout"]],
+      Lookup[cstar["catalogues"][[1]], {"affineType", "rank"}]}
+  ],
+  {{"C**.1", "C**.2"}, True, False, "linear", {"A2n(2)", 2}},
+  TestID -> "web-manifest-family-index"
 ]

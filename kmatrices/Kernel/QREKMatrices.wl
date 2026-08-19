@@ -44,6 +44,8 @@ KMatrixFamilies::usage =
   "KMatrixFamilies[type] gives the registered K-matrix family identifiers for a supported affine presentation.";
 KMatrixFamilyData::usage =
   "KMatrixFamilyData[family] gives structured family metadata, parameter domains, general formula data, properties, and source anchors.";
+KMatrixFamilySchematic::usage =
+  "KMatrixFamilySchematic[family] gives the arbitrary-rank generalized Satake diagram schematics of a K-matrix family as layout-independent node/link token streams.";
 KMatrixRealizationData::usage =
   "KMatrixRealizationData[diagram, u] gives a bare, dressed, or transported K-matrix realization with an explicit transformation chain.";
 KMatrixPropertyData::usage =
@@ -94,8 +96,8 @@ $twistedTypes = {
   "A2n-1(2)", "A2n-1(2)T", "A2n(2)", "A2n(2)T", "Dn+1(2)"
 };
 $canonicalTypes = Join[$untwistedTypes, $twistedTypes];
-$qreKMatricesVersion = "0.20.0";
-$webCatalogueSchemaVersion = "1.7.0";
+$qreKMatricesVersion = "0.21.0";
+$webCatalogueSchemaVersion = "1.8.0";
 
 QREKMatricesVersion[] := $qreKMatricesVersion;
 
@@ -538,7 +540,7 @@ $twistedFamilyFormulae = <|
     "qRE_II/alt_temp.tex", "res:B*2"],
   "tB*.1" -> twistedMasterFormula["tB*.1", 1, "-",
     "M_1(u)\\text{ is diagonal and }M_2(u)=\\sum_{\\bar r\\leq i<\\bar\\ell}(-\\lambda E_{-i,-i}+\\lambda^{-1}E_{ii}+E_{-i,i}-E_{i,-i})",
-    "\\lambda=\\mathrm{i}q^{n-r},\\quad\\mu=q^{-\\ell-1};\\qquad\\lambda\\in\\mathbb K^\\times\\ (r=n)",
+    "\\lambda=\\mathrm{i}q^{n-r},\\quad\\mu=q^{-\\ell-1};\\qquad\\lambda=\\mathrm{i},\\ s_n=0\\ (r=n)\\text{ is the corrected boundary specialization}",
     "qRE_II/plain_temp.tex", "res:tB*1"],
   "tB*.2" -> twistedMasterFormula["tB*.2", 1, "+",
     "M_1(u)\\text{ is diagonal and }M_2(u)\\text{ is the symmetric alternating sum with }\\delta_{r,n-1}(\\lambda+\\lambda^{-1})E_{11}",
@@ -925,8 +927,7 @@ KeyValueMap[(If[!KeyExistsQ[$familyRegistry, #1],
 
 KeyValueMap[Function[{family, formula},
   $familyRegistry[family] = Join[$familyRegistry[family], <|
-    "ContentStatus" -> If[family === "C*.4", "publishedPartialProperties",
-      "published"],
+    "ContentStatus" -> "published",
     "Regimes" -> If[StringEndsQ[family, ".1"],
       {"MainCatalogue", "NonQuasistandard"}, {"MainCatalogue"}],
     "ParameterDomain" -> Join[$familyRegistry[family, "ParameterDomain"], <|
@@ -938,12 +939,249 @@ KeyValueMap[Function[{family, formula},
     "GeneralFormula" -> formula,
     "Properties" -> {
       <|"Kind" -> "eigendecomposition", "Status" ->
-          If[family === "C*.4", "conditional", "sourceIdentity"],
+          If[family === "C*.4", "computedExact", "sourceIdentity"],
         "LaTeX" -> "K(u)=V D(u)V^{-1}"|>,
       <|"Kind" -> "unitarity", "Status" -> "sourceIdentity",
         "LaTeX" -> "K(u)K(u^{-1})=\\operatorname{Id}"|>},
     "SourceAnchors" -> formula["SourceAnchors"]|>]
 ], $twistedFamilyFormulae];
+
+(* The source table in qRE_II/nqs_temp.tex mixes diagram-representative
+   restrictions with the larger algebraic domains of its displayed formulas.
+   Keep those two notions separate here.  In particular, the C*.1 closed
+   formula is meaningful for 0<=ell<=n-2, whereas the archived table chooses
+   2 ell<n-1 as its representative chamber. *)
+$twistedNonQuasiBranches = <|
+  "B*.1" -> {
+    <|"BranchID" -> "nqs-endpoint-02", "Label" -> "Two exceptional fork nodes",
+      "Kind" -> "endpoint", "Regime" -> "NonQuasistandard",
+      "ConstraintsLaTeX" -> {"n\\geq3", "(\\ell,r)=(0,2)"},
+      "FreeParameters" -> {"Nu0", "Nu1"},
+      "FormulaStatus" -> "implementedClosedForm",
+      "PropertyStatus" -> "exactCharacteristicCertificate",
+      "BoundaryStatus" -> "arbitraryRankProved"|>,
+    <|"BranchID" -> "nqs-internal", "Label" -> "One internal exceptional node",
+      "Kind" -> "generic", "Regime" -> "NonQuasistandard",
+      "ConstraintsLaTeX" -> {"1\\leq\\ell\\leq n-3", "r=\\ell+2"},
+      "RepresentativeSplitLaTeX" -> {"\\ell\\text{ even: B*.1a}",
+        "\\ell\\text{ odd: B*.1b}"}, "FreeParameters" -> {"Nu"},
+      "FormulaStatus" -> "implementedClosedForm",
+      "PropertyStatus" -> "exactActiveBlockCertificate",
+      "BoundaryStatus" -> "arbitraryRankProved"|>},
+  "tB*.1" -> {
+    <|"BranchID" -> "nqs-internal", "Label" -> "One internal exceptional node",
+      "Kind" -> "generic", "Regime" -> "NonQuasistandard",
+      "ConstraintsLaTeX" -> {"1\\leq\\ell\\leq n-3", "r=\\ell+2"},
+      "RepresentativeSplitLaTeX" -> {"n-\\ell\\text{ even: tB*.1a}",
+        "n-\\ell\\text{ odd: tB*.1b}"}, "FreeParameters" -> {"Nu"},
+      "FormulaStatus" -> "implementedClosedForm",
+      "PropertyStatus" -> "exactActiveBlockCertificate",
+      "BoundaryStatus" -> "arbitraryRankProved"|>,
+    <|"BranchID" -> "nqs-endpoint-n", "Label" -> "Two terminal exceptional nodes",
+      "Kind" -> "endpoint", "Regime" -> "NonQuasistandard",
+      "ConstraintsLaTeX" -> {"n\\geq3", "(\\ell,r)=(n-2,n)"},
+      "FreeParameters" -> {"NuNMinus1", "NuN"},
+      "FormulaStatus" -> "implementedClosedForm",
+      "PropertyStatus" -> "exactCharacteristicCertificate",
+      "BoundaryStatus" -> "arbitraryRankProved",
+      "DeformationStatus" -> "implementedTwoParameter"|>},
+  "C**.1" -> {
+    <|"BranchID" -> "nqs-internal", "Label" -> "One internal exceptional node",
+      "Kind" -> "generic", "Regime" -> "NonQuasistandard",
+      "ConstraintsLaTeX" -> {"1\\leq\\ell\\leq n-2", "r=\\ell+2"},
+      "FreeParameters" -> {"Nu"}, "FormulaStatus" -> "implementedClosedForm",
+      "PropertyStatus" -> "exactActiveBlockCertificate",
+      "BoundaryStatus" -> "arbitraryRankProved"|>,
+    <|"BranchID" -> "nqs-endpoint-n", "Label" -> "Exceptional long endpoint",
+      "Kind" -> "endpoint", "Regime" -> "NonQuasistandard",
+      "ConstraintsLaTeX" -> {"n\\geq2", "(\\ell,r)=(n-1,n)"},
+      "FreeParameters" -> {"Nu"}, "FormulaStatus" -> "implementedClosedForm",
+      "PropertyStatus" -> "exactActiveCubicCertificate",
+      "BoundaryStatus" -> "arbitraryRankProved"|>},
+  "tC**.1" -> {
+    <|"BranchID" -> "nqs-endpoint-0", "Label" -> "Exceptional short endpoint",
+      "Kind" -> "endpoint", "Regime" -> "NonQuasistandard",
+      "ConstraintsLaTeX" -> {"n\\geq2", "(\\ell,r)=(0,1)"},
+      "FreeParameters" -> {"Nu"}, "FormulaStatus" -> "implementedClosedForm",
+      "PropertyStatus" -> "exactActiveCubicCertificate",
+      "BoundaryStatus" -> "arbitraryRankProved"|>,
+    <|"BranchID" -> "nqs-internal", "Label" -> "One internal exceptional node",
+      "Kind" -> "generic", "Regime" -> "NonQuasistandard",
+      "ConstraintsLaTeX" -> {"1\\leq\\ell\\leq n-2", "r=\\ell+2"},
+      "FreeParameters" -> {"Nu"}, "FormulaStatus" -> "implementedClosedForm",
+      "PropertyStatus" -> "exactActiveBlockCertificate",
+      "BoundaryStatus" -> "arbitraryRankProved"|>},
+  "C*.1" -> {
+    <|"BranchID" -> "nqs-endpoint-0", "Label" -> "Exceptional short endpoint",
+      "Kind" -> "endpoint", "Regime" -> "NonQuasistandard",
+      "ConstraintsLaTeX" -> {"n\\geq2", "(\\ell,r)=(0,1)"},
+      "FreeParameters" -> {"Nu"}, "FormulaStatus" -> "implementedClosedForm",
+      "PropertyStatus" -> "exactActiveCubicCertificate",
+      "BoundaryStatus" -> "arbitraryRankProved"|>,
+    <|"BranchID" -> "nqs-internal", "Label" -> "One internal exceptional node",
+      "Kind" -> "generic", "Regime" -> "NonQuasistandard",
+      "ConstraintsLaTeX" -> {"0\\leq\\ell\\leq n-2", "r=\\ell+2"},
+      "RepresentativeConstraintsLaTeX" -> {"2\\ell<n-1"},
+      "DomainAuditStatus" -> "formulaDomainAndRepresentativeChamberSeparated",
+      "FreeParameters" -> {"Nu"}, "FormulaStatus" -> "implementedClosedForm",
+      "PropertyStatus" -> "exactActiveBlockCertificate",
+      "BoundaryStatus" -> "arbitraryRankProved"|>}
+|>;
+
+KeyValueMap[Function[{family, branches},
+  $familyRegistry[family] = Join[$familyRegistry[family], <|
+    "Regimes" -> DeleteDuplicates@Join[
+      Lookup[$familyRegistry[family], "Regimes", {}],
+      DeleteDuplicates[Lookup[branches, "Regime", {}]]],
+    "ParameterDomain" -> Join[$familyRegistry[family, "ParameterDomain"], <|
+      "Branches" -> Join[
+        Lookup[$familyRegistry[family, "ParameterDomain"], "Branches", {}],
+        branches]|>]|>]
+], $twistedNonQuasiBranches];
+
+$twistedRankOneBranches = <|
+  "C**.1" -> {
+    <|"BranchID" -> "a2twisted-all-white", "Label" -> "A2(2) all-white",
+      "Kind" -> "exceptional", "Regime" -> "LowRank",
+      "ConstraintsLaTeX" -> {"n=1", "(\\ell,r)=(0,1)"},
+      "FreeParameters" -> {"Mu"},
+      "FormulaStatus" -> "implementedMasterSpecialization",
+      "PropertyStatus" -> "exactRankOneCertificate",
+      "BoundaryStatus" -> "exactRankOneProved"|>,
+    <|"BranchID" -> "a2twisted-one-white", "Label" -> "A2(2) one-white coincidence",
+      "Kind" -> "exceptional", "Regime" -> "LowRankCoincidence",
+      "ConstraintsLaTeX" -> {"n=1", "\\ell=r\\in\\{0,1\\}"},
+      "CoincidentFamilies" -> {"C**.1", "C**.2"},
+      "FormulaStatus" -> "implementedProjectiveCoincidence",
+      "PropertyStatus" -> "exactRankOneCertificate",
+      "BoundaryStatus" -> "exactRankOneProved"|>},
+  "C**.2" -> {
+    <|"BranchID" -> "a2twisted-one-white", "Label" -> "A2(2) one-white coincidence",
+      "Kind" -> "exceptional", "Regime" -> "LowRankCoincidence",
+      "ConstraintsLaTeX" -> {"n=1", "\\ell=r\\in\\{0,1\\}"},
+      "CoincidentFamilies" -> {"C**.1", "C**.2"},
+      "FormulaStatus" -> "implementedProjectiveCoincidence",
+      "PropertyStatus" -> "exactRankOneCertificate",
+      "BoundaryStatus" -> "exactRankOneProved"|>},
+  "tC**.1" -> {
+    <|"BranchID" -> "a2twisted-reversed-all-white",
+      "Label" -> "Reversed A2(2) all-white", "Kind" -> "exceptional",
+      "Regime" -> "LowRank", "ConstraintsLaTeX" -> {"n=1", "(\\ell,r)=(0,1)"},
+      "FreeParameters" -> {"Lambda"},
+      "FormulaStatus" -> "implementedMasterSpecialization",
+      "PropertyStatus" -> "exactRankOneCertificate",
+      "BoundaryStatus" -> "exactRankOneProved"|>,
+    <|"BranchID" -> "a2twisted-reversed-one-white",
+      "Label" -> "Reversed A2(2) one-white coincidence", "Kind" -> "exceptional",
+      "Regime" -> "LowRankCoincidence",
+      "ConstraintsLaTeX" -> {"n=1", "\\ell=r\\in\\{0,1\\}"},
+      "CoincidentFamilies" -> {"tC**.1", "tC**.2"},
+      "FormulaStatus" -> "implementedProjectiveCoincidence",
+      "PropertyStatus" -> "exactRankOneCertificate",
+      "BoundaryStatus" -> "exactRankOneProved"|>},
+  "tC**.2" -> {
+    <|"BranchID" -> "a2twisted-reversed-one-white",
+      "Label" -> "Reversed A2(2) one-white coincidence", "Kind" -> "exceptional",
+      "Regime" -> "LowRankCoincidence",
+      "ConstraintsLaTeX" -> {"n=1", "\\ell=r\\in\\{0,1\\}"},
+      "CoincidentFamilies" -> {"tC**.1", "tC**.2"},
+      "FormulaStatus" -> "implementedProjectiveCoincidence",
+      "PropertyStatus" -> "exactRankOneCertificate",
+      "BoundaryStatus" -> "exactRankOneProved"|>}
+|>;
+
+KeyValueMap[Function[{family, branches},
+  $familyRegistry[family] = Join[$familyRegistry[family], <|
+    "Regimes" -> DeleteDuplicates@Join[
+      Lookup[$familyRegistry[family], "Regimes", {}],
+      DeleteDuplicates[Lookup[branches, "Regime", {}]]],
+    "ParameterDomain" -> Join[$familyRegistry[family, "ParameterDomain"], <|
+      "Branches" -> Join[
+        Lookup[$familyRegistry[family, "ParameterDomain"], "Branches", {}],
+        branches]|>]|>]
+], $twistedRankOneBranches];
+
+(* ------------------------------------------------------------------
+   Arbitrary-rank diagram schematics.
+
+   Each family carries one or more representative variants.  A variant is a
+   flat token stream of nodes and links carrying no geometry: the renderer
+   derives all coordinates.  A "dashed" link denotes a run of arbitrary
+   admissible length, which is what makes the schematic rank-independent.
+
+   Layouts:
+     "linear"  a single chain, optionally capped at either end by a fork.
+     "folded"  a cycle folded about the tau-axis, drawn as two rows joined
+               by rungs; an end is either a cap node or a rounded "arc".
+     "cycle"   a closed ring, used by the type-A identity families.
+
+   Transcribed from the diagram tables of qRE/files/results*.tex and
+   qRE_II/{plain,alt,par}_temp.tex.
+   ------------------------------------------------------------------ *)
+
+$familySchematics = <|
+  "A.3" -> {
+    <|"VariantID"->"A.3a","Label"->"Identity representative","Layout"->"folded","CapLeft"-><|"Kind"->"node","Fill"->"black","Label"->"0"|>,"CapRight"-><|"Kind"->"node","Fill"->"black","Label"->None|>,"Top"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>},"Bottom"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"N-\\ell","Position"->"below"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"N-r","Position"->"below"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>},"Rungs"->True,"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->4,"To"->"capR","Side"->"above","Label"->"p_2"|>}|>,
+    <|"VariantID"->"A.3b","Label"->"Flipped representative","Layout"->"folded","CapLeft"-><|"Kind"->"node","Fill"->"black","Label"->"0"|>,"CapRight"->"arc","Top"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>},"Bottom"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"N-\\ell","Position"->"below"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"N-r","Position"->"below"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>},"Rungs"->True,"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->4,"To"->5,"Side"->"above","Label"->"p_2"|>}|>,
+    <|"VariantID"->"A.3c","Label"->"Both ends flipped","Layout"->"folded","CapLeft"->"arc","CapRight"->"arc","Top"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>},"Bottom"->{<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"left"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-\\ell","Position"->"below"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-r","Position"->"below"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>},"Rungs"->True,"Braces"->{<|"From"->0,"To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->4,"To"->5,"Side"->"above","Label"->"p_2"|>}|>},
+  "B*.1" -> {
+    <|"VariantID"->"B*.1a","Label"->"Identity representative","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->False|>,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->4,"To"->6,"Side"->"below","Label"->"p_2"|>}|>,
+    <|"VariantID"->"B*.1b","Label"->"Flipped representative","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->True|>,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->4,"To"->6,"Side"->"below","Label"->"p_2"|>}|>},
+  "B*.2" -> {
+    <|"VariantID"->"B*.2a","Label"->"Identity representative","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->False|>,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->7,"To"->9,"Side"->"below","Label"->"p_2"|>}|>,
+    <|"VariantID"->"B*.2b","Label"->"Flipped representative","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->True|>,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->7,"To"->9,"Side"->"below","Label"->"p_2"|>}|>},
+  "B.1" -> {
+    <|"VariantID"->"B.1a","Label"->"Identity representative","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->False|>,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->4,"To"->6,"Side"->"below","Label"->"p_2"|>}|>,
+    <|"VariantID"->"B.1b","Label"->"Flipped representative","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->True|>,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->4,"To"->6,"Side"->"below","Label"->"p_2"|>}|>},
+  "B.2" -> {
+    <|"VariantID"->"B.2a","Label"->"Identity representative","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->False|>,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->7,"To"->9,"Side"->"below","Label"->"p_2"|>}|>,
+    <|"VariantID"->"B.2b","Label"->"Flipped representative","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->True|>,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->7,"To"->9,"Side"->"below","Label"->"p_2"|>}|>},
+  "C**.1" -> {
+    <|"VariantID"->"C**.1","Label"->"Representative","Layout"->"linear","CapLeft"->None,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->0,"To"->2,"Side"->"below","Label"->"p_1"|>,<|"From"->5,"To"->7,"Side"->"below","Label"->"p_2"|>}|>},
+  "C**.2" -> {
+    <|"VariantID"->"C**.2","Label"->"Representative","Layout"->"linear","CapLeft"->None,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->0,"To"->2,"Side"->"below","Label"->"p_1"|>,<|"From"->8,"To"->10,"Side"->"below","Label"->"p_2"|>}|>},
+  "C*.1" -> {
+    <|"VariantID"->"C*.1","Label"->"Representative","Layout"->"linear","CapLeft"->None,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->0,"To"->2,"Side"->"below","Label"->"p_1"|>,<|"From"->5,"To"->7,"Side"->"below","Label"->"p_2"|>}|>},
+  "C*.2" -> {
+    <|"VariantID"->"C*.2","Label"->"Representative","Layout"->"linear","CapLeft"->None,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->0,"To"->2,"Side"->"below","Label"->"p_1"|>,<|"From"->8,"To"->10,"Side"->"below","Label"->"p_2"|>}|>},
+  "C*.4" -> {
+    <|"VariantID"->"C*.4a","Label"->"Identity representative","Layout"->"folded","CapLeft"-><|"Kind"->"node","Fill"->"black","Label"->None|>,"CapRight"->"arc","Top"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"white","Label"->"0","Position"->"right"|>},"Bottom"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-\\ell","Position"->"below"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-1","Position"->"below"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"white","Label"->"n","Position"->"right"|>},"Rungs"->True,"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>}|>,
+    <|"VariantID"->"C*.4b","Label"->"Flipped representative","Layout"->"folded","CapLeft"->"arc","CapRight"->"arc","Top"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"white","Label"->"0","Position"->"right"|>},"Bottom"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-\\ell","Position"->"below"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-1","Position"->"below"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"white","Label"->"n","Position"->"right"|>},"Rungs"->True,"Braces"->{<|"From"->0,"To"->1,"Side"->"above","Label"->"p_1"|>}|>},
+  "C.1" -> {
+    <|"VariantID"->"C.1","Label"->"Representative","Layout"->"linear","CapLeft"->None,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->0,"To"->2,"Side"->"below","Label"->"p_1"|>,<|"From"->5,"To"->7,"Side"->"below","Label"->"p_2"|>}|>},
+  "C.2" -> {
+    <|"VariantID"->"C.2","Label"->"Representative","Layout"->"linear","CapLeft"->None,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->0,"To"->2,"Side"->"below","Label"->"p_1"|>,<|"From"->8,"To"->10,"Side"->"below","Label"->"p_2"|>}|>},
+  "C.4" -> {
+    <|"VariantID"->"C.4a","Label"->"Identity representative","Layout"->"folded","CapLeft"-><|"Kind"->"node","Fill"->"black","Label"->None|>,"CapRight"->"arc","Top"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"white","Label"->"0","Position"->"right"|>},"Bottom"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-\\ell","Position"->"below"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-1","Position"->"below"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"white","Label"->"n","Position"->"right"|>},"Rungs"->True,"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>}|>,
+    <|"VariantID"->"C.4b","Label"->"Flipped representative","Layout"->"folded","CapLeft"->"arc","CapRight"->"arc","Top"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"white","Label"->"0","Position"->"right"|>},"Bottom"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-\\ell","Position"->"below"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-1","Position"->"below"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"white","Label"->"n","Position"->"right"|>},"Rungs"->True,"Braces"->{<|"From"->0,"To"->1,"Side"->"above","Label"->"p_1"|>}|>},
+  "D.1" -> {
+    <|"VariantID"->"D.1a","Label"->"Identity representative","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->False|>,"CapRight"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"n-1"|>,"Bottom"-><|"Fill"->"black","Label"->"n"|>,"Tau"->False|>,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-2","Position"->"above"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->4,"To"->"capR","Side"->"below","Label"->"p_2"|>}|>,
+    <|"VariantID"->"D.1b","Label"->"Flipped representative","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->False|>,"CapRight"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"n-1"|>,"Bottom"-><|"Fill"->"black","Label"->"n"|>,"Tau"->True|>,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"\\hspace{-6pt}n-2","Position"->"above"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->4,"To"->"capR","Side"->"below","Label"->"p_2"|>}|>,
+    <|"VariantID"->"D.1c","Label"->"Both ends flipped","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->True|>,"CapRight"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"n-1"|>,"Bottom"-><|"Fill"->"black","Label"->"n"|>,"Tau"->True|>,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"\\hspace{-4pt} n-2","Position"->"above"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->4,"To"->"capR","Side"->"below","Label"->"p_2"|>}|>},
+  "D.2" -> {
+    <|"VariantID"->"D.2a","Label"->"Identity representative","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->False|>,"CapRight"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"n-1"|>,"Bottom"-><|"Fill"->"black","Label"->"n"|>,"Tau"->False|>,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-2","Position"->"above"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->7,"To"->"capR","Side"->"below","Label"->"p_2"|>}|>,
+    <|"VariantID"->"D.2b","Label"->"Flipped representative","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->False|>,"CapRight"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"n-1"|>,"Bottom"-><|"Fill"->"black","Label"->"n"|>,"Tau"->True|>,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-2","Position"->"above"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->7,"To"->"capR","Side"->"below","Label"->"p_2"|>}|>,
+    <|"VariantID"->"D.2c","Label"->"Both ends flipped","Layout"->"linear","CapLeft"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"0"|>,"Bottom"-><|"Fill"->"black","Label"->"1"|>,"Tau"->True|>,"CapRight"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"n-1"|>,"Bottom"-><|"Fill"->"black","Label"->"n"|>,"Tau"->True|>,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-2","Position"->"above"|>},"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>,<|"From"->7,"To"->"capR","Side"->"below","Label"->"p_2"|>}|>},
+  "D.4" -> {
+    <|"VariantID"->"D.4a","Label"->"Identity representative","Layout"->"folded","CapLeft"-><|"Kind"->"node","Fill"->"black","Label"->None|>,"CapRight"->"arc","Top"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"0","Position"->"right"|>},"Bottom"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-\\ell","Position"->"below"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-2\\hspace{5pt}","Position"->"below"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-1","Position"->"right"|>},"Rungs"->True,"Braces"->{<|"From"->"capL","To"->1,"Side"->"above","Label"->"p_1"|>}|>,
+    <|"VariantID"->"D.4b","Label"->"Flipped representative","Layout"->"folded","CapLeft"->"arc","CapRight"->"arc","Top"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"0","Position"->"right"|>},"Bottom"->{<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-\\ell","Position"->"below"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-2\\hspace{5pt}","Position"->"below"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n-1","Position"->"right"|>},"Rungs"->True,"Braces"->{<|"From"->0,"To"->1,"Side"->"above","Label"->"p_1"|>}|>},
+  "tB*.1" -> {
+    <|"VariantID"->"tB*.1a","Label"->"Identity representative","Layout"->"linear","CapLeft"->None,"CapRight"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"n{-}1"|>,"Bottom"-><|"Fill"->"black","Label"->"n"|>,"Tau"->False|>,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n{-}2\\qu","Position"->"above"|>},"Braces"->{<|"From"->0,"To"->2,"Side"->"below","Label"->"p_1"|>,<|"From"->5,"To"->"capR","Side"->"below","Label"->"p_2"|>}|>,
+    <|"VariantID"->"tB*.1b","Label"->"Flipped representative","Layout"->"linear","CapLeft"->None,"CapRight"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"n{-}1"|>,"Bottom"-><|"Fill"->"black","Label"->"n"|>,"Tau"->True|>,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n{-}2\\qu","Position"->"above"|>},"Braces"->{<|"From"->0,"To"->2,"Side"->"below","Label"->"p_1"|>,<|"From"->5,"To"->"capR","Side"->"below","Label"->"p_2"|>}|>},
+  "tB*.2" -> {
+    <|"VariantID"->"tB*.2a","Label"->"Identity representative","Layout"->"linear","CapLeft"->None,"CapRight"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"n{-}1"|>,"Bottom"-><|"Fill"->"black","Label"->"n"|>,"Tau"->False|>,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n{-}2\\qu","Position"->"above"|>},"Braces"->{<|"From"->8,"To"->"capR","Side"->"below","Label"->"p_2"|>,<|"From"->0,"To"->2,"Side"->"below","Label"->"p_1"|>}|>,
+    <|"VariantID"->"tB*.2b","Label"->"Flipped representative","Layout"->"linear","CapLeft"->None,"CapRight"-><|"Kind"->"fork","Top"-><|"Fill"->"black","Label"->"n{-}1"|>,"Bottom"-><|"Fill"->"black","Label"->"n"|>,"Tau"->True|>,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"double","Arrow"->"right"|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n{-}2\\qu","Position"->"above"|>},"Braces"->{<|"From"->0,"To"->2,"Side"->"below","Label"->"p_1"|>,<|"From"->8,"To"->"capR","Side"->"below","Label"->"p_2"|>}|>},
+  "tC**.1" -> {
+    <|"VariantID"->"tC**.1","Label"->"Representative","Layout"->"linear","CapLeft"->None,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->0,"To"->2,"Side"->"below","Label"->"p_1"|>,<|"From"->5,"To"->7,"Side"->"below","Label"->"p_2"|>}|>},
+  "tC**.2" -> {
+    <|"VariantID"->"tC**.2","Label"->"Representative","Layout"->"linear","CapLeft"->None,"CapRight"->None,"Row"->{<|"Kind"->"node","Fill"->"black","Label"->"0","Position"->"left"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"\\ell","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"r","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->None,"Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n-1","Position"->"above"|>,<|"Kind"->"link","Style"->"double","Arrow"->"left"|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"right"|>},"Braces"->{<|"From"->0,"To"->2,"Side"->"below","Label"->"p_1"|>,<|"From"->8,"To"->10,"Side"->"below","Label"->"p_2"|>}|>},
+  "A.1" -> {<|"VariantID"->"A.1","Label"->"Representative","Layout"->"cycle","Ring"->{<|"Kind"->"node","Fill"->"white","Label"->"0","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>},"Tau"->{},"Braces"->{}|>},
+  "A.2" -> {<|"VariantID"->"A.2","Label"->"Representative","Layout"->"cycle","Ring"->{<|"Kind"->"node","Fill"->"white","Label"->"0","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"black","Label"->"n","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>},"Tau"->{},"Braces"->{}|>},
+  "A.4" -> {<|"VariantID"->"A.4","Label"->"Representative","Layout"->"cycle","Ring"->{<|"Kind"->"node","Fill"->"white","Label"->"0","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"1","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"(n-1)/2","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"(n+1)/2","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"(n+3)/2","Position"->"above"|>,<|"Kind"->"link","Style"->"dashed","Arrow"->None|>,<|"Kind"->"node","Fill"->"white","Label"->"n","Position"->"above"|>,<|"Kind"->"link","Style"->"solid","Arrow"->None|>},"Tau"->{{0,3},{1,4},{2,5}},"Braces"->{}|>}
+|>;
+
+KMatrixFamilySchematic[family_String] := Lookup[$familySchematics, family,
+  Missing["NoSchematic", family]];
 
 KMatrixFamilies[type_String] := Module[{canonical = canonicalType[type]},
   If[MissingQ[canonical], Return[$Failed]];
@@ -1382,6 +1620,17 @@ ClassifySatakeDiagram[d_?SatakeDiagramQ] := Module[
       Length[candidates] == 1,
         family = Missing["RequiresDiagramAutomorphism", First[candidates]];
         status = "ClassifiedUpToDiagramAutomorphism",
+      n == 1 && MemberQ[{"A2n(2)", "A2n(2)T"}, type] &&
+          Sort[candidates] === Sort[If[type === "A2n(2)",
+            {"C**.1", "C**.2"}, {"tC**.1", "tC**.2"}]],
+        (* At A_2^(2) a single white node is simultaneously the
+           plain interval {ell} and the alternating progression {ell}.
+           The two closed formulae are projectively equal.  Select the
+           plain label canonically while retaining both memberships. *)
+        family = If[type === "A2n(2)", "C**.1", "tC**.1"];
+        representativeFamily = family;
+        regime = "LowRankCoincidence";
+        status = "ClassifiedLowRankCoincidence",
       Length[candidates] > 1,
         family = Missing["AmbiguousFamily", candidates];
         status = "CandidateFamiliesOnly",
@@ -1394,6 +1643,8 @@ ClassifySatakeDiagram[d_?SatakeDiagramQ] := Module[
     "OrbitCandidateFamilies" -> orbitCandidates,
     "Parameters" -> params, "Equation" -> equation,
     "ClassificationStatus" -> status, "Regime" -> regime,
+    "CoincidentFamilies" -> If[status === "ClassifiedLowRankCoincidence",
+      candidates, {}],
     "RepresentativeFamily" -> representativeFamily,
     "RepresentativePermutation" -> Lookup[chosen, "RepresentativePermutation",
       Missing["NotAvailable"]],
@@ -1407,6 +1658,7 @@ nonQuasiEndpointQ[family_, n_, ell_, r_] := Switch[family,
   "B.1", MemberQ[{{0, 2}, {n - 1, n}}, {ell, r}],
   "D.1", {ell, r} === {0, 2},
   "B*.1", {ell, r} === {0, 2},
+  "tB*.1", {ell, r} === {n - 2, n},
   "C**.1", {ell, r} === {n - 1, n},
   "tC**.1" | "C*.1", {ell, r} === {0, 1},
   _, False
@@ -1429,6 +1681,9 @@ nonQuasiParameterRequestQ[family_, n_, ell_, r_, params_Association] :=
     "B.1" | "D.1", KeyExistsQ[params, "Nu"] ||
       KeyExistsQ[params, "Nu0"] || KeyExistsQ[params, "Nu1"],
     "B*.1", KeyExistsQ[params, "Nu0"] || KeyExistsQ[params, "Nu1"],
+    "tB*.1", KeyExistsQ[params, "NuNMinus1"] ||
+      KeyExistsQ[params, "NuN"] || KeyExistsQ[params, "Nu0"] ||
+      KeyExistsQ[params, "Nu1"],
     "C.1" | "C**.1" | "tC**.1" | "C*.1", KeyExistsQ[params, "Nu"],
     _, False
   ];
@@ -1458,9 +1713,30 @@ CanonicalCoidealParameters[d_?SatakeDiagramQ, q_: q, OptionsPattern[]] := Module
   If[method === Automatic,
     method = If[(MemberQ[{"A.1", "A.2", "A.4"}, family] &&
           OptionValue["ScalingParameter"] === 1) ||
-        (family === "C**.1" && nonQuasiEndpointQ[family, d["Rank"], ell, r] &&
+        (MemberQ[{"tB*.1", "C**.1"}, family] &&
+          nonQuasiEndpointQ[family, d["Rank"], ell, r] &&
           TrueQ[supportedNonQuasi]),
       "SourceAssignment", "BoundaryInference"]
+  ];
+  If[method === "SourceAssignment" && family === "tB*.1" &&
+      {ell, r} === {d["Rank"] - 2, d["Rank"]} &&
+      TrueQ[supportedNonQuasi],
+    nu = {
+      Lookup[params, "NuNMinus1",
+        Lookup[params, "Nu0", Symbol["\[Nu]0"]]],
+      Lookup[params, "NuN",
+        Lookup[params, "Nu1", Symbol["\[Nu]1"]]]};
+    eta = OptionValue["ScalingParameter"];
+    Return[<|"Family" -> family,
+      "CParameters" -> <|d["Rank"] - 2 ->
+          (-q)^(d["Rank"] - 2) eta^-1,
+        d["Rank"] - 1 -> q^-1, d["Rank"] -> -q^-1|>,
+      "SParameters" -> <|d["Rank"] - 2 -> 0,
+        d["Rank"] - 1 -> -(nu[[1]] + nu[[1]]^-1)/(q - q^-1),
+        d["Rank"] -> -I (nu[[2]] + nu[[2]]^-1)/(q - q^-1)|>,
+      "ScalingParameter" -> eta, "Equation" -> classification["Equation"],
+      "DressingParameters" -> <||>, "BoundaryParameters" -> params,
+      "ResearchStatus" -> "BareAssignmentFromqREIIKCD1xx"|>]
   ];
   If[method === "SourceAssignment" && family === "C**.1" &&
       nonQuasiEndpointQ[family, d["Rank"], ell, r] && TrueQ[supportedNonQuasi],
@@ -2129,23 +2405,23 @@ $catalogue = <|
   "D.2" -> <|"AffineType" -> "D(1)", "Kind" -> "Alternating", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "qREFormula"|>,
   "D.3" -> <|"AffineType" -> "D(1)", "Kind" -> "ExceptionalD4", "Equation" -> "None", "Implementation" -> "NoVectorKMatrix", "ResearchStatus" -> "qRENonexistenceResult"|>,
   "D.4" -> <|"AffineType" -> "D(1)", "Kind" -> "Parallel", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "qREFormula"|>,
-  "B*.1" -> <|"AffineType" -> "A2n-1(2)", "Kind" -> "Plain", "Implementation" -> "ClosedForm", "ResearchStatus" -> "NotebookChecked"|>,
-  "tB*.1" -> <|"AffineType" -> "A2n-1(2)T", "Kind" -> "Plain", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "NotebookChecked"|>,
-  "C**.1" -> <|"AffineType" -> "A2n(2)", "Kind" -> "Plain", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "NotebookChecked"|>,
-  "tC**.1" -> <|"AffineType" -> "A2n(2)T", "Kind" -> "Plain", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "NotebookChecked"|>,
-  "C*.1" -> <|"AffineType" -> "Dn+1(2)", "Kind" -> "Plain", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "NotebookChecked"|>,
-  "B*.2" -> <|"AffineType" -> "A2n-1(2)", "Kind" -> "Alternating", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "NotebookChecked"|>,
-  "tB*.2" -> <|"AffineType" -> "A2n-1(2)T", "Kind" -> "Alternating", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "NotebookChecked"|>,
-  "C**.2" -> <|"AffineType" -> "A2n(2)", "Kind" -> "Alternating", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "NotebookChecked"|>,
-  "tC**.2" -> <|"AffineType" -> "A2n(2)T", "Kind" -> "Alternating", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "NotebookChecked"|>,
-  "C*.2" -> <|"AffineType" -> "Dn+1(2)", "Kind" -> "Alternating", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "NotebookChecked"|>,
-  "C*.4" -> <|"AffineType" -> "Dn+1(2)", "Kind" -> "Parallel", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "FormulaPresentPropertiesUnfinished"|>,
+  "B*.1" -> <|"AffineType" -> "A2n-1(2)", "Kind" -> "Plain", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "TwistedPlainMasterBoundaryIntertwinerProved", "ReflectionEquationResearchStatus" -> "ArbitraryRankProvedByGenericAffineTensorRestriction"|>,
+  "tB*.1" -> <|"AffineType" -> "A2n-1(2)T", "Kind" -> "Plain", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "TwistedPlainMasterBoundaryIntertwinerProvedWithCorrectedRN", "ReflectionEquationResearchStatus" -> "ArbitraryRankProvedByGenericAffineTensorRestriction"|>,
+  "C**.1" -> <|"AffineType" -> "A2n(2)", "Kind" -> "Plain", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "TwistedPlainMasterBoundaryIntertwinerProved", "ReflectionEquationResearchStatus" -> "ArbitraryRankProvedByGenericAffineTensorRestriction"|>,
+  "tC**.1" -> <|"AffineType" -> "A2n(2)T", "Kind" -> "Plain", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "TwistedPlainMasterBoundaryIntertwinerProved", "ReflectionEquationResearchStatus" -> "ArbitraryRankProvedByGenericAffineTensorRestriction"|>,
+  "C*.1" -> <|"AffineType" -> "Dn+1(2)", "Kind" -> "Plain", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "TwistedPlainMasterBoundaryIntertwinerProved", "ReflectionEquationResearchStatus" -> "ArbitraryRankProvedByGenericAffineTensorRestriction"|>,
+  "B*.2" -> <|"AffineType" -> "A2n-1(2)", "Kind" -> "Alternating", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "TwistedAlternatingMasterBoundaryIntertwinerProved", "ReflectionEquationResearchStatus" -> "ArbitraryRankProvedByGenericAffineTensorRestriction"|>,
+  "tB*.2" -> <|"AffineType" -> "A2n-1(2)T", "Kind" -> "Alternating", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "TwistedAlternatingMasterBoundaryIntertwinerProved", "ReflectionEquationResearchStatus" -> "ArbitraryRankProvedByGenericAffineTensorRestriction"|>,
+  "C**.2" -> <|"AffineType" -> "A2n(2)", "Kind" -> "Alternating", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "TwistedAlternatingMasterBoundaryIntertwinerProved", "ReflectionEquationResearchStatus" -> "ArbitraryRankProvedByGenericAffineTensorRestriction"|>,
+  "tC**.2" -> <|"AffineType" -> "A2n(2)T", "Kind" -> "Alternating", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "TwistedAlternatingMasterBoundaryIntertwinerProved", "ReflectionEquationResearchStatus" -> "ArbitraryRankProvedByGenericAffineTensorRestriction"|>,
+  "C*.2" -> <|"AffineType" -> "Dn+1(2)", "Kind" -> "Alternating", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "TwistedAlternatingMasterBoundaryIntertwinerProved", "ReflectionEquationResearchStatus" -> "ArbitraryRankProvedByGenericAffineTensorRestriction"|>,
+  "C*.4" -> <|"AffineType" -> "Dn+1(2)", "Kind" -> "Parallel", "Equation" -> "Standard", "Implementation" -> "ClosedForm", "ResearchStatus" -> "TwistedParallelMasterBoundaryIntertwinerProved", "ReflectionEquationResearchStatus" -> "ArbitraryRankProvedByGenericAffineTensorRestriction"|>,
   "NonQuasistandard" -> <|"AffineType" -> "Multiple", "Kind" -> "Plain",
     "Implementation" -> "PartialClosedForm",
     "ImplementedFamilies" -> {"C.1", "B*.1", "tB*.1", "C**.1", "tC**.1", "C*.1"},
-    "ImplementedRegime" -> "Generic r=l+2 branches and manuscript-complete B*.1, C**.1, tC**.1, and C*.1 endpoints",
-    "Outstanding" -> "The tB*.1 (l,r)=(n-2,n) endpoint is disabled because its source branch is explicitly unfinished",
-    "ResearchStatus" -> "GenericAndCompleteEndpointsNotebookChecked"|>
+    "ImplementedRegime" -> "All ten twisted r=l+2 diagram strata, including all five parameter-rich exceptional endpoints",
+    "Outstanding" -> "No generic-rank twisted formula obstruction; untwisted non-quasistandard migration remains",
+    "ResearchStatus" -> "AllTwistedNonQuasistandardBoundaryIntertwinersProved"|>
 |>;
 
 KMatrixCatalogue[] := $catalogue;
@@ -2267,6 +2543,48 @@ bareNonQuasiBEndpoint[n_Integer, ell_Integer, r_Integer,
   id + (u - u^-1) lambda^2 u^2/denominator *
     (k1[u] k2[u] m2 + alpha[u/lambda] m3minus +
       alpha[lambda/u] m3plus)
+];
+
+bareNonQuasiTBEndpoint[n_Integer, ell_Integer, r_Integer,
+    u_, q_, params_Association] := Module[
+  {labels, unit, lambda = I, mu, nu0, nu1, k2, alpha, n0, n1,
+   denominator, diagonalMinusNumerator, diagonalPlusNumerator, activeSum,
+   terminalMinus, terminalPlus, tails},
+  If[{ell, r} =!= {n - 2, n} || n < 3, Return[$Failed]];
+  labels = Join[Range[-n, -1], Range[1, n]];
+  unit[i_, j_] := matrixUnit[labels, i, j];
+  mu = q^(-n + 1);
+  nu0 = Lookup[params, "NuNMinus1",
+    Lookup[params, "Nu0", Symbol["\[Nu]0"]]];
+  nu1 = Lookup[params, "NuN",
+    Lookup[params, "Nu1", Symbol["\[Nu]1"]]];
+  k2[x_] := lambda^-1 - (mu x)^-1;
+  n0 = nu0 + nu0^-1;
+  n1 = nu1 + nu1^-1;
+  alpha[x_] := n1 x - n0;
+  denominator = k2[-nu0 u/nu1] k2[-nu1 u/nu0]
+    k2[-nu0 nu1 u] k2[-u/(nu0 nu1)];
+  diagonalMinusNumerator =
+    -k2[lambda u] k2[-lambda u] (mu - mu^-1)
+    - ((nu1^2 + nu1^-2) u^2 + nu0^2 + nu0^-2)/(u^2 mu)
+    + lambda (mu - mu^-1) n0 n1/(u mu);
+  diagonalPlusNumerator =
+    k2[lambda u] k2[-lambda u] (mu - mu^-1)
+    + ((nu1^2 + nu1^-2) u^-2 + nu0^2 + nu0^-2)/mu
+    - lambda (mu - mu^-1) n0 n1/(u mu);
+  activeSum = Sum[
+    -diagonalMinusNumerator/((u - u^-1) k2[u] k2[-u]) unit[-i, -i]
+    + diagonalPlusNumerator/((u - u^-1) k2[u] k2[-u]) unit[i, i]
+    + unit[-i, i] - unit[i, -i], {i, 1, 2}];
+  terminalMinus = alpha[-lambda/(mu u)]/(u mu) (
+    unit[2, 1] - unit[1, 2]
+    + u mu (unit[1, -2] + unit[-2, 1]) - n0 unit[2, 2]);
+  terminalPlus = alpha[-u mu/lambda]/(u mu) (
+    unit[-2, -1] - unit[-1, -2]
+    + (unit[-1, 2] + unit[2, -1])/(mu u) + n0 unit[-2, -2]);
+  tails = Sum[unit[-i, -i] + u^-2 unit[i, i], {i, 3, n}];
+  tails + (u - u^-1) u^-2 mu^-1/denominator (
+    -k2[u] k2[-u] activeSum + terminalMinus + terminalPlus)
 ];
 
 bareNonQuasiCMinusEndpoint[n_Integer, ell_Integer, r_Integer,
@@ -2913,6 +3231,7 @@ KMatrix::nonquasi = "The diagram is in the non-quasistandard `1` regime. Supply 
 KMatrix::novector = "The classified `1` regime has no vector K-matrix in qRE.";
 KMatrix::rotation = "The diagram is classified as `1` only after the diagram automorphism `2`; automatic transport of the closed formula has not been encoded.";
 KMatrix::transport = "The diagram belongs to family `1`, but its fork-exchange representative requires a matrix-level transport that has not yet been encoded.";
+KMatrix::tbrnlambda = "For tB*.1 at r=n, the proved boundary-intertwiner specialization requires Lambda=I (and the inferred coideal parameter s_n=0); the archived free-Lambda extension is incompatible with the node-n equation.";
 
 KMatrix[d_Association, u_, OptionsPattern[]] := Module[
   {method = OptionValue["Method"], family = OptionValue["Family"], params,
@@ -3141,13 +3460,22 @@ KMatrix[d_Association, u_, OptionsPattern[]] := Module[
           n = Lookup[d, "Rank", Missing["Rank"]];
           ell = Lookup[params, "l", Missing["l"]];
           r = Lookup[params, "r", Missing["r"]];
+          If[family === "tB*.1" && r === n && KeyExistsQ[params, "Lambda"] &&
+              !PossibleZeroQ[Together[params["Lambda"] - I]],
+            Message[KMatrix::tbrnlambda]; Return[$Failed]
+          ];
           result = If[And @@ (IntegerQ /@ {n, ell, r}),
             If[MemberQ[{"tB*.1", "C**.1"}, family] && nonQuasiFormula,
-              If[family === "C**.1" && {ell, r} === {n - 1, n},
-                bareNonQuasiCMinusEndpoint[n, ell, r, u,
-                  OptionValue["QuantumParameter"], params],
-                bareNonQuasiPlain1[family, n, ell, r, u,
-                  OptionValue["QuantumParameter"], params]],
+              Which[
+                family === "tB*.1" && {ell, r} === {n - 2, n},
+                  bareNonQuasiTBEndpoint[n, ell, r, u,
+                    OptionValue["QuantumParameter"], params],
+                family === "C**.1" && {ell, r} === {n - 1, n},
+                  bareNonQuasiCMinusEndpoint[n, ell, r, u,
+                    OptionValue["QuantumParameter"], params],
+                True,
+                  bareNonQuasiPlain1[family, n, ell, r, u,
+                    OptionValue["QuantumParameter"], params]],
               bareTwistedMinusPlain1[family, n, ell, r, u,
                 OptionValue["QuantumParameter"], params]], $Failed];
           If[result === $Failed,
@@ -3163,17 +3491,37 @@ KMatrix[d_Association, u_, OptionsPattern[]] := Module[
                 "qRE_II/nqs_temp.tex", "qRE_II/plain_temp.tex"],
               "Formula" -> family,
               "NotebookSymbol" -> Which[
+                nonQuasiFormula && family === "tB*.1" &&
+                  {ell, r} === {n - 2, n}, "KCD1xx",
                 nonQuasiFormula && family === "C**.1" &&
                   {ell, r} === {n - 1, n}, "KCB1xx",
                 nonQuasiFormula && family === "C**.1", "KCB1x",
                 True, Missing["NotRecorded"]],
               "Branch" -> Which[
+                nonQuasiFormula && family === "tB*.1" &&
+                  {ell, r} === {n - 2, n},
+                    "NonQuasistandardEndpointN",
                 nonQuasiFormula && family === "C**.1" &&
                   {ell, r} === {n - 1, n},
                     "NonQuasistandardEndpointN",
                 nonQuasiFormula, "NonQuasistandardGeneric",
+                n === 1 && family === "C**.1", "LowRankA2Twisted",
+                family === "tB*.1" && r === n, "CorrectedTerminalRN",
                 True, "MainCatalogue"],
-              "ResearchStatus" -> "NotebookChecked"|>|>,
+              "ResearchStatus" -> Which[
+                nonQuasiFormula && family === "tB*.1" &&
+                  {ell, r} === {n - 2, n},
+                  "TwistedNonQuasistandardEndpointBoundaryIntertwinerProved",
+                nonQuasiFormula && family === "C**.1" &&
+                  {ell, r} === {n - 1, n},
+                  "TwistedNonQuasistandardEndpointBoundaryIntertwinerProved",
+                nonQuasiFormula,
+                  "TwistedNonQuasistandardInternalBoundaryIntertwinerProved",
+                n === 1 && family === "C**.1",
+                  "TwistedRankOneBoundaryAndReflectionEquationsProved",
+                family === "tB*.1" && r === n,
+                  "TwistedPlainMasterBoundaryIntertwinerProvedWithCorrectedRN",
+                True, "TwistedPlainMasterBoundaryIntertwinerProved"]|>|>,
         "tC**.1" | "C*.1",
           n = Lookup[d, "Rank", Missing["Rank"]];
           ell = Lookup[params, "l", Missing["l"]];
@@ -3219,8 +3567,16 @@ KMatrix[d_Association, u_, OptionsPattern[]] := Module[
                 nonQuasiFormula && family === "C*.1" &&
                   {ell, r} === {0, 1}, "NonQuasistandardEndpoint0",
                 nonQuasiFormula, "NonQuasistandardGeneric",
+                n === 1 && family === "tC**.1", "LowRankA2TwistedReversed",
                 True, "MainCatalogue"],
-              "ResearchStatus" -> "NotebookChecked"|>|>,
+              "ResearchStatus" -> Which[
+                nonQuasiFormula && {ell, r} === {0, 1},
+                  "TwistedNonQuasistandardEndpointBoundaryIntertwinerProved",
+                nonQuasiFormula,
+                  "TwistedNonQuasistandardInternalBoundaryIntertwinerProved",
+                n === 1 && family === "tC**.1",
+                  "TwistedRankOneBoundaryAndReflectionEquationsProved",
+                True, "TwistedPlainMasterBoundaryIntertwinerProved"]|>|>,
         "B*.2" | "tB*.2" | "C**.2",
           n = Lookup[d, "Rank", Missing["Rank"]];
           ell = Lookup[params, "l", Missing["l"]];
@@ -3237,7 +3593,11 @@ KMatrix[d_Association, u_, OptionsPattern[]] := Module[
             "BasisLabels" -> If[family === "C**.2", Range[-n, n],
               Join[Range[-n, -1], Range[1, n]]], "Parameters" -> params,
             "Provenance" -> <|"Source" -> "qRE_II/alt_temp.tex",
-              "Formula" -> family, "ResearchStatus" -> "NotebookChecked"|>|>,
+              "ProofSource" -> "qRE_v2 Theorem 9.1",
+              "Formula" -> family,
+              "ResearchStatus" -> If[n === 1 && family === "C**.2",
+                "TwistedRankOneProjectiveCoincidenceProved",
+                "TwistedAlternatingMasterBoundaryIntertwinerProved"]|>|>,
         "tC**.2" | "C*.2",
           n = Lookup[d, "Rank", Missing["Rank"]];
           ell = Lookup[params, "l", Missing["l"]];
@@ -3257,9 +3617,12 @@ KMatrix[d_Association, u_, OptionsPattern[]] := Module[
             "Parameters" -> params,
             "Provenance" -> <|
               "Source" -> "qRE_II/Mathematica/qRE-II-July-9.nb",
+              "ProofSource" -> "qRE_v2 Theorem 9.1",
               "Formula" -> family,
               "NotebookSymbol" -> If[family === "tC**.2", "KBC2", "KBB2"],
-              "ResearchStatus" -> "NotebookChecked"|>|>,
+              "ResearchStatus" -> If[n === 1 && family === "tC**.2",
+                "TwistedRankOneProjectiveCoincidenceProved",
+                "TwistedAlternatingMasterBoundaryIntertwinerProved"]|>|>,
         "C.4" | "D.4",
           n = Lookup[d, "Rank", Missing["Rank"]];
           ell = Lookup[params, "l", Missing["l"]];
@@ -3296,7 +3659,7 @@ KMatrix[d_Association, u_, OptionsPattern[]] := Module[
             "Provenance" -> <|
               "Source" -> "qRE_II/Mathematica/qRE-II-July-9.nb",
               "Formula" -> family, "NotebookSymbol" -> "KBB4",
-              "ResearchStatus" -> "FormulaPresentPropertiesUnfinished"|>|>,
+              "ResearchStatus" -> "TwistedParallelMasterBoundaryIntertwinerProved"|>|>,
         "B*.1",
           n = Lookup[d, "Rank", Missing["Rank"]];
           ell = Lookup[params, "l", Missing["l"]];
@@ -3332,7 +3695,12 @@ KMatrix[d_Association, u_, OptionsPattern[]] := Module[
                   "NonQuasistandardEndpoint02",
                 nonQuasiFormula, "NonQuasistandardGeneric",
                 True, "MainCatalogue"],
-              "ResearchStatus" -> "NotebookChecked"
+              "ResearchStatus" -> Which[
+                nonQuasiFormula && {ell, r} === {0, 2},
+                  "TwistedNonQuasistandardEndpointBoundaryIntertwinerProved",
+                nonQuasiFormula,
+                  "TwistedNonQuasistandardInternalBoundaryIntertwinerProved",
+                True, "TwistedPlainMasterBoundaryIntertwinerProved"]
             |>
           |>,
         _, Message[KMatrix::family, family];
@@ -4199,7 +4567,7 @@ twistedSpectralGroups[result_Association, u_, q_] := Module[
   lambda = Lookup[params, "Lambda", Switch[family,
     "B*.1", If[r == n, Symbol["\[Lambda]"], I q^(n - r + 1)],
     "B*.2", I q^(n - r),
-    "tB*.1", If[r == n, Symbol["\[Lambda]"], I q^(n - r)],
+    "tB*.1", I q^(n - r),
     "tB*.2", If[MemberQ[{n - 1, n}, r], Symbol["\[Lambda]"],
       I q^(n - r - 1)],
     "C**.1", I q^(n + 1/2 - r),
@@ -4244,8 +4612,38 @@ twistedSpectralGroups[result_Association, u_, q_] := Module[
             "LaTeX" -> "u^2\\frac{k_1(\\nu_0\\nu_1^{-1}u^{-1})}{k_1(\\nu_0\\nu_1^{-1}u)}\\frac{k_1(\\nu_0^{-1}\\nu_1^{-1}u^{-1})}{k_1(\\nu_0^{-1}\\nu_1^{-1}u)}",
             "Multiplicity" -> 1|>}]
       ];
+      If[family === "tB*.1" && branch === "NonQuasistandardEndpointN",
+        nu0 = Lookup[params, "NuNMinus1",
+          Lookup[params, "Nu0", Symbol["\[Nu]0"]]];
+        nu1 = Lookup[params, "NuN",
+          Lookup[params, "Nu1", Symbol["\[Nu]1"]]];
+        (* KCD1xx has lambda=i and mu=q^(1-n).  Its four active
+           eigenvalues are indexed by the multiplicative square formed by
+           nu0 and nu1; the remaining positive and negative tails are
+           diagonal. *)
+        k2[y_] := I^-1 - (q^(1 - n) y)^-1;
+        Return[Join[
+          Select[{
+            <|"Value" -> 1, "LaTeX" -> "1",
+              "Multiplicity" -> n - 2|>,
+            <|"Value" -> u^-2, "LaTeX" -> "u^{-2}",
+              "Multiplicity" -> n - 2|>},
+            Lookup[#, "Multiplicity", 0] > 0 &],
+          Map[Function[z,
+            <|"Value" -> Together[u^-2 k2[-z/u]/k2[-z u]],
+              "LaTeX" ->
+                "u^{-2}\\frac{k_2(-zu^{-1})}{k_2(-zu)}",
+              "Multiplicity" -> 1,
+              "SpectralParameter" -> z|>],
+            {(nu0 nu1)^-1, nu1/nu0, nu0 nu1, nu0/nu1}]
+        ]]
+      ];
       If[branch =!= "NonQuasistandardGeneric", Return[{}]];
-      argumentSign = If[family === "C**.1", 1, -1];
+      (* bareNonQuasiPlain1 writes the C**.1 source convention
+         g_2(y)=lambda^-1+(mu y)^-1 as the local function
+         k_2(y)=g_2(-y).  Thus every linear-spectral non-quasistandard
+         branch uses the local argument -nu^{+-2}u here. *)
+      argumentSign = -1;
       If[quadratic,
         Return[Select[{
           <|"Value" -> 1, "LaTeX" -> "1",
@@ -4416,11 +4814,18 @@ spectralPropertyDossier[result_Association, u_, groups_List, sources_List,
 
 twistedKMatrixPropertyData[result_Association, u_, q_, verify_] := Module[
   {family = Lookup[result, "Family", Missing[]], groups, power,
-   factorization, regularity, provenance, branch, exactVerify},
-  groups = twistedSpectralGroups[result, u, q];
-  If[groups === {}, Return[{}]];
+   factorization, regularity, provenance, branch, exactVerify,
+   endpointProperties, properties},
   provenance = Lookup[result, "Provenance", <||>];
   branch = ToString[Lookup[provenance, "Branch", "MainCatalogue"]];
+  If[StringStartsQ[branch, "NonQuasistandardEndpoint"] &&
+      MemberQ[{"C**.1", "tC**.1", "C*.1"}, family],
+    endpointProperties = twistedNonQuasiEndpointPropertyData[
+      result, u, q, verify];
+    If[endpointProperties =!= {}, Return[endpointProperties]]
+  ];
+  groups = twistedSpectralGroups[result, u, q];
+  If[groups === {}, Return[{}]];
   exactVerify = TrueQ[verify] &&
     !StringStartsQ[branch, "NonQuasistandardGeneric"];
   power = If[MemberQ[{"tC**.1", "tC**.2", "C*.1", "C*.2"}, family],
@@ -4430,19 +4835,257 @@ twistedKMatrixPropertyData[result_Association, u_, q_, verify_] := Module[
   regularity = If[power === "u^2",
     "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}",
     "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}"];
-  spectralPropertyDossier[result, u, groups, twistedPropertySource[family],
-    factorization, regularity, exactVerify]
+  properties = spectralPropertyDossier[result, u, groups,
+    twistedPropertySource[family], factorization, regularity, exactVerify];
+  If[branch === "NonQuasistandardGeneric",
+    properties = certifyTwistedNonQuasiGenericProperties[properties]];
+  properties
 ];
 
-cStar4PartialPropertyData[result_Association, u_, verify_] := Module[
-  {matrix = result["KMatrix"], size, identity, regularityVerified = False,
-   unitarityVerified = False, sources, assumptions, stem = "cstar4", record},
+certifyTwistedNonQuasiGenericProperties[properties_List] := Map[
+  Function[property, Module[{kind = Lookup[property, "Kind", ""], verification},
+    If[MemberQ[{"eigenvalues", "characteristicIdentity", "minimalIdentity",
+          "regularity", "unitarity"}, kind],
+      verification = propertyVerification["verified",
+        "rankStableFourCoordinateBlockCertificate", 0];
+      AssociateTo[verification,
+        "artifact" ->
+          "notes/working-version/qRE_v2/computation/verify_twisted_nonquasistandard_properties.wls"];
+      Join[property, <|"Status" -> "verifiedExact",
+        "Verification" -> verification|>],
+      property
+    ]
+  ]],
+  properties
+];
+
+twistedNonQuasiEndpointPropertyData[result_Association, u_, q_, verify_] :=
+ Module[
+  {family = result["Family"], matrix = result["KMatrix"], labels,
+   params, size, n, lambda, mu, x, k1, h1, activeLabels, activeIndices,
+   inactiveIndices, active, activeIdentity, activeTrace, activeSecond,
+   activeDeterminant, polynomialVariable, activePolynomial,
+   characteristicPolynomial, minimalPolynomial, determinant,
+   knownGroups, knownEigenvalues, activeVerified = False,
+   inactiveVerified = False, regularityVerified = False,
+   unitarityVerified = False, identity, sources, assumptions,
+   stem, record, activeAtInverse},
+  labels = Lookup[result, "BasisLabels", {}];
+  params = Lookup[result, "Parameters", <||>];
   size = Length[matrix];
+  n = Switch[family,
+    "C**.1" | "tC**.1", (size - 1)/2,
+    "C*.1", (size - 2)/2,
+    _, Return[{}]
+  ];
+  If[!IntegerQ[n], Return[{}]];
+  lambda = Lookup[params, "Lambda", Switch[family,
+    "C**.1", I q^(1/2),
+    "tC**.1", I q^n,
+    "C*.1", q^(n - 1/2)
+  ]];
+  mu = Lookup[params, "Mu", Switch[family,
+    "C**.1", q^-n,
+    "tC**.1" | "C*.1", q^(-1/2)
+  ]];
+  x = If[family === "C**.1", u, u^2];
+  k1[y_] := lambda mu - y;
+  h1 = Together[k1[x^-1]/k1[x]];
+  activeLabels = If[family === "C**.1", {-1, 0, 1},
+    {-n, "0p", n}];
+  activeIndices = (First@FirstPosition[labels, #]) & /@ activeLabels;
+  inactiveIndices = Complement[Range[size], activeIndices];
+  active = Normal[matrix][[activeIndices, activeIndices]];
+  activeIdentity = IdentityMatrix[3];
+  activeTrace = Together[Tr[active]];
+  activeSecond = Together[(activeTrace^2 - Tr[active.active])/2];
+  activeDeterminant = Together[Det[active]];
+  polynomialVariable = Symbol["x$K"];
+  activePolynomial = Together[polynomialVariable^3 -
+    activeTrace polynomialVariable^2 + activeSecond polynomialVariable -
+    activeDeterminant];
+  knownGroups = If[family === "C**.1",
+    {
+      <|"Value" -> Together[u^2 h1],
+        "LaTeX" -> "u^2h_1(u)", "Multiplicity" -> n - 1|>,
+      <|"Value" -> h1, "LaTeX" -> "h_1(u)",
+        "Multiplicity" -> n - 1|>
+    },
+    {<|"Value" -> 1, "LaTeX" -> "1",
+      "Multiplicity" -> If[family === "tC**.1", 2 n - 2, 2 n - 1]|>}
+  ];
+  knownEigenvalues = DeleteDuplicates[Lookup[knownGroups, "Value"]];
+  characteristicPolynomial = Together[
+    Times @@ (((polynomialVariable - #["Value"])^#["Multiplicity"]) & /@
+      knownGroups)
+    activePolynomial
+  ];
+  minimalPolynomial = Together[
+    Times @@ ((polynomialVariable - #) & /@ knownEigenvalues)
+    activePolynomial
+  ];
+  determinant = Together[
+    Times @@ ((#["Value"]^#["Multiplicity"]) & /@ knownGroups)
+    activeDeterminant
+  ];
   identity = IdentityMatrix[size, SparseArray];
+  sources = twistedPropertySource[family];
+  stem = twistedPropertyStem[family] <> "endpoint";
+  assumptions = {"q,u,\\nu\\in\\mathbb K^\\times",
+    "\\text{all displayed denominators are nonzero}",
+    "\\text{the cubic and elementary factors are generically coprime}"};
+  If[TrueQ[verify],
+    activeVerified = zeroMatrixQ[Map[Together,
+      active.active.active - activeTrace active.active +
+        activeSecond active - activeDeterminant activeIdentity, {2}], True];
+    inactiveVerified = And @@ Table[
+      And[
+        And @@ (PossibleZeroQ[Together[
+          Normal[matrix][[index, #]]]] & /@ DeleteCases[Range[size], index]),
+        AnyTrue[knownEigenvalues,
+          PossibleZeroQ[Together[Normal[matrix][[index, index]] - #]] &]
+      ],
+      {index, inactiveIndices}
+    ];
+    regularityVerified = zeroMatrixQ[Map[Together,
+      SparseArray[Normal[matrix] /. u -> 1] - identity, {2}], True] &&
+      zeroMatrixQ[Map[Together,
+        SparseArray[Normal[matrix] /. u -> -1] - identity, {2}], True];
+    activeAtInverse = active /. u -> u^-1;
+    unitarityVerified = zeroMatrixQ[Map[Together,
+      active.activeAtInverse - activeIdentity, {2}], True] &&
+      AllTrue[knownEigenvalues,
+        PossibleZeroQ[Together[# (# /. u -> u^-1) - 1]] &]
+  ];
+  record[id_, kind_, label_, status_, latex_, expression_, verification_,
+      spectrum_: {}] := <|
+    "PropertyID" -> stem <> "-" <> id, "Kind" -> kind,
+    "Label" -> label, "Status" -> status, "LaTeX" -> latex,
+    "Expression" -> expression, "AssumptionsLaTeX" -> assumptions,
+    "Verification" -> verification, "SourceAnchors" -> sources,
+    "Spectrum" -> spectrum|>;
+  {
+    record["spectrum", "eigenvalues", "Eigenvalues", "computedExact",
+      "\\operatorname{Spec}K(u)=\\operatorname{Spec}_{\\rm elem}(u)\\cup\\{\\rho:q_3(\\rho;u)=0\\}",
+      {knownEigenvalues, activePolynomial},
+      propertyVerification["computed", "elementaryBlocksAndActiveCubic", Null],
+      Append[knownGroups, <|"LaTeX" -> "q_3(\\rho;u)=0",
+        "Multiplicity" -> 3, "DefiningPolynomial" -> activePolynomial|>]],
+    record["characteristic", "characteristicIdentity",
+      "Characteristic identity",
+      If[activeVerified && inactiveVerified, "verifiedExact", "computedExact"],
+      "\\chi_{K(u)}(t)=\\chi_{\\rm elem}(t;u)q_3(t;u)",
+      characteristicPolynomial,
+      propertyVerification[If[activeVerified && inactiveVerified,
+          "verified", "computed"],
+        "activeCayleyHamiltonAndElementaryBlockResidual",
+        If[activeVerified && inactiveVerified, 0, Null]]],
+    record["minimal", "minimalIdentity", "Generic minimal identity",
+      If[activeVerified && inactiveVerified, "verifiedExact", "conditional"],
+      "m_{K(u)}(t)=m_{\\rm elem}(t;u)q_3(t;u)",
+      minimalPolynomial,
+      propertyVerification[If[activeVerified && inactiveVerified,
+          "verified", "conditional"],
+        "genericCoprimeFactorsOfBlockCharacteristicIdentity",
+        If[activeVerified && inactiveVerified, 0, Null]]],
+    record["determinant", "determinant", "Determinant", "computedExact",
+      "\\det K(u)=\\det K_{\\rm elem}(u)\\det K_3(u)", determinant,
+      propertyVerification["computed", "productOfBlockDeterminants", Null]],
+    record["factorization", "factorization", "Block factorization",
+      "computedExact",
+      "K(u)\\sim K_{\\rm elem}(u)\\oplus K_3(u)", Null,
+      propertyVerification["computed", "coordinateSupportDecomposition", Null]],
+    record["rank-loci", "rankLoci", "Rank-drop locus", "conditional",
+      "\\operatorname{rank}K(u)<N\\Longleftrightarrow\\det K(u)=0",
+      determinant, propertyVerification["conditional",
+        "determinantCriterionAwayFromPoles", Null]],
+    record["regularity", "regularity", "Regularity",
+      If[regularityVerified, "verifiedExact", "conditional"],
+      "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{away from reduction loci}",
+      Null, propertyVerification[If[regularityVerified, "verified", "conditional"],
+        "exactMatrixResidual", If[regularityVerified, 0, Null]]],
+    record["unitarity", "unitarity", "Boundary unitarity",
+      If[unitarityVerified, "verifiedExact", "conditional"],
+      "K(u)K(u^{-1})=\\operatorname{Id}", Null,
+      propertyVerification[If[unitarityVerified, "verified", "conditional"],
+        "activeBlockAndElementaryEigenvalueResidual",
+        If[unitarityVerified, 0, Null]]]
+  }
+];
+
+cStar4PropertyData[result_Association, u_, q_, verify_] := Module[
+  {matrix = result["KMatrix"], params, size, n, ell, lambda, mu, x,
+   k1, k2, h1, h2, zeroTrace, zeroDeterminant, discriminant,
+   zeroEigenvalues, groups, linearEigenvalues, polynomialVariable,
+   characteristicPolynomial, minimalPolynomial, determinant, identity,
+   quadraticIdentity, characteristicVerified = False,
+   regularityVerified = False, unitarityVerified = False, sources,
+   assumptions, stem = "cstar4", record},
+  size = Length[matrix];
+  n = (size - 2)/2;
+  params = Lookup[result, "Parameters", <||>];
+  ell = Lookup[params, "l", Missing[]];
+  If[!IntegerQ[n] || !IntegerQ[ell], Return[{}]];
+  lambda = Lookup[params, "Lambda", Symbol["\[Lambda]"]];
+  mu = Lookup[params, "Mu", q^(-n + 2 ell) lambda];
+  x = u^2;
+  k1[y_] := lambda mu - y;
+  k2[y_] := lambda^-1 + (mu y)^-1;
+  h1 = Together[k1[x^-1]/k1[x]];
+  h2 = Together[k2[x^-1]/k2[x]];
+  zeroTrace = Together[(lambda + mu) (lambda mu - 1) (1 + x)/
+    ((lambda mu - x) (lambda + mu x))];
+  zeroDeterminant = Together[x^-1 h1 h2];
+  discriminant = Together[zeroTrace^2 - 4 zeroDeterminant];
+  zeroEigenvalues = Together /@ {
+    (zeroTrace - Sqrt[discriminant])/2,
+    (zeroTrace + Sqrt[discriminant])/2
+  };
+  groups = Select[{
+    <|"Value" -> 1, "LaTeX" -> "1", "Multiplicity" -> n - ell|>,
+    <|"Value" -> h1, "LaTeX" -> "h_1(u^2)",
+      "Multiplicity" -> n - ell|>,
+    <|"Value" -> Together[h1 h2],
+      "LaTeX" -> "h_1(u^2)h_2(u^2)", "Multiplicity" -> ell|>,
+    <|"Value" -> Together[u^-4 h2],
+      "LaTeX" -> "u^{-4}h_2(u^2)", "Multiplicity" -> ell|>,
+    <|"Value" -> zeroEigenvalues[[1]], "LaTeX" -> "\\rho_-(u)",
+      "Multiplicity" -> 1|>,
+    <|"Value" -> zeroEigenvalues[[2]], "LaTeX" -> "\\rho_+(u)",
+      "Multiplicity" -> 1|>
+  }, Lookup[#, "Multiplicity", 0] > 0 &];
+  linearEigenvalues = DeleteDuplicates@Join[{1, h1},
+    If[ell > 0, {Together[h1 h2], Together[u^-4 h2]}, {}]];
+  polynomialVariable = Symbol["x$K"];
+  characteristicPolynomial = Together[
+    (polynomialVariable - 1)^(n - ell)
+    (polynomialVariable - h1)^(n - ell)
+    If[ell > 0,
+      (polynomialVariable - h1 h2)^ell
+      (polynomialVariable - u^-4 h2)^ell, 1]
+    (polynomialVariable^2 - zeroTrace polynomialVariable +
+      zeroDeterminant)
+  ];
+  minimalPolynomial = Together[
+    Times @@ ((polynomialVariable - #) & /@ linearEigenvalues)
+    (polynomialVariable^2 - zeroTrace polynomialVariable +
+      zeroDeterminant)
+  ];
+  determinant = Together[
+    h1^(n + 1) h2^(2 ell + 1) u^(-4 ell - 2)
+  ];
+  identity = IdentityMatrix[size, SparseArray];
+  quadraticIdentity = matrix.matrix - zeroTrace matrix +
+    zeroDeterminant identity;
   sources = twistedPropertySource["C*.4"];
   assumptions = {"q,u,\\lambda\\in\\mathbb K^\\times",
-    "\\text{all displayed denominators are nonzero}"};
+    "\\mu=q^{-n+2\\ell}\\lambda",
+    "\\text{all displayed denominators are nonzero}",
+    "\\text{the displayed spectral factors are generically distinct}"};
   If[TrueQ[verify],
+    characteristicVerified = zeroMatrixQ[Map[Together,
+      Fold[Dot, quadraticIdentity,
+        (matrix - # identity) & /@ linearEigenvalues], {2}], True];
     regularityVerified = zeroMatrixQ[Map[Together,
       SparseArray[Normal[matrix] /. u -> 1] - identity, {2}], True] &&
       zeroMatrixQ[Map[Together,
@@ -4450,39 +5093,54 @@ cStar4PartialPropertyData[result_Association, u_, verify_] := Module[
     unitarityVerified = zeroMatrixQ[Map[Together,
       matrix.SparseArray[Normal[matrix] /. u -> u^-1] - identity, {2}], True]
   ];
-  record[id_, kind_, label_, status_, latex_, verification_] := <|
+  record[id_, kind_, label_, status_, latex_, expression_, verification_,
+      spectrum_: {}] := <|
     "PropertyID" -> stem <> "-" <> id, "Kind" -> kind, "Label" -> label,
-    "Status" -> status, "LaTeX" -> latex, "Expression" -> Null,
+    "Status" -> status, "LaTeX" -> latex, "Expression" -> expression,
     "AssumptionsLaTeX" -> assumptions, "Verification" -> verification,
-    "SourceAnchors" -> sources, "Spectrum" -> {}|>;
+    "SourceAnchors" -> sources, "Spectrum" -> spectrum|>;
   {
-    record["spectrum", "eigenvalues", "Eigenvalues", "unavailable",
-      "\\operatorname{Spec}K(u)\\text{ awaits completion of the }0,0'\\text{ spectral block in qRE\\_II}",
-      propertyVerification["unavailable", "sourceEigendecompositionIncomplete", Null]],
+    record["spectrum", "eigenvalues", "Eigenvalues",
+      If[characteristicVerified, "verifiedExact", "computedExact"],
+      "\\operatorname{Spec}K(u)=\\{1,h_1,h_1h_2,u^{-4}h_2,\\rho_-,\\rho_+\\}",
+      DeleteDuplicates[Lookup[groups, "Value"]],
+      propertyVerification[If[characteristicVerified, "verified", "computed"],
+        "blockCharacteristicFactorAndExactMatrixResidual",
+        If[characteristicVerified, 0, Null]], groups],
     record["characteristic", "characteristicIdentity", "Characteristic identity",
-      "unavailable", "\\chi_{K(u)}(x)\\text{ is not asserted while the source spectral block is unfinished}",
-      propertyVerification["unavailable", "dependsOnIncompleteSourceSpectrum", Null]],
-    record["minimal", "minimalIdentity", "Generic minimal identity", "unavailable",
-      "m_{K(u)}(x)\\text{ is not asserted while the source spectral block is unfinished}",
-      propertyVerification["unavailable", "dependsOnIncompleteSourceSpectrum", Null]],
-    record["determinant", "determinant", "Determinant", "unavailable",
-      "\\det K(u)\\text{ has not yet been normalized into a published family formula}",
-      propertyVerification["unavailable", "sourcePropertyUnfinished", Null]],
-    record["factorization", "factorization", "Spectral factorization", "unavailable",
-      "K(u)=V D(u)V^{-1}\\quad\\text{with the }0,0'\\text{ coefficients explicitly marked unfinished in qRE\\_II}",
-      propertyVerification["unavailable", "sourceEigendecompositionIncomplete", Null]],
+      If[characteristicVerified, "verifiedExact", "computedExact"],
+      "\\chi_{K(u)}(t)=(t-1)^{n-\\ell}(t-h_1)^{n-\\ell}(t-h_1h_2)^{\\ell}(t-u^{-4}h_2)^{\\ell}q_0(t)",
+      characteristicPolynomial,
+      propertyVerification[If[characteristicVerified, "verified", "computed"],
+        "blockCharacteristicFactorAndExactMatrixResidual",
+        If[characteristicVerified, 0, Null]]],
+    record["minimal", "minimalIdentity", "Generic minimal identity",
+      If[characteristicVerified, "verifiedExact", "computedExact"],
+      "m_{K(u)}(t)=(t-1)(t-h_1)q_0(t)\\prod_{\\ell>0}(t-h_1h_2)(t-u^{-4}h_2)",
+      minimalPolynomial,
+      propertyVerification[If[characteristicVerified, "verified", "computed"],
+        "genericDistinctFactorsOfCharacteristicIdentity",
+        If[characteristicVerified, 0, Null]]],
+    record["determinant", "determinant", "Determinant", "computedExact",
+      "\\det K(u)=u^{-4\\ell-2}h_1(u^2)^{n+1}h_2(u^2)^{2\\ell+1}",
+      determinant, propertyVerification["computed",
+        "productOfBlockDeterminants", Null]],
+    record["factorization", "factorization", "Block factorization", "computedExact",
+      "K(u)\\sim\\operatorname{diag}(1,h_1,h_1h_2,u^{-4}h_2,K_0(u))\\quad\\text{with multiplicities as displayed}",
+      Null, propertyVerification["computed", "constantPairedBlockReduction", Null]],
     record["rank-loci", "rankLoci", "Rank-drop locus", "conditional",
       "\\operatorname{rank}K(u)<N\\Longleftrightarrow\\det K(u)=0",
-      propertyVerification["conditional", "determinantCriterionAwayFromPoles", Null]],
+      determinant, propertyVerification["conditional",
+        "determinantCriterionAwayFromPoles", Null]],
     record["regularity", "regularity", "Regularity",
       If[regularityVerified, "verifiedExact", "sourceIdentity"],
-      "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}",
+      "K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}", Null,
       propertyVerification[If[regularityVerified, "verified", "sourceIdentity"],
         If[regularityVerified, "exactMatrixResidual", "qREIIRegularityIdentity"],
         If[regularityVerified, 0, Null]]],
     record["unitarity", "unitarity", "Boundary unitarity",
       If[unitarityVerified, "verifiedExact", "sourceIdentity"],
-      "K(u)K(u^{-1})=\\operatorname{Id}",
+      "K(u)K(u^{-1})=\\operatorname{Id}", Null,
       propertyVerification[If[unitarityVerified, "verified", "sourceIdentity"],
         If[unitarityVerified, "exactMatrixResidual", "qREIIUnitarityIdentity"],
         If[unitarityVerified, 0, Null]]]
@@ -4502,7 +5160,7 @@ KMatrixPropertyData[result_Association, u_, q_: q, OptionsPattern[]] /;
   "B*.1" | "B*.2" | "tB*.1" | "tB*.2" | "C**.1" | "C**.2" |
       "tC**.1" | "tC**.2" | "C*.1" | "C*.2",
     twistedKMatrixPropertyData[result, u, q, TrueQ[OptionValue["Verify"]]],
-  "C*.4", cStar4PartialPropertyData[result, u,
+  "C*.4", cStar4PropertyData[result, u, q,
     TrueQ[OptionValue["Verify"]]],
   _, {}
 ];
@@ -5094,7 +5752,10 @@ webKMatrixPropertyData[property_Association] := <|
   "sourceAnchors" -> (webSourceAnchorData /@ Lookup[property,
     "SourceAnchors", {}]),
   "spectrum" -> Map[Function[item, <|
-    "value" -> WebExpressionData[item["Value"]],
+    "value" -> If[KeyExistsQ[item, "Value"],
+      WebExpressionData[item["Value"]], Null],
+    "definingPolynomial" -> If[KeyExistsQ[item, "DefiningPolynomial"],
+      WebExpressionData[item["DefiningPolynomial"]], Null],
     "latex" -> ToString[item["LaTeX"]],
     "multiplicity" -> item["Multiplicity"]|>], Lookup[property, "Spectrum", {}]]
 |>;
@@ -5349,6 +6010,16 @@ webFamilyParameterDomainData[domain_Association] := <|
     "regime" -> ToString[branch["Regime"]],
     "description" -> ToString[Lookup[branch, "Description", ""]],
     "constraintsLatex" -> (ToString /@ Lookup[branch, "ConstraintsLaTeX", {}]),
+    "formulaStatus" -> ToString[
+      Lookup[branch, "FormulaStatus", "notRecorded"]],
+    "propertyStatus" -> ToString[
+      Lookup[branch, "PropertyStatus", "notRecorded"]],
+    "boundaryStatus" -> ToString[
+      Lookup[branch, "BoundaryStatus", "notRecorded"]],
+    "deformationStatus" -> ToString[
+      Lookup[branch, "DeformationStatus", "notRecorded"]],
+    "domainAuditStatus" -> ToString[
+      Lookup[branch, "DomainAuditStatus", "notRecorded"]],
     "formula" -> webFamilyFormulaData[Lookup[branch, "Formula", Null]],
     "properties" -> (webFamilyPropertyData /@
       Lookup[branch, "Properties", {}]),
@@ -5356,6 +6027,67 @@ webFamilyParameterDomainData[domain_Association] := <|
       Lookup[branch, "Verification", Null]]|>],
     Lookup[domain, "Branches", {}]]
 |>;
+
+webFamilySchematicNodeData[token_Association] := If[
+  ToString[token["Kind"]] === "node",
+  <|"kind" -> "node", "fill" -> ToString[token["Fill"]],
+    "label" -> If[token["Label"] === None, Null, ToString[token["Label"]]],
+    "position" -> If[Lookup[token, "Position", None] === None, "above",
+      ToString[token["Position"]]]|>,
+  <|"kind" -> "link", "style" -> ToString[token["Style"]],
+    "arrow" -> If[Lookup[token, "Arrow", None] === None, Null,
+      ToString[token["Arrow"]]]|>];
+
+webFamilySchematicCapData[cap_] := Which[
+  cap === None, Null,
+  cap === "arc", "arc",
+  ToString[Lookup[cap, "Kind", ""]] === "fork",
+    <|"kind" -> "fork",
+      "top" -> <|"fill" -> ToString[cap["Top", "Fill"]],
+        "label" -> If[cap["Top", "Label"] === None, Null,
+          ToString[cap["Top", "Label"]]]|>,
+      "bottom" -> <|"fill" -> ToString[cap["Bottom", "Fill"]],
+        "label" -> If[cap["Bottom", "Label"] === None, Null,
+          ToString[cap["Bottom", "Label"]]]|>,
+      "tau" -> TrueQ[Lookup[cap, "Tau", False]]|>,
+  True, <|"kind" -> "node", "fill" -> ToString[cap["Fill"]],
+    "label" -> If[cap["Label"] === None, Null, ToString[cap["Label"]]]|>];
+
+webFamilySchematicBraceData[brace_Association] := <|
+  "from" -> If[StringQ[brace["From"]], brace["From"], brace["From"]],
+  "to" -> If[StringQ[brace["To"]], brace["To"], brace["To"]],
+  "side" -> ToString[brace["Side"]],
+  "label" -> If[brace["Label"] === None, Null, ToString[brace["Label"]]]|>;
+
+webFamilySchematicVariantData[variant_Association] := Module[{layout, base},
+  layout = ToString[variant["Layout"]];
+  base = <|"variantId" -> ToString[variant["VariantID"]],
+    "label" -> ToString[variant["Label"]],
+    "layout" -> layout,
+    "braces" -> (webFamilySchematicBraceData /@ Lookup[variant, "Braces", {}])|>;
+  Which[
+    layout === "linear",
+      Join[base, <|
+        "capLeft" -> webFamilySchematicCapData[Lookup[variant, "CapLeft", None]],
+        "capRight" -> webFamilySchematicCapData[Lookup[variant, "CapRight", None]],
+        "row" -> (webFamilySchematicNodeData /@ variant["Row"])|>],
+    layout === "folded",
+      Join[base, <|
+        "capLeft" -> webFamilySchematicCapData[Lookup[variant, "CapLeft", None]],
+        "capRight" -> webFamilySchematicCapData[Lookup[variant, "CapRight", None]],
+        "top" -> (webFamilySchematicNodeData /@ variant["Top"]),
+        "bottom" -> (webFamilySchematicNodeData /@ variant["Bottom"]),
+        "rungs" -> TrueQ[Lookup[variant, "Rungs", False]]|>],
+    True,
+      Join[base, <|
+        "ring" -> (webFamilySchematicNodeData /@ variant["Ring"]),
+        "tau" -> Lookup[variant, "Tau", {}]|>]]
+];
+
+webFamilySchematicData[family_String] := Module[{variants},
+  variants = Lookup[$familySchematics, family, {}];
+  webFamilySchematicVariantData /@ variants
+];
 
 webFamilyRecordData[record_Association, instanceIDs_List] := <|
   "familyId" -> ToString[record["FamilyID"]],
@@ -5373,6 +6105,7 @@ webFamilyRecordData[record_Association, instanceIDs_List] := <|
     Lookup[record, "RegimeFormulas", {}]],
   "properties" -> (webFamilyPropertyData /@ record["Properties"]),
   "sourceAnchors" -> (webSourceAnchorData /@ record["SourceAnchors"]),
+  "schematic" -> webFamilySchematicData[ToString[record["FamilyID"]]],
   "instanceIds" -> instanceIDs
 |>;
 
@@ -5543,7 +6276,7 @@ Options[ExportWebCatalogue] = {
 ExportWebCatalogue[path_String, OptionsPattern[]] := Module[
   {types, ranks, typeRanks, specifications, outputDirectory, files = {}, data,
    index, filename, manifest, catalogueID, detailDirectory, detailPath, type,
-   rank, specification},
+   rank, specification, familyCatalogues = <||>, familyIndex},
   types = Replace[OptionValue["Types"], Automatic -> AffineTypes[]];
   ranks = OptionValue["Ranks"];
   typeRanks = OptionValue["TypeRanks"];
@@ -5584,14 +6317,32 @@ ExportWebCatalogue[path_String, OptionsPattern[]] := Module[
         "layout" -> "lazy-v1",
         "detailBasePath" -> FileNameJoin[{"details", catalogueID}],
         "detailCount" -> Length[data["diagrams"]],
-        "families" -> Lookup[data["families"], "familyId"]|>]
+        "families" -> Lookup[data["families"], "familyId"]|>];
+      Scan[Function[familyID,
+        familyCatalogues[familyID] = Append[
+          Lookup[familyCatalogues, familyID, {}],
+          <|"catalogueId" -> catalogueID,
+            "affineType" -> data["catalogue", "affineType"],
+            "rank" -> data["catalogue", "rank"],
+            "path" -> filename|>]],
+        Lookup[data["families"], "familyId"]]
     ],
     {specification, specifications}
   ];
+  (* The atlas is browsed family-first, so the manifest carries a complete
+     family index: identity, domain, general formula, and arbitrary-rank
+     schematic.  Large per-rank catalogues are then only loaded when a
+     concrete instance is requested. *)
+  familyIndex = Map[Function[familyID, Module[{record},
+    record = KeyDrop[webFamilyRecordData[KMatrixFamilyData[familyID], {}],
+      "instanceIds"];
+    Join[record, <|"catalogues" -> familyCatalogues[familyID]|>]]],
+    Keys[familyCatalogues]];
   manifest = <|
     "schemaVersion" -> $webCatalogueSchemaVersion,
     "engine" -> <|"name" -> "QREKMatrices", "version" -> $qreKMatricesVersion|>,
-    "files" -> Flatten[files]
+    "files" -> Flatten[files],
+    "families" -> familyIndex
   |>;
   Export[FileNameJoin[{outputDirectory, "manifest.json"}], manifest, "RawJSON"];
   manifest

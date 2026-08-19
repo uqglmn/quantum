@@ -15,9 +15,14 @@ export interface SparseMatrix {
   entries: Array<{ index: [number, number]; value: Expression }>;
 }
 
+export interface ManifestFamilyRecord extends Omit<FamilyRecord, "instanceIds"> {
+  catalogues: Array<{ catalogueId: string; affineType: string; rank: number; path: string }>;
+}
+
 export interface CatalogueManifest {
   schemaVersion: string;
   engine: { name: "QREKMatrices"; version: string };
+  families: ManifestFamilyRecord[];
   files: Array<{
     id: string;
     affineType: string;
@@ -54,14 +59,14 @@ export interface FamilyFormulaRecord {
 
 export interface FamilyPropertyRecord {
   kind: string;
-  status: "sourceIdentity" | "computed" | "verified" | "conditional";
+  status: "sourceIdentity" | "computed" | "computedExact" | "verified" | "conditional";
   latex: string;
 }
 
 export interface FamilyFormulaBranch {
   branchId: string;
   label: string;
-  kind: "generic" | "boundary" | "corner" | "exceptional" | "classification";
+  kind: "generic" | "boundary" | "corner" | "endpoint" | "exceptional" | "classification";
   regime: string;
   description: string;
   constraintsLatex: string[];
@@ -73,6 +78,48 @@ export interface FamilyFormulaBranch {
     equation: "Standard" | "Transposed";
     method: string;
   };
+  formulaStatus?: string;
+  propertyStatus?: string;
+  boundaryStatus?: string;
+  deformationStatus?: string;
+  domainAuditStatus?: string;
+}
+
+export type SchematicToken =
+  | { kind: "node"; fill: "black" | "white"; label: string | null; position: "above" | "below" | "left" | "right" }
+  | { kind: "link"; style: "solid" | "dashed" | "double"; arrow: "left" | "right" | null };
+
+export type SchematicCap =
+  | null
+  | "arc"
+  | { kind: "node"; fill: "black" | "white"; label: string | null }
+  | {
+      kind: "fork";
+      top: { fill: "black" | "white"; label: string | null };
+      bottom: { fill: "black" | "white"; label: string | null };
+      tau: boolean;
+    };
+
+export interface SchematicBrace {
+  from: number | string;
+  to: number | string;
+  side: "above" | "below";
+  label: string | null;
+}
+
+export interface SchematicVariant {
+  variantId: string;
+  label: string;
+  layout: "linear" | "folded" | "cycle";
+  capLeft?: SchematicCap;
+  capRight?: SchematicCap;
+  row?: SchematicToken[];
+  top?: SchematicToken[];
+  bottom?: SchematicToken[];
+  ring?: SchematicToken[];
+  rungs?: boolean;
+  tau?: number[][];
+  braces: SchematicBrace[];
 }
 
 export interface FamilyRecord {
@@ -92,6 +139,7 @@ export interface FamilyRecord {
   regimeFormulas: Array<{ regime: string; formula: FamilyFormulaRecord }>;
   properties: FamilyPropertyRecord[];
   sourceAnchors: FamilySourceAnchor[];
+  schematic: SchematicVariant[];
   instanceIds: string[];
 }
 
@@ -141,9 +189,15 @@ export interface KMatrixProperty {
     method: string;
     residualNonzeroCount: number | null;
     engineVersion: string;
+    artifact?: string;
   };
   sourceAnchors: FamilySourceAnchor[];
-  spectrum: Array<{ value: Expression; latex: string; multiplicity: number }>;
+  spectrum: Array<{
+    value: Expression;
+    latex: string;
+    multiplicity: number;
+    definingPolynomial?: Expression | null;
+  }>;
 }
 
 export interface DerivedRealization {

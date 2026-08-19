@@ -4,6 +4,38 @@ This document is the implementation contract for the public generalized
 Satake-diagram explorer. The mathematical package remains the source of truth;
 the web application is a renderer and client of versioned mathematical data.
 
+## Navigation model
+
+The atlas is browsed **family-first**. A K-matrix family is a general-rank
+object: it is what a reader looks up, cites, and compares. Concrete diagrams
+at a fixed rank are examples of a family, not the primary unit, so they are
+reached from a family page rather than the other way round. The manifest
+therefore carries a complete family index -- identity, parameter domain,
+general formula, and arbitrary-rank schematic -- and the large per-rank
+catalogues are fetched only when a concrete instance is requested.
+
+## Diagram schematics
+
+The package owns the arbitrary-rank generalized Satake diagram of every
+family, exported through `KMatrixFamilySchematic` and inside each family
+record. A schematic is a flat token stream of nodes and links carrying **no
+geometry**: node fill records membership of `X`, a dashed link denotes a run
+of arbitrary admissible length, and fork caps, `tau` orbits and `p_i` braces
+are declared structurally. The renderer derives every coordinate.
+
+This keeps the existing boundary intact: the UI never infers mathematical
+meaning. It replaces the earlier arrangement in which one family's diagram
+(A.3) was hard-coded as a React component, which put family-specific Lie
+theory in the application layer.
+
+Three layouts cover the nine presentations:
+
+| Layout | Used by | Shape |
+|---|---|---|
+| `linear` | B/C/D, all twisted blocks | a chain, optionally capped by a fork at either end |
+| `folded` | A.3, C.4, D.4, C*.4 | a cycle folded about the `tau`-axis, drawn as two rows joined by rungs; an end is a cap node or a rounded arc |
+| `cycle` | A.1, A.2, A.4 | a closed ring |
+
 ## First deployable slice
 
 The first slice supports:

@@ -75,7 +75,7 @@ export function SatakeDiagram({ record, compact = false }: { record: DrawableDia
       {tauPairs.map(([i, j]) => {
         const a = positions[i]; const b = positions[j];
         const lift = Math.max(34, Math.abs(b.x - a.x) * 0.28);
-        return <path key={`tau-${i}-${j}`} className="tau-line"
+        return <path key={`tau-${i}-${j}`} className="dg-tau"
           d={`M ${a.x} ${a.y - 11} Q ${(a.x + b.x) / 2} ${Math.min(a.y, b.y) - lift} ${b.x} ${b.y - 11}`}
           markerStart={`url(#tau-arrow-${markerKey})`} markerEnd={`url(#tau-arrow-${markerKey})`} />;
       })}
@@ -86,7 +86,7 @@ export function SatakeDiagram({ record, compact = false }: { record: DrawableDia
           const [dx, dy] = parallelOffset(a, b, offset);
           const reverse = edge.short === edge.i;
           const from = reverse ? b : a; const to = reverse ? a : b;
-          return <line key={`${edge.i}-${edge.j}-${k}`} className="dynkin-edge"
+          return <line key={`${edge.i}-${edge.j}-${k}`} className="dg-edge"
             x1={from.x + dx} y1={from.y + dy} x2={to.x + dx} y2={to.y + dy}
             markerEnd={edge.short !== null && k === Math.floor(edge.multiplicity / 2) ? `url(#dynkin-arrow-${markerKey})` : undefined} />;
         });
@@ -94,13 +94,10 @@ export function SatakeDiagram({ record, compact = false }: { record: DrawableDia
       {record.spec.nodes.map((node) => {
         const point = positions[node]; const black = record.spec.X.includes(node);
         return <g key={node} transform={`translate(${point.x},${point.y})`}>
-          <circle className={black ? "satake-node satake-node--black" : "satake-node"} r="7" />
-          <text className="node-label" y="-15">{node}</text>
+          <circle className={black ? "dg-node dg-node--filled" : "dg-node dg-node--open"} r="7" />
+          <text className="dg-label" y="-15">{node}</text>
         </g>;
       })}
-      {!compact && <text className="diagram-caption" x="220" y="211" textAnchor="middle">
-        black nodes X = {record.spec.X.length ? `{${record.spec.X.join(", ")}}` : "∅"}; double arrows encode τ
-      </text>}
     </svg>
   );
 }

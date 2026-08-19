@@ -124,7 +124,15 @@ future evaluation in other finite-dimensional modules.
   `KDC1` uses `lambda = I q^(n-r+1)`; `KCD1` uses
   `lambda = I q^(n-r)` and its minus-sign `k2`; and `KCB1` evaluates its
   plus-sign auxiliary function at `-u`, producing the same effective minus
-  sign. These choices pass the represented boundary equations.
+  sign. These choices pass the represented boundary equations.  In particular,
+  the `KCD1` value at `r=n` is the corrected specialization `lambda=I` with
+  inferred `s_n=0`; the draft's claimed free-`lambda` extension fails the
+  node-`n` equation and is now rejected by `KMatrix`.
+- The complete quasistandard twisted-plain master branch now has a symbolic
+  arbitrary-rank boundary-intertwiner proof.  This includes both full-tail
+  degenerations in all five presentations and the exchanged tB*.1 orbit
+  `l=r=n-1`; exact represented-generator certificates recover the archived
+  endpoint coefficients and the corrected C**.1 parity factor.
 - Generic non-quasistandard `r=l+2` closed formulas for B*.1, tB*.1,
   C**.1, tC**.1, and C*.1, including the additional `Nu` parameter. They pass
   canonical boundary inference, and their `Nu^2=-1` specialization agrees
@@ -175,7 +183,8 @@ boundary equation.
    by family, using boundary inference as an independent check, including the
    special parameter branches not represented by the current canonical
    witnesses.
-3. Reconstruct and test the unfinished tB*.1 special endpoint and remaining
+3. Reconstruct and test the unfinished non-quasistandard tB*.1 `(n-2,n)`
+   endpoint and remaining
    low-rank exceptional formulas, retaining explicit provenance and
    `conjectural for general rank` metadata where the manuscripts only establish
    low-rank computational evidence.

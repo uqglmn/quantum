@@ -246,3 +246,46 @@ headless-browser checks of incompatible-rank deep links for A.2, A.4, and D.3.
 Validation includes 87 Wolfram tests, 16 frontend tests, schema and semantic
 validation of all 41 catalogue indexes and 1,095 diagram details, a production
 build, and a desktop headless-browser inspection of the A.3 general case.
+
+## Family-first atlas and arbitrary-rank diagram schematics — 2026-08-19
+
+- frontend: `2.0.0`;
+- QREKMatrices engine: `0.21.0`;
+- catalogue schema: `1.8.0`;
+- made the K-matrix **family** the unit of navigation. A family page reads
+  diagram, restrictions, `K(u)`, definitions, then branch strata; the
+  concrete-rank explorer and the construction/verification record moved
+  behind disclosures;
+- added `KMatrixFamilySchematic`, a package-owned registry of arbitrary-rank
+  generalized Satake diagrams for 23 of the 24 families (38 representative
+  variants). Exceptional D.3 has no schematic because it has no nonzero
+  vector K-matrix;
+- schematics are geometry-free token streams; the renderer derives all
+  coordinates. Layouts are `linear`, `folded`, and `cycle`;
+- the schematics were transcribed from the diagram tables of
+  `qRE/files/results*.tex` and `qRE_II/{plain,alt,par}_temp.tex` by parsing
+  the TikZ sources, so node fills, bond multiplicities, arrow directions,
+  fork ends, `tau` orbits and `p_i` braces follow the published figures;
+- extended the manifest with a complete family index carrying identity,
+  parameter domain, general formula and schematic, so browsing the atlas no
+  longer loads per-rank catalogues;
+- corrected the presentation dictionary in the UI: the reversed `A^{(2)}`
+  presentations are labelled *reversed*, not *transposed*, per
+  `notes/working-version/qRE_v2/CONVENTIONS.md`. The transposed reflection
+  equation is a separate notion;
+- removed the hard-coded A.3 diagram component and the superseded
+  library/configurator components; family-specific Lie theory no longer
+  lives in the application layer.
+
+Validation at this milestone: 108 Wolfram tests (0 failed), 25 frontend tests,
+TypeScript and a production build clean, and schema/semantic validation of 43
+catalogue indexes, 1,101 diagram details and the 24-family manifest index
+(38 schematics: 26 linear, 9 folded, 3 cyclic). Headless inspection covered
+C.1, C.2, B.1, A.3 and C*.1, including the concrete-rank explorer rendering an
+exact 8x8 C.1 matrix at rank four.
+
+An independent cross-check of the exported bond directions confirms the
+presentation signatures: untwisted C carries inward double bonds at both ends
+while twisted T-D carries outward ones, and the reversed presentations are
+exact mirrors of their unreversed partners (B*.1 against tB*.1, C**.1 against
+tC**.1).

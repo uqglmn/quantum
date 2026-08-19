@@ -45,6 +45,7 @@ describe("family registry", () => {
       regimeFormulas: [],
       properties: [],
       sourceAnchors: [],
+      schematic: [],
       instanceIds: ["A(1)-n2-X0-tau0"],
     };
 

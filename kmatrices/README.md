@@ -419,13 +419,18 @@ fork representatives, every generic non-quasistandard family, and all four
 manuscript-complete exceptional endpoint formulas. It also checks sparse
 R-matrix materialization and regularity in all nine series, plus exact rational
 samples of unitarity and the Yang--Baxter equation and an exact reflection-
-equation certificate.
+equation certificate. It also covers the arbitrary-rank diagram schematics:
+registry coverage and layouts, the C.1 token stream and brace anchors, the
+B.1a/B.1b fork representatives distinguished by their `tau` edge, and the
+schematic carried by exported family records and by the manifest family
+index.
 
 ## Web explorer
 
-The repository now contains a static-first generalized Satake diagram explorer
-in `apps/web`. Its catalogue is generated directly by the Wolfram package and
-contains typed, non-executable expression trees rather than Wolfram source.
+`apps/web` is a static-first **family atlas**. Its unit of navigation is the
+K-matrix family, not the individual diagram: the 24 families across the nine
+presentation blocks are the objects a reader looks up, while the 1,101
+enumerated diagrams are examples of them.
 
 ```bash
 math -script Scripts/ExportWebCatalogue.wls
@@ -434,6 +439,38 @@ npm ci
 npm run validate:data
 npm run dev
 ```
+
+A family page shows, in reading order, the arbitrary-rank generalized Satake
+diagram, the restrictions that define the family, `K(u)` with its `k_i` and
+`M_i` definitions, and the branch strata. The concrete-rank explorer and the
+construction/verification record (QSP presentation, ambient R-matrix,
+reflection-equation certificates, provenance) are retained behind disclosures
+so the page reads as mathematics rather than as a dashboard.
+
+### Arbitrary-rank diagram schematics
+
+`KMatrixFamilySchematic[family]` gives the diagram of a family as it is drawn
+in the source tables: black and white nodes, single and double bonds, forks,
+`tau`-orbits, `p_i` braces, and dashed runs standing for blocks of arbitrary
+admissible length. Twenty-three families carry one or more representative
+variants; exceptional D.3 has none, because it has no nonzero vector
+K-matrix.
+
+```wl
+schematic = KMatrixFamilySchematic["B.1"];
+Lookup[schematic, "VariantID"]
+(* {"B.1a", "B.1b"} *)
+First[schematic]["CapLeft"]["Kind"]
+(* "fork" *)
+```
+
+A schematic is a flat token stream of nodes and links carrying **no
+geometry**; the renderer derives every coordinate. Three layouts are used:
+`"linear"` for a chain optionally capped by forks, `"folded"` for a cycle
+folded about the `tau`-axis and drawn as two rows joined by rungs, and
+`"cycle"` for the closed type-A rings. The schematics are exported inside each
+family record and, for the atlas index, once in `manifest.json`, so browsing
+the whole atlas does not require loading per-rank catalogues.
 
 The current generated release covers twisted and untwisted type/rank
 catalogues, interactive diagram selection, classification and regime data,
@@ -452,14 +489,14 @@ characteristic and minimal identities, determinant and rank loci,
 factorisation, regularity, and boundary unitarity. The B.1/C.1/D.1
 and twisted non-quasistandard branches retain their distinct formulas and
 spectra. Each property carries assumptions, provenance, and its verification
-method. C*.4 explicitly marks the unfinished source eigendecomposition while
-still verifying regularity and unitarity directly. The exporter is configured
+method. C*.4 replaces the unfinished source eigendecomposition by an exact
+block characteristic identity, including its quadratic `0,0'` factor,
+determinant, regularity, and unitarity. The exporter is configured
 through rank six for every supported presentation (A2n-1(2) and its transpose
 start at rank three; D(1) starts at rank four), using lazy per-diagram detail
-files. The current local build contains 41 catalogues and 1,095 diagrams. The R
-panel supports formula, sparse-entry, provenance, and JSON views. Exact expanded
-QSP relations, twisted reflection-equation convention reconciliation, and
-interactive free-parameter substitution remain extension boundaries. See `Documentation/PlatformArchitecture.md`,
+files. Exact expanded QSP relations, twisted reflection-equation convention
+reconciliation, and interactive free-parameter substitution remain extension
+boundaries. See `Documentation/PlatformArchitecture.md`,
 `Documentation/PlatformRoadmap.md`, and `Documentation/PlatformDeployment.md`.
 
 ## Current research boundary

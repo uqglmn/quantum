@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.7.0",
+	"schemaVersion":"1.8.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.20.0"
+		"version":"0.21.0"
 	},
 	"catalogue":{
 		"id":"dnplus1-2--n6",
@@ -6259,14 +6259,14 @@
 					"Formula":"C*.1",
 					"NotebookSymbol":"KBB1x",
 					"Branch":"NonQuasistandardGeneric",
-					"ResearchStatus":"NotebookChecked"
+					"ResearchStatus":"TwistedNonQuasistandardInternalBoundaryIntertwinerProved"
 				},
 				"properties":[
 					{
 						"propertyId":"cstar1-spectrum",
 						"kind":"eigenvalues",
 						"label":"Eigenvalues",
-						"status":"sourceIdentity",
+						"status":"verifiedExact",
 						"latex":"\\operatorname{Spec}K(u)=\\{\\kappa_1(u),\\ldots,\\kappa_s(u)\\}",
 						"expression":{
 							"kind":"call",
@@ -6612,10 +6612,11 @@
 							"\\text{the displayed eigenvalues are generically distinct}"
 						],
 						"verification":{
-							"status":"sourceIdentity",
-							"method":"sourceEigendecomposition",
-							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"status":"verified",
+							"method":"rankStableFourCoordinateBlockCertificate",
+							"residualNonzeroCount":0,
+							"engineVersion":"0.21.0",
+							"artifact":"notes\/working-version\/qRE_v2\/computation\/verify_twisted_nonquasistandard_properties.wls"
 						},
 						"sourceAnchors":[
 							{
@@ -6630,6 +6631,7 @@
 									"kind":"integer",
 									"value":"1"
 								},
+								"definingPolynomial":null,
 								"latex":"1",
 								"multiplicity":7
 							},
@@ -6778,6 +6780,7 @@
 										}
 									]
 								},
+								"definingPolynomial":null,
 								"latex":"h_1(u^2)\\frac{k_2(-\\nu^2u^{-2})}{k_2(-\\nu^2u^2)}",
 								"multiplicity":1
 							},
@@ -6914,6 +6917,7 @@
 										}
 									]
 								},
+								"definingPolynomial":null,
 								"latex":"h_1(u^2)\\frac{k_2(-\\nu^{-2}u^{-2})}{k_2(-\\nu^{-2}u^2)}",
 								"multiplicity":1
 							},
@@ -6942,6 +6946,7 @@
 										}
 									]
 								},
+								"definingPolynomial":null,
 								"latex":"u^4h_1(u^2)",
 								"multiplicity":2
 							},
@@ -6970,6 +6975,7 @@
 										}
 									]
 								},
+								"definingPolynomial":null,
 								"latex":"h_1(u^2)",
 								"multiplicity":2
 							},
@@ -6978,6 +6984,7 @@
 									"kind":"integer",
 									"value":"-1"
 								},
+								"definingPolynomial":null,
 								"latex":"u^2h_1(u^2)",
 								"multiplicity":1
 							}
@@ -6987,7 +6994,7 @@
 						"propertyId":"cstar1-characteristic",
 						"kind":"characteristicIdentity",
 						"label":"Characteristic identity",
-						"status":"sourceIdentity",
+						"status":"verifiedExact",
 						"latex":"\\chi_{K(u)}(x)=\\prod_\\kappa(x-\\kappa)^{m_\\kappa}",
 						"expression":{
 							"kind":"call",
@@ -7411,10 +7418,11 @@
 							"\\text{the displayed eigenvalues are generically distinct}"
 						],
 						"verification":{
-							"status":"sourceIdentity",
-							"method":"sourceEigendecomposition",
-							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"status":"verified",
+							"method":"rankStableFourCoordinateBlockCertificate",
+							"residualNonzeroCount":0,
+							"engineVersion":"0.21.0",
+							"artifact":"notes\/working-version\/qRE_v2\/computation\/verify_twisted_nonquasistandard_properties.wls"
 						},
 						"sourceAnchors":[
 							{
@@ -7429,7 +7437,7 @@
 						"propertyId":"cstar1-minimal",
 						"kind":"minimalIdentity",
 						"label":"Generic minimal identity",
-						"status":"conditional",
+						"status":"verifiedExact",
 						"latex":"m_{K(u)}(x)=\\prod_{\\kappa\\in\\operatorname{Spec}_{\\rm distinct}K(u)}(x-\\kappa)",
 						"expression":{
 							"kind":"call",
@@ -7824,10 +7832,11 @@
 							"\\text{the displayed eigenvalues are distinct}"
 						],
 						"verification":{
-							"status":"conditional",
-							"method":"sourceEigendecomposition",
-							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"status":"verified",
+							"method":"rankStableFourCoordinateBlockCertificate",
+							"residualNonzeroCount":0,
+							"engineVersion":"0.21.0",
+							"artifact":"notes\/working-version\/qRE_v2\/computation\/verify_twisted_nonquasistandard_properties.wls"
 						},
 						"sourceAnchors":[
 							{
@@ -8127,7 +8136,7 @@
 							"status":"computed",
 							"method":"productOfSourceEigenvalues",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -8154,7 +8163,7 @@
 							"status":"sourceIdentity",
 							"method":"qREIISpectralFactorization",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -8454,7 +8463,7 @@
 							"status":"conditional",
 							"method":"determinantCriterionAwayFromPoles",
 							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"engineVersion":"0.21.0"
 						},
 						"sourceAnchors":[
 							{
@@ -8469,7 +8478,7 @@
 						"propertyId":"cstar1-regularity",
 						"kind":"regularity",
 						"label":"Regularity",
-						"status":"sourceIdentity",
+						"status":"verifiedExact",
 						"latex":"K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}",
 						"expression":null,
 						"assumptionsLatex":[
@@ -8478,10 +8487,11 @@
 							"\\text{the displayed eigenvalues are generically distinct}"
 						],
 						"verification":{
-							"status":"sourceIdentity",
-							"method":"qREIIRegularityClassification",
-							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"status":"verified",
+							"method":"rankStableFourCoordinateBlockCertificate",
+							"residualNonzeroCount":0,
+							"engineVersion":"0.21.0",
+							"artifact":"notes\/working-version\/qRE_v2\/computation\/verify_twisted_nonquasistandard_properties.wls"
 						},
 						"sourceAnchors":[
 							{
@@ -8496,7 +8506,7 @@
 						"propertyId":"cstar1-unitarity",
 						"kind":"unitarity",
 						"label":"Boundary unitarity",
-						"status":"sourceIdentity",
+						"status":"verifiedExact",
 						"latex":"K(u)K(u^{-1})=\\operatorname{Id}",
 						"expression":null,
 						"assumptionsLatex":[
@@ -8505,10 +8515,11 @@
 							"\\text{the displayed eigenvalues are generically distinct}"
 						],
 						"verification":{
-							"status":"sourceIdentity",
-							"method":"qREIIUnitarityIdentity",
-							"residualNonzeroCount":null,
-							"engineVersion":"0.20.0"
+							"status":"verified",
+							"method":"rankStableFourCoordinateBlockCertificate",
+							"residualNonzeroCount":0,
+							"engineVersion":"0.21.0",
+							"artifact":"notes\/working-version\/qRE_v2\/computation\/verify_twisted_nonquasistandard_properties.wls"
 						},
 						"sourceAnchors":[
 							{
@@ -14655,7 +14666,7 @@
 								"propertyId":"cstar1-spectrum",
 								"kind":"eigenvalues",
 								"label":"Eigenvalues",
-								"status":"sourceIdentity",
+								"status":"verifiedExact",
 								"latex":"\\operatorname{Spec}K(u)=\\{\\kappa_1(u),\\ldots,\\kappa_s(u)\\}",
 								"expression":{
 									"kind":"call",
@@ -15001,10 +15012,11 @@
 									"\\text{the displayed eigenvalues are generically distinct}"
 								],
 								"verification":{
-									"status":"sourceIdentity",
+									"status":"verified",
 									"method":"constantSimilarityFromBareRealization",
-									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"residualNonzeroCount":0,
+									"engineVersion":"0.21.0",
+									"artifact":"notes\/working-version\/qRE_v2\/computation\/verify_twisted_nonquasistandard_properties.wls"
 								},
 								"sourceAnchors":[
 									{
@@ -15019,6 +15031,7 @@
 											"kind":"integer",
 											"value":"1"
 										},
+										"definingPolynomial":null,
 										"latex":"1",
 										"multiplicity":7
 									},
@@ -15167,6 +15180,7 @@
 												}
 											]
 										},
+										"definingPolynomial":null,
 										"latex":"h_1(u^2)\\frac{k_2(-\\nu^2u^{-2})}{k_2(-\\nu^2u^2)}",
 										"multiplicity":1
 									},
@@ -15303,6 +15317,7 @@
 												}
 											]
 										},
+										"definingPolynomial":null,
 										"latex":"h_1(u^2)\\frac{k_2(-\\nu^{-2}u^{-2})}{k_2(-\\nu^{-2}u^2)}",
 										"multiplicity":1
 									},
@@ -15331,6 +15346,7 @@
 												}
 											]
 										},
+										"definingPolynomial":null,
 										"latex":"u^4h_1(u^2)",
 										"multiplicity":2
 									},
@@ -15359,6 +15375,7 @@
 												}
 											]
 										},
+										"definingPolynomial":null,
 										"latex":"h_1(u^2)",
 										"multiplicity":2
 									},
@@ -15367,6 +15384,7 @@
 											"kind":"integer",
 											"value":"-1"
 										},
+										"definingPolynomial":null,
 										"latex":"u^2h_1(u^2)",
 										"multiplicity":1
 									}
@@ -15376,7 +15394,7 @@
 								"propertyId":"cstar1-characteristic",
 								"kind":"characteristicIdentity",
 								"label":"Characteristic identity",
-								"status":"sourceIdentity",
+								"status":"verifiedExact",
 								"latex":"\\chi_{K(u)}(x)=\\prod_\\kappa(x-\\kappa)^{m_\\kappa}",
 								"expression":{
 									"kind":"call",
@@ -15800,10 +15818,11 @@
 									"\\text{the displayed eigenvalues are generically distinct}"
 								],
 								"verification":{
-									"status":"sourceIdentity",
+									"status":"verified",
 									"method":"constantSimilarityFromBareRealization",
-									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"residualNonzeroCount":0,
+									"engineVersion":"0.21.0",
+									"artifact":"notes\/working-version\/qRE_v2\/computation\/verify_twisted_nonquasistandard_properties.wls"
 								},
 								"sourceAnchors":[
 									{
@@ -15818,7 +15837,7 @@
 								"propertyId":"cstar1-minimal",
 								"kind":"minimalIdentity",
 								"label":"Generic minimal identity",
-								"status":"conditional",
+								"status":"verifiedExact",
 								"latex":"m_{K(u)}(x)=\\prod_{\\kappa\\in\\operatorname{Spec}_{\\rm distinct}K(u)}(x-\\kappa)",
 								"expression":{
 									"kind":"call",
@@ -16213,10 +16232,11 @@
 									"\\text{the displayed eigenvalues are distinct}"
 								],
 								"verification":{
-									"status":"conditional",
+									"status":"verified",
 									"method":"constantSimilarityFromBareRealization",
-									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"residualNonzeroCount":0,
+									"engineVersion":"0.21.0",
+									"artifact":"notes\/working-version\/qRE_v2\/computation\/verify_twisted_nonquasistandard_properties.wls"
 								},
 								"sourceAnchors":[
 									{
@@ -16516,7 +16536,7 @@
 									"status":"computed",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -16543,7 +16563,7 @@
 									"status":"sourceIdentity",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -16843,7 +16863,7 @@
 									"status":"conditional",
 									"method":"constantSimilarityFromBareRealization",
 									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"engineVersion":"0.21.0"
 								},
 								"sourceAnchors":[
 									{
@@ -16858,7 +16878,7 @@
 								"propertyId":"cstar1-regularity",
 								"kind":"regularity",
 								"label":"Regularity",
-								"status":"sourceIdentity",
+								"status":"verifiedExact",
 								"latex":"K(1)=K(-1)=\\operatorname{Id}\\quad\\text{generically}",
 								"expression":null,
 								"assumptionsLatex":[
@@ -16867,10 +16887,11 @@
 									"\\text{the displayed eigenvalues are generically distinct}"
 								],
 								"verification":{
-									"status":"sourceIdentity",
+									"status":"verified",
 									"method":"constantSimilarityFromBareRealization",
-									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"residualNonzeroCount":0,
+									"engineVersion":"0.21.0",
+									"artifact":"notes\/working-version\/qRE_v2\/computation\/verify_twisted_nonquasistandard_properties.wls"
 								},
 								"sourceAnchors":[
 									{
@@ -16885,7 +16906,7 @@
 								"propertyId":"cstar1-unitarity",
 								"kind":"unitarity",
 								"label":"Boundary unitarity",
-								"status":"sourceIdentity",
+								"status":"verifiedExact",
 								"latex":"K(u)K(u^{-1})=\\operatorname{Id}",
 								"expression":null,
 								"assumptionsLatex":[
@@ -16894,10 +16915,11 @@
 									"\\text{the displayed eigenvalues are generically distinct}"
 								],
 								"verification":{
-									"status":"sourceIdentity",
+									"status":"verified",
 									"method":"constantSimilarityFromBareRealization",
-									"residualNonzeroCount":null,
-									"engineVersion":"0.20.0"
+									"residualNonzeroCount":0,
+									"engineVersion":"0.21.0",
+									"artifact":"notes\/working-version\/qRE_v2\/computation\/verify_twisted_nonquasistandard_properties.wls"
 								},
 								"sourceAnchors":[
 									{
@@ -16914,7 +16936,7 @@
 							"Formula":"C*.1",
 							"NotebookSymbol":"KBB1x",
 							"Branch":"NonQuasistandardGeneric",
-							"ResearchStatus":"NotebookChecked",
+							"ResearchStatus":"TwistedNonQuasistandardInternalBoundaryIntertwinerProved",
 							"Realization":"dressed"
 						}
 					}

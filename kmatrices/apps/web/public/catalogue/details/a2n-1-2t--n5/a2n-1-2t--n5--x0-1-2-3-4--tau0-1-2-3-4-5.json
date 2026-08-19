@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.7.0",
+	"schemaVersion":"1.8.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.20.0"
+		"version":"0.21.0"
 	},
 	"catalogue":{
 		"id":"a2n-1-2t--n5",
@@ -1704,8 +1704,8 @@
 						"Source":"qRE_II\/plain_temp.tex",
 						"Formula":"tB*.1",
 						"NotebookSymbol":null,
-						"Branch":"MainCatalogue",
-						"ResearchStatus":"NotebookChecked"
+						"Branch":"CorrectedTerminalRN",
+						"ResearchStatus":"TwistedPlainMasterBoundaryIntertwinerProvedWithCorrectedRN"
 					},
 					"properties":[
 						{
@@ -1723,8 +1723,45 @@
 										"head":"Times",
 										"arguments":[
 											{
-												"kind":"integer",
-												"value":"-1"
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"q"
+															},
+															{
+																"kind":"integer",
+																"value":"6"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"complex",
+																"real":{
+																	"kind":"integer",
+																	"value":"0"
+																},
+																"imaginary":{
+																	"kind":"integer",
+																	"value":"-1"
+																}
+															},
+															{
+																"kind":"symbol",
+																"name":"u"
+															}
+														]
+													}
+												]
 											},
 											{
 												"kind":"symbol",
@@ -1739,6 +1776,17 @@
 														"head":"Plus",
 														"arguments":[
 															{
+																"kind":"complex",
+																"real":{
+																	"kind":"integer",
+																	"value":"0"
+																},
+																"imaginary":{
+																	"kind":"integer",
+																	"value":"-1"
+																}
+															},
+															{
 																"kind":"call",
 																"head":"Times",
 																"arguments":[
@@ -1761,70 +1809,12 @@
 																		"name":"u"
 																	}
 																]
-															},
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
-																	}
-																]
 															}
 														]
 													},
 													{
 														"kind":"integer",
 														"value":"-1"
-													}
-												]
-											},
-											{
-												"kind":"call",
-												"head":"Plus",
-												"arguments":[
-													{
-														"kind":"call",
-														"head":"Times",
-														"arguments":[
-															{
-																"kind":"integer",
-																"value":"-1"
-															},
-															{
-																"kind":"call",
-																"head":"Power",
-																"arguments":[
-																	{
-																		"kind":"symbol",
-																		"name":"q"
-																	},
-																	{
-																		"kind":"integer",
-																		"value":"6"
-																	}
-																]
-															}
-														]
-													},
-													{
-														"kind":"call",
-														"head":"Times",
-														"arguments":[
-															{
-																"kind":"symbol",
-																"name":"u"
-															},
-															{
-																"kind":"symbol",
-																"name":"λ"
-															}
-														]
 													}
 												]
 											}
@@ -1834,74 +1824,6 @@
 										"kind":"call",
 										"head":"Times",
 										"arguments":[
-											{
-												"kind":"call",
-												"head":"Power",
-												"arguments":[
-													{
-														"kind":"symbol",
-														"name":"u"
-													},
-													{
-														"kind":"integer",
-														"value":"-1"
-													}
-												]
-											},
-											{
-												"kind":"call",
-												"head":"Power",
-												"arguments":[
-													{
-														"kind":"call",
-														"head":"Plus",
-														"arguments":[
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"call",
-																		"head":"Power",
-																		"arguments":[
-																			{
-																				"kind":"symbol",
-																				"name":"q"
-																			},
-																			{
-																				"kind":"integer",
-																				"value":"6"
-																			}
-																		]
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"u"
-																	}
-																]
-															},
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
-																	}
-																]
-															}
-														]
-													},
-													{
-														"kind":"integer",
-														"value":"-1"
-													}
-												]
-											},
 											{
 												"kind":"call",
 												"head":"Plus",
@@ -1925,18 +1847,86 @@
 														"head":"Times",
 														"arguments":[
 															{
-																"kind":"integer",
-																"value":"-1"
+																"kind":"complex",
+																"real":{
+																	"kind":"integer",
+																	"value":"0"
+																},
+																"imaginary":{
+																	"kind":"integer",
+																	"value":"-1"
+																}
 															},
 															{
 																"kind":"symbol",
 																"name":"u"
-															},
-															{
-																"kind":"symbol",
-																"name":"λ"
 															}
 														]
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Power",
+												"arguments":[
+													{
+														"kind":"symbol",
+														"name":"u"
+													},
+													{
+														"kind":"integer",
+														"value":"-1"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Power",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"complex",
+																"real":{
+																	"kind":"integer",
+																	"value":"0"
+																},
+																"imaginary":{
+																	"kind":"integer",
+																	"value":"-1"
+																}
+															},
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"Power",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"q"
+																			},
+																			{
+																				"kind":"integer",
+																				"value":"6"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"integer",
+														"value":"-1"
 													}
 												]
 											}
@@ -1953,7 +1943,7 @@
 								"status":"sourceIdentity",
 								"method":"sourceEigendecomposition",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -1968,190 +1958,6 @@
 										"kind":"call",
 										"head":"Times",
 										"arguments":[
-											{
-												"kind":"integer",
-												"value":"-1"
-											},
-											{
-												"kind":"symbol",
-												"name":"u"
-											},
-											{
-												"kind":"call",
-												"head":"Power",
-												"arguments":[
-													{
-														"kind":"call",
-														"head":"Plus",
-														"arguments":[
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"call",
-																		"head":"Power",
-																		"arguments":[
-																			{
-																				"kind":"symbol",
-																				"name":"q"
-																			},
-																			{
-																				"kind":"integer",
-																				"value":"6"
-																			}
-																		]
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"u"
-																	}
-																]
-															},
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
-																	}
-																]
-															}
-														]
-													},
-													{
-														"kind":"integer",
-														"value":"-1"
-													}
-												]
-											},
-											{
-												"kind":"call",
-												"head":"Plus",
-												"arguments":[
-													{
-														"kind":"call",
-														"head":"Times",
-														"arguments":[
-															{
-																"kind":"integer",
-																"value":"-1"
-															},
-															{
-																"kind":"call",
-																"head":"Power",
-																"arguments":[
-																	{
-																		"kind":"symbol",
-																		"name":"q"
-																	},
-																	{
-																		"kind":"integer",
-																		"value":"6"
-																	}
-																]
-															}
-														]
-													},
-													{
-														"kind":"call",
-														"head":"Times",
-														"arguments":[
-															{
-																"kind":"symbol",
-																"name":"u"
-															},
-															{
-																"kind":"symbol",
-																"name":"λ"
-															}
-														]
-													}
-												]
-											}
-										]
-									},
-									"latex":"u^2h_1(u)",
-									"multiplicity":5
-								},
-								{
-									"value":{
-										"kind":"call",
-										"head":"Times",
-										"arguments":[
-											{
-												"kind":"call",
-												"head":"Power",
-												"arguments":[
-													{
-														"kind":"symbol",
-														"name":"u"
-													},
-													{
-														"kind":"integer",
-														"value":"-1"
-													}
-												]
-											},
-											{
-												"kind":"call",
-												"head":"Power",
-												"arguments":[
-													{
-														"kind":"call",
-														"head":"Plus",
-														"arguments":[
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"call",
-																		"head":"Power",
-																		"arguments":[
-																			{
-																				"kind":"symbol",
-																				"name":"q"
-																			},
-																			{
-																				"kind":"integer",
-																				"value":"6"
-																			}
-																		]
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"u"
-																	}
-																]
-															},
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
-																	}
-																]
-															}
-														]
-													},
-													{
-														"kind":"integer",
-														"value":"-1"
-													}
-												]
-											},
 											{
 												"kind":"call",
 												"head":"Plus",
@@ -2175,23 +1981,199 @@
 														"head":"Times",
 														"arguments":[
 															{
-																"kind":"integer",
-																"value":"-1"
+																"kind":"complex",
+																"real":{
+																	"kind":"integer",
+																	"value":"0"
+																},
+																"imaginary":{
+																	"kind":"integer",
+																	"value":"-1"
+																}
 															},
 															{
 																"kind":"symbol",
 																"name":"u"
-															},
-															{
-																"kind":"symbol",
-																"name":"λ"
 															}
 														]
+													}
+												]
+											},
+											{
+												"kind":"symbol",
+												"name":"u"
+											},
+											{
+												"kind":"call",
+												"head":"Power",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"complex",
+																"real":{
+																	"kind":"integer",
+																	"value":"0"
+																},
+																"imaginary":{
+																	"kind":"integer",
+																	"value":"-1"
+																}
+															},
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"Power",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"q"
+																			},
+																			{
+																				"kind":"integer",
+																				"value":"6"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"integer",
+														"value":"-1"
 													}
 												]
 											}
 										]
 									},
+									"definingPolynomial":null,
+									"latex":"u^2h_1(u)",
+									"multiplicity":5
+								},
+								{
+									"value":{
+										"kind":"call",
+										"head":"Times",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"q"
+															},
+															{
+																"kind":"integer",
+																"value":"6"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"complex",
+																"real":{
+																	"kind":"integer",
+																	"value":"0"
+																},
+																"imaginary":{
+																	"kind":"integer",
+																	"value":"-1"
+																}
+															},
+															{
+																"kind":"symbol",
+																"name":"u"
+															}
+														]
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Power",
+												"arguments":[
+													{
+														"kind":"symbol",
+														"name":"u"
+													},
+													{
+														"kind":"integer",
+														"value":"-1"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Power",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"complex",
+																"real":{
+																	"kind":"integer",
+																	"value":"0"
+																},
+																"imaginary":{
+																	"kind":"integer",
+																	"value":"-1"
+																}
+															},
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"Power",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"q"
+																			},
+																			{
+																				"kind":"integer",
+																				"value":"6"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"integer",
+														"value":"-1"
+													}
+												]
+											}
+										]
+									},
+									"definingPolynomial":null,
 									"latex":"h_1(u)",
 									"multiplicity":5
 								}
@@ -2216,84 +2198,12 @@
 												"head":"Plus",
 												"arguments":[
 													{
-														"kind":"symbol",
-														"name":"x$K"
-													},
-													{
 														"kind":"call",
 														"head":"Times",
 														"arguments":[
 															{
 																"kind":"integer",
 																"value":"-1"
-															},
-															{
-																"kind":"call",
-																"head":"Power",
-																"arguments":[
-																	{
-																		"kind":"symbol",
-																		"name":"u"
-																	},
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	}
-																]
-															},
-															{
-																"kind":"call",
-																"head":"Power",
-																"arguments":[
-																	{
-																		"kind":"call",
-																		"head":"Plus",
-																		"arguments":[
-																			{
-																				"kind":"call",
-																				"head":"Times",
-																				"arguments":[
-																					{
-																						"kind":"call",
-																						"head":"Power",
-																						"arguments":[
-																							{
-																								"kind":"symbol",
-																								"name":"q"
-																							},
-																							{
-																								"kind":"integer",
-																								"value":"6"
-																							}
-																						]
-																					},
-																					{
-																						"kind":"symbol",
-																						"name":"u"
-																					}
-																				]
-																			},
-																			{
-																				"kind":"call",
-																				"head":"Times",
-																				"arguments":[
-																					{
-																						"kind":"integer",
-																						"value":"-1"
-																					},
-																					{
-																						"kind":"symbol",
-																						"name":"λ"
-																					}
-																				]
-																			}
-																		]
-																	},
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	}
-																]
 															},
 															{
 																"kind":"call",
@@ -2318,50 +2228,37 @@
 																		"head":"Times",
 																		"arguments":[
 																			{
-																				"kind":"integer",
-																				"value":"-1"
+																				"kind":"complex",
+																				"real":{
+																					"kind":"integer",
+																					"value":"0"
+																				},
+																				"imaginary":{
+																					"kind":"integer",
+																					"value":"-1"
+																				}
 																			},
 																			{
 																				"kind":"symbol",
 																				"name":"u"
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"λ"
 																			}
 																		]
 																	}
 																]
-															}
-														]
-													}
-												]
-											},
-											{
-												"kind":"integer",
-												"value":"5"
-											}
-										]
-									},
-									{
-										"kind":"call",
-										"head":"Power",
-										"arguments":[
-											{
-												"kind":"call",
-												"head":"Plus",
-												"arguments":[
-													{
-														"kind":"symbol",
-														"name":"x$K"
-													},
-													{
-														"kind":"call",
-														"head":"Times",
-														"arguments":[
+															},
 															{
-																"kind":"symbol",
-																"name":"u"
+																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"-1"
+																	}
+																]
 															},
 															{
 																"kind":"call",
@@ -2371,6 +2268,17 @@
 																		"kind":"call",
 																		"head":"Plus",
 																		"arguments":[
+																			{
+																				"kind":"complex",
+																				"real":{
+																					"kind":"integer",
+																					"value":"0"
+																				},
+																				"imaginary":{
+																					"kind":"integer",
+																					"value":"-1"
+																				}
+																			},
 																			{
 																				"kind":"call",
 																				"head":"Times",
@@ -2394,18 +2302,130 @@
 																						"name":"u"
 																					}
 																				]
+																			}
+																		]
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"-1"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"symbol",
+														"name":"x$K"
+													}
+												]
+											},
+											{
+												"kind":"integer",
+												"value":"5"
+											}
+										]
+									},
+									{
+										"kind":"call",
+										"head":"Power",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"integer",
+																"value":"-1"
+															},
+															{
+																"kind":"call",
+																"head":"Plus",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"Power",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"q"
+																			},
+																			{
+																				"kind":"integer",
+																				"value":"6"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Times",
+																		"arguments":[
+																			{
+																				"kind":"complex",
+																				"real":{
+																					"kind":"integer",
+																					"value":"0"
+																				},
+																				"imaginary":{
+																					"kind":"integer",
+																					"value":"-1"
+																				}
+																			},
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"kind":"symbol",
+																"name":"u"
+															},
+															{
+																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"Plus",
+																		"arguments":[
+																			{
+																				"kind":"complex",
+																				"real":{
+																					"kind":"integer",
+																					"value":"0"
+																				},
+																				"imaginary":{
+																					"kind":"integer",
+																					"value":"-1"
+																				}
 																			},
 																			{
 																				"kind":"call",
 																				"head":"Times",
 																				"arguments":[
 																					{
-																						"kind":"integer",
-																						"value":"-1"
+																						"kind":"call",
+																						"head":"Power",
+																						"arguments":[
+																							{
+																								"kind":"symbol",
+																								"name":"q"
+																							},
+																							{
+																								"kind":"integer",
+																								"value":"6"
+																							}
+																						]
 																					},
 																					{
 																						"kind":"symbol",
-																						"name":"λ"
+																						"name":"u"
 																					}
 																				]
 																			}
@@ -2416,52 +2436,12 @@
 																		"value":"-1"
 																	}
 																]
-															},
-															{
-																"kind":"call",
-																"head":"Plus",
-																"arguments":[
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"integer",
-																				"value":"-1"
-																			},
-																			{
-																				"kind":"call",
-																				"head":"Power",
-																				"arguments":[
-																					{
-																						"kind":"symbol",
-																						"name":"q"
-																					},
-																					{
-																						"kind":"integer",
-																						"value":"6"
-																					}
-																				]
-																			}
-																		]
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"symbol",
-																				"name":"u"
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"λ"
-																			}
-																		]
-																	}
-																]
 															}
 														]
+													},
+													{
+														"kind":"symbol",
+														"name":"x$K"
 													}
 												]
 											},
@@ -2482,7 +2462,7 @@
 								"status":"sourceIdentity",
 								"method":"sourceEigendecomposition",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -2508,84 +2488,12 @@
 										"head":"Plus",
 										"arguments":[
 											{
-												"kind":"symbol",
-												"name":"x$K"
-											},
-											{
 												"kind":"call",
 												"head":"Times",
 												"arguments":[
 													{
 														"kind":"integer",
 														"value":"-1"
-													},
-													{
-														"kind":"call",
-														"head":"Power",
-														"arguments":[
-															{
-																"kind":"symbol",
-																"name":"u"
-															},
-															{
-																"kind":"integer",
-																"value":"-1"
-															}
-														]
-													},
-													{
-														"kind":"call",
-														"head":"Power",
-														"arguments":[
-															{
-																"kind":"call",
-																"head":"Plus",
-																"arguments":[
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"call",
-																				"head":"Power",
-																				"arguments":[
-																					{
-																						"kind":"symbol",
-																						"name":"q"
-																					},
-																					{
-																						"kind":"integer",
-																						"value":"6"
-																					}
-																				]
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"u"
-																			}
-																		]
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"integer",
-																				"value":"-1"
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"λ"
-																			}
-																		]
-																	}
-																]
-															},
-															{
-																"kind":"integer",
-																"value":"-1"
-															}
-														]
 													},
 													{
 														"kind":"call",
@@ -2610,40 +2518,37 @@
 																"head":"Times",
 																"arguments":[
 																	{
-																		"kind":"integer",
-																		"value":"-1"
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
 																	},
 																	{
 																		"kind":"symbol",
 																		"name":"u"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
 																	}
 																]
 															}
 														]
-													}
-												]
-											}
-										]
-									},
-									{
-										"kind":"call",
-										"head":"Plus",
-										"arguments":[
-											{
-												"kind":"symbol",
-												"name":"x$K"
-											},
-											{
-												"kind":"call",
-												"head":"Times",
-												"arguments":[
+													},
 													{
-														"kind":"symbol",
-														"name":"u"
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"u"
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
 													},
 													{
 														"kind":"call",
@@ -2653,6 +2558,17 @@
 																"kind":"call",
 																"head":"Plus",
 																"arguments":[
+																	{
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
+																	},
 																	{
 																		"kind":"call",
 																		"head":"Times",
@@ -2676,18 +2592,120 @@
 																				"name":"u"
 																			}
 																		]
+																	}
+																]
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
+													}
+												]
+											},
+											{
+												"kind":"symbol",
+												"name":"x$K"
+											}
+										]
+									},
+									{
+										"kind":"call",
+										"head":"Plus",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"Times",
+												"arguments":[
+													{
+														"kind":"integer",
+														"value":"-1"
+													},
+													{
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"q"
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"6"
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"symbol",
+														"name":"u"
+													},
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Plus",
+																"arguments":[
+																	{
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
 																	},
 																	{
 																		"kind":"call",
 																		"head":"Times",
 																		"arguments":[
 																			{
-																				"kind":"integer",
-																				"value":"-1"
+																				"kind":"call",
+																				"head":"Power",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"q"
+																					},
+																					{
+																						"kind":"integer",
+																						"value":"6"
+																					}
+																				]
 																			},
 																			{
 																				"kind":"symbol",
-																				"name":"λ"
+																				"name":"u"
 																			}
 																		]
 																	}
@@ -2698,52 +2716,12 @@
 																"value":"-1"
 															}
 														]
-													},
-													{
-														"kind":"call",
-														"head":"Plus",
-														"arguments":[
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Power",
-																		"arguments":[
-																			{
-																				"kind":"symbol",
-																				"name":"q"
-																			},
-																			{
-																				"kind":"integer",
-																				"value":"6"
-																			}
-																		]
-																	}
-																]
-															},
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"symbol",
-																		"name":"u"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
-																	}
-																]
-															}
-														]
 													}
 												]
+											},
+											{
+												"kind":"symbol",
+												"name":"x$K"
 											}
 										]
 									}
@@ -2759,7 +2737,7 @@
 								"status":"conditional",
 								"method":"sourceEigendecomposition",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -2790,6 +2768,68 @@
 												"arguments":[
 													{
 														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"q"
+															},
+															{
+																"kind":"integer",
+																"value":"6"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"complex",
+																"real":{
+																	"kind":"integer",
+																	"value":"0"
+																},
+																"imaginary":{
+																	"kind":"integer",
+																	"value":"-1"
+																}
+															},
+															{
+																"kind":"symbol",
+																"name":"u"
+															}
+														]
+													}
+												]
+											},
+											{
+												"kind":"integer",
+												"value":"10"
+											}
+										]
+									},
+									{
+										"kind":"call",
+										"head":"Power",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"complex",
+														"real":{
+															"kind":"integer",
+															"value":"0"
+														},
+														"imaginary":{
+															"kind":"integer",
+															"value":"-1"
+														}
+													},
+													{
+														"kind":"call",
 														"head":"Times",
 														"arguments":[
 															{
@@ -2811,74 +2851,12 @@
 																"name":"u"
 															}
 														]
-													},
-													{
-														"kind":"call",
-														"head":"Times",
-														"arguments":[
-															{
-																"kind":"integer",
-																"value":"-1"
-															},
-															{
-																"kind":"symbol",
-																"name":"λ"
-															}
-														]
 													}
 												]
 											},
 											{
 												"kind":"integer",
 												"value":"-10"
-											}
-										]
-									},
-									{
-										"kind":"call",
-										"head":"Power",
-										"arguments":[
-											{
-												"kind":"call",
-												"head":"Plus",
-												"arguments":[
-													{
-														"kind":"call",
-														"head":"Power",
-														"arguments":[
-															{
-																"kind":"symbol",
-																"name":"q"
-															},
-															{
-																"kind":"integer",
-																"value":"6"
-															}
-														]
-													},
-													{
-														"kind":"call",
-														"head":"Times",
-														"arguments":[
-															{
-																"kind":"integer",
-																"value":"-1"
-															},
-															{
-																"kind":"symbol",
-																"name":"u"
-															},
-															{
-																"kind":"symbol",
-																"name":"λ"
-															}
-														]
-													}
-												]
-											},
-											{
-												"kind":"integer",
-												"value":"10"
 											}
 										]
 									}
@@ -2893,7 +2871,7 @@
 								"status":"computed",
 								"method":"productOfSourceEigenvalues",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -2920,7 +2898,7 @@
 								"status":"sourceIdentity",
 								"method":"qREIISpectralFactorization",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -2951,6 +2929,68 @@
 												"arguments":[
 													{
 														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"q"
+															},
+															{
+																"kind":"integer",
+																"value":"6"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"complex",
+																"real":{
+																	"kind":"integer",
+																	"value":"0"
+																},
+																"imaginary":{
+																	"kind":"integer",
+																	"value":"-1"
+																}
+															},
+															{
+																"kind":"symbol",
+																"name":"u"
+															}
+														]
+													}
+												]
+											},
+											{
+												"kind":"integer",
+												"value":"10"
+											}
+										]
+									},
+									{
+										"kind":"call",
+										"head":"Power",
+										"arguments":[
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"complex",
+														"real":{
+															"kind":"integer",
+															"value":"0"
+														},
+														"imaginary":{
+															"kind":"integer",
+															"value":"-1"
+														}
+													},
+													{
+														"kind":"call",
 														"head":"Times",
 														"arguments":[
 															{
@@ -2972,74 +3012,12 @@
 																"name":"u"
 															}
 														]
-													},
-													{
-														"kind":"call",
-														"head":"Times",
-														"arguments":[
-															{
-																"kind":"integer",
-																"value":"-1"
-															},
-															{
-																"kind":"symbol",
-																"name":"λ"
-															}
-														]
 													}
 												]
 											},
 											{
 												"kind":"integer",
 												"value":"-10"
-											}
-										]
-									},
-									{
-										"kind":"call",
-										"head":"Power",
-										"arguments":[
-											{
-												"kind":"call",
-												"head":"Plus",
-												"arguments":[
-													{
-														"kind":"call",
-														"head":"Power",
-														"arguments":[
-															{
-																"kind":"symbol",
-																"name":"q"
-															},
-															{
-																"kind":"integer",
-																"value":"6"
-															}
-														]
-													},
-													{
-														"kind":"call",
-														"head":"Times",
-														"arguments":[
-															{
-																"kind":"integer",
-																"value":"-1"
-															},
-															{
-																"kind":"symbol",
-																"name":"u"
-															},
-															{
-																"kind":"symbol",
-																"name":"λ"
-															}
-														]
-													}
-												]
-											},
-											{
-												"kind":"integer",
-												"value":"10"
 											}
 										]
 									}
@@ -3054,7 +3032,7 @@
 								"status":"conditional",
 								"method":"determinantCriterionAwayFromPoles",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -3081,7 +3059,7 @@
 								"status":"sourceIdentity",
 								"method":"qREIIRegularityClassification",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -3108,7 +3086,7 @@
 								"status":"sourceIdentity",
 								"method":"qREIIUnitarityIdentity",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -4497,8 +4475,45 @@
 												"head":"Times",
 												"arguments":[
 													{
-														"kind":"integer",
-														"value":"-1"
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"q"
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"6"
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															}
+														]
 													},
 													{
 														"kind":"symbol",
@@ -4513,6 +4528,17 @@
 																"head":"Plus",
 																"arguments":[
 																	{
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
+																	},
+																	{
 																		"kind":"call",
 																		"head":"Times",
 																		"arguments":[
@@ -4535,70 +4561,12 @@
 																				"name":"u"
 																			}
 																		]
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"integer",
-																				"value":"-1"
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"λ"
-																			}
-																		]
 																	}
 																]
 															},
 															{
 																"kind":"integer",
 																"value":"-1"
-															}
-														]
-													},
-													{
-														"kind":"call",
-														"head":"Plus",
-														"arguments":[
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Power",
-																		"arguments":[
-																			{
-																				"kind":"symbol",
-																				"name":"q"
-																			},
-																			{
-																				"kind":"integer",
-																				"value":"6"
-																			}
-																		]
-																	}
-																]
-															},
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"symbol",
-																		"name":"u"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
-																	}
-																]
 															}
 														]
 													}
@@ -4608,74 +4576,6 @@
 												"kind":"call",
 												"head":"Times",
 												"arguments":[
-													{
-														"kind":"call",
-														"head":"Power",
-														"arguments":[
-															{
-																"kind":"symbol",
-																"name":"u"
-															},
-															{
-																"kind":"integer",
-																"value":"-1"
-															}
-														]
-													},
-													{
-														"kind":"call",
-														"head":"Power",
-														"arguments":[
-															{
-																"kind":"call",
-																"head":"Plus",
-																"arguments":[
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"call",
-																				"head":"Power",
-																				"arguments":[
-																					{
-																						"kind":"symbol",
-																						"name":"q"
-																					},
-																					{
-																						"kind":"integer",
-																						"value":"6"
-																					}
-																				]
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"u"
-																			}
-																		]
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"integer",
-																				"value":"-1"
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"λ"
-																			}
-																		]
-																	}
-																]
-															},
-															{
-																"kind":"integer",
-																"value":"-1"
-															}
-														]
-													},
 													{
 														"kind":"call",
 														"head":"Plus",
@@ -4699,18 +4599,86 @@
 																"head":"Times",
 																"arguments":[
 																	{
-																		"kind":"integer",
-																		"value":"-1"
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
 																	},
 																	{
 																		"kind":"symbol",
 																		"name":"u"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
 																	}
 																]
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"u"
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Plus",
+																"arguments":[
+																	{
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Times",
+																		"arguments":[
+																			{
+																				"kind":"call",
+																				"head":"Power",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"q"
+																					},
+																					{
+																						"kind":"integer",
+																						"value":"6"
+																					}
+																				]
+																			},
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
 															}
 														]
 													}
@@ -4727,7 +4695,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -4742,190 +4710,6 @@
 												"kind":"call",
 												"head":"Times",
 												"arguments":[
-													{
-														"kind":"integer",
-														"value":"-1"
-													},
-													{
-														"kind":"symbol",
-														"name":"u"
-													},
-													{
-														"kind":"call",
-														"head":"Power",
-														"arguments":[
-															{
-																"kind":"call",
-																"head":"Plus",
-																"arguments":[
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"call",
-																				"head":"Power",
-																				"arguments":[
-																					{
-																						"kind":"symbol",
-																						"name":"q"
-																					},
-																					{
-																						"kind":"integer",
-																						"value":"6"
-																					}
-																				]
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"u"
-																			}
-																		]
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"integer",
-																				"value":"-1"
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"λ"
-																			}
-																		]
-																	}
-																]
-															},
-															{
-																"kind":"integer",
-																"value":"-1"
-															}
-														]
-													},
-													{
-														"kind":"call",
-														"head":"Plus",
-														"arguments":[
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Power",
-																		"arguments":[
-																			{
-																				"kind":"symbol",
-																				"name":"q"
-																			},
-																			{
-																				"kind":"integer",
-																				"value":"6"
-																			}
-																		]
-																	}
-																]
-															},
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"symbol",
-																		"name":"u"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
-																	}
-																]
-															}
-														]
-													}
-												]
-											},
-											"latex":"u^2h_1(u)",
-											"multiplicity":5
-										},
-										{
-											"value":{
-												"kind":"call",
-												"head":"Times",
-												"arguments":[
-													{
-														"kind":"call",
-														"head":"Power",
-														"arguments":[
-															{
-																"kind":"symbol",
-																"name":"u"
-															},
-															{
-																"kind":"integer",
-																"value":"-1"
-															}
-														]
-													},
-													{
-														"kind":"call",
-														"head":"Power",
-														"arguments":[
-															{
-																"kind":"call",
-																"head":"Plus",
-																"arguments":[
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"call",
-																				"head":"Power",
-																				"arguments":[
-																					{
-																						"kind":"symbol",
-																						"name":"q"
-																					},
-																					{
-																						"kind":"integer",
-																						"value":"6"
-																					}
-																				]
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"u"
-																			}
-																		]
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"integer",
-																				"value":"-1"
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"λ"
-																			}
-																		]
-																	}
-																]
-															},
-															{
-																"kind":"integer",
-																"value":"-1"
-															}
-														]
-													},
 													{
 														"kind":"call",
 														"head":"Plus",
@@ -4949,23 +4733,199 @@
 																"head":"Times",
 																"arguments":[
 																	{
-																		"kind":"integer",
-																		"value":"-1"
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
 																	},
 																	{
 																		"kind":"symbol",
 																		"name":"u"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
 																	}
 																]
+															}
+														]
+													},
+													{
+														"kind":"symbol",
+														"name":"u"
+													},
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Plus",
+																"arguments":[
+																	{
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Times",
+																		"arguments":[
+																			{
+																				"kind":"call",
+																				"head":"Power",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"q"
+																					},
+																					{
+																						"kind":"integer",
+																						"value":"6"
+																					}
+																				]
+																			},
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
 															}
 														]
 													}
 												]
 											},
+											"definingPolynomial":null,
+											"latex":"u^2h_1(u)",
+											"multiplicity":5
+										},
+										{
+											"value":{
+												"kind":"call",
+												"head":"Times",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"q"
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"6"
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"symbol",
+																"name":"u"
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
+													},
+													{
+														"kind":"call",
+														"head":"Power",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Plus",
+																"arguments":[
+																	{
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Times",
+																		"arguments":[
+																			{
+																				"kind":"call",
+																				"head":"Power",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"q"
+																					},
+																					{
+																						"kind":"integer",
+																						"value":"6"
+																					}
+																				]
+																			},
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"kind":"integer",
+																"value":"-1"
+															}
+														]
+													}
+												]
+											},
+											"definingPolynomial":null,
 											"latex":"h_1(u)",
 											"multiplicity":5
 										}
@@ -4990,84 +4950,12 @@
 														"head":"Plus",
 														"arguments":[
 															{
-																"kind":"symbol",
-																"name":"x$K"
-															},
-															{
 																"kind":"call",
 																"head":"Times",
 																"arguments":[
 																	{
 																		"kind":"integer",
 																		"value":"-1"
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Power",
-																		"arguments":[
-																			{
-																				"kind":"symbol",
-																				"name":"u"
-																			},
-																			{
-																				"kind":"integer",
-																				"value":"-1"
-																			}
-																		]
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Power",
-																		"arguments":[
-																			{
-																				"kind":"call",
-																				"head":"Plus",
-																				"arguments":[
-																					{
-																						"kind":"call",
-																						"head":"Times",
-																						"arguments":[
-																							{
-																								"kind":"call",
-																								"head":"Power",
-																								"arguments":[
-																									{
-																										"kind":"symbol",
-																										"name":"q"
-																									},
-																									{
-																										"kind":"integer",
-																										"value":"6"
-																									}
-																								]
-																							},
-																							{
-																								"kind":"symbol",
-																								"name":"u"
-																							}
-																						]
-																					},
-																					{
-																						"kind":"call",
-																						"head":"Times",
-																						"arguments":[
-																							{
-																								"kind":"integer",
-																								"value":"-1"
-																							},
-																							{
-																								"kind":"symbol",
-																								"name":"λ"
-																							}
-																						]
-																					}
-																				]
-																			},
-																			{
-																				"kind":"integer",
-																				"value":"-1"
-																			}
-																		]
 																	},
 																	{
 																		"kind":"call",
@@ -5092,50 +4980,37 @@
 																				"head":"Times",
 																				"arguments":[
 																					{
-																						"kind":"integer",
-																						"value":"-1"
+																						"kind":"complex",
+																						"real":{
+																							"kind":"integer",
+																							"value":"0"
+																						},
+																						"imaginary":{
+																							"kind":"integer",
+																							"value":"-1"
+																						}
 																					},
 																					{
 																						"kind":"symbol",
 																						"name":"u"
-																					},
-																					{
-																						"kind":"symbol",
-																						"name":"λ"
 																					}
 																				]
 																			}
 																		]
-																	}
-																]
-															}
-														]
-													},
-													{
-														"kind":"integer",
-														"value":"5"
-													}
-												]
-											},
-											{
-												"kind":"call",
-												"head":"Power",
-												"arguments":[
-													{
-														"kind":"call",
-														"head":"Plus",
-														"arguments":[
-															{
-																"kind":"symbol",
-																"name":"x$K"
-															},
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
+																	},
 																	{
-																		"kind":"symbol",
-																		"name":"u"
+																		"kind":"call",
+																		"head":"Power",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			},
+																			{
+																				"kind":"integer",
+																				"value":"-1"
+																			}
+																		]
 																	},
 																	{
 																		"kind":"call",
@@ -5145,6 +5020,17 @@
 																				"kind":"call",
 																				"head":"Plus",
 																				"arguments":[
+																					{
+																						"kind":"complex",
+																						"real":{
+																							"kind":"integer",
+																							"value":"0"
+																						},
+																						"imaginary":{
+																							"kind":"integer",
+																							"value":"-1"
+																						}
+																					},
 																					{
 																						"kind":"call",
 																						"head":"Times",
@@ -5168,18 +5054,130 @@
 																								"name":"u"
 																							}
 																						]
+																					}
+																				]
+																			},
+																			{
+																				"kind":"integer",
+																				"value":"-1"
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"kind":"symbol",
+																"name":"x$K"
+															}
+														]
+													},
+													{
+														"kind":"integer",
+														"value":"5"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Power",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"integer",
+																		"value":"-1"
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Plus",
+																		"arguments":[
+																			{
+																				"kind":"call",
+																				"head":"Power",
+																				"arguments":[
+																					{
+																						"kind":"symbol",
+																						"name":"q"
+																					},
+																					{
+																						"kind":"integer",
+																						"value":"6"
+																					}
+																				]
+																			},
+																			{
+																				"kind":"call",
+																				"head":"Times",
+																				"arguments":[
+																					{
+																						"kind":"complex",
+																						"real":{
+																							"kind":"integer",
+																							"value":"0"
+																						},
+																						"imaginary":{
+																							"kind":"integer",
+																							"value":"-1"
+																						}
+																					},
+																					{
+																						"kind":"symbol",
+																						"name":"u"
+																					}
+																				]
+																			}
+																		]
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Power",
+																		"arguments":[
+																			{
+																				"kind":"call",
+																				"head":"Plus",
+																				"arguments":[
+																					{
+																						"kind":"complex",
+																						"real":{
+																							"kind":"integer",
+																							"value":"0"
+																						},
+																						"imaginary":{
+																							"kind":"integer",
+																							"value":"-1"
+																						}
 																					},
 																					{
 																						"kind":"call",
 																						"head":"Times",
 																						"arguments":[
 																							{
-																								"kind":"integer",
-																								"value":"-1"
+																								"kind":"call",
+																								"head":"Power",
+																								"arguments":[
+																									{
+																										"kind":"symbol",
+																										"name":"q"
+																									},
+																									{
+																										"kind":"integer",
+																										"value":"6"
+																									}
+																								]
 																							},
 																							{
 																								"kind":"symbol",
-																								"name":"λ"
+																								"name":"u"
 																							}
 																						]
 																					}
@@ -5190,52 +5188,12 @@
 																				"value":"-1"
 																			}
 																		]
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Plus",
-																		"arguments":[
-																			{
-																				"kind":"call",
-																				"head":"Times",
-																				"arguments":[
-																					{
-																						"kind":"integer",
-																						"value":"-1"
-																					},
-																					{
-																						"kind":"call",
-																						"head":"Power",
-																						"arguments":[
-																							{
-																								"kind":"symbol",
-																								"name":"q"
-																							},
-																							{
-																								"kind":"integer",
-																								"value":"6"
-																							}
-																						]
-																					}
-																				]
-																			},
-																			{
-																				"kind":"call",
-																				"head":"Times",
-																				"arguments":[
-																					{
-																						"kind":"symbol",
-																						"name":"u"
-																					},
-																					{
-																						"kind":"symbol",
-																						"name":"λ"
-																					}
-																				]
-																			}
-																		]
 																	}
 																]
+															},
+															{
+																"kind":"symbol",
+																"name":"x$K"
 															}
 														]
 													},
@@ -5256,7 +5214,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -5282,84 +5240,12 @@
 												"head":"Plus",
 												"arguments":[
 													{
-														"kind":"symbol",
-														"name":"x$K"
-													},
-													{
 														"kind":"call",
 														"head":"Times",
 														"arguments":[
 															{
 																"kind":"integer",
 																"value":"-1"
-															},
-															{
-																"kind":"call",
-																"head":"Power",
-																"arguments":[
-																	{
-																		"kind":"symbol",
-																		"name":"u"
-																	},
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	}
-																]
-															},
-															{
-																"kind":"call",
-																"head":"Power",
-																"arguments":[
-																	{
-																		"kind":"call",
-																		"head":"Plus",
-																		"arguments":[
-																			{
-																				"kind":"call",
-																				"head":"Times",
-																				"arguments":[
-																					{
-																						"kind":"call",
-																						"head":"Power",
-																						"arguments":[
-																							{
-																								"kind":"symbol",
-																								"name":"q"
-																							},
-																							{
-																								"kind":"integer",
-																								"value":"6"
-																							}
-																						]
-																					},
-																					{
-																						"kind":"symbol",
-																						"name":"u"
-																					}
-																				]
-																			},
-																			{
-																				"kind":"call",
-																				"head":"Times",
-																				"arguments":[
-																					{
-																						"kind":"integer",
-																						"value":"-1"
-																					},
-																					{
-																						"kind":"symbol",
-																						"name":"λ"
-																					}
-																				]
-																			}
-																		]
-																	},
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	}
-																]
 															},
 															{
 																"kind":"call",
@@ -5384,40 +5270,37 @@
 																		"head":"Times",
 																		"arguments":[
 																			{
-																				"kind":"integer",
-																				"value":"-1"
+																				"kind":"complex",
+																				"real":{
+																					"kind":"integer",
+																					"value":"0"
+																				},
+																				"imaginary":{
+																					"kind":"integer",
+																					"value":"-1"
+																				}
 																			},
 																			{
 																				"kind":"symbol",
 																				"name":"u"
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"λ"
 																			}
 																		]
 																	}
 																]
-															}
-														]
-													}
-												]
-											},
-											{
-												"kind":"call",
-												"head":"Plus",
-												"arguments":[
-													{
-														"kind":"symbol",
-														"name":"x$K"
-													},
-													{
-														"kind":"call",
-														"head":"Times",
-														"arguments":[
+															},
 															{
-																"kind":"symbol",
-																"name":"u"
+																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"-1"
+																	}
+																]
 															},
 															{
 																"kind":"call",
@@ -5427,6 +5310,17 @@
 																		"kind":"call",
 																		"head":"Plus",
 																		"arguments":[
+																			{
+																				"kind":"complex",
+																				"real":{
+																					"kind":"integer",
+																					"value":"0"
+																				},
+																				"imaginary":{
+																					"kind":"integer",
+																					"value":"-1"
+																				}
+																			},
 																			{
 																				"kind":"call",
 																				"head":"Times",
@@ -5450,18 +5344,120 @@
 																						"name":"u"
 																					}
 																				]
+																			}
+																		]
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"-1"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"symbol",
+														"name":"x$K"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Plus",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Times",
+														"arguments":[
+															{
+																"kind":"integer",
+																"value":"-1"
+															},
+															{
+																"kind":"call",
+																"head":"Plus",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"Power",
+																		"arguments":[
+																			{
+																				"kind":"symbol",
+																				"name":"q"
+																			},
+																			{
+																				"kind":"integer",
+																				"value":"6"
+																			}
+																		]
+																	},
+																	{
+																		"kind":"call",
+																		"head":"Times",
+																		"arguments":[
+																			{
+																				"kind":"complex",
+																				"real":{
+																					"kind":"integer",
+																					"value":"0"
+																				},
+																				"imaginary":{
+																					"kind":"integer",
+																					"value":"-1"
+																				}
+																			},
+																			{
+																				"kind":"symbol",
+																				"name":"u"
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"kind":"symbol",
+																"name":"u"
+															},
+															{
+																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"call",
+																		"head":"Plus",
+																		"arguments":[
+																			{
+																				"kind":"complex",
+																				"real":{
+																					"kind":"integer",
+																					"value":"0"
+																				},
+																				"imaginary":{
+																					"kind":"integer",
+																					"value":"-1"
+																				}
 																			},
 																			{
 																				"kind":"call",
 																				"head":"Times",
 																				"arguments":[
 																					{
-																						"kind":"integer",
-																						"value":"-1"
+																						"kind":"call",
+																						"head":"Power",
+																						"arguments":[
+																							{
+																								"kind":"symbol",
+																								"name":"q"
+																							},
+																							{
+																								"kind":"integer",
+																								"value":"6"
+																							}
+																						]
 																					},
 																					{
 																						"kind":"symbol",
-																						"name":"λ"
+																						"name":"u"
 																					}
 																				]
 																			}
@@ -5472,52 +5468,12 @@
 																		"value":"-1"
 																	}
 																]
-															},
-															{
-																"kind":"call",
-																"head":"Plus",
-																"arguments":[
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"integer",
-																				"value":"-1"
-																			},
-																			{
-																				"kind":"call",
-																				"head":"Power",
-																				"arguments":[
-																					{
-																						"kind":"symbol",
-																						"name":"q"
-																					},
-																					{
-																						"kind":"integer",
-																						"value":"6"
-																					}
-																				]
-																			}
-																		]
-																	},
-																	{
-																		"kind":"call",
-																		"head":"Times",
-																		"arguments":[
-																			{
-																				"kind":"symbol",
-																				"name":"u"
-																			},
-																			{
-																				"kind":"symbol",
-																				"name":"λ"
-																			}
-																		]
-																	}
-																]
 															}
 														]
+													},
+													{
+														"kind":"symbol",
+														"name":"x$K"
 													}
 												]
 											}
@@ -5533,7 +5489,7 @@
 										"status":"conditional",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -5564,6 +5520,68 @@
 														"arguments":[
 															{
 																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"q"
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"6"
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"integer",
+														"value":"10"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Power",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"complex",
+																"real":{
+																	"kind":"integer",
+																	"value":"0"
+																},
+																"imaginary":{
+																	"kind":"integer",
+																	"value":"-1"
+																}
+															},
+															{
+																"kind":"call",
 																"head":"Times",
 																"arguments":[
 																	{
@@ -5585,74 +5603,12 @@
 																		"name":"u"
 																	}
 																]
-															},
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
-																	}
-																]
 															}
 														]
 													},
 													{
 														"kind":"integer",
 														"value":"-10"
-													}
-												]
-											},
-											{
-												"kind":"call",
-												"head":"Power",
-												"arguments":[
-													{
-														"kind":"call",
-														"head":"Plus",
-														"arguments":[
-															{
-																"kind":"call",
-																"head":"Power",
-																"arguments":[
-																	{
-																		"kind":"symbol",
-																		"name":"q"
-																	},
-																	{
-																		"kind":"integer",
-																		"value":"6"
-																	}
-																]
-															},
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"u"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
-																	}
-																]
-															}
-														]
-													},
-													{
-														"kind":"integer",
-														"value":"10"
 													}
 												]
 											}
@@ -5667,7 +5623,7 @@
 										"status":"computed",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -5694,7 +5650,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -5725,6 +5681,68 @@
 														"arguments":[
 															{
 																"kind":"call",
+																"head":"Power",
+																"arguments":[
+																	{
+																		"kind":"symbol",
+																		"name":"q"
+																	},
+																	{
+																		"kind":"integer",
+																		"value":"6"
+																	}
+																]
+															},
+															{
+																"kind":"call",
+																"head":"Times",
+																"arguments":[
+																	{
+																		"kind":"complex",
+																		"real":{
+																			"kind":"integer",
+																			"value":"0"
+																		},
+																		"imaginary":{
+																			"kind":"integer",
+																			"value":"-1"
+																		}
+																	},
+																	{
+																		"kind":"symbol",
+																		"name":"u"
+																	}
+																]
+															}
+														]
+													},
+													{
+														"kind":"integer",
+														"value":"10"
+													}
+												]
+											},
+											{
+												"kind":"call",
+												"head":"Power",
+												"arguments":[
+													{
+														"kind":"call",
+														"head":"Plus",
+														"arguments":[
+															{
+																"kind":"complex",
+																"real":{
+																	"kind":"integer",
+																	"value":"0"
+																},
+																"imaginary":{
+																	"kind":"integer",
+																	"value":"-1"
+																}
+															},
+															{
+																"kind":"call",
 																"head":"Times",
 																"arguments":[
 																	{
@@ -5746,74 +5764,12 @@
 																		"name":"u"
 																	}
 																]
-															},
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
-																	}
-																]
 															}
 														]
 													},
 													{
 														"kind":"integer",
 														"value":"-10"
-													}
-												]
-											},
-											{
-												"kind":"call",
-												"head":"Power",
-												"arguments":[
-													{
-														"kind":"call",
-														"head":"Plus",
-														"arguments":[
-															{
-																"kind":"call",
-																"head":"Power",
-																"arguments":[
-																	{
-																		"kind":"symbol",
-																		"name":"q"
-																	},
-																	{
-																		"kind":"integer",
-																		"value":"6"
-																	}
-																]
-															},
-															{
-																"kind":"call",
-																"head":"Times",
-																"arguments":[
-																	{
-																		"kind":"integer",
-																		"value":"-1"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"u"
-																	},
-																	{
-																		"kind":"symbol",
-																		"name":"λ"
-																	}
-																]
-															}
-														]
-													},
-													{
-														"kind":"integer",
-														"value":"10"
 													}
 												]
 											}
@@ -5828,7 +5784,7 @@
 										"status":"conditional",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -5855,7 +5811,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -5882,7 +5838,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -5898,8 +5854,8 @@
 								"Source":"qRE_II\/plain_temp.tex",
 								"Formula":"tB*.1",
 								"NotebookSymbol":null,
-								"Branch":"MainCatalogue",
-								"ResearchStatus":"NotebookChecked",
+								"Branch":"CorrectedTerminalRN",
+								"ResearchStatus":"TwistedPlainMasterBoundaryIntertwinerProvedWithCorrectedRN",
 								"Realization":"dressed"
 							}
 						}
@@ -7157,8 +7113,9 @@
 					"latex":"\\left(\n\\begin{array}{cccccccccc}\n \\frac{\\lambda  u \\left(u-\\frac{1}{u}\\right)}{q^5 \\left(\\frac{\\lambda }{q^5}-u\\right)}+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & \\frac{\\lambda  u \\left(u-\\frac{1}{u}\\right)}{q^5 \\left(\\frac{\\lambda }{q^5}-u\\right)}+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & \\frac{\\lambda  u \\left(u-\\frac{1}{u}\\right)}{q^5 \\left(\\frac{\\lambda }{q^5}-u\\right)}+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & \\frac{\\lambda  u \\left(u-\\frac{1}{u}\\right)}{q^5 \\left(\\frac{\\lambda }{q^5}-u\\right)}+1 & 0 & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & \\frac{\\lambda  u \\left(u-\\frac{1}{u}\\right)}{q^5 \\left(\\frac{\\lambda }{q^5}-u\\right)}+1 & 0 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\frac{\\lambda }{q^5}-u}+1 & 0 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\frac{\\lambda }{q^5}-u}+1 & 0 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\frac{\\lambda }{q^5}-u}+1 & 0 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\frac{\\lambda }{q^5}-u}+1 & 0 \\\\\n 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \\frac{u-\\frac{1}{u}}{\\frac{\\lambda }{q^5}-u}+1 \\\\\n\\end{array}\n\\right)",
 					"provenance":{
 						"Source":"qRE_II\/alt_temp.tex",
+						"ProofSource":"qRE_v2 Theorem 9.1",
 						"Formula":"tB*.2",
-						"ResearchStatus":"NotebookChecked"
+						"ResearchStatus":"TwistedAlternatingMasterBoundaryIntertwinerProved"
 					},
 					"properties":[
 						{
@@ -7406,7 +7363,7 @@
 								"status":"sourceIdentity",
 								"method":"sourceEigendecomposition",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -7529,6 +7486,7 @@
 											}
 										]
 									},
+									"definingPolynomial":null,
 									"latex":"u^2h_1(u)",
 									"multiplicity":5
 								},
@@ -7645,6 +7603,7 @@
 											}
 										]
 									},
+									"definingPolynomial":null,
 									"latex":"h_1(u)",
 									"multiplicity":5
 								}
@@ -7935,7 +7894,7 @@
 								"status":"sourceIdentity",
 								"method":"sourceEigendecomposition",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -8212,7 +8171,7 @@
 								"status":"conditional",
 								"method":"sourceEigendecomposition",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -8346,7 +8305,7 @@
 								"status":"computed",
 								"method":"productOfSourceEigenvalues",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -8373,7 +8332,7 @@
 								"status":"sourceIdentity",
 								"method":"qREIISpectralFactorization",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -8507,7 +8466,7 @@
 								"status":"conditional",
 								"method":"determinantCriterionAwayFromPoles",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -8534,7 +8493,7 @@
 								"status":"sourceIdentity",
 								"method":"qREIIRegularityClassification",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -8561,7 +8520,7 @@
 								"status":"sourceIdentity",
 								"method":"qREIIUnitarityIdentity",
 								"residualNonzeroCount":null,
-								"engineVersion":"0.20.0"
+								"engineVersion":"0.21.0"
 							},
 							"sourceAnchors":[
 								{
@@ -10075,7 +10034,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -10198,6 +10157,7 @@
 													}
 												]
 											},
+											"definingPolynomial":null,
 											"latex":"u^2h_1(u)",
 											"multiplicity":5
 										},
@@ -10314,6 +10274,7 @@
 													}
 												]
 											},
+											"definingPolynomial":null,
 											"latex":"h_1(u)",
 											"multiplicity":5
 										}
@@ -10604,7 +10565,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -10881,7 +10842,7 @@
 										"status":"conditional",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -11015,7 +10976,7 @@
 										"status":"computed",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -11042,7 +11003,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -11176,7 +11137,7 @@
 										"status":"conditional",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -11203,7 +11164,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -11230,7 +11191,7 @@
 										"status":"sourceIdentity",
 										"method":"constantSimilarityFromBareRealization",
 										"residualNonzeroCount":null,
-										"engineVersion":"0.20.0"
+										"engineVersion":"0.21.0"
 									},
 									"sourceAnchors":[
 										{
@@ -11244,8 +11205,9 @@
 							],
 							"provenance":{
 								"Source":"qRE_II\/alt_temp.tex",
+								"ProofSource":"qRE_v2 Theorem 9.1",
 								"Formula":"tB*.2",
-								"ResearchStatus":"NotebookChecked",
+								"ResearchStatus":"TwistedAlternatingMasterBoundaryIntertwinerProved",
 								"Realization":"dressed"
 							}
 						}

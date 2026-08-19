@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.7.0",
+	"schemaVersion":"1.8.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.20.0"
+		"version":"0.21.0"
 	},
 	"catalogue":{
 		"id":"b-1--n6",
@@ -80112,6 +80112,11 @@
 						"constraintsLatex":[
 							"\\ell\\text{ even}"
 						],
+						"formulaStatus":"notRecorded",
+						"propertyStatus":"notRecorded",
+						"boundaryStatus":"notRecorded",
+						"deformationStatus":"notRecorded",
+						"domainAuditStatus":"notRecorded",
 						"formula":null,
 						"properties":[],
 						"verification":{
@@ -80130,6 +80135,11 @@
 						"constraintsLatex":[
 							"\\ell\\text{ odd}"
 						],
+						"formulaStatus":"notRecorded",
+						"propertyStatus":"notRecorded",
+						"boundaryStatus":"notRecorded",
+						"deformationStatus":"notRecorded",
+						"domainAuditStatus":"notRecorded",
 						"formula":null,
 						"properties":[],
 						"verification":{
@@ -80148,6 +80158,11 @@
 						"constraintsLatex":[
 							"r=\\ell+2"
 						],
+						"formulaStatus":"notRecorded",
+						"propertyStatus":"notRecorded",
+						"boundaryStatus":"notRecorded",
+						"deformationStatus":"notRecorded",
+						"domainAuditStatus":"notRecorded",
 						"formula":null,
 						"properties":[],
 						"verification":{
@@ -80682,6 +80697,220 @@
 					"role":"shortRootEndpoint"
 				}
 			],
+			"schematic":[
+				{
+					"variantId":"B.1a",
+					"label":"Identity representative",
+					"layout":"linear",
+					"braces":[
+						{
+							"from":"capL",
+							"to":1,
+							"side":"above",
+							"label":"p_1"
+						},
+						{
+							"from":4,
+							"to":6,
+							"side":"below",
+							"label":"p_2"
+						}
+					],
+					"capLeft":{
+						"kind":"fork",
+						"top":{
+							"fill":"black",
+							"label":"0"
+						},
+						"bottom":{
+							"fill":"black",
+							"label":"1"
+						},
+						"tau":false
+					},
+					"capRight":null,
+					"row":[
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"2",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":"\\ell",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":"r",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"n-1",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"double",
+							"arrow":"right"
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"n",
+							"position":"right"
+						}
+					]
+				},
+				{
+					"variantId":"B.1b",
+					"label":"Flipped representative",
+					"layout":"linear",
+					"braces":[
+						{
+							"from":"capL",
+							"to":1,
+							"side":"above",
+							"label":"p_1"
+						},
+						{
+							"from":4,
+							"to":6,
+							"side":"below",
+							"label":"p_2"
+						}
+					],
+					"capLeft":{
+						"kind":"fork",
+						"top":{
+							"fill":"black",
+							"label":"0"
+						},
+						"bottom":{
+							"fill":"black",
+							"label":"1"
+						},
+						"tau":true
+					},
+					"capRight":null,
+					"row":[
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"2",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":"\\ell",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":"r",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"n-1",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"double",
+							"arrow":"right"
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"n",
+							"position":"right"
+						}
+					]
+				}
+			],
 			"instanceIds":[
 				"b-1--n6--xnone--tau0-1-2-3-4-5-6",
 				"b-1--n6--x6--tau0-1-2-3-4-5-6",
@@ -80768,6 +80997,11 @@
 						"regime":"MainCatalogue",
 						"description":"",
 						"constraintsLatex":[],
+						"formulaStatus":"notRecorded",
+						"propertyStatus":"notRecorded",
+						"boundaryStatus":"notRecorded",
+						"deformationStatus":"notRecorded",
+						"domainAuditStatus":"notRecorded",
 						"formula":null,
 						"properties":[],
 						"verification":{
@@ -80784,6 +81018,11 @@
 						"regime":"MainCatalogue",
 						"description":"",
 						"constraintsLatex":[],
+						"formulaStatus":"notRecorded",
+						"propertyStatus":"notRecorded",
+						"boundaryStatus":"notRecorded",
+						"deformationStatus":"notRecorded",
+						"domainAuditStatus":"notRecorded",
 						"formula":null,
 						"properties":[],
 						"verification":{
@@ -81062,6 +81301,286 @@
 					"source":"qRE\/files\/resultsC1BD2.tex",
 					"anchor":"D2:K",
 					"role":"specialization"
+				}
+			],
+			"schematic":[
+				{
+					"variantId":"B.2a",
+					"label":"Identity representative",
+					"layout":"linear",
+					"braces":[
+						{
+							"from":"capL",
+							"to":1,
+							"side":"above",
+							"label":"p_1"
+						},
+						{
+							"from":7,
+							"to":9,
+							"side":"below",
+							"label":"p_2"
+						}
+					],
+					"capLeft":{
+						"kind":"fork",
+						"top":{
+							"fill":"black",
+							"label":"0"
+						},
+						"bottom":{
+							"fill":"black",
+							"label":"1"
+						},
+						"tau":false
+					},
+					"capRight":null,
+					"row":[
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"2",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":"\\ell",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":"r",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"n-1",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"double",
+							"arrow":"right"
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"n",
+							"position":"right"
+						}
+					]
+				},
+				{
+					"variantId":"B.2b",
+					"label":"Flipped representative",
+					"layout":"linear",
+					"braces":[
+						{
+							"from":"capL",
+							"to":1,
+							"side":"above",
+							"label":"p_1"
+						},
+						{
+							"from":7,
+							"to":9,
+							"side":"below",
+							"label":"p_2"
+						}
+					],
+					"capLeft":{
+						"kind":"fork",
+						"top":{
+							"fill":"black",
+							"label":"0"
+						},
+						"bottom":{
+							"fill":"black",
+							"label":"1"
+						},
+						"tau":true
+					},
+					"capRight":null,
+					"row":[
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"2",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":"\\ell",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":"r",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"n-1",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"double",
+							"arrow":"right"
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"n",
+							"position":"right"
+						}
+					]
 				}
 			],
 			"instanceIds":[

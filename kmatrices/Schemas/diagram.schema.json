@@ -3,26 +3,56 @@
   "$id": "https://qrekmatrices.org/schemas/diagram.schema.json",
   "title": "QRE lazily loaded generalized Satake diagram detail",
   "type": "object",
-  "required": ["schemaVersion", "engine", "catalogue", "diagram"],
+  "required": [
+    "schemaVersion",
+    "engine",
+    "catalogue",
+    "diagram"
+  ],
   "properties": {
-    "schemaVersion": { "const": "1.7.0" },
+    "schemaVersion": {
+      "const": "1.8.0"
+    },
     "engine": {
       "type": "object",
-      "required": ["name", "version"],
+      "required": [
+        "name",
+        "version"
+      ],
       "properties": {
-        "name": { "const": "QREKMatrices" },
-        "version": { "type": "string" }
+        "name": {
+          "const": "QREKMatrices"
+        },
+        "version": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
     "catalogue": {
       "type": "object",
-      "required": ["id", "affineType", "rank", "layout"],
+      "required": [
+        "id",
+        "affineType",
+        "rank",
+        "layout"
+      ],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
-        "affineType": { "type": "string", "minLength": 1 },
-        "rank": { "type": "integer", "minimum": 1 },
-        "layout": { "const": "lazy-v1" }
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "affineType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rank": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "layout": {
+          "const": "lazy-v1"
+        }
       },
       "additionalProperties": false
     },

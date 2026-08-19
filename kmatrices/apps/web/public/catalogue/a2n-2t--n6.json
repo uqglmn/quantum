@@ -1,8 +1,8 @@
 {
-	"schemaVersion":"1.7.0",
+	"schemaVersion":"1.8.0",
 	"engine":{
 		"name":"QREKMatrices",
-		"version":"0.20.0"
+		"version":"0.21.0"
 	},
 	"catalogue":{
 		"id":"a2n-2t--n6",
@@ -95066,7 +95066,9 @@
 			"contentStatus":"published",
 			"regimes":[
 				"MainCatalogue",
-				"NonQuasistandard"
+				"NonQuasistandard",
+				"LowRank",
+				"LowRankCoincidence"
 			],
 			"parameterOrder":[
 				"l",
@@ -95092,7 +95094,104 @@
 						"latex":"0\\leq\\ell\\leq r\\leq n"
 					}
 				],
-				"branches":[]
+				"branches":[
+					{
+						"branchId":"nqs-endpoint-0",
+						"label":"Exceptional short endpoint",
+						"kind":"endpoint",
+						"regime":"NonQuasistandard",
+						"description":"",
+						"constraintsLatex":[
+							"n\\geq2",
+							"(\\ell,r)=(0,1)"
+						],
+						"formulaStatus":"implementedClosedForm",
+						"propertyStatus":"exactActiveCubicCertificate",
+						"boundaryStatus":"arbitraryRankProved",
+						"deformationStatus":"notRecorded",
+						"domainAuditStatus":"notRecorded",
+						"formula":null,
+						"properties":[],
+						"verification":{
+							"status":"notComputed",
+							"level":"notComputed",
+							"equation":"Standard",
+							"method":"notComputed"
+						}
+					},
+					{
+						"branchId":"nqs-internal",
+						"label":"One internal exceptional node",
+						"kind":"generic",
+						"regime":"NonQuasistandard",
+						"description":"",
+						"constraintsLatex":[
+							"1\\leq\\ell\\leq n-2",
+							"r=\\ell+2"
+						],
+						"formulaStatus":"implementedClosedForm",
+						"propertyStatus":"exactActiveBlockCertificate",
+						"boundaryStatus":"arbitraryRankProved",
+						"deformationStatus":"notRecorded",
+						"domainAuditStatus":"notRecorded",
+						"formula":null,
+						"properties":[],
+						"verification":{
+							"status":"notComputed",
+							"level":"notComputed",
+							"equation":"Standard",
+							"method":"notComputed"
+						}
+					},
+					{
+						"branchId":"a2twisted-reversed-all-white",
+						"label":"Reversed A2(2) all-white",
+						"kind":"exceptional",
+						"regime":"LowRank",
+						"description":"",
+						"constraintsLatex":[
+							"n=1",
+							"(\\ell,r)=(0,1)"
+						],
+						"formulaStatus":"implementedMasterSpecialization",
+						"propertyStatus":"exactRankOneCertificate",
+						"boundaryStatus":"exactRankOneProved",
+						"deformationStatus":"notRecorded",
+						"domainAuditStatus":"notRecorded",
+						"formula":null,
+						"properties":[],
+						"verification":{
+							"status":"notComputed",
+							"level":"notComputed",
+							"equation":"Standard",
+							"method":"notComputed"
+						}
+					},
+					{
+						"branchId":"a2twisted-reversed-one-white",
+						"label":"Reversed A2(2) one-white coincidence",
+						"kind":"exceptional",
+						"regime":"LowRankCoincidence",
+						"description":"",
+						"constraintsLatex":[
+							"n=1",
+							"\\ell=r\\in\\{0,1\\}"
+						],
+						"formulaStatus":"implementedProjectiveCoincidence",
+						"propertyStatus":"exactRankOneCertificate",
+						"boundaryStatus":"exactRankOneProved",
+						"deformationStatus":"notRecorded",
+						"domainAuditStatus":"notRecorded",
+						"formula":null,
+						"properties":[],
+						"verification":{
+							"status":"notComputed",
+							"level":"notComputed",
+							"equation":"Standard",
+							"method":"notComputed"
+						}
+					}
+				]
 			},
 			"generalFormula":{
 				"kind":"quadraticSpectralMasterFormula",
@@ -95224,6 +95323,114 @@
 					"role":"formulaAndProperties"
 				}
 			],
+			"schematic":[
+				{
+					"variantId":"tC**.1",
+					"label":"Representative",
+					"layout":"linear",
+					"braces":[
+						{
+							"from":0,
+							"to":2,
+							"side":"below",
+							"label":"p_1"
+						},
+						{
+							"from":5,
+							"to":7,
+							"side":"below",
+							"label":"p_2"
+						}
+					],
+					"capLeft":null,
+					"capRight":null,
+					"row":[
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"0",
+							"position":"left"
+						},
+						{
+							"kind":"link",
+							"style":"double",
+							"arrow":"left"
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"1",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":"\\ell",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":"r",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"n-1",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"double",
+							"arrow":"left"
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"n",
+							"position":"right"
+						}
+					]
+				}
+			],
 			"instanceIds":[
 				"a2n-2t--n6--xnone--tau0-1-2-3-4-5-6",
 				"a2n-2t--n6--x0--tau0-1-2-3-4-5-6",
@@ -95264,7 +95471,8 @@
 			"description":"Transposed presentation of C**.2.",
 			"contentStatus":"published",
 			"regimes":[
-				"MainCatalogue"
+				"MainCatalogue",
+				"LowRankCoincidence"
 			],
 			"parameterOrder":[
 				"l",
@@ -95290,7 +95498,32 @@
 						"latex":"0\\leq\\ell\\leq r\\leq n"
 					}
 				],
-				"branches":[]
+				"branches":[
+					{
+						"branchId":"a2twisted-reversed-one-white",
+						"label":"Reversed A2(2) one-white coincidence",
+						"kind":"exceptional",
+						"regime":"LowRankCoincidence",
+						"description":"",
+						"constraintsLatex":[
+							"n=1",
+							"\\ell=r\\in\\{0,1\\}"
+						],
+						"formulaStatus":"implementedProjectiveCoincidence",
+						"propertyStatus":"exactRankOneCertificate",
+						"boundaryStatus":"exactRankOneProved",
+						"deformationStatus":"notRecorded",
+						"domainAuditStatus":"notRecorded",
+						"formula":null,
+						"properties":[],
+						"verification":{
+							"status":"notComputed",
+							"level":"notComputed",
+							"equation":"Standard",
+							"method":"notComputed"
+						}
+					}
+				]
 			},
 			"generalFormula":{
 				"kind":"quadraticSpectralMasterFormula",
@@ -95420,6 +95653,147 @@
 					"source":"qRE_II\/alt_temp.tex",
 					"anchor":"res:tC**2",
 					"role":"formulaAndProperties"
+				}
+			],
+			"schematic":[
+				{
+					"variantId":"tC**.2",
+					"label":"Representative",
+					"layout":"linear",
+					"braces":[
+						{
+							"from":0,
+							"to":2,
+							"side":"below",
+							"label":"p_1"
+						},
+						{
+							"from":8,
+							"to":10,
+							"side":"below",
+							"label":"p_2"
+						}
+					],
+					"capLeft":null,
+					"capRight":null,
+					"row":[
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"0",
+							"position":"left"
+						},
+						{
+							"kind":"link",
+							"style":"double",
+							"arrow":"left"
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"1",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":"\\ell",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"white",
+							"label":"r",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"solid",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":null,
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"dashed",
+							"arrow":null
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"n-1",
+							"position":"above"
+						},
+						{
+							"kind":"link",
+							"style":"double",
+							"arrow":"left"
+						},
+						{
+							"kind":"node",
+							"fill":"black",
+							"label":"n",
+							"position":"right"
+						}
+					]
 				}
 			],
 			"instanceIds":[

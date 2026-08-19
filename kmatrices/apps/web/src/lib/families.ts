@@ -139,9 +139,9 @@ export function affineTypeLatex(affineType: string): string {
     "C(1)": String.raw`C_n^{(1)}`,
     "D(1)": String.raw`D_n^{(1)}`,
     "A2n-1(2)": String.raw`A_{2n-1}^{(2)}`,
-    "A2n-1(2)T": String.raw`A_{2n-1}^{(2)}\ \text{(transposed)}`,
+    "A2n-1(2)T": String.raw`A_{2n-1}^{(2)}\ \text{reversed}`,
     "A2n(2)": String.raw`A_{2n}^{(2)}`,
-    "A2n(2)T": String.raw`A_{2n}^{(2)}\ \text{(transposed)}`,
+    "A2n(2)T": String.raw`A_{2n}^{(2)}\ \text{reversed}`,
     "Dn+1(2)": String.raw`D_{n+1}^{(2)}`,
   } as Record<string, string>)[affineType] ?? affineType;
 }
